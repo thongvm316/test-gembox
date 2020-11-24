@@ -1,0 +1,56 @@
+.product-search {
+  .info-search {
+    max-width: 1678px;
+    width: 100vw;
+    height: 76px;
+    align-items: center;
+  }
+  .date-picker {
+    display: flex;
+    margin-left: 300px;
+  }
+}
+
+@media (max-width: 1440px) {
+  .product-search {
+    .date-picker {
+      margin-left: 50px !important;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .product-search {
+    .info-search {
+      .ant-input {
+        width: 150px !important;
+        margin-left: 25px !important;
+      }
+      .ant-space {
+        width: 220px !important;
+      }
+    }
+    .date-picker {
+      margin-left: 20px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .product-search {
+    .info-search {
+      .ant-input {
+        margin-left: 0px !important;
+      }
+      .ant-space {
+        width: 220px !important;
+      }
+    }
+    .date-picker {
+      margin: 10px 0px !important;
+    }
+    .res-small-device {
+      margin-top: 50px !important;
+    }
+  }
+}
