@@ -123,6 +123,17 @@ const ProductSearch = () => {
                         dataSource={data}
                         scroll={{ x: 1300 }}
                         rowSelection={{ ...rowSelection, checkStrictly }}
+                        onRow={(record, rowIndex) => {
+                          return{
+                            onClick: event => {
+                              props.history.push({
+                                pathname: '/product-detail',
+                                state: {product: record}
+                              })
+                            }
+                          }
+            
+                        }}
                     />
                 </Col>
                 <Modal
