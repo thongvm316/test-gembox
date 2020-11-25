@@ -53,7 +53,7 @@ const MainLayout = (props) => {
                         </div>
                     </Dropdown>
                 </Header>
-                <Content style={{ margin: '24px 16px', padding: 24, height: '100vh', minHeight: 'initial' }}>
+                <Content style={{ margin: '24px 16px', padding: 24, height: 'auto', minHeight: 'initial' }}>
                     {props.children}
                 </Content>
             </Layout>
