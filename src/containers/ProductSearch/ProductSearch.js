@@ -3,7 +3,7 @@ import { Button, DatePicker, Row, Col, Input, Space, Table, Modal  } from 'antd'
 import Chart from './Chart'
 import './ProductSearch.scss'
 
-const ProductSearch = () => {
+const ProductSearch = (props) => {
     const [ countSelected, setCountSelected ] = useState(0)
 
   const renderTitle = (record) =>{
@@ -123,6 +123,17 @@ const ProductSearch = () => {
                         dataSource={data}
                         scroll={{ x: 1300 }}
                         rowSelection={{ ...rowSelection, checkStrictly }}
+                        onRow={(record, rowIndex) => {
+                          return{
+                            onClick: event => {
+                              props.history.push({
+                                pathname: '/product-detail',
+                                state: {product: record}
+                              })
+                            }
+                          }
+            
+                        }}
                     />
                 </Col>
                 <Modal
