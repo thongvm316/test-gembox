@@ -10,3 +10,4 @@ Page 4 --- Done
 Page 5
 Chart - Filter
 Sorter
+Responsive

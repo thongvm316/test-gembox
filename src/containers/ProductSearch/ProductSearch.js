@@ -4,7 +4,7 @@ import Chart from './Chart'
 import './ProductSearch.scss'
 
 const ProductSearch = () => {
-    const [ countSelected, setCountSelected ] = useState(0)
+  const [ countSelected, setCountSelected ] = useState(0)
 
   const renderTitle = (record) =>{
     return <a onClick={showModal}>{record} </a>

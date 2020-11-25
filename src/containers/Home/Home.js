@@ -56,7 +56,6 @@ const ListItem = (props) => {
 
 const RenderData = (props) => {
   const datas = props.datas
-  console.log(datas)
   const listitems = datas.map(product => (
     <ListItem key={product.id} value={product}/>
   ))
@@ -67,9 +66,7 @@ const RenderData = (props) => {
   )
 }
 
-
-
-const Home = (props) => {
+const Home = () => {
   return (
     <div className="home-page">
       <h1 className='first'>잼팩토리 데이터 랩 <small>잼팩토리 랩은 검증된 데이터만을 송출합니다.</small></h1>

@@ -1,0 +1,30 @@
+.sale-status {
+    .title{
+        justify-content: flex-end;
+        margin-bottom: 64px;
+        font-weight: 400;
+        font-size: 18px;
+    }
+    .card-style {
+       .card-one {
+         
+       }
+    }
+    .bar-style {
+        justify-content: space-between;
+        margin-bottom: 34px;
+    }
+    .row-3 {
+        justify-content: space-between;
+        .ant-col {
+            p {
+                span {
+                    height: 50px;
+                    width: 50px;
+                    background: #fd8dff;
+                    color: #fd8dff;
+                }
+            }
+        }
+    }
+}
