@@ -2,58 +2,72 @@ import React, { useState } from 'react';
 import { DatePicker, Space, Button, Row, Col, Card, Divider } from 'antd';
 import './home.scss'
 
-const RenderData = (props) => {
-    const arrs1 = [{
-        "title": "11번가",
-        "name": "Polar bear",
-        "price": 30
-      }, {
-        "title": "11번가",
-        "name": "Killer whale",
-        "price": 84
-      }, {
-        "title": "11번가",
-        "name": "Chuckwalla",
-        "price": 71
-      },
-      {
-        "title": "11번가",
-        "name": "Polar bear",
-        "price": 30
-      }, {
-        "title": "11번가",
-        "name": "Killer whale",
-        "price": 84
-      }, {
-        "title": "11번가",
-        "name": "Chuckwalla",
-        "price": 71
-      }
-     ]
-    const [data, setData] = useState(arrs1);
+const datas = [{
+  "id": 1,
+  "title": "11번가",
+  "name": "Polar bear",
+  "price": 30
+}, {
+  "id": 2,
+  "title": "11번가",
+  "name": "Killer whale",
+  "price": 84
+}, {
+  "id": 3,
+  "title": "11번가",
+  "name": "Chuckwalla",
+  "price": 71
+},
+{
+  "id": 4,
+  "title": "11번가",
+  "name": "Polar bear",
+  "price": 35
+}, {
+  "id": 5,
+  "title": "11번가",
+  "name": "Killer whale",
+  "price": 84
+}, {
+  "id": 6,
+  "title": "11번가",
+  "name": "Chuckwalla",
+  "price": 71
+}]
+
+const ListItem = (props) => {
+    const value = props.value
     return (
         <>
-            { data.map((product, i) => {
-                    return (
-                      <>
-                        <ul key={i} className="ul-list">
-                            <li><strong>{i}</strong></li>
-                            <li>
-                              <ul className='list-in'>
-                                 <li><small>{product.title}</small></li>
-                                 <li><strong>{product.name}</strong></li>
-                              </ul>
-                            </li>
-                            <li><strong>₩{product.price}</strong></li>
-                        </ul>
-                        <Divider key={i} className='edit-margin'/>
-                      </>
-                    )
-                }) 
-            }
+          <ul className="ul-list">
+              <li><strong>{value.id}</strong></li>
+              <li>
+                <ul className='list-in'>
+                <li><small>{value.title}</small></li>
+                <li><strong>{value.name}</strong></li>
+                </ul>
+              </li>
+              <li><strong>₩{value.price}</strong></li>
+          </ul>
+          <Divider className='edit-margin'/>
         </>
     )
 }
+
+const RenderData = (props) => {
+  const datas = props.datas
+  console.log(datas)
+  const listitems = datas.map(product => (
+    <ListItem key={product.id} value={product}/>
+  ))
+  return (
+    <>
+      {listitems}
+    </>
+  )
+}
+
+
 
 const Home = (props) => {
   return (
@@ -74,15 +88,9 @@ const Home = (props) => {
             <Row>
               <Col span={24}>
                   <Card title="TOP 20 매출 벤더">
-                     <RenderData/>
+                     <RenderData datas={datas}/>
                  </Card>
               </Col>
-
-              {/* <Col span={12}>
-                <Card title="TOP 20 매출 벤더">
-                     <RenderData/>
-                 </Card>
-              </Col> */}
             </Row>
           </Col>
 
@@ -90,15 +98,9 @@ const Home = (props) => {
             <Row>
               <Col span={24}>
                   <Card title="TOP 20 매출 벤더">
-                     <RenderData/>
+                     <RenderData  datas={datas}/>
                  </Card>
               </Col>
-
-              {/* <Col span={12}>
-                <Card title="TOP 20 매출 벤더">
-                     <RenderData/>
-                 </Card>
-              </Col> */}
             </Row>
           </Col>
         </Row>
