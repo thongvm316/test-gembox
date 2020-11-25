@@ -1,20 +1,126 @@
-import React from 'react'
-import { Button, DatePicker, Space, Input, Row, Col } from 'antd';
-import TableList from './TableList'
-import { HeadingBar } from '../ProductSearch/ProductSearch'
+import React, { useState } from 'react'
+import { Button, DatePicker, Space, Input, Row, Col, Table, Modal } from 'antd';
+import Chart from './Chart'
 import './VendorSearch.scss'
 
 const VendorSearch = () => {
+    const [ countSelected, setCountSelected ] = useState(0)
+
+    const renderTitle = (record) =>{
+      return <a onClick={showModal}>{record}</a>
+    }
+  
+    const [visible, setVisible] = React.useState(false)
+  
+      const showModal = () => {
+         setVisible(true)
+        };
+      
+      const handleOk = e => {
+          setVisible(false)
+        };
+      
+      const  handleCancel = e => {
+          setVisible(false)
+    };
+  
+
+    const columns = [
+      {
+        title: '마켓명',
+        dataIndex: '마켓명',
+        render: renderTitle,
+      },
+      {
+        title: '벤더명',
+        dataIndex: '벤더명',
+      },
+      {
+        title: '카테고리',
+        dataIndex: '카테고리',
+      },
+      {
+        title: '상품명',
+        dataIndex: '상품명',
+      },
+      {
+        title: '가격',
+        dataIndex: '가격',
+      },
+    ];
+
+    const data = [];
+    for (let i = 0; i < 46; i++) {
+      data.push({
+        key: i,
+        마켓명: `Edward King ${i}`,
+        벤더명: 32,
+        카테고리: `London, Park Lane no. ${i}`,
+        상품명: '유아완구(category)',
+        가격: '￦55,500',
+        리뷰: 140.244,
+        판매수: '1,000,000,000,000'
+      });
+    }
+
+    const onSearch = (e) => {
+        console.log(e)
+    }
+
+    const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            setCountSelected(selectedRows.length)
+
+        },
+        onSelect: (record, selected, selectedRows) => {
+            console.log(record, selected, selectedRows);
+        },
+        onSelectAll: (selected, selectedRows, changeRows) => {
+            console.log(selected, selectedRows, changeRows);
+            setCountSelected(selectedRows.length)
+        },
+    };
+    const [checkStrictly, setCheckStrictly] = useState(false);
+
     const { RangePicker } = DatePicker;
+
     function onChange(date, dateString) {
         console.log(date, dateString);
     }
 
     return (
-        <div className="product-search">
-            <HeadingBar/>
+        <div className="vendor-search">
+            <Row className="info-search" style={{ justifyContent: 'flex-end' }}>
+                <Col className="date-picker">
+                    <Space direction="" size={12}>
+                        <RangePicker />
+                    </Space>
+                    <Button style={{ marginLeft: '8px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
+                </Col>
+                <Col>
+                    <Input style={{ width: '392px', marginLeft: '60px' }} placeholder="Search" />
+                    <Button style={{ marginLeft: '18px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
+                </Col>
+            </Row>            
+
             <Row>
-                <TableList/>
+                <Col span={24}>
+                    <Table
+                        columns={columns}
+                        dataSource={data}
+                        scroll={{ x: 1300 }}
+                        rowSelection={{ ...rowSelection, checkStrictly }}
+                    />
+                </Col>
+                <Modal
+                        title="Basic Modal"
+                        visible={visible}
+                        onOk={handleOk}  
+                        onCancel={handleCancel}
+                        >
+                        <Chart/>
+                </Modal>
             </Row>
         </div>
     )

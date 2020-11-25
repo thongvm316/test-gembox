@@ -10,6 +10,7 @@ import ProductSearch from '../containers/ProductSearch/ProductSearch'
 import VendorSearch from '../containers/VendorSearch/VendorSearch'
 import Chart from '../containers/ProductSearch/Chart'
 import Register from '../containers/Register/Register'
+import VideoSearch from '../containers/VideoSearch/VideoSearch'
 
 const Routes = () => {
     return (
@@ -21,6 +22,10 @@ const Routes = () => {
             <AppRoute exact path="/demo-chart" component={Chart} />
             <AppRoute exact path="/register" component={Register} layout={RegisterLayout}/>
 
+            <AppRoute exact path="/product-search" component={ProductSearch} />
+            <AppRoute exact path="/vendor-search" component={VendorSearch} />
+            <AppRoute exact path="/video-search" component={VideoSearch} />
+            {/* <AppRoute exact path="/sale-status" component={} /> */}
         </Switch>
     )
 }
