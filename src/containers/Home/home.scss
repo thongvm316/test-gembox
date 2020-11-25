@@ -39,7 +39,6 @@
     .ant-col {
       &:nth-child(n) {
         border-radius: 10px;
-        // border: 1px solid gray;
       }
       h3 {
         font-size: 20px;
@@ -50,13 +49,23 @@
         list-style: none;
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0;
+        font-family: 'Open Sans', sans-serif !important;
+        .list-in {
+          list-style: none;
+        }
       }
     }
   }
+ 
   .site-card-wrapper {
     padding: 30px;
     width: 100%;
     max-width: 1194px;
+    .edit-margin {
+      margin: 10px 0;
+    }
   }
   footer {
     color: #335B63;

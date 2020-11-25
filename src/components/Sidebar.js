@@ -18,19 +18,19 @@ const Sidebar = (props) => {
                 </Menu.Item>
                 <Menu.Item className="app-menu-item" key="/page2">
                     {/* <Icon type="search" /> */}
-                    <NavLink to="/page1">상품 검색</NavLink>
+                    <NavLink to="/product-search">상품 검색</NavLink>
                 </Menu.Item>
                 <Menu.Item className="app-menu-item" key="/page3">
                     {/* <Icon type="search" /> */}
-                    <NavLink to="/page2">밴더 검색</NavLink>
+                    <NavLink to="/vendor-search">밴더 검색</NavLink>
                 </Menu.Item>
                 <Menu.Item className="app-menu-item" key="/page4">
                     {/* <Icon type="search" /> */}
-                    <NavLink to="/page2">킥킥 동영상 검색</NavLink>
+                    <NavLink to="/video-search">킥킥 동영상 검색</NavLink>
                 </Menu.Item>
                 <Menu.Item className="app-menu-item" key="/page5">
                     {/* <Icon type="search" /> */}
-                    <NavLink to="/page3">나의 판매현황</NavLink>
+                    <NavLink to="/sale-status">나의 판매현황</NavLink>
                 </Menu.Item>
             </Menu>
         </Layout.Sider>

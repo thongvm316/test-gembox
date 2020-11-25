@@ -39,7 +39,7 @@ const MainLayout = (props) => {
     return (
         <Layout className="admin-layout">
             <Sidebar collapsed={collapsed} />
-            <Layout>
+            <Layout style={{ background: '#fff' }}>
                 <Header style={{ background: '#fff', padding: 0 }}>
                     {
                         collapsed ?

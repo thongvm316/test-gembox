@@ -4,58 +4,30 @@ import './home.scss'
 
 const RenderData = (props) => {
     const arrs1 = [{
+        "title": "11번가",
         "name": "Polar bear",
         "price": 30
       }, {
+        "title": "11번가",
         "name": "Killer whale",
         "price": 84
       }, {
+        "title": "11번가",
         "name": "Chuckwalla",
         "price": 71
       },
       {
+        "title": "11번가",
         "name": "Polar bear",
         "price": 30
       }, {
+        "title": "11번가",
         "name": "Killer whale",
         "price": 84
       }, {
+        "title": "11번가",
         "name": "Chuckwalla",
         "price": 71
-      },
-      {
-        "name": "Polar bear",
-        "price": 30
-      }, {
-        "name": "Killer whale",
-        "price": 84
-      }, {
-        "name": "Chuckwalla",
-        "price": 71
-      },
-      {
-        "name": "Polar bear",
-        "price": 30
-      }, {
-        "name": "Killer whale",
-        "price": 84
-      }, {
-        "name": "Chuckwalla",
-        "price": 71
-      },
-      {
-        "name": "Polar bear",
-        "price": 30
-      }, {
-        "name": "Killer whale",
-        "price": 84
-      }, {
-        "name": "Chuckwalla",
-        "price": 71
-      },
-      {
-        "name": "Polar bear",
-        "price": 30
       }
      ]
     const [data, setData] = useState(arrs1);
@@ -63,10 +35,19 @@ const RenderData = (props) => {
         <>
             { data.map((product, i) => {
                     return (
+                      <>
                         <ul key={i} className="ul-list">
-                            <li>{i}.{product.name}</li>
-                            <li>₩{product.price}</li>
+                            <li><strong>{i}</strong></li>
+                            <li>
+                              <ul className='list-in'>
+                                 <li><small>{product.title}</small></li>
+                                 <li><strong>{product.name}</strong></li>
+                              </ul>
+                            </li>
+                            <li><strong>₩{product.price}</strong></li>
                         </ul>
+                        <Divider key={i} className='edit-margin'/>
+                      </>
                     )
                 }) 
             }
@@ -90,14 +71,35 @@ const Home = (props) => {
       <div className="site-card-wrapper">
         <Row gutter={32}>
           <Col xs={24} sm={24} md={8} lg={12} xl={12}>
-            <Card title="TOP 20 매출 벤더" bordered={false}>
-            <RenderData/>
-            </Card>
+            <Row>
+              <Col span={24}>
+                  <Card title="TOP 20 매출 벤더">
+                     <RenderData/>
+                 </Card>
+              </Col>
+
+              {/* <Col span={12}>
+                <Card title="TOP 20 매출 벤더">
+                     <RenderData/>
+                 </Card>
+              </Col> */}
+            </Row>
           </Col>
+
           <Col xs={24} sm={24} md={8} lg={12} xl={12}>
-            <Card title="TOP 20 판매 상품" bordered={false}>
-            <RenderData/>
-            </Card>
+            <Row>
+              <Col span={24}>
+                  <Card title="TOP 20 매출 벤더">
+                     <RenderData/>
+                 </Card>
+              </Col>
+
+              {/* <Col span={12}>
+                <Card title="TOP 20 매출 벤더">
+                     <RenderData/>
+                 </Card>
+              </Col> */}
+            </Row>
           </Col>
         </Row>
       </div>
