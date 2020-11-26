@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Button, DatePicker, Row, Col, Input, Space, Table, Modal  } from 'antd';
+import Filter from './Filter'
 import Chart from './Chart'
 import './ProductSearch.scss'
 
-const ProductSearch = () => {
+const ProductSearch = (props) => {
   const [ countSelected, setCountSelected ] = useState(0)
 
   const renderTitle = (record) =>{
@@ -100,7 +101,7 @@ const ProductSearch = () => {
         <div className="product-search">
              <Row className="info-search">
                 <Col>
-                    <Button style={{ marginRight: '15px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">필터</Button>
+                    <Button onClick={showModal} style={{ marginRight: '15px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">필터</Button>
                     <Button style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">선택된 항목 그래프 비교</Button>
                 </Col>
                 <Col style={{ marginLeft: '100px' }}  className="date-picker">
@@ -116,7 +117,6 @@ const ProductSearch = () => {
             </Row>
 
             <Row className='res-small-device'>
-                {/* <TableList/> */}
                 <Col span={24}>
                     <Table
                         columns={columns}
@@ -141,8 +141,10 @@ const ProductSearch = () => {
                     visible={visible}
                     onOk={handleOk}  
                     onCancel={handleCancel}
+                    width={800}
                     >
-                    <Chart/>
+                    {/* <Chart/> */}
+                    <Filter/>
                 </Modal>
             </Row>
         </div>

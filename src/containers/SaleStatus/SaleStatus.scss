@@ -1,29 +1,111 @@
 .sale-status {
-    .title{
-        justify-content: flex-end;
-        margin-bottom: 64px;
-        font-weight: 400;
-        font-size: 18px;
+  .title {
+    justify-content: flex-end;
+    margin-bottom: 64px;
+    font-weight: 400;
+    font-size: 18px;
+  }
+  .bar-style {
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 34px;
+  }
+  .row-3 {
+    justify-content: space-between;
+    .ant-col {
+      p {
+        span {
+          height: 50px;
+          width: 50px;
+          background: #fd8dff;
+          color: #fd8dff;
+        }
+      }
     }
-    .card-style {
-       .card-one {
-         
-       }
+  }
+  .card-style {
+    .col-one, .col-two, .col-three, .col-four {
+      .ant-row {
+        justify-content: space-between;
+      }
+
+      .ant-card-body {
+        padding: 20px;
+        position: relative;
+        top: 52%;
+        transform: translateY(-50px);
+
+        .one-in-col-one, .one-in-col-two, .one-in-col-three, .one-in-col-four {
+          p {
+            font-weight: 700;
+            font-size: 9px;
+            position: relative;
+            top: 35%;
+            margin-bottom: 0;
+          }
+        }
+
+        .two-in-col-one, .two-in-col-two, .two-in-col-three, .two-in-col-four {
+          p:first-child {
+            font-weight: 700;
+            font-size: 25px;
+            margin-bottom: 0;
+          }
+          p:last-child {
+              font-weight: 700;
+          }
+        }
+      }
     }
+  }
+}
+
+@media (min-width: 768px){ 
+    .info-search {
+        .ant-btn {
+            margin-top: 1rem !important;
+        }
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
     .bar-style {
-        justify-content: space-between;
-        margin-bottom: 34px;
-    }
-    .row-3 {
-        justify-content: space-between;
-        .ant-col {
-            p {
-                span {
-                    height: 50px;
-                    width: 50px;
-                    background: #fd8dff;
-                    color: #fd8dff;
+        h1 { text-align: center; }
+        .info-search {
+            .date-picker {
+                margin-bottom: 1rem;
+                .ant-space {
+                    width: 70vw;
                 }
+            }
+            .ant-input {
+                width: 68vw !important;
+                margin-left: 0 !important;
+            }
+        }
+    }
+ }
+
+@media (max-width: 575.98px) { 
+    .bar-style {
+        h1 { text-align: center; }
+        .info-search {
+            .date-picker {
+                margin-bottom: 1rem;
+                .ant-space {
+                    width: 80vw;
+                }
+                .ant-btn {
+                    margin-left: 0 !important;
+                }
+            }
+            .ant-input {
+                width: 80vw !important;
+                margin-left: 0 !important;
+            }
+            .ant-btn {
+                margin-left: 0 !important;
+                margin-top: .5rem !important;
             }
         }
     }

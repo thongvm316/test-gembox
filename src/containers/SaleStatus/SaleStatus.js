@@ -76,67 +76,78 @@ const SaleStatus = () => {
     return (
         <div className="sale-status">
             <Row className='title' span={24}><strong>이수진</strong>님 안녕하세요</Row>
-            <Row className='card-style' gutter={24} style={{ width: '70vw', margin: '0 auto 70px auto' }}>
-                <Col xl={6}>
-                    <Card style={{ width: 240, height: 150 }}>
-                        <Row className='card-one'>
-                            <Col style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <p>종합 판매순위</p>
+            
+            <Row className='card-style' gutter={[24,24]} style={{ width: '85vw', margin: '0 auto 70px auto' }}>
+                <Col xs={24} sm={24} md={12}  xl={6} className='col-one'>
+                    <Card style={{ width: '100%', height: 150 }}>
+                        <Row>
+                             <Col className='one-in-col-one'>
+                                <p>총 리뷰</p>
+                             </Col>
+                             <Col className='two-in-col-one'> 
                                 <p>56위</p>
-                            </Col>
+                             </Col>
                         </Row>
                     </Card>
                 </Col>
-                <Col xl={6}>
-                    <Card style={{ width: 240, height: 150 }}>
+                <Col xs={24} sm={24} md={12} xl={6} className='col-two'>
+                    <Card style={{ width: '100%', height: 150 }}>
                         <Row>
-                           <Col>총 리뷰</Col>
-                           <Col>
+                             <Col className='one-in-col-two'>
+                                <p>총 리뷰</p>
+                             </Col>
+                             <Col className='two-in-col-two'> 
                                 <p>56위</p>
                                 <p>5,050,505,050 건</p>
-                           </Col>
-                       </Row>
-                    </Card>
-                </Col>
-                <Col xl={6}>
-                    <Card style={{ width: 240, height: 150 }}>
-                        <Row>
-                            <Col>
-                                <p>종합 판매순위</p>
-                                <p>56위</p>
-                            </Col>
+                             </Col>
                         </Row>
                     </Card>
                 </Col>
-                <Col xl={6}>
-                    <Card style={{ width: 240, height: 150 }}>
-                       <Row>
-                           <Col>총 리뷰</Col>
-                           <Col>
-                                <p>66위</p>
-                                <p>₩ 110,000,000,000</p>
-                           </Col>
-                       </Row>
+                <Col xs={24} sm={24} md={12} xl={6} className='col-three'>
+                    <Card style={{ width: '100%', height: 150 }}>
+                        <Row>
+                             <Col className='one-in-col-three'>
+                                <p>총 리뷰</p>
+                             </Col>
+                             <Col className='two-in-col-three'> 
+                                <p>56위</p>
+                             </Col>
+                        </Row>
+                    </Card>
+                </Col>
+                <Col xs={24} sm={24} md={12} xl={6} className='col-four'>
+                    <Card style={{ width: '100%', height: 150 }}>
+                        <Row>
+                             <Col className='one-in-col-four'>
+                                <p>총 리뷰</p>
+                             </Col>
+                             <Col className='two-in-col-four'> 
+                                <p>56위</p>
+                                <p>5,050,505,050 건</p>
+                             </Col>
+                        </Row>
                     </Card>
                 </Col>
             </Row>
+
             <Row className='bar-style'>
-                <Col><h1>판매 채널</h1></Col>
-                <Col>
+                <Col sm={24} md={4} lg={4} xl={4}><h1>판매 채널</h1></Col>
+                <Col md={24} lg={20} xl={20}>
                     <Row className="info-search" style={{ justifyContent: 'flex-end', marginBottom: '16px' }}>
-                    <Col className="date-picker">
-                        <Space direction="" size={12}>
-                            <RangePicker />
-                        </Space>
-                        <Button style={{ marginLeft: '8px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
-                    </Col>
-                    <Col>
-                        <Input style={{ width: '392px', marginLeft: '60px' }} placeholder="Search" />
-                        <Button style={{ marginLeft: '18px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
-                    </Col>
+                        <Col className="date-picker">
+                            <Space direction="" size={12}>
+                                <RangePicker />
+                            </Space>
+                            <Button style={{ marginLeft: '8px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
+                        </Col>
+                        <Col>
+                            <Input style={{ width: '392px', marginLeft: '60px' }} placeholder="Search" />
+                            <Button style={{ marginLeft: '18px', backgroundColor: '#71c4d5', border: 'none', width: 81 }} type="primary">EXCEL</Button>
+                        </Col>
                     </Row>       
                 </Col>
             </Row>
+
             <Row className='row-3'>
                 <Col><p><span>12</span>11번가</p></Col>
                 <Col><p><span>12</span>G마켓</p></Col>
@@ -147,6 +158,7 @@ const SaleStatus = () => {
                 <Col><p><span>12</span>티몬</p></Col>
                 <Col><p><span>12</span>위메프</p></Col>
             </Row>
+
             <Row>
                 <Col span={24}>
                     <Table
