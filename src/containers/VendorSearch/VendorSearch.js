@@ -5,31 +5,10 @@ import './VendorSearch.scss'
 
 const VendorSearch = () => {
     const [ countSelected, setCountSelected ] = useState(0)
-
-    const renderTitle = (record) =>{
-      return <a onClick={showModal}>{record}</a>
-    }
-  
-    const [visible, setVisible] = React.useState(false)
-  
-      const showModal = () => {
-         setVisible(true)
-        };
-      
-      const handleOk = e => {
-          setVisible(false)
-        };
-      
-      const  handleCancel = e => {
-          setVisible(false)
-    };
-  
-
     const columns = [
       {
         title: '마켓명',
         dataIndex: '마켓명',
-        render: renderTitle,
       },
       {
         title: '벤더명',
@@ -63,10 +42,6 @@ const VendorSearch = () => {
       });
     }
 
-    const onSearch = (e) => {
-        console.log(e)
-    }
-
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -84,11 +59,6 @@ const VendorSearch = () => {
     const [checkStrictly, setCheckStrictly] = useState(false);
 
     const { RangePicker } = DatePicker;
-
-    function onChange(date, dateString) {
-        console.log(date, dateString);
-    }
-
     return (
         <div className="vendor-search">
             <Row className="info-search" style={{ justifyContent: 'flex-end' }}>
@@ -98,7 +68,7 @@ const VendorSearch = () => {
                     </Space>
                     <Button style={{ marginLeft: '8px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
                 </Col>
-                <Col>
+                <Col className='search'>
                     <Input style={{ width: '392px', marginLeft: '60px' }} placeholder="Search" />
                     <Button style={{ marginLeft: '18px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
                 </Col>
@@ -113,14 +83,6 @@ const VendorSearch = () => {
                         rowSelection={{ ...rowSelection, checkStrictly }}
                     />
                 </Col>
-                <Modal
-                        title="Basic Modal"
-                        visible={visible}
-                        onOk={handleOk}  
-                        onCancel={handleCancel}
-                        >
-                        <Chart/>
-                </Modal>
             </Row>
         </div>
     )

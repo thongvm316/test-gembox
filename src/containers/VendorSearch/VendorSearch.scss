@@ -3,3 +3,42 @@
     margin-bottom: 16px;
   }
 }
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
+  .vendor-search {
+    .info-search {
+      .date-picker {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
+  .vendor-search {
+    .info-search {
+      .date-picker {
+        margin-bottom: 1rem;
+        .ant-space {
+          margin-bottom: 0.5rem;
+          .ant-picker {
+            width: 90vw;
+          }
+        }
+        .ant-btn {
+          margin-left: 0 !important;
+        }
+      }
+      .search {
+        .ant-input {
+          margin-left: 0 !important;
+          width: 90vw !important;
+          margin-bottom: 0.5rem;
+        }
+        .ant-btn {
+          margin-left: 0 !important;
+        }
+      }
+    }
+  }
+}

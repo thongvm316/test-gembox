@@ -1,56 +1,54 @@
 .product-search {
   .info-search {
-    max-width: 1678px;
-    width: 100vw;
+    max-width: 1700px;
+    width: 90vw;
     height: 76px;
     align-items: center;
   }
-  .date-picker {
-    display: flex;
-    margin-left: 300px;
-  }
 }
 
-@media (max-width: 1440px) {
-  .product-search {
-    .date-picker {
-      margin-left: 50px !important;
-    }
-  }
-}
-
-@media (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1440px) { 
   .product-search {
     .info-search {
-      .ant-input {
-        width: 150px !important;
-        margin-left: 25px !important;
+      .style-col-3 {
+        .ant-input {
+          margin-left: 0 !important;
+        }
+        .date-picker {
+        }
       }
-      .ant-space {
-        width: 220px !important;
-      }
-    }
-    .date-picker {
-      margin-left: 20px;
     }
   }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 1200px){ 
   .product-search {
     .info-search {
-      .ant-input {
-        margin-left: 0px !important;
+      .date-picker {
+        margin-left: 100px;
       }
-      .ant-space {
-        width: 220px !important;
+      .style-col-3 {
+        margin-left: 60px;
       }
-    }
-    .date-picker {
-      margin: 10px 0px !important;
-    }
-    .res-small-device {
-      margin-top: 50px !important;
     }
   }
 }
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
+  .product-search {
+    .info-search {
+      .style-col-1 {
+        margin-bottom: 0.5rem;
+      }
+      .date-picker {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}
+
+
+
+
+
+

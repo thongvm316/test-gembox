@@ -11,6 +11,7 @@ import VendorSearch from '../containers/VendorSearch/VendorSearch'
 import Register from '../containers/Register/Register'
 import VideoSearch from '../containers/VideoSearch/VideoSearch'
 import SaleStatus from '../containers/SaleStatus/SaleStatus'
+import ProductDetail from '../components/ProductDetail/ProductDetail'
 
 const Routes = () => {
     return (
@@ -23,6 +24,7 @@ const Routes = () => {
             <AppRoute exact path="/vendor-search" component={VendorSearch} />
             <AppRoute exact path="/video-search" component={VideoSearch} />
             <AppRoute exact path="/sale-status" component={SaleStatus} />
+            <AppRoute exact path="/product-detail" component={ProductDetail} />
         </Switch>
     )
 }

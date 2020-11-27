@@ -90,7 +90,7 @@ const VideoSearch = () => {
                         </Space>
                         <Button style={{ marginLeft: '8px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
                     </Col>
-                    <Col>
+                    <Col className='search'>
                         <Input style={{ width: '392px', marginLeft: '60px' }} placeholder="Search" />
                         <Button style={{ marginLeft: '18px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
                     </Col>

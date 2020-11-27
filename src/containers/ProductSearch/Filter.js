@@ -1,5 +1,5 @@
 import React from 'react'
-import { Checkbox, Row, Col, Slider, Button, Input } from 'antd'
+import { Checkbox, Row, Col, Slider, Button, Input, Select, Option } from 'antd'
 import './Filter.scss'
 
 const Filter = () => {
@@ -14,6 +14,7 @@ const Filter = () => {
     function onAfterChange(value) {
     console.log('onAfterChange: ', value);
     }
+
     return (
         <div className='modal'>
             <Row className='market'>
@@ -21,31 +22,31 @@ const Filter = () => {
                 <Col span={20}>
                     <Row>
                         <Col span={5}>
-                            <Checkbox onChange={onChange}>A</Checkbox>
+                            <Checkbox onChange={onChange}>11번가</Checkbox>
                         </Col>
                         <Col span={5}>
-                            <Checkbox>B</Checkbox>
+                            <Checkbox>G마켓</Checkbox>
                         </Col>
                         <Col span={5}>
-                            <Checkbox>C</Checkbox>
+                            <Checkbox>쿠팡</Checkbox>
                         </Col>
                         <Col span={5}>
-                            <Checkbox>D</Checkbox>
+                            <Checkbox>위메프</Checkbox>
                         </Col>
                         <Col span={5}>
-                            <Checkbox>E</Checkbox>
+                            <Checkbox>티몬</Checkbox>
                         </Col>
                         <Col span={5}>
-                            <Checkbox>B</Checkbox>
+                            <Checkbox>인터파크</Checkbox>
                         </Col>
                         <Col span={5}>
-                            <Checkbox>C</Checkbox>
+                            <Checkbox>스마트스토어</Checkbox>
                         </Col>
                         <Col span={5}>
-                            <Checkbox>D</Checkbox>
+                            <Checkbox>잼토이즈</Checkbox>
                         </Col>
                         <Col span={4}>
-                            <Checkbox>E</Checkbox>
+                            <Checkbox>전제 선택</Checkbox>
                         </Col>
                     </Row>
                 </Col>
@@ -73,13 +74,32 @@ const Filter = () => {
                 <Col span={4}><h4>리뷰수 검색</h4></Col>
                 <Col span={20}>
                     <Row>
-                        <Col span={7}>
-                            <Input  suffix='최소' defaultValue='5000'/>
-                        </Col>
-                        <Col span={1}><p style={{ margin: '5px 0 0 10px' }}>~</p></Col>
-                        <Col span={7}>
-                            <Input suffix='최대' defaultValue='5000'/>
-                        </Col>
+                        <Input.Group compact>
+                            <Input style={{ width: 200, textAlign: 'center' }} suffix='최소' defaultValue='5000' />
+                            <Input
+                                className="site-input-split"
+                                style={{
+                                width: 30,
+                                borderLeft: 0,
+                                borderRight: 0,
+                                pointerEvents: 'none',
+                                backgroundColor: '#f4f2ff !important',
+                                border: 'none',
+                                margin: '0 1rem'
+                                }}
+                                placeholder="~"
+                                disabled
+                            />
+                            <Input
+                                className="site-input-right"
+                                style={{
+                                width: 200,
+                                textAlign: 'center',
+                                }}
+                                suffix='최소' defaultValue='5000'
+                                placeholder="Maximum"
+                            />
+                        </Input.Group>
                     </Row>
                 </Col>
             </Row>
@@ -88,13 +108,32 @@ const Filter = () => {
                 <Col span={4}><h4>판매수 검색</h4></Col>
                 <Col span={20}>
                     <Row>
-                        <Col span={7}>
-                            <Input  suffix='최소' defaultValue='5000'/>
-                        </Col>
-                        <Col span={1}><p style={{ margin: '5px 0 0 10px' }}>~</p></Col>
-                        <Col span={7}>
-                            <Input suffix='최대' defaultValue='5000'/>
-                        </Col>
+                        <Input.Group compact>
+                            <Input style={{ width: 200, textAlign: 'center' }} suffix='최소' defaultValue='5000' />
+                            <Input
+                                className="site-input-split"
+                                style={{
+                                width: 30,
+                                borderLeft: 0,
+                                borderRight: 0,
+                                pointerEvents: 'none',
+                                backgroundColor: '#f4f2ff !important',
+                                border: 'none',
+                                margin: '0 1rem'
+                                }}
+                                placeholder="~"
+                                disabled
+                            />
+                            <Input
+                                className="site-input-right"
+                                style={{
+                                width: 200,
+                                textAlign: 'center',
+                                }}
+                                suffix='최소' defaultValue='5000'
+                                placeholder="Maximum"
+                            />
+                        </Input.Group>
                     </Row>
                 </Col>
             </Row>
@@ -104,11 +143,10 @@ const Filter = () => {
                     <h4>잼팩토리 평균</h4>
                 </Col>
                 <Col span={20}>
-                    <Button className='style-btn'>잼팩토리 평균판매 건 보다 높은 상품 보기 </Button>
-                    <Button className='style-btn'>잼팩토리 평균판매 건 보다 낮은 상품 보기 </Button>
+                    <Button className='style-btn'>잼팩토리 평균판매 건 보다 높은 상품 보기 </Button> {/* May be other component, check after have sb */}
+                    <Button className='style-btn'>잼팩토리 평균판매 건 보다 낮은 상품 보기 </Button> {/* May be other component, check after have sb */}
                 </Col>
             </Row>
-            {/* <Button>적용하기</Button> */}
             <Row className='modal-btn' style={{ justifyContent: 'center' }}>
                 <Col style={{ padding: '1rem'}} span={3}><Button  className='style-btn' >적용하기</Button></Col>
             </Row>
