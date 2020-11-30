@@ -98,20 +98,20 @@ const ProductSearch = (props) => {
 
     return (
         <div className="product-search">
-             <Row className="info-search" style={{ marginBottom: '60px' }}>
+             <Row className="info-search" style={{ marginBottom: '5rem' }} justify='space-between'>
                 <Col className='style-col-1'>
-                    <Button onClick={showModal} style={{ marginRight: '15px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">필터</Button>
+                    <Button onClick={showModal} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">필터</Button>
                     <Button onClick={showModalTwo} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">선택된 항목 그래프 비교</Button>
                 </Col>
                 <Col className="date-picker">
                     <Space direction="" size={12}>
                         <RangePicker />
                     </Space>
-                    <Button style={{ marginLeft: '8px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
+                    <Button style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
                 </Col>
                 <Col className='style-col-3'>
                     <Input style={{ width: '392px'}} placeholder="Search" />
-                    <Button style={{ marginLeft: '18px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
+                    <Button style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
                 </Col>
             </Row>
 

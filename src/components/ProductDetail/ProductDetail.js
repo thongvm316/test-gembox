@@ -4,8 +4,6 @@ import { Row, Col, Button, Space } from 'antd'
 import Highcharts from "highcharts/highstock";
 import PieChart from "highcharts-react-official";
 
-
-import Chart from '../../containers/ProductSearch/Chart'
 import HighchartsReact from 'highcharts-react-official';
 
 const ProductDetail = (props) => {
@@ -135,7 +133,6 @@ const ProductDetail = (props) => {
                             <h4>카테고리 순위</h4>
                         </div>
                         <h2 style={{ fontSize: '40px' }}>24위</h2>
-
                     </div>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>

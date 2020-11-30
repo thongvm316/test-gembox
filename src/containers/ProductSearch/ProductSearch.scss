@@ -5,50 +5,47 @@
     height: 76px;
     align-items: center;
   }
-}
-
-@media (min-width: 768px) and (max-width: 1440px) { 
-  .product-search {
-    .info-search {
-      .style-col-3 {
-        .ant-input {
-          margin-left: 0 !important;
-        }
-        .date-picker {
-        }
-      }
+  .style-col-3 {
+    .ant-input {
+      background-color: #fff !important;
     }
   }
 }
 
-@media (min-width: 1200px){ 
-  .product-search {
-    .info-search {
-      .date-picker {
-        margin-left: 100px;
-      }
-      .style-col-3 {
-        margin-left: 60px;
-      }
-    }
-  }
-}
-
-@media (min-width: 576px) and (max-width: 767.98px) { 
+@media (min-width: 768px) {
   .product-search {
     .info-search {
       .style-col-1 {
-        margin-bottom: 0.5rem;
+        .ant-btn:first-child {
+          margin-right: 1rem;
+        }
       }
       .date-picker {
-        margin-bottom: 0.5rem;
+        .ant-btn {
+          margin-left: 1rem;
+        }
+      }
+      .style-col-3 {
+        .ant-btn {
+          margin-left: 1rem;
+        }
       }
     }
   }
 }
 
-
-
-
-
-
+@media (max-width: 767.98px) {
+  .product-search {
+    .info-search {
+      margin-bottom: 6.5rem !important;
+      .style-col-1, .date-picker {
+        margin-bottom: .5rem;
+      }
+      .style-col-1 {
+        .ant-btn:first-child {
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+}

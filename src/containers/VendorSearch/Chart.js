@@ -7,10 +7,13 @@ const Chart = () => {
     const options = {
         chart: {
             type: 'column'
-        },
+        },  
         title: {
             text: '잼팩토리 2개월 평균 비교'
         },
+        credits: {
+            enabled: false
+        },  
         xAxis: {
             categories: ['1', '2', '3', '4', '5']
         },

@@ -1,22 +1,40 @@
 import React from 'react'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
+import { Row, Col, Checkbox } from 'antd'
+import './Chart.scss'
 
 const Chart = () => {
 
+    // For Chart
     const options = {
         chart: {
             type: 'column'
         },
         title: {
-            text: '잼팩토리 2개월 평균 비교'
+            text: '잼팩토리 2개월 평균 비교',
+            style: {
+                fontWeight: 'bold',
+            }
+
         },
+        credits: {
+            enabled: false
+        },  
         xAxis: {
             categories: ['1', '2', '3', '4', '5']
         },
         yAxis: {
             title: {
                 text: ''
+            },
+            labels: {
+                formatter: function() {
+                    return this.value + '%';
+                },
+                style: {
+                    color: '#826af9'
+                }
             }
         },
         legend: {
@@ -31,6 +49,10 @@ const Chart = () => {
             }
         },
         tooltip: {
+            style: {
+                color: 'black',
+                fontSize: '16px',
+            },
             backgroundColor: '#fff',
             borderColor: 'none',
             borderRadius: 10,
@@ -69,6 +91,84 @@ const Chart = () => {
                 y: 80
             }]
         }]
+    }
+
+    const optionsLineChart2 = {
+        chart: {
+            type: 'spline'
+        },
+        title: {
+            text: '',
+        },
+        credits: {
+            enabled: false
+        },  
+        series: [
+            {
+                data: [1, 5, 3, 6, 7, 9, 4],
+                name: 'Product 1',
+                color: '#FF21B4'
+            },
+            {
+                data: [9, 2, 6, 3, 7, 8, 20],
+                name: 'Product 2',
+                color: '#5b4a99',
+            },
+            {
+                data: [5, 5, 8, 7, 4, 8, 5],
+                name: 'Product 3',
+                color: '#ff9900'
+            },
+            {
+                data: [3, 5, 7, 4, 9, 0, 2],
+                name: 'Product 4',
+                color: '#28cbff',
+            },
+            {
+                data: [1, 0, 9, 8, 3, 5, 2],
+                name: 'Product 5',
+                color: '#9e00ff',
+            }
+        ],
+        xAxis: {
+            categories: ['10월', '11월', '12월'],
+        },
+        yAxis: {
+            title: {
+                text: ''
+            },
+            labels: {
+                formatter: function() {
+                    return this.value + 'M';
+                },
+                style: {
+                    color: '#aeaeb0'
+                }
+            }
+        },
+        tooltip: {
+            style: {
+                fontSize: '16px',
+            },
+            crosshairs: {
+                width: 1,
+                color: 'purple'
+            },
+            shared: true,
+            backgroundColor: '#fff',
+            borderColor: 'none',
+            borderRadius: 10,
+            shadow: true,
+            useHTML: true,           
+            headerFormat: '<small>판매건수 비교 &nbsp; &nbsp; &nbsp; &nbsp;{point.key}</small><table>',
+            pointFormat: '<tr><td style="color: {series.color}">{series.name}:&nbsp; &nbsp; &nbsp; </td>' +
+                '<td style="text-align: right"><b>{point.y}</b></td></tr>',
+            footerFormat: '</table>',
+        },
+        legend: {
+            layout: 'horizontal',
+            align: 'center',
+        },
     }
 
     const optionsChartTwo = {
@@ -152,15 +252,34 @@ const Chart = () => {
         }
     }
 
+    // For Checkbox
+    const optionsCheckbox = [
+        { label: '가격비교', value: '가격비교' },
+        { label: '판매 수 비교', value: ' 수 비교' },
+        { label: '리뷰 수 비교', value: '리뷰 수 비교' },
+    ];
+
+    function onChange(checkedValues) {
+        console.log('checked = ', checkedValues);
+    }
+
     return (
         <div className="chart">
             <HighchartsReact
                 highcharts={Highcharts}
                 options={options}
             />
+            <Row gutter={32} style={{ marginBottom: '1rem' }}>
+                <Col span={3}>
+                    <h1 style={{ fontWeight: 700, fontSize: '14px' }}>상품 비교</h1>
+                </Col>
+                <Col span={21}>
+                    <Checkbox.Group options={optionsCheckbox} onChange={onChange} />
+                </Col>
+            </Row>
             <HighchartsReact
                 highcharts={Highcharts}
-                options={optionsChartTwo}
+                options={optionsLineChart2}
             />
         </div>
     )

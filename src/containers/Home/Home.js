@@ -33,6 +33,28 @@ const datas = [{
   "title": "11번가",
   "name": "Chuckwalla",
   "price": 71
+},
+{
+  "id": 7,
+  "title": "11번가",
+  "name": "Polar bear",
+  "price": 30
+}, {
+  "id": 8,
+  "title": "11번가",
+  "name": "Killer whale",
+  "price": 84
+}, {
+  "id": 9,
+  "title": "11번가",
+  "name": "Chuckwalla",
+  "price": 71
+},
+{
+  "id": 10,
+  "title": "11번가",
+  "name": "Polar bear",
+  "price": 35
 }]
 
 const ListItem = (props) => {
@@ -87,24 +109,30 @@ const Home = () => {
 
       <div className="site-card-wrapper">
         <Row gutter={32}>
-          <Col xs={24} sm={24} md={12} lg={12} xl={12} className='style-small-device'>
-            <Row>
-              <Col span={24}>
-                  <Card title="TOP 20 매출 벤더">
-                     <RenderData datas={datas}/>
-                 </Card>
-              </Col>
-            </Row>
+           <Col xs={24} sm={24} md={24} lg={12} xl={12} className='style-small-device'>
+              <Card title="TOP 20 매출 벤더">
+                <Row gutter={32}>
+                  <Col span={12}>
+                    <RenderData datas={datas}/>
+                  </Col>
+                  <Col span={12}>
+                    <RenderData datas={datas}/>
+                  </Col>
+                </Row>
+              </Card>
           </Col>
 
-          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-            <Row>
-              <Col span={24}>
-                  <Card title="TOP 20 매출 벤더">
-                     <RenderData  datas={datas}/>
-                 </Card>
-              </Col>
-            </Row>
+          <Col xs={24} sm={24} md={24} lg={12} xl={12} className='style-small-device'>
+              <Card title="TOP 20">
+                <Row gutter={32}>
+                  <Col span={12}>
+                    <RenderData datas={datas}/>
+                  </Col>
+                  <Col span={12}>
+                    <RenderData datas={datas}/>
+                  </Col>
+                </Row>
+              </Card>
           </Col>
         </Row>
       </div>

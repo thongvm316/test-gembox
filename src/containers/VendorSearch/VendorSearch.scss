@@ -1,6 +1,11 @@
 .vendor-search {
   .info-search {
     margin-bottom: 16px;
+    .search {
+      .ant-input {
+        background-color: #fff !important;
+      }
+    }
   }
 }
 

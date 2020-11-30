@@ -44,6 +44,9 @@
         font-family: 'Open Sans', sans-serif;
       }
       .ul-list {
+        li:first-child {
+          font-size: 20px;
+        }
         list-style: none;
         display: flex;
         justify-content: space-between;
@@ -64,6 +67,10 @@
     .edit-margin {
       margin: 10px 0;
     }
+    .ant-card-head-title {
+      font-weight: 700;
+      font-size: 20px;
+    }
   }
 }
 
@@ -76,6 +83,14 @@
       width: 80vw;
       h1 {
         font-size: 12px;
+      }
+    }
+    .ant-row {
+      .ant-col {
+        .ul-list {
+          flex-direction: column;
+          text-align: center;
+        }
       }
     }
   }

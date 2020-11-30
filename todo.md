@@ -1,30 +1,28 @@
 todos:
+Page Home:
+    1. Render list in to column -> When meger API, have date -> continues solve
 
-Home: render list in cart -
-Chart Style -
-Sorter
-Responsive 2 - 3 - 4
+Page Product-Search
+    1. Res Filter Comp
+    2. Style Chart like design ---
 
-Sat-------
-1. Res 2
+All Page:
+    1. Sort in table
 
-Mon-------
-1. Home: render list in cart
-2. Chart Style
-
-
+Review all and clean code - understand
 -----------------------------------------------------
-today-------
-1. Continues filter ---- Done
+1. Res 2 --- Done
 
-2. /product-detail Route - Show Chart in Modal
-    a. /product-detail Route ---- Done
-    b. Show Chart in Modal ---- Done
+2. Chart Style --- Done
 
-3. Res Page Home ---- Done
+3. Home: render list in cart
+    b. Style in small device --- Done
 
-4. Res 3 - 4
-    a. Res 3 --- Done
-    b. Res 4 --- Done
+4. Style Chart like design
+    a. In Button --> Done
+    b. ProductDetail
 
-5. Res 2
+
+
+
+
