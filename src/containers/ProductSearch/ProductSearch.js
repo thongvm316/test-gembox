@@ -98,10 +98,10 @@ const ProductSearch = (props) => {
 
     return (
         <div className="product-search">
-             <Row className="info-search" style={{ marginBottom: '5rem' }} justify='space-between'>
+             <Row className="info-search" style={{ marginBottom: '5rem' }} justify='space-between' align='middle'>
                 <Col className='style-col-1'>
-                    <Button onClick={showModal} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">필터</Button>
-                    <Button onClick={showModalTwo} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">선택된 항목 그래프 비교</Button>
+                  <Button onClick={showModal} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">필터</Button>
+                  <Button onClick={showModalTwo} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">선택된 항목 그래프 비교</Button>
                 </Col>
                 <Col className="date-picker">
                     <Space direction="" size={12}>
@@ -110,8 +110,8 @@ const ProductSearch = (props) => {
                     <Button style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
                 </Col>
                 <Col className='style-col-3'>
-                    <Input style={{ width: '392px'}} placeholder="Search" />
-                    <Button style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
+                  <Input style={{ width: '392px'}} placeholder="Search" />
+                  <Button style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
                 </Col>
             </Row>
 
@@ -135,42 +135,43 @@ const ProductSearch = (props) => {
                         }}
                     />
                 </Col>
-                <Modal
-                    visible={visible}
-                    onOk={handleOk}  
-                    onCancel={handleCancel}
-                    width={800}
-                    className='style-btn'
-                    footer={[
-                      <Button key="back" onClick={handleCancel}>
-                        Cancel
-                      </Button>,
-                      <Button style={{ backgroundColor: '#f4f2ff', border: 'none', color: '#6b5db0', fontWeight: 700 }} key="submit" type="primary" onClick={handleOk}>
-                        OK
-                      </Button>
-                    ]}
-                >
-                    <Filter/>
-                </Modal>
+             </Row>
 
-                <Modal
-                    visible={visibleTwo}
-                    onOk={handleOkTwo}  
-                    onCancel={handleCancelTwo}
-                    width={1000}
-                    className='style-btn'
-                    footer={[
-                      <Button key="back" onClick={handleOkTwo}>
-                        Cancel
-                      </Button>,
-                      <Button style={{ backgroundColor: '#f4f2ff', border: 'none', color: '#6b5db0', fontWeight: 700 }} key="submit" type="primary" onClick={handleCancelTwo}>
-                        OK
-                      </Button>
-                    ]}
-                >
-                    <Chart/>
-                </Modal>
-            </Row>
+             <Modal
+                  visible={visible}
+                  onOk={handleOk}  
+                  onCancel={handleCancel}
+                  width={800}
+                  className='style-btn'
+                  footer={[
+                    <Button key="back" onClick={handleCancel}>
+                      Cancel
+                    </Button>,
+                    <Button style={{ backgroundColor: '#f4f2ff', border: 'none', color: '#6b5db0', fontWeight: 700 }} key="submit" type="primary" onClick={handleOk}>
+                      OK
+                    </Button>
+                  ]}
+              >
+                  <Filter/>
+              </Modal>
+
+              <Modal
+                  visible={visibleTwo}
+                  onOk={handleOkTwo}  
+                  onCancel={handleCancelTwo}
+                  width={1000}
+                  className='style-btn'
+                  footer={[
+                    <Button key="back" onClick={handleOkTwo}>
+                      Cancel
+                    </Button>,
+                    <Button style={{ backgroundColor: '#f4f2ff', border: 'none', color: '#6b5db0', fontWeight: 700 }} key="submit" type="primary" onClick={handleCancelTwo}>
+                      OK
+                    </Button>
+                  ]}
+              >
+                  <Chart/>
+              </Modal>
         </div>
     )
 }

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Button, DatePicker, Space, Input, Row, Col, Table, Modal } from 'antd';
-import Chart from './Chart'
 import './VendorSearch.scss'
 
 const VendorSearch = () => {

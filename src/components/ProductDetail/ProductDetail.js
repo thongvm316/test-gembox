@@ -9,27 +9,188 @@ import HighchartsReact from 'highcharts-react-official';
 const ProductDetail = (props) => {
 
     const optionsLineChart = {
-        series: [{
-            type: 'spline',
-            data: [1, 5, 3, 6, 7, 9, 4]
-        }]
+        chart: {
+            type: 'spline'
+        },
+        title: {
+            text: '판매 추이 그래프',
+            align: 'left',
+            style: {
+                fontWeight: 'bold',
+                fontSize: '16px'
+            }
+        },
+        credits: {
+            enabled: false
+        },  
+        series: [
+            {   
+                data: [1, 5, 3, 5, 4, 7, 5, 3, 6, 4, 9, 12],
+                name: 'Product 1',
+                color: '#FF21B4'
+            }
+        ],
+        plotOptions: {
+            series: {
+                pointStart: 1,
+                marker: {
+                    enabled: false
+                }
+            }
+        },
+        xAxis: {
+            allowDecimals: false,
+            accessibility: {
+                rangeDescription: 'Range: 1 to 12'
+            },
+            labels: {
+                formatter: function() {
+                    return this.value + '월';
+                },
+                style: {
+                    color: '#aeaeb0'
+                }
+            }
+        },
+        yAxis: {
+            title: {
+                text: ''
+            },
+            labels: {
+                formatter: function() {
+                    return this.value + 'M';
+                },
+                style: {
+                    color: '#aeaeb0'
+                }
+            }
+        },
+        tooltip: {
+            enable: true
+        },
+        legend: {
+            layout: 'horizontal',
+            align: 'center',
+        },
     }
 
+    // const optionsLineChart2 = {
+    //     series: [
+    //         {
+    //             type: 'spline',
+    //             data: [1, 5, 3, 6, 7, 9, 4]
+    //         },
+    //         {
+    //             type: 'spline',
+    //             data: [9, 2, 6, 3, 7, 8, 8]
+    //         },
+    //         {
+    //             type: 'spline',
+    //             data: [5, 5, 8, 7, 4, 8, 5]
+    //         }
+    //     ]
+    // }
+
     const optionsLineChart2 = {
+        chart: {
+            type: 'spline'
+        },
+        title: {
+            text: '최근 3개월 경쟁사 분석',
+            align: 'left',
+            style: {
+                fontWeight: 'bold',
+                fontSize: '16px'
+            }
+        },
+        credits: {
+            enabled: false
+        },  
         series: [
-        {
-            type: 'spline',
-            data: [1, 5, 3, 6, 7, 9, 4]
+            {   
+                data: [1, 5, 3],
+                name: 'Product 1',
+                color: '#FF21B4'
+            },
+            {
+                data: [9, 2, 6],
+                name: 'Product 2',
+                color: '#5b4a99',
+            },
+            {
+                data: [5, 5, 8],
+                name: 'Product 3',
+                color: '#ff9900'
+            },
+            {
+                data: [3, 5, 7],
+                name: 'Product 4',
+                color: '#28cbff',
+            },
+            {
+                data: [1, 0, 9],
+                name: 'Product 5',
+                color: '#9e00ff',
+            }
+        ],
+        plotOptions: {
+            series: {
+                pointStart: 10,
+                marker: {
+                    enabled: false
+                }
+            }
         },
-        {
-            type: 'spline',
-            data: [9, 2, 6, 3, 7, 8, 8]
+        xAxis: {
+            allowDecimals: false,
+            accessibility: {
+                rangeDescription: 'Range: 10 to 12'
+            },
+            labels: {
+                formatter: function() {
+                    return this.value + '월';
+                },
+                style: {
+                    color: '#aeaeb0'
+                }
+            }
         },
-        {
-            type: 'spline',
-            data: [5, 5, 8, 7, 4, 8, 5]
-        }
-        ]
+        yAxis: {
+            title: {
+                text: ''
+            },
+            labels: {
+                formatter: function() {
+                    return this.value + 'M';
+                },
+                style: {
+                    color: '#aeaeb0'
+                }
+            }
+        },
+        tooltip: {
+            style: {
+                fontSize: '16px',
+            },
+            crosshairs: {
+                width: 1,
+                color: 'purple'
+            },
+            shared: true,
+            backgroundColor: '#fff',
+            borderColor: 'none',
+            borderRadius: 10,
+            shadow: true,
+            useHTML: true,           
+            headerFormat: '<strong>판매건수 비교 &nbsp; &nbsp; &nbsp; &nbsp;{point.key}</strong><table>',
+            pointFormat: '<tr><td style="color: {series.color}">{series.name}:&nbsp; &nbsp; &nbsp; </td>' +
+                '<td style="text-align: right"><b>{point.y}</b></td></tr>',
+            footerFormat: '</table>',
+        },
+        legend: {
+            layout: 'horizontal',
+            align: 'center',
+        },
     }
 
     const options = {
@@ -39,21 +200,37 @@ const ProductDetail = (props) => {
             renderTo: 'container',
         },
         tooltip: {
-            enabled: true
+            enabled: true,
+            formatter: function () {
+                return '<b>' + this.y + '%</b>';
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        title: {
+            text: '점유율',
+            style: {
+                fontWeight: 'bold',
+            }
         },
         series: [
             {
                 dataLabels: {
                     enabled: false,
-
                 },
                 showInLegend: true,
                 data: [
                     {
-                        y: 100
+                        y: 100,
+                        name: '유아 인형',
+                        color: '#ff7b7b'
+
                     },
                     {
-                        y: 50
+                        y: 50,
+                        name: '카카오 라이언 봉제 인형',
+                        color: '#b2ffe3'
                     }
                 ]
             }

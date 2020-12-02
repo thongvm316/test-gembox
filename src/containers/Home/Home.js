@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { DatePicker, Space, Button, Row, Col, Card, Divider } from 'antd';
+import { DatePicker, Space, Button, Row, Col, Card, Divider, ConfigProvider } from 'antd';
 import './home.scss'
+
+import moment from 'moment';
 
 const datas = [{
   "id": 1,
@@ -88,6 +90,12 @@ const RenderData = (props) => {
   )
 }
 
+// Date Picker
+function onChange(date, dateString) {
+  console.log(date, dateString);
+}
+
+
 const Home = () => {
   return (
     <div className="home-page">
@@ -101,7 +109,7 @@ const Home = () => {
         </Col>
         <Col xl={20} className="date-picker">
             <Space direction="vertical">
-                <DatePicker style={{ marginRight: '8px' }}/>
+                <DatePicker style={{ marginRight: '8px' }} onChange={onChange} picker="month" />
             </Space>
             <Button style={{ background: '#71c4d5', borderColor: '#71c4d5', fontWeight: 'bold' }} type="primary">적용하기</Button>
         </Col>

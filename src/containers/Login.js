@@ -12,6 +12,7 @@ const layout = {
         span: 16,
     },
 };
+
 const tailLayout = {
     wrapperCol: {
         offset: 8,
@@ -132,9 +133,6 @@ const Login = (props) => {
                 </div>
 
             </Modal>
-
-
-
         </>
     )
 }

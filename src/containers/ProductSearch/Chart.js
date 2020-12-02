@@ -98,40 +98,64 @@ const Chart = () => {
             type: 'spline'
         },
         title: {
-            text: '',
+            text: '최근 3개월 경쟁사 분석',
+            align: 'left',
+            style: {
+                fontWeight: 'bold',
+                fontSize: '16px'
+            }
         },
         credits: {
             enabled: false
         },  
         series: [
-            {
-                data: [1, 5, 3, 6, 7, 9, 4],
+            {   
+                data: [1, 5, 3],
                 name: 'Product 1',
                 color: '#FF21B4'
             },
             {
-                data: [9, 2, 6, 3, 7, 8, 20],
+                data: [9, 2, 6],
                 name: 'Product 2',
                 color: '#5b4a99',
             },
             {
-                data: [5, 5, 8, 7, 4, 8, 5],
+                data: [5, 5, 8],
                 name: 'Product 3',
                 color: '#ff9900'
             },
             {
-                data: [3, 5, 7, 4, 9, 0, 2],
+                data: [3, 5, 7],
                 name: 'Product 4',
                 color: '#28cbff',
             },
             {
-                data: [1, 0, 9, 8, 3, 5, 2],
+                data: [1, 0, 9],
                 name: 'Product 5',
                 color: '#9e00ff',
             }
         ],
+        plotOptions: {
+            series: {
+                pointStart: 10,
+                marker: {
+                    enabled: false
+                }
+            }
+        },
         xAxis: {
-            categories: ['10월', '11월', '12월'],
+            allowDecimals: false,
+            accessibility: {
+                rangeDescription: 'Range: 10 to 12'
+            },
+            labels: {
+                formatter: function() {
+                    return this.value + '월';
+                },
+                style: {
+                    color: '#aeaeb0'
+                }
+            }
         },
         yAxis: {
             title: {

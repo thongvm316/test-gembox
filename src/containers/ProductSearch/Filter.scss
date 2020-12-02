@@ -34,3 +34,14 @@
     }
   }
 }
+
+@media (max-width: 370px) {
+  .modal {
+    .jam-factory-average {
+      .style-btn {
+        width: 63vw;
+        font-size: 10px;
+      }
+    }
+  }
+}
