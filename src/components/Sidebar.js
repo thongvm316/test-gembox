@@ -6,7 +6,7 @@ const Sidebar = (props) => {
     const { collapsed } = props;
 
     return (
-        <Layout.Sider style={{ background: '#414955' }} className="sidebar-left-menu" collapsedWidth="0" trigger={null} collapsible collapsed={collapsed}>
+        <Layout.Sider style={{ background: '#414955', height: '100vh' }} className="sidebar-left-menu" collapsedWidth="0" trigger={null} collapsible collapsed={collapsed}>
             <Menu theme='dark' style={{ background: '#414955' }} mode="inline" defaultSelectedKeys={['1']}>
                 <Menu.Item className="app-menu-item" key="/home">
                     {/* <Icon type="search" /> */}

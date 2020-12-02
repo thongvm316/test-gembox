@@ -12,10 +12,18 @@ import Register from '../containers/Register/Register'
 import VideoSearch from '../containers/VideoSearch/VideoSearch'
 import SaleStatus from '../containers/SaleStatus/SaleStatus'
 import ProductDetail from '../components/ProductDetail/ProductDetail'
+import Admin from '../containers/Admin/Admin'
+import ShowInfoRegister from '../containers/Admin/ShowInfoRegister'
+import Confirm from '../containers/Admin/Confirm'
 
 const Routes = () => {
     return (
         <Switch>
+            {/* Admin */}
+            <AppRoute exact path="/admin" component={Admin} />
+            <AppRoute exact path="/show-info-register" component={ShowInfoRegister} />
+            <AppRoute exact path="/confirm" component={Confirm} />
+
             <AppRoute exact path="/" component={Login} layout={LoginLayout} />
             <AppRoute exact path="/home" component={Home} />
             <AppRoute exact path="/register" component={Register} layout={RegisterLayout}/>

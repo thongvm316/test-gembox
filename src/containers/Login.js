@@ -4,6 +4,8 @@ import { Form, Input, Button, Row, Col, Modal } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useLocation } from "react-router-dom";
 
+import axios from 'axios'
+
 const layout = {
     labelCol: {
         span: 8,
@@ -35,8 +37,20 @@ const Login = (props) => {
     }, [location])
 
 
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         console.log('Success:', values);
+        const { username, password } = values
+        const body = {
+            username,
+            password
+        }
+        const config = {
+                headers: {
+                  "accept": "application/json"
+                }
+        }
+        const {data} = await axios.post('http://192.168.1.176/logins', body, config);
+        console.log(data)
         history.push('/home');
     };
 
@@ -108,7 +122,7 @@ const Login = (props) => {
                         <Row gutter={24}>
                             <Col span={12}>
                                 <Button className="btn-login" onClick={() => setFindPassword(true)}>비밀번호 찾기</Button>
-                            </Col>
+                            </Col>        
                             <Col span={12}>
                                 <Button className="btn-login" onClick={onRegister}>회원가입</Button>
                             </Col>

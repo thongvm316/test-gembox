@@ -100,8 +100,8 @@ const ProductSearch = (props) => {
         <div className="product-search">
              <Row className="info-search" style={{ marginBottom: '5rem' }} justify='space-between' align='middle'>
                 <Col className='style-col-1'>
-                  <Button onClick={showModal} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">필터</Button>
-                  <Button onClick={showModalTwo} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">선택된 항목 그래프 비교</Button>
+                  <Button onClick={showModal}>필터</Button>
+                  <Button onClick={showModalTwo}>선택된 항목 그래프 비교</Button>
                 </Col>
                 <Col className="date-picker">
                     <Space direction="" size={12}>
