@@ -3,6 +3,8 @@ import { Button, DatePicker, Space, Input, Row, Col, Table, Modal } from 'antd';
 import './VendorSearch.scss'
 
 const VendorSearch = () => {
+
+  // Table
     const [ countSelected, setCountSelected ] = useState(0)
     const columns = [
       {
@@ -57,13 +59,23 @@ const VendorSearch = () => {
     };
     const [checkStrictly, setCheckStrictly] = useState(false);
 
+    // DatePicker
     const { RangePicker } = DatePicker;
+    function onChange(date, dateString) {
+      // console.log('Formatted Selected Time: ', dateString);
+      // console.log(date)
+    }
+    
+    function onOk(value) {
+      console.log('onOk: ', value);
+    }
+
     return (
         <div className="vendor-search">
             <Row className="info-search" style={{ justifyContent: 'flex-end' }}>
                 <Col className="date-picker">
                     <Space direction="" size={12}>
-                        <RangePicker />
+                        <RangePicker onChange={onChange} onOk={onOk} />
                     </Space>
                     <Button style={{ marginLeft: '8px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
                 </Col>

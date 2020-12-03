@@ -13,7 +13,6 @@ const ShowInfoRegister = () => {
                         <h3>이선호</h3>
                         <p>010-0000-0000</p>
                         <p>brickmate@gmail,com</p>
-                        <p>brickmate@gmail,com</p>
                     </div>
                     <div className='style-p' style={{ marginBottom: '70px' }}>
                         <h3>신청 채널</h3>

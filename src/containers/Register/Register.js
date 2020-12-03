@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import './Register.scss'
-
 import { Row, Col, Input, Modal, Button, Form } from 'antd';
-const FormItem = Form.Item;
+import axios from 'axios'
 
+const FormItem = Form.Item;
 
 const Register = (props) => {
 
     const [ verifiedPhone, setVerifiedPhone ] = useState(false);
     const [ signUp, setSignUp ] = useState(false);
     const [ findPassword, setFindPassword ] = useState(false)
+    const [ email, setEmail ] = useState('')
 
     const onFinish = (values) => {
         console.log('Success:', values);
@@ -30,9 +31,22 @@ const Register = (props) => {
             pathname: '/',
             state: {findPassword: true}
         })
-
     }
 
+    const verifyEmail = async () => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }
+        try {
+            const res = await axios.get(`http://192.168.1.43/check?email=${email}`, config)
+        } catch (error) {
+            console.log(error.response.data)
+        }
+}    
+    
     return (
         <>
             <Row gutter={24}>
@@ -50,7 +64,6 @@ const Register = (props) => {
                             onFinishFailed={onFinishFailed}
                         >
                             <Row gutter={24}>
-
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} >
                                     <div className="verified">
                                         <FormItem
@@ -66,9 +79,10 @@ const Register = (props) => {
                                             <Input
                                                 placeholder="이메일"
                                                 type="text"
+                                                onChange={(e) => {setEmail(e.target.value)}}
                                             />
                                         </FormItem>
-                                        <Button>중복확인</Button>
+                                        <Button onClick={verifyEmail}>중복확인</Button>
                                     </div>
                                     <FormItem
                                         name="password"
@@ -174,7 +188,6 @@ const Register = (props) => {
                                 <Col span={24} style={{ textAlign: 'center', marginTop: '24px' }}>
                                     <FormItem>
                                         <Button htmlType="submit" className="submit">회원가입 신청</Button>
-
                                     </FormItem>
                                 </Col>
                             </Row>

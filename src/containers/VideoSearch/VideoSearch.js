@@ -3,6 +3,7 @@ import { Button, DatePicker, Space, Input, Row, Col, Table } from 'antd';
 import './VideoSearch.scss'
 
 const VideoSearch = () => {
+  // Table
     const [ countSelected, setCountSelected ] = useState(0)
 
     const columns = [
@@ -54,10 +55,6 @@ const VideoSearch = () => {
       });
     }
 
-    const onSearch = (e) => {
-        console.log(e)
-    }
-
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -74,39 +71,44 @@ const VideoSearch = () => {
     };
     const [checkStrictly, setCheckStrictly] = useState(false);
 
+  // Date Picker
     const { RangePicker } = DatePicker;
-
     function onChange(date, dateString) {
-        console.log(date, dateString);
+      // console.log('Formatted Selected Time: ', dateString);
+      // console.log(date)
+    }
+    
+    function onOk(value) {
+      console.log('onOk: ', value);
     }
 
     return (
         <>
-             <div className="video-search">
-                <Row className="info-search" style={{ justifyContent: 'flex-end' }}>
-                    <Col className="date-picker">
-                        <Space direction="" size={12}>
-                            <RangePicker />
-                        </Space>
-                        <Button style={{ marginLeft: '8px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
-                    </Col>
-                    <Col className='search'>
-                        <Input style={{ width: '392px', marginLeft: '60px' }} placeholder="Search" />
-                        <Button style={{ marginLeft: '18px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
-                    </Col>
-                </Row>            
+          <div className="video-search">
+            <Row className="info-search" style={{ justifyContent: 'flex-end' }}>
+                <Col className="date-picker">
+                    <Space direction="" size={12}>
+                        <RangePicker onChange={onChange} onOk={onOk} />
+                    </Space>
+                    <Button style={{ marginLeft: '8px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
+                </Col>
+                <Col className='search'>
+                    <Input style={{ width: '392px', marginLeft: '60px' }} placeholder="Search" />
+                    <Button style={{ marginLeft: '18px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
+                </Col>
+            </Row>            
 
-                <Row>
-                    <Col span={24}>
-                        <Table
-                            columns={columns}
-                            dataSource={data}
-                            scroll={{ x: 1300 }}
-                            rowSelection={{ ...rowSelection, checkStrictly }}
-                        />
-                    </Col>
-                </Row>
-            </div>
+            <Row>
+                <Col span={24}>
+                    <Table
+                        columns={columns}
+                        dataSource={data}
+                        scroll={{ x: 1300 }}
+                        rowSelection={{ ...rowSelection, checkStrictly }}
+                    />
+                </Col>
+            </Row>
+         </div>
         </>
     )
 }

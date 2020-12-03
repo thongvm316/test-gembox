@@ -36,23 +36,27 @@ const Login = (props) => {
         }
     }, [location])
 
-
-    const onFinish = async (values) => {
-        console.log('Success:', values);
-        const { username, password } = values
-        const body = {
-            username,
-            password
+const onFinish = async (values) => {
+    console.log('Success:', values);
+    const { username, password } = values
+    const body = {
+        username,
+        password
+    }
+    const config = {
+        headers: {
+            "accept": "application/json",
+            'Content-Type': 'application/json'
         }
-        const config = {
-                headers: {
-                  "accept": "application/json"
-                }
-        }
-        const {data} = await axios.post('http://192.168.1.176/logins', body, config);
-        console.log(data)
+    }
+    const {data} = await axios.post('http://192.168.1.176/logins', body, config);
+    if (data.data.code === '20000' && data.data.message === 'Success') {
+        localStorage.setItem('token', data.data.result.token);
         history.push('/home');
-    };
+    } else {
+        console.log(`Handle Err`)
+    }
+};
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -60,7 +64,6 @@ const Login = (props) => {
 
     const onRegister = () => {
         history.push('/register');
-
     }
 
     const handleOk = () =>{
@@ -127,7 +130,6 @@ const Login = (props) => {
                                 <Button className="btn-login" onClick={onRegister}>회원가입</Button>
                             </Col>
                         </Row>
-
                     </Form>
                 </Col>
             </Row>

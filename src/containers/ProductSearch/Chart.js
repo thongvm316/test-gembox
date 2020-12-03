@@ -194,95 +194,13 @@ const Chart = () => {
             align: 'center',
         },
     }
-
-    const optionsChartTwo = {
-        title: {
-            text: 'Solar Employment Growth by Sector, 2010-2016'
-        },
-        
-        yAxis: {
-            title: {
-                text: ''
-            },
-            labels: {
-                formatter: function() {
-                    return this.value + 'M';
-                }
-            }
-        },
     
-        xAxis: {
-            categories: ['10월', '11월', '12월'],
-        },
-
-        tooltip: {
-            crosshairs: {
-                width: 1,
-                color: 'purple'
-            },
-            shared: true,
-            backgroundColor: '#fff',
-            borderColor: 'none',
-            borderRadius: 10,
-            shadow: true,
-        },
-    
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle'
-        },
-    
-        series: [{
-            name: 'Manufacturing',
-            data: [30, 70, 90],
-            color: 'pink',
-           
-        }, {
-            name: 'Sales',
-            data: [10, 40, 150],
-            color: 'purple',
-           
-        },{
-            name: 'Manufacturing',
-            data: [0, 55, 120],
-            color: 'yellow',
-            
-        }, {
-            name: 'Sales',
-            data: [20, 46, 100],
-            color: 'cyan',
-            
-        }, {
-            name: 'Sales',
-            data: [3, 86, 140],
-            color: '#9e00ff',
-            
-        }],
-    
-        responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 500
-                },
-                chartOptions: {
-                    legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'bottom'
-                    }
-                }
-            }]
-        }
-    }
-
     // For Checkbox
     const optionsCheckbox = [
         { label: '가격비교', value: '가격비교' },
         { label: '판매 수 비교', value: ' 수 비교' },
         { label: '리뷰 수 비교', value: '리뷰 수 비교' },
     ];
-
     function onChange(checkedValues) {
         console.log('checked = ', checkedValues);
     }

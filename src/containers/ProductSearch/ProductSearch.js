@@ -5,7 +5,6 @@ import Chart from './Chart'
 import './ProductSearch.scss'
 
 const ProductSearch = (props) => {
-
   // Of Modal Filter
   const [visible, setVisible] = useState(false)
   const showModal = () => {
@@ -93,8 +92,17 @@ const ProductSearch = (props) => {
   };
   const [checkStrictly, setCheckStrictly] = useState(false);
 
-  // Component in antd
+  // RanggePicker
   const { RangePicker } = DatePicker;
+  function onChange(date, dateString) {
+    // console.log('Formatted Selected Time: ', dateString);
+    // console.log(date)
+  }
+  
+  function onOk(value) {
+    console.log('onOk: ', value);
+  }
+  
 
     return (
         <div className="product-search">
@@ -105,7 +113,7 @@ const ProductSearch = (props) => {
                 </Col>
                 <Col className="date-picker">
                     <Space direction="" size={12}>
-                        <RangePicker />
+                        <RangePicker onChange={onChange} onOk={onOk} />
                     </Space>
                     <Button style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
                 </Col>
@@ -137,39 +145,39 @@ const ProductSearch = (props) => {
                 </Col>
              </Row>
 
-             <Modal
-                  visible={visible}
-                  onOk={handleOk}  
-                  onCancel={handleCancel}
-                  width={800}
-                  className='style-btn'
-                  footer={[
-                    <Button key="back" onClick={handleCancel}>
-                      Cancel
-                    </Button>,
-                    <Button style={{ backgroundColor: '#f4f2ff', border: 'none', color: '#6b5db0', fontWeight: 700 }} key="submit" type="primary" onClick={handleOk}>
-                      OK
-                    </Button>
-                  ]}
-              >
-                  <Filter/>
-              </Modal>
+            <Modal
+                visible={visible}
+                onOk={handleOk}  
+                onCancel={handleCancel}
+                width={800}
+                className='style-btn'
+                footer={[
+                  <Button key="back" onClick={handleCancel}>
+                    Cancel
+                  </Button>,
+                  <Button style={{ backgroundColor: '#f4f2ff', border: 'none', color: '#6b5db0', fontWeight: 700 }} key="submit" type="primary" onClick={handleOk}>
+                    OK
+                  </Button>
+                ]}
+            >
+                <Filter/>
+            </Modal>
 
-              <Modal
-                  visible={visibleTwo}
-                  onOk={handleOkTwo}  
-                  onCancel={handleCancelTwo}
-                  width={1000}
-                  className='style-btn'
-                  footer={[
-                    <Button key="back" onClick={handleOkTwo}>
-                      Cancel
-                    </Button>,
-                    <Button style={{ backgroundColor: '#f4f2ff', border: 'none', color: '#6b5db0', fontWeight: 700 }} key="submit" type="primary" onClick={handleCancelTwo}>
-                      OK
-                    </Button>
-                  ]}
-              >
+            <Modal
+              visible={visibleTwo}
+              onOk={handleOkTwo}  
+              onCancel={handleCancelTwo}
+              width={1000}
+              className='style-btn'
+              footer={[
+                <Button key="back" onClick={handleOkTwo}>
+                  Cancel
+                </Button>,
+                <Button style={{ backgroundColor: '#f4f2ff', border: 'none', color: '#6b5db0', fontWeight: 700 }} key="submit" type="primary" onClick={handleCancelTwo}>
+                  OK
+                </Button>
+              ]}
+            >
                   <Chart/>
               </Modal>
         </div>
