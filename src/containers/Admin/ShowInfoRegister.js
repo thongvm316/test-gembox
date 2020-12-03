@@ -5,12 +5,14 @@ import './ShowInfoRegister.scss'
 const ShowInfoRegister = () => {
     return (
         <div className='show-info-register'>
+            
             <Row gutter={[16,16]}>
                 <Col style={{ textAlign:'center' }} xl={24} sm={12} md={12} lg={12} xl={12}>
                     <h3 style={{ marginBottom: '70px' }}>가입 신청 확인</h3>
                     <div style={{ marginBottom: '70px' }}>
                         <h3>이선호</h3>
                         <p>010-0000-0000</p>
+                        <p>brickmate@gmail,com</p>
                         <p>brickmate@gmail,com</p>
                     </div>
                     <div className='style-p' style={{ marginBottom: '70px' }}>
