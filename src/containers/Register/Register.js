@@ -1,20 +1,42 @@
 import React, { useState } from 'react';
 import './Register.scss'
-import { Row, Col, Input, Modal, Button, Form } from 'antd';
+import { Row, Col, Input, Modal, Button, Form, message } from 'antd';
+import { API_URL } from '../../constants/appConstants'
 import axios from 'axios'
 
 const FormItem = Form.Item;
 
 const Register = (props) => {
 
-    const [ verifiedPhone, setVerifiedPhone ] = useState(false);
-    const [ signUp, setSignUp ] = useState(false);
-    const [ findPassword, setFindPassword ] = useState(false)
-    const [ email, setEmail ] = useState('')
+    const [ verifiedPhone, setVerifiedPhone ] = useState(false);  // For show or hidden input to type code sms
+    const [ signUp, setSignUp ] = useState(false); // For Moal
+    const [ email, setEmail ] = useState('') // For verify email
+    const [basePdf, setBasePdf] = useState(""); // For convert pdf-file
 
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
+        values.file = basePdf;
         console.log('Success:', values);
         setSignUp(true)
+
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+            }
+        }
+
+        const body = {
+            "email": "ldminh@brickmate.vn",
+            "verify_code": "aHwe12nD",
+            "url_market": "aHwe12nD",
+            "business_liciense": "aHwe12nD",
+        }
+
+        try {
+            const { data } = await axios.post(`${API_URL}/signup`, body, config)
+        } catch (error) {
+            console.log(error.response)
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -33,6 +55,31 @@ const Register = (props) => {
         })
     }
 
+    const verifySmsCode = async () => {
+        setVerifiedPhone(true)
+
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+            }
+        }
+
+        const body = {
+            email: "thongvm@brickmate.vn",
+            password: "123456789",
+            name: "Minh Le",
+            phone: "+84931318752"
+        }
+
+        try {
+            const { data } = await axios.post(`${API_URL}/verify`, body, config)
+            console.log(data)
+        } catch (error) {
+            console.log(error.response)
+        }
+    }
+
     const verifyEmail = async () => {
         const config = {
             headers: {
@@ -41,11 +88,36 @@ const Register = (props) => {
             }
         }
         try {
-            const res = await axios.get(`http://192.168.1.43/check?email=${email}`, config)
+            const {data} = await axios.get(`${API_URL}/check?email=${email}`, config)
+            // console.log(data)
+            message.success('This email is available');
         } catch (error) {
-            console.log(error.response.data)
+            // console.log(error.response.data)
+            message.error('This email already exists');
         }
-}    
+    }    
+
+    // For PDF file 
+    const uploadPdfFile = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertBase64(file);
+        setBasePdf(base64);
+    };
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+          const fileReader = new FileReader();
+          fileReader.readAsDataURL(file);
+    
+          fileReader.onload = () => {
+            resolve(fileReader.result);
+          };
+    
+          fileReader.onerror = (error) => {
+            reject(error);
+          };
+        });
+    };
     
     return (
         <>
@@ -142,7 +214,7 @@ const Register = (props) => {
                                                 type="text"
                                             />
                                         </FormItem>
-                                        <Button onClick={() => setVerifiedPhone(true)}>인증번호 전송</Button>
+                                        <Button onClick={verifySmsCode}>인증번호 전송</Button>
                                     </div>
                                     {
                                         verifiedPhone ?
@@ -179,9 +251,19 @@ const Register = (props) => {
                                             type="text"
                                         />
                                     </FormItem>
-                                    <Button>사업자 등록증 pdf 첨부</Button>
-
-
+                                    <FormItem
+                                        name="file"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please attach your PDF file',
+                                            },
+                                        ]}
+                                    >
+                                         <Input type='file' onChange={(e) => { uploadPdfFile(e) }}/>
+                                    </FormItem>
+                                    <br></br>
+      <img src={basePdf} height="200px" />
                                 </Col>
                             </Row>
                             <Row gutter={24}>

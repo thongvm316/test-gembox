@@ -2,33 +2,33 @@ How to add more remote repo:
     1. git remote add repo2 https://github.com/thongvm316/JamFactory.git
     2. Push master: git push -u repo2 master
     3. Push branch: git push -u repo2 development
-    -----------------------------------------------------
-today: 
-1. GIT ----> Done
 
-2. Render data in page home - Note: att wrap in Row ----> Done
+Fix Cors in localhost-chorme: 
+/usr/bin/google-chrome-stable --disable-web-security --user-data-dir=/home/jossnaz/.config/google-chrome/
 
-3. Review each page: Understand code - clean
-    a. Home ----> Done
-    b. ProductSeach ----> Done
-    c. Register ----> Done
-    d. SaleStatus ----> Done
-    e. Vendor ----> Done
-    f. Video ----> Done
-    g. Admin ----> Done
-    h. Login ----> Done
-
-4. Call API.
-    a. Login
-
-Register - Login - Product - Vender
-
-todos: 
-1. How to call API in DevConnector
-2. Read document API for JamF
-3. Call in JamF
+---------------------------------------------------------
+API: Register - Login - Product - Vender
 
 ----
-Tommorow:
-1. Logic after check email.
-2. Continues API in register
+today:
+1. What is CORS and solve
+    a. What is ----> Done
+    b. Solve problem in register ----> Done
+
+2. Attacd PDF file to sever
+    a. Solution ----> Done
+    b. Act ----> Done
+    c. UI like design
+
+3. Submit All
+
+-------
+Solution: Base 64
+1. What is?
+2. How to use?
+3. Use in JamF project ?
+4. Test with PDF file, Fix UI
+----> Done all
+
+Purpose: Get base64 file --> send to onSubmit ----> Done
+UI PDF Attach like Design

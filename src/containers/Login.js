@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-
 import { Form, Input, Button, Row, Col, Modal } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useLocation } from "react-router-dom";
-
+import { API_URL } from '../constants/appConstants'
 import axios from 'axios'
+
 
 const layout = {
     labelCol: {
@@ -43,16 +43,19 @@ const onFinish = async (values) => {
         username,
         password
     }
+    
     const config = {
         headers: {
-            "accept": "application/json",
+            "Accept": "application/json",
             'Content-Type': 'application/json'
         }
     }
-    const {data} = await axios.post('http://192.168.1.176/logins', body, config);
+
+    const {data} = await axios.post(`${API_URL}/logins`, body, config);
     if (data.data.code === '20000' && data.data.message === 'Success') {
+        console.log(data)
         localStorage.setItem('token', data.data.result.token);
-        history.push('/home');
+        // history.push('/home');
     } else {
         console.log(`Handle Err`)
     }
