@@ -11,12 +11,26 @@ const Register = (props) => {
     const [ verifiedPhone, setVerifiedPhone ] = useState(false);  // For show or hidden input to type code sms
     const [ signUp, setSignUp ] = useState(false); // For Moal
     const [ email, setEmail ] = useState('') // For verify email
-    const [basePdf, setBasePdf] = useState(""); // For convert pdf-file
+    const [ basePdf, setBasePdf ] = useState(""); // For convert pdf-file
+    const [ validatePassword, setValidatePassword ] = useState('');
+    const [ confirmPassword, setConfirmPassword ] = useState('');
 
     const onFinish = async (values) => {
         values.file = basePdf;
+        console.log(basePdf)
         console.log('Success:', values);
-        setSignUp(true)
+
+        if (validatePassword.length < 6) {
+            message.error('The password is not enough characters');
+            return;
+        }
+
+        if (validatePassword !== confirmPassword) {
+            message.error('Passwords do not match');
+            return;
+        }
+
+        const { confirmPassword, email, file, password, phone, url, username, verifiedPhone  } = values
 
         const config = {
             headers: {
@@ -34,6 +48,7 @@ const Register = (props) => {
 
         try {
             const { data } = await axios.post(`${API_URL}/signup`, body, config)
+            setSignUp(true)
         } catch (error) {
             console.log(error.response)
         }
@@ -118,6 +133,19 @@ const Register = (props) => {
           };
         });
     };
+
+    // For Validate Password
+    const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+    const mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+    const analyze = (event) => {
+        if(strongRegex.test(event.target.value)) {
+            this.setState({ backgroundColor: "#0F9D58" });
+        } else if(mediumRegex.test(event.target.value)) {
+            this.setState({ backgroundColor: "#F4B400" });
+        } else {
+            this.setState({ backgroundColor: "#DB4437" });
+        }
+    }
     
     return (
         <>
@@ -144,7 +172,8 @@ const Register = (props) => {
                                             rules={[
                                                 {
                                                     required: true,
-                                                    message: 'Please input your 이메일!',
+                                                    type: 'email',
+                                                    message: 'The input is not valid E-mail!',
                                                 },
                                             ]}
                                         >
@@ -168,6 +197,7 @@ const Register = (props) => {
                                         <Input
                                             placeholder="비밀번호 8자리"
                                             type="text"
+                                            onChange={e => { setValidatePassword(e.target.value); }}
                                         />
                                     </FormItem>
                                     <FormItem
@@ -182,6 +212,7 @@ const Register = (props) => {
                                         <Input
                                             placeholder="비밀번호 재확인"
                                             type="text"
+                                            onChange={ e => { setConfirmPassword(e.target.value) } }
                                         />
                                     </FormItem>
                                     <br />
@@ -211,7 +242,12 @@ const Register = (props) => {
                                         >
                                             <Input
                                                 placeholder="이메일"
-                                                type="text"
+                                                type="tel"
+                                                onChange={e => {
+                                                    if (!Number(e.target.value)) {
+                                                        message.error('Your phone must be a number');
+                                                    }
+                                                }}
                                             />
                                         </FormItem>
                                         <Button onClick={verifySmsCode}>인증번호 전송</Button>
@@ -229,7 +265,12 @@ const Register = (props) => {
                                             >
                                                 <Input
                                                     placeholder="인증번호 입력"
-                                                    type="text"
+                                                    type="tel"
+                                                    onChange={e => {
+                                                        if (!Number(e.target.value)) {
+                                                            message.error('Your phone must be a number');
+                                                        }
+                                                    }}
                                                 />
                                             </FormItem>
                                             : ''
@@ -260,10 +301,8 @@ const Register = (props) => {
                                             },
                                         ]}
                                     >
-                                         <Input type='file' onChange={(e) => { uploadPdfFile(e) }}/>
+                                         <Input type='file' addonBefore="사업자 등록증 pdf 첨부" accept=".pdf" onChange={(e) => { uploadPdfFile(e) }}/>
                                     </FormItem>
-                                    <br></br>
-      <img src={basePdf} height="200px" />
                                 </Col>
                             </Row>
                             <Row gutter={24}>

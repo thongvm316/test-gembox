@@ -3,6 +3,8 @@ import { Button, DatePicker, Row, Col, Input, Space, Table, Modal  } from 'antd'
 import Filter from './Filter'
 import Chart from './Chart'
 import './ProductSearch.scss'
+import { API_URL } from '../../constants/appConstants'
+import axios from 'axios'
 
 const ProductSearch = (props) => {
   // Of Modal Filter
@@ -92,19 +94,40 @@ const ProductSearch = (props) => {
   };
   const [checkStrictly, setCheckStrictly] = useState(false);
 
+  // Convert date to timestamp
+  function toTimestamp(strDate){
+    var datum = Date.parse(strDate);
+    return datum/1000;
+  }
+
   // RanggePicker
   const { RangePicker } = DatePicker;
-  function onChange(date, dateString) {
-    // console.log('Formatted Selected Time: ', dateString);
-    // console.log(date)
+  const [valueDate, setValueDate] = useState([]);
+  const onChange = (dateString) => {
+    console.log('Formatted Selected Time: ', dateString);
+    let startDay = toTimestamp(dateString[0])
+    let endDay = toTimestamp(dateString[1])
+    setValueDate([startDay, endDay]);
   }
-  
-  function onOk(value) {
-    console.log('onOk: ', value);
-  }
-  
 
-    return (
+  const getDateFilter = async () => {
+    const config = {
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-Auth-Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImV4cCI6IjIwMTcwMTAxMDAwMCJ9.eyJzaWQiOiIxMjM0NTY3ODkwMTIzNDU2Nzg5MCIsImNvZGUiOiJhYmNkZXJmZ2hpIiwic2Vzc2lvbiI6IklHUURQeTYrSWZPR003OUZqT3dDIn0.wPM7MqaXIlbJxZ8Mb4Qgd2vhiB1KIBpKmGtVbF7eZtg'
+      }
+    }
+
+    try {
+      const { data } = await axios.get(`${API_URL}/product?keyword=kid&start_date=${valueDate[0]}&end_date=${valueDate[1]}&last_id=1`, config)
+      console.log(data)
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
+   
+     return (
         <div className="product-search">
              <Row className="info-search" style={{ marginBottom: '5rem' }} justify='space-between' align='middle'>
                 <Col className='style-col-1'>
@@ -113,9 +136,9 @@ const ProductSearch = (props) => {
                 </Col>
                 <Col className="date-picker">
                     <Space direction="" size={12}>
-                        <RangePicker onChange={onChange} onOk={onOk} />
+                        <RangePicker onChange={onChange}/>
                     </Space>
-                    <Button style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
+                    <Button onClick={getDateFilter} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
                 </Col>
                 <Col className='style-col-3'>
                   <Input style={{ width: '392px'}} placeholder="Search" />

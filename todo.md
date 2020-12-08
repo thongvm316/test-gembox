@@ -6,29 +6,17 @@ How to add more remote repo:
 Fix Cors in localhost-chorme: 
 /usr/bin/google-chrome-stable --disable-web-security --user-data-dir=/home/jossnaz/.config/google-chrome/
 
+Study 2-3 video in 30m everyday -> discipline
+
 ---------------------------------------------------------
 API: Register - Login - Product - Vender
 
 ----
 today:
-1. What is CORS and solve
-    a. What is ----> Done
-    b. Solve problem in register ----> Done
 
-2. Attacd PDF file to sever
-    a. Solution ----> Done
-    b. Act ----> Done
-    c. UI like design
-
-3. Submit All
-
--------
-Solution: Base 64
-1. What is?
-2. How to use?
-3. Use in JamF project ?
-4. Test with PDF file, Fix UI
-----> Done all
-
-Purpose: Get base64 file --> send to onSubmit ----> Done
-UI PDF Attach like Design
+1. UI PDF Attach like Design ----> Done
+2. Submit Register -----> Done
+3. Validate when xan nhan password ----> Done
+4. Search Product API
+    a. Convert Date to Time stamp ----> Done
+    b. Call API ----> Done
