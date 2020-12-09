@@ -20,4 +20,4 @@ today:
 5. Deploy to Nelify
 6. Logic to use token
 
-Deploy to Heroku
+Build and fix in Netlify --- 100%
