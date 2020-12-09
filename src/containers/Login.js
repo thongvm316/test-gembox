@@ -50,10 +50,9 @@ const onFinish = async (values) => {
             'Content-Type': 'application/json'
         }
     }
-
     const {data} = await axios.post(`${API_URL}/logins`, body, config);
     if (data.data.code === '20000' && data.data.message === 'Success') {
-        // console.log(data)
+        console.log(data)
         localStorage.setItem('token', data.data.result.token);
         history.push('/home');
     } else {
