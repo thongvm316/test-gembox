@@ -8,12 +8,12 @@ const FormItem = Form.Item;
 
 const Register = (props) => {
 
-    const [ verifiedPhone, setVerifiedPhone ] = useState(false);  // For show or hidden input to type code sms
-    const [ signUp, setSignUp ] = useState(false); // For Moal
-    const [ email, setEmail ] = useState('') // For verify email
-    const [ basePdf, setBasePdf ] = useState(""); // For convert pdf-file
-    const [ validatePassword, setValidatePassword ] = useState('');
-    const [ confirmPassword, setConfirmPassword ] = useState('');
+    const [verifiedPhone, setVerifiedPhone] = useState(false);  // For show or hidden input to type code sms
+    const [signUp, setSignUp] = useState(false); // For Moal
+    const [email, setEmail] = useState('') // For verify email
+    const [basePdf, setBasePdf] = useState(""); // For convert pdf-file
+    const [validatePassword, setValidatePassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const onFinish = async (values) => {
         values.file = basePdf;
@@ -30,7 +30,7 @@ const Register = (props) => {
             return;
         }
 
-        const { confirmPassword, email, file, password, phone, url, username, verifiedPhone  } = values
+        const { confirmPassword, email, file, password, phone, url, username, verifiedPhone } = values
 
         const config = {
             headers: {
@@ -66,7 +66,7 @@ const Register = (props) => {
     const onFindPassword = () => {
         props.history.push({
             pathname: '/',
-            state: {findPassword: true}
+            state: { findPassword: true }
         })
     }
 
@@ -103,14 +103,14 @@ const Register = (props) => {
             }
         }
         try {
-            const {data} = await axios.get(`${API_URL}/check?email=${email}`, config)
+            const { data } = await axios.get(`${API_URL}/check?email=${email}`, config)
             // console.log(data)
             message.success('This email is available');
         } catch (error) {
             // console.log(error.response.data)
             message.error('This email already exists');
         }
-    }    
+    }
 
     // For PDF file 
     const uploadPdfFile = async (e) => {
@@ -121,32 +121,19 @@ const Register = (props) => {
 
     const convertBase64 = (file) => {
         return new Promise((resolve, reject) => {
-          const fileReader = new FileReader();
-          fileReader.readAsDataURL(file);
-    
-          fileReader.onload = () => {
-            resolve(fileReader.result);
-          };
-    
-          fileReader.onerror = (error) => {
-            reject(error);
-          };
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
         });
     };
 
-    // For Validate Password
-    const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-    const mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
-    const analyze = (event) => {
-        if(strongRegex.test(event.target.value)) {
-            this.setState({ backgroundColor: "#0F9D58" });
-        } else if(mediumRegex.test(event.target.value)) {
-            this.setState({ backgroundColor: "#F4B400" });
-        } else {
-            this.setState({ backgroundColor: "#DB4437" });
-        }
-    }
-    
     return (
         <>
             <Row gutter={24}>
@@ -180,7 +167,7 @@ const Register = (props) => {
                                             <Input
                                                 placeholder="이메일"
                                                 type="text"
-                                                onChange={(e) => {setEmail(e.target.value)}}
+                                                onChange={(e) => { setEmail(e.target.value) }}
                                             />
                                         </FormItem>
                                         <Button onClick={verifyEmail}>중복확인</Button>
@@ -212,7 +199,7 @@ const Register = (props) => {
                                         <Input
                                             placeholder="비밀번호 재확인"
                                             type="text"
-                                            onChange={ e => { setConfirmPassword(e.target.value) } }
+                                            onChange={e => { setConfirmPassword(e.target.value) }}
                                         />
                                     </FormItem>
                                     <br />
@@ -301,7 +288,7 @@ const Register = (props) => {
                                             },
                                         ]}
                                     >
-                                         <Input type='file' addonBefore="사업자 등록증 pdf 첨부" accept=".pdf" onChange={(e) => { uploadPdfFile(e) }}/>
+                                        <Input type='file' addonBefore="사업자 등록증 pdf 첨부" accept=".pdf" onChange={(e) => { uploadPdfFile(e) }} />
                                     </FormItem>
                                 </Col>
                             </Row>

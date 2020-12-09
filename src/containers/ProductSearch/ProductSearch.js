@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, DatePicker, Row, Col, Input, Space, Table, Modal  } from 'antd';
+import { Button, DatePicker, Row, Col, Input, Space, Table, Modal } from 'antd';
 import Filter from './Filter'
 import Chart from './Chart'
 import './ProductSearch.scss'
@@ -10,13 +10,13 @@ const ProductSearch = (props) => {
   // Of Modal Filter
   const [visible, setVisible] = useState(false)
   const showModal = () => {
-      setVisible(true)
+    setVisible(true)
   };
   const handleOk = e => {
-      setVisible(false)
+    setVisible(false)
   };
-  const  handleCancel = e => {
-      setVisible(false)
+  const handleCancel = e => {
+    setVisible(false)
   };
 
   // Of Modal Chart
@@ -27,12 +27,12 @@ const ProductSearch = (props) => {
   const handleOkTwo = e => {
     setVisibleTwo(false)
   };
-  const  handleCancelTwo = e => {
+  const handleCancelTwo = e => {
     setVisibleTwo(false)
   };
 
   // Of Table
-  const [ countSelected, setCountSelected ] = useState(0)
+  const [countSelected, setCountSelected] = useState(0)
   const columns = [
     {
       title: '마켓명',
@@ -79,132 +79,130 @@ const ProductSearch = (props) => {
   }
 
   const rowSelection = {
-      onChange: (selectedRowKeys, selectedRows) => {
-          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-          setCountSelected(selectedRows.length)
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      setCountSelected(selectedRows.length)
 
-      },
-      onSelect: (record, selected, selectedRows) => {
-          console.log(record, selected, selectedRows);
-      },
-      onSelectAll: (selected, selectedRows, changeRows) => {
-          console.log(selected, selectedRows, changeRows);
-          setCountSelected(selectedRows.length)
-      },
+    },
+    onSelect: (record, selected, selectedRows) => {
+      console.log(record, selected, selectedRows);
+    },
+    onSelectAll: (selected, selectedRows, changeRows) => {
+      console.log(selected, selectedRows, changeRows);
+      setCountSelected(selectedRows.length)
+    },
   };
   const [checkStrictly, setCheckStrictly] = useState(false);
-
-  // Convert date to timestamp
-  function toTimestamp(strDate){
-    var datum = Date.parse(strDate);
-    return datum/1000;
-  }
 
   // RanggePicker
   const { RangePicker } = DatePicker;
   const [valueDate, setValueDate] = useState([]);
+  const convertToTimeStamp = (strDate) => {
+    var datum = Date.parse(strDate);
+    return datum / 1000;
+  }
   const onChange = (dateString) => {
-    console.log('Formatted Selected Time: ', dateString);
-    let startDay = toTimestamp(dateString[0])
-    let endDay = toTimestamp(dateString[1])
+    // console.log('Formatted Selected Time: ', dateString);
+    let startDay = convertToTimeStamp(dateString[0])
+    let endDay = convertToTimeStamp(dateString[1])
     setValueDate([startDay, endDay]);
   }
 
   const getDateFilter = async () => {
     const config = {
       headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-Auth-Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImV4cCI6IjIwMTcwMTAxMDAwMCJ9.eyJzaWQiOiIxMjM0NTY3ODkwMTIzNDU2Nzg5MCIsImNvZGUiOiJhYmNkZXJmZ2hpIiwic2Vzc2lvbiI6IklHUURQeTYrSWZPR003OUZqT3dDIn0.wPM7MqaXIlbJxZ8Mb4Qgd2vhiB1KIBpKmGtVbF7eZtg'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-Auth-Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImV4cCI6IjIwMTcwMTAxMDAwMCJ9.eyJzaWQiOiIxMjM0NTY3ODkwMTIzNDU2Nzg5MCIsImNvZGUiOiJhYmNkZXJmZ2hpIiwic2Vzc2lvbiI6IklHUURQeTYrSWZPR003OUZqT3dDIn0.wPM7MqaXIlbJxZ8Mb4Qgd2vhiB1KIBpKmGtVbF7eZtg'
       }
     }
 
     try {
-      const { data } = await axios.get(`${API_URL}/product?keyword=kid&start_date=${valueDate[0]}&end_date=${valueDate[1]}&last_id=1`, config)
+      const { data } = await axios.get(`${API_URL}/product?keyword=kid&start_date=${valueDate[0]}&end_date=${valueDate[1]}&last_id=${100}`, config)
       console.log(data)
     } catch (error) {
-      console.log(error.response)
+      console.log(error.response.data)
     }
   }
-   
-     return (
-        <div className="product-search">
-             <Row className="info-search" style={{ marginBottom: '5rem' }} justify='space-between' align='middle'>
-                <Col className='style-col-1'>
-                  <Button onClick={showModal}>필터</Button>
-                  <Button onClick={showModalTwo}>선택된 항목 그래프 비교</Button>
-                </Col>
-                <Col className="date-picker">
-                    <Space direction="" size={12}>
-                        <RangePicker onChange={onChange}/>
-                    </Space>
-                    <Button onClick={getDateFilter} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
-                </Col>
-                <Col className='style-col-3'>
-                  <Input style={{ width: '392px'}} placeholder="Search" />
-                  <Button style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
-                </Col>
-            </Row>
 
-            <Row className='res-small-device'>
-                <Col span={24}>
-                    <Table
-                        columns={columns}
-                        dataSource={data}
-                        scroll={{ x: 1300 }}
-                        rowSelection={{ ...rowSelection, checkStrictly }}
-                        onRow={(record, rowIndex) => {
-                          return{
-                            onClick: event => {
-                              props.history.push({
-                                pathname: '/product-detail',
-                                state: {product: record}
-                              })
-                            }
-                          }
-            
-                        }}
-                    />
-                </Col>
-             </Row>
+  return (
+    <div className="product-search">
+      <Row className="info-search" style={{ marginBottom: '5rem' }} justify='space-between' align='middle'>
+        <Col className='style-col-1'>
+          <Button onClick={showModal}>필터</Button>
+          <Button onClick={showModalTwo}>선택된 항목 그래프 비교</Button>
+        </Col>
+        <Col className="date-picker">
+          <Space direction="" size={12}>
+            <RangePicker onChange={onChange} />
+          </Space>
+          <Button onClick={getDateFilter} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
+        </Col>
+        <Col className='style-col-3'>
+          <Input style={{ width: '392px' }} placeholder="Search" />
+          <Button style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
+        </Col>
+      </Row>
 
-            <Modal
-                visible={visible}
-                onOk={handleOk}  
-                onCancel={handleCancel}
-                width={800}
-                className='style-btn'
-                footer={[
-                  <Button key="back" onClick={handleCancel}>
-                    Cancel
+      <Row className='res-small-device'>
+        <Col span={24}>
+          <Table
+            columns={columns}
+            dataSource={data}
+            scroll={{ x: 1300 }}
+            rowSelection={{ ...rowSelection, checkStrictly }}
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: event => {
+                  props.history.push({
+                    pathname: '/product-detail',
+                    state: { product: record }
+                  })
+                }
+              }
+
+            }}
+          />
+        </Col>
+      </Row>
+
+      <Modal
+        visible={visible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={800}
+        className='style-btn'
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            Cancel
                   </Button>,
-                  <Button style={{ backgroundColor: '#f4f2ff', border: 'none', color: '#6b5db0', fontWeight: 700 }} key="submit" type="primary" onClick={handleOk}>
-                    OK
+          <Button style={{ backgroundColor: '#f4f2ff', border: 'none', color: '#6b5db0', fontWeight: 700 }} key="submit" type="primary" onClick={handleOk}>
+            OK
                   </Button>
-                ]}
-            >
-                <Filter/>
-            </Modal>
+        ]}
+      >
+        <Filter />
+      </Modal>
 
-            <Modal
-              visible={visibleTwo}
-              onOk={handleOkTwo}  
-              onCancel={handleCancelTwo}
-              width={1000}
-              className='style-btn'
-              footer={[
-                <Button key="back" onClick={handleOkTwo}>
-                  Cancel
+      <Modal
+        visible={visibleTwo}
+        onOk={handleOkTwo}
+        onCancel={handleCancelTwo}
+        width={1000}
+        className='style-btn'
+        footer={[
+          <Button key="back" onClick={handleOkTwo}>
+            Cancel
                 </Button>,
-                <Button style={{ backgroundColor: '#f4f2ff', border: 'none', color: '#6b5db0', fontWeight: 700 }} key="submit" type="primary" onClick={handleCancelTwo}>
-                  OK
+          <Button style={{ backgroundColor: '#f4f2ff', border: 'none', color: '#6b5db0', fontWeight: 700 }} key="submit" type="primary" onClick={handleCancelTwo}>
+            OK
                 </Button>
-              ]}
-            >
-                  <Chart/>
-              </Modal>
-        </div>
-    )
+        ]}
+      >
+        <Chart />
+      </Modal>
+    </div>
+  )
 }
 
 export default ProductSearch

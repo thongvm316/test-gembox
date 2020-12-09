@@ -13,10 +13,13 @@ API: Register - Login - Product - Vender
 
 ----
 today:
+1. Review call API SearchProduct - Clean Code ----> Done
+2. Call API Search My Product: Dont have this in design
+3. Call API Get Vendor API: 404
+4. Refer the way call API in Movie Project ----> Done
+5. Deploy to Nelify
+6. Logic to use token
 
-1. UI PDF Attach like Design ----> Done
-2. Submit Register -----> Done
-3. Validate when xan nhan password ----> Done
-4. Search Product API
-    a. Convert Date to Time stamp ----> Done
-    b. Call API ----> Done
+Netlify
+    1. Study
+    2. Deploy
