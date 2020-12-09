@@ -20,6 +20,4 @@ today:
 5. Deploy to Nelify
 6. Logic to use token
 
-Netlify
-    1. Study
-    2. Deploy
+Deploy to Heroku
