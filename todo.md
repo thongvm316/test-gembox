@@ -6,18 +6,22 @@ How to add more remote repo:
 Fix Cors in localhost-chorme: 
 /usr/bin/google-chrome-stable --disable-web-security --user-data-dir=/home/jossnaz/.config/google-chrome/
 
-Study 2-3 video in 30m everyday -> discipline
-
+Err when deploy to Heroku: Err=H10
+Fix:
+    "scripts": {
+    "dev": "react-scripts start",
+    "start": "serve -s build",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
+    }
 ---------------------------------------------------------
 API: Register - Login - Product - Vender
 
 ----
 today:
-1. Review call API SearchProduct - Clean Code ----> Done
-2. Call API Search My Product: Dont have this in design
-3. Call API Get Vendor API: 404
-4. Refer the way call API in Movie Project ----> Done
-5. Deploy to Nelify
-6. Logic to use token
+1. Heroku Deploy --> Try some method --> Done
+2. Test in development branch
+3. Firebase
 
-Build and fix in Netlify --- 100%

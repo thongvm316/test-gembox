@@ -27,38 +27,38 @@ const FormItem = Form.Item;
 const Login = (props) => {
     const { history } = props;
     const location = useLocation();
-    const [ findPassword, setFindPassword ] = useState(false);
+    const [findPassword, setFindPassword] = useState(false);
 
     useEffect(() => {
-        if (location.state && location.state.findPassword){
+        if (location.state && location.state.findPassword) {
             console.log(location)
             setFindPassword(true)
         }
     }, [location])
 
-const onFinish = async (values) => {
-    console.log('Success:', values);
-    const { username, password } = values
-    const body = {
-        username,
-        password
-    }
-    
-    const config = {
-        headers: {
-            "Accept": "application/json",
-            'Content-Type': 'application/json'
+    const onFinish = async (values) => {
+        console.log('Success:', values);
+        const { username, password } = values
+        const body = {
+            username,
+            password
         }
-    }
-    const {data} = await axios.post(`${API_URL}/logins`, body, config);
-    if (data.data.code === '20000' && data.data.message === 'Success') {
-        console.log(data)
-        localStorage.setItem('token', data.data.result.token);
-        history.push('/home');
-    } else {
-        console.log(`Handle Err`)
-    }
-};
+
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json'
+            }
+        }
+        const { data } = await axios.post(`${API_URL}/logins`, body, config);
+        if (data.data.code === '20000' && data.data.message === 'Success') {
+            console.log(data)
+            localStorage.setItem('token', data.data.result.token);
+            history.push('/home');
+        } else {
+            console.log(`Handle Err`)
+        }
+    };
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -68,7 +68,7 @@ const onFinish = async (values) => {
         history.push('/register');
     }
 
-    const handleOk = () =>{
+    const handleOk = () => {
         setFindPassword(false)
     }
 
@@ -127,7 +127,7 @@ const onFinish = async (values) => {
                         <Row gutter={24}>
                             <Col span={12}>
                                 <Button className="btn-login" onClick={() => setFindPassword(true)}>비밀번호 찾기</Button>
-                            </Col>        
+                            </Col>
                             <Col span={12}>
                                 <Button className="btn-login" onClick={onRegister}>회원가입</Button>
                             </Col>
