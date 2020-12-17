@@ -12,9 +12,11 @@ import Register from '../containers/Register/Register'
 import VideoSearch from '../containers/VideoSearch/VideoSearch'
 import SaleStatus from '../containers/SaleStatus/SaleStatus'
 import ProductDetail from '../components/ProductDetail/ProductDetail'
-import Admin from '../containers/Admin/Admin'
-import ShowInfoRegister from '../containers/Admin/ShowInfoRegister'
-import Confirm from '../containers/Admin/Confirm'
+import AdminMember from '../containers/Admin/AdminMember/AdminMember'
+import MemberDetail from '../containers/Admin/AdminMember/MemberDetail'
+import AdminLogin from '../containers/Admin/AdminLogin'
+import AdminFindPassword from '../containers/Admin/AdminFindPassword'
+import AdminMemberRequest from '../containers/Admin/AdminMemberRequest/AdminMemberRequest'
 import setAuthToken from '../utils/setAuthToken'
 
 // if (localStorage.token) {
@@ -26,9 +28,11 @@ const Routes = () => {
     return (
         <Switch>
             {/* Admin */}
-            <AppRoute exact path="/admin" component={Admin} />
-            <AppRoute exact path="/show-info-register" component={ShowInfoRegister} />
-            <AppRoute exact path="/confirm" component={Confirm} />
+            <AppRoute exact path="/admin-login" component={AdminLogin} layout={LoginLayout} />
+            <AppRoute exact path="/admin-find-password" component={AdminFindPassword} layout={LoginLayout} />
+            <AppRoute exact path="/admin-member" component={AdminMember} />
+            <AppRoute exact path="/member-detail" component={MemberDetail} />
+            <AppRoute exact path="/member-request" component={AdminMemberRequest} />
 
             <AppRoute exact path="/" component={Login} layout={LoginLayout} />
             <AppRoute exact path="/home" component={Home} />

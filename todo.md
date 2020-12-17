@@ -9,19 +9,26 @@ Fix Cors in localhost-chorme:
 Err when deploy to Heroku: Err=H10
 Fix:
     "scripts": {
-    "dev": "react-scripts start",
-    "start": "serve -s build",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run build"
+        "dev": "react-scripts start",
+        "start": "serve -s build",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts     eject",
+        "heroku-postbuild": "npm run build"
     }
 ---------------------------------------------------------
 API: Register - Login - Product - Vender
 
 ----
-today:
-1. Heroku Deploy --> Try some method --> Done
-2. Test in development branch
-3. Firebase
+todo:
+1. Story Board ---- Done
+2. Fix some UI
+3. React lazy load - BackEnd
 
+2. Fix UI - Admin
+    a. Login ---- Done
+    b. Find Account ---- Done
+    c. Member List Registed, push ---- Done
+    d. Member request 
+        1. Request ---- Done
+        2. Detail       

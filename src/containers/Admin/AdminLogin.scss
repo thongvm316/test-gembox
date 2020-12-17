@@ -1,0 +1,12 @@
+.admin-login {
+    .ant-input {
+        background-color: #DDDDDD !important;
+        border: none;
+    }
+    .ant-input-affix-wrapper, .ant-form-item-has-error .ant-input-affix-wrapper{
+        background-color: #DDDDDD;
+    }
+    .ant-form-item-has-error .ant-input-affix-wrapper:hover {
+        background-color: #DDDDDD !important;
+    }
+}

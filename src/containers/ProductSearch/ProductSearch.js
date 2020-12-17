@@ -5,6 +5,7 @@ import Chart from './Chart'
 import './ProductSearch.scss'
 import { API_URL } from '../../constants/appConstants'
 import axios from 'axios'
+import fileDownload from 'js-file-download';
 
 const ProductSearch = (props) => {
   // Of Modal Filter
@@ -119,11 +120,28 @@ const ProductSearch = (props) => {
 
     try {
       const { data } = await axios.get(`${API_URL}/product?keyword=kid&start_date=${valueDate[0]}&end_date=${valueDate[1]}&last_id=${100}`, config)
-      console.log(data)
+      // console.log(data)
     } catch (error) {
       console.log(error.response.data)
     }
   }
+
+  const getExcelFile = async () => {
+    const config = {
+      headers: {
+        'X-Auth-Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImV4cCI6IjIwMTcwMTAxMDAwMCJ9.eyJzaWQiOiIxMjM0NTY3ODkwMTIzNDU2Nzg5MCIsImNvZGUiOiJhYmNkZXJmZ2hpIiwic2Vzc2lvbiI6IklHUURQeTYrSWZPR003OUZqT3dDIn0.wPM7MqaXIlbJxZ8Mb4Qgd2vhiB1KIBpKmGtVbF7eZtg'
+      }
+    }
+    try {
+      const { data } = await axios.get(`http://192.168.1.90/product/export?first=1&last=100`, {
+        responseType: 'blob',
+      }, config)
+      fileDownload(data, 'data.xls');
+    } catch (error) {
+      console.log(error.response.data)
+    }
+  }
+
 
   return (
     <div className="product-search">
@@ -140,7 +158,7 @@ const ProductSearch = (props) => {
         </Col>
         <Col className='style-col-3'>
           <Input style={{ width: '392px' }} placeholder="Search" />
-          <Button style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
+          <Button onClick={getExcelFile} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
         </Col>
       </Row>
 
@@ -160,7 +178,6 @@ const ProductSearch = (props) => {
                   })
                 }
               }
-
             }}
           />
         </Col>
@@ -175,10 +192,11 @@ const ProductSearch = (props) => {
         footer={[
           <Button key="back" onClick={handleCancel}>
             Cancel
-                  </Button>,
+          </Button>,
+
           <Button style={{ backgroundColor: '#f4f2ff', border: 'none', color: '#6b5db0', fontWeight: 700 }} key="submit" type="primary" onClick={handleOk}>
             OK
-                  </Button>
+          </Button>
         ]}
       >
         <Filter />

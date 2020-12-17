@@ -1,0 +1,14 @@
+.admin-member {
+    .top {
+        .style-input {
+            .ant-input {
+                background-color: #fff !important;
+            }
+        }
+    }
+    .ant-btn:hover, .ant-btn:focus {
+        color: #fff;
+        background-color: black;
+        border-color: black;
+    }
+}

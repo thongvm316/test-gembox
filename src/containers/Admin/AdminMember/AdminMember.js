@@ -1,33 +1,26 @@
 import React from 'react'
 import { Row, Col, Button, Space, Input, Table } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
-import './Admin.scss'
+import './AdminMember.scss'
 
-const Admin = () => {
+const AdminMember = (props) => {
+    // For Table
     const columns = [
         {
-          title: '이름',
-          dataIndex: 'name',
+            title: '이름',
+            dataIndex: 'name',
         },
         {
-          title: '이메일',
-          dataIndex: 'age',
+            title: '이메일',
+            dataIndex: 'email',
         },
         {
-          title: '비밀번호',
-          dataIndex: 'address',
+            title: '비밀번호',
+            dataIndex: 'password',
         },
         {
-        title: '연락처',
-        dataIndex: 'name',
-        },
-        {
-        title: '상태',
-        dataIndex: 'age',
-        },
-        {
-        title: ' 선택 메일 보내기',
-        dataIndex: 'address',
+            title: '연락처',
+            dataIndex: 'contact',
         },
     ];
 
@@ -36,24 +29,29 @@ const Admin = () => {
         data.push({
             key: i,
             name: `Edward King ${i}`,
-            age: 32,
-            address: `London, Park Lane no. ${i}`,
+            email: 32,
+            password: `123456789`,
+            contact: '010-0000-0000',
         });
     }
 
+
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
-          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         },
     };
 
+    // Props
+    const { history } = props;
+
     return (
-        <div className='admin'>
+        <div className='admin-member'>
             <Row gutter={[0, 16]} className='top' justify='space-between'>
                 <Col>
                     <Space size='middle'>
-                        <Button>가입회원만 보기</Button>
-                        <Button>가입요청 보기</Button>
+                        <Button onClick={() => { history.push('/admin-member') }}>가입회원만 보기</Button>
+                        <Button onClick={() => { history.push('/member-request') }}>가입요청 보기</Button>
                     </Space>
                 </Col>
                 <Col className='style-input'>
@@ -67,11 +65,21 @@ const Admin = () => {
                 <Col span={24}>
                     <Table
                         rowSelection={{
-                        ...rowSelection,
+                            ...rowSelection,
                         }}
                         scroll={{ x: 1300 }}
                         columns={columns}
                         dataSource={data}
+                        onRow={(record, rowIndex) => {
+                            return {
+                                onClick: event => {
+                                    history.push({
+                                        pathname: '/member-detail',
+                                        state: { product: record }
+                                    })
+                                }
+                            }
+                        }}
                     />
                 </Col>
             </Row>
@@ -79,4 +87,4 @@ const Admin = () => {
     )
 }
 
-export default Admin
+export default AdminMember

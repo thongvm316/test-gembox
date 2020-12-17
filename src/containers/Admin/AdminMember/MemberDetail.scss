@@ -1,0 +1,23 @@
+.member-detail {
+    .style-positon {
+        display: flex;
+        justify-content: space-between;
+    }
+    .border-solid {
+        padding: .5rem;
+        border: 1px solid gray;
+    }
+}
+
+@media (max-width: '576px') {
+    .ant-row {
+        width: 95% !important;
+    }
+}
+
+@media (max-width: '320px') {
+    .border-solid {
+        width: 200px;
+        border: none !important;
+    }
+}
