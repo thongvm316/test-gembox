@@ -25,10 +25,15 @@ todo:
 2. Fix some UI
 3. React lazy load - BackEnd
 
-2. Fix UI - Admin
+2. Fix UI - User's page
     a. Login ---- Done
-    b. Find Account ---- Done
-    c. Member List Registed, push ---- Done
-    d. Member request 
-        1. Request ---- Done
-        2. Detail       
+    b. Signup
+        a. Add more UI --> Logic resend sms
+    c. Popup after signup
+    d. Popup find password 
+    e. Sb miss a a page -- add to PJ 
+
+--
+
+Signup:
+    1. Use old - fix row col

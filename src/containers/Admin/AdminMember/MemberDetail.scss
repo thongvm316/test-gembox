@@ -10,14 +10,18 @@
 }
 
 @media (max-width: '576px') {
-    .ant-row {
-        width: 95% !important;
+    .member-detail {
+        .ant-row {
+            width: 95% !important;
+        }
     }
 }
 
 @media (max-width: '320px') {
-    .border-solid {
-        width: 200px;
-        border: none !important;
+    .member-detail {
+        .border-solid {
+            width: 200px;
+            border: none !important;
+        }
     }
 }

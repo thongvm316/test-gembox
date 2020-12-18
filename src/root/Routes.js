@@ -8,17 +8,19 @@ import Home from '../containers/Home/Home';
 import Login from '../containers/Login';
 import ProductSearch from '../containers/ProductSearch/ProductSearch'
 import VendorSearch from '../containers/VendorSearch/VendorSearch'
-import Register from '../containers/Register/Register'
+import SignUp from '../containers/Register/SignUp'
 import VideoSearch from '../containers/VideoSearch/VideoSearch'
 import SaleStatus from '../containers/SaleStatus/SaleStatus'
 import ProductDetail from '../components/ProductDetail/ProductDetail'
+
 import AdminMember from '../containers/Admin/AdminMember/AdminMember'
 import MemberDetail from '../containers/Admin/AdminMember/MemberDetail'
 import AdminLogin from '../containers/Admin/AdminLogin'
 import AdminFindPassword from '../containers/Admin/AdminFindPassword'
 import AdminMemberRequest from '../containers/Admin/AdminMemberRequest/AdminMemberRequest'
-import setAuthToken from '../utils/setAuthToken'
+import AdminMemberRequestDetail from '../containers/Admin/AdminMemberRequest/AdminMemberRequestDetail'
 
+import setAuthToken from '../utils/setAuthToken'
 // if (localStorage.token) {
 //     console.log(localStorage.token)
 //     setAuthToken(localStorage.token);
@@ -33,10 +35,11 @@ const Routes = () => {
             <AppRoute exact path="/admin-member" component={AdminMember} />
             <AppRoute exact path="/member-detail" component={MemberDetail} />
             <AppRoute exact path="/member-request" component={AdminMemberRequest} />
+            <AppRoute exact path="/member-request-detail" component={AdminMemberRequestDetail} />   
 
             <AppRoute exact path="/" component={Login} layout={LoginLayout} />
             <AppRoute exact path="/home" component={Home} />
-            <AppRoute exact path="/register" component={Register} layout={RegisterLayout} />
+            <AppRoute exact path="/signup" component={SignUp} layout={RegisterLayout} />
 
             <AppRoute exact path="/product-search" component={ProductSearch} />
             <AppRoute exact path="/vendor-search" component={VendorSearch} />

@@ -78,7 +78,7 @@ const AdminMemberRequest = (props) => {
                             return {
                                 onClick: event => {
                                     history.push({
-                                        pathname: '',
+                                        pathname: '/member-request-detail',
                                         state: { product: record }
                                     })
                                 }

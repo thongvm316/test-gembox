@@ -207,7 +207,7 @@ const Home = () => {
            </Col>
         </Row>
         <Row justify='center'>
-            <Col>
+            <Col span={24}>
               <p style={{ color: '#335b63' }}>
                   <strong>주소 </strong>:서울특별시 강남구 언주로 311 (로즈1타워) 3층    <strong>개인정보관리자</strong>:심규민    copyright &copy; gemtoys.co.kr all rights reserved.
               </p>

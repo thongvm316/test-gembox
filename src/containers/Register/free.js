@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import './Register.scss'
+import './SignUp.scss'
 import { Row, Col, Input, Modal, Button, Form, message } from 'antd';
 import { API_URL } from '../../constants/appConstants'
 import axios from 'axios'
 
 const FormItem = Form.Item;
 
-const Register = (props) => {
+const SignUp = (props) => {
 
     const [verifiedPhone, setVerifiedPhone] = useState(false);  // For show or hidden input to type code sms
     const [signUp, setSignUp] = useState(false); // For Moal
@@ -328,4 +328,4 @@ const Register = (props) => {
     )
 }
 
-export default Register
+export default SignUp

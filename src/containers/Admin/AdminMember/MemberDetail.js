@@ -8,7 +8,7 @@ const MemberDetail = (props) => {
             <Row style={{ width: '500px' }}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className="style-positon">
                     <p><strong>이름</strong></p>
-                    <p>010-0000-0000</p>
+                    <p>이선호</p>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className="style-positon">
                     <p><strong>연락처</strong></p>
@@ -20,7 +20,7 @@ const MemberDetail = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className="style-positon">
                     <p><strong>패스워드</strong></p>
-                    <p>werr2334</p>
+                    <p>werr2334</p>   
                 </Col>
             </Row>
 
