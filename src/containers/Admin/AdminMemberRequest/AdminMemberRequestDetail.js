@@ -2,6 +2,39 @@ import React from 'react'
 import { Row, Col, Button, Space, Image } from 'antd'
 import './AdminMemberRequestDetail.scss'
 
+const data = {
+    "success": true,
+    "data": {
+        "code": "20000",
+        "message": "Success",
+        "result": {
+            "member": [{
+                "id": 16,
+                "email": "ldminh1@gmail.com",
+                "phone": "+84969351874",
+                "name": "Minh Le",
+                "register_date": "2020-12-18",
+                "approved_date": "2020-12-18",
+                "markets": ["http://google.com"],
+                "company_registration_num": null,
+                "business_license": "https://df11gazfkzugr.cloudfront.net/16/9308837603f3a6a9a6686543f8d47e37.pdf?Expires=1608866672&Signature=aeuEmeci~xcLX7F6wbuEQZ~IJrVl3h4JD9XI1cBshs-DhBUYNqlrIvLG81a-zjDJh3J7Ncjet4moXxGMjg~WDkrh4b1v82Ge0NU5YhxRrMGfPFi24kc3Qfbm57mIkGs0luOssiFcJ0uyGR6C8KxmAH61Q6Go2rmdcQjvZwGU7-bug7-qQW7gMa5gAaUUyeIADV~YomvtT8eA6apPOZFA8hI3Yo1ly-5n-F-X9bv2o~hFckHCsC2hHGYCbx-WQgQ2xRG~-eshIqq5Cs7SSTPG6Io~c78dKNpXl0gTuMw-noMzo-nlxIMocqWlZBnAFLjMCDW3URzVgemG0t2Y0PgMog__&Key-Pair-Id=APKAJXU52GAWWUFZNCCQ"
+            }],
+            "member_request": [
+                {
+                    "id": 16,
+                    "email": "ldminh1@gmail.com",
+                    "phone": "+84969351874",
+                    "name": "Minh Le",
+                    "status": 0,
+                    "register_date": "2020-12-18",
+                    "markets": ["http://google.com"],
+                    "business_license": "https://df11gazfkzugr.cloudfront.net/16/9308837603f3a6a9a6686543f8d47e37.pdf?Expires=1608866672&Signature=aeuEmeci~xcLX7F6wbuEQZ~IJrVl3h4JD9XI1cBshs-DhBUYNqlrIvLG81a-zjDJh3J7Ncjet4moXxGMjg~WDkrh4b1v82Ge0NU5YhxRrMGfPFi24kc3Qfbm57mIkGs0luOssiFcJ0uyGR6C8KxmAH61Q6Go2rmdcQjvZwGU7-bug7-qQW7gMa5gAaUUyeIADV~YomvtT8eA6apPOZFA8hI3Yo1ly-5n-F-X9bv2o~hFckHCsC2hHGYCbx-WQgQ2xRG~-eshIqq5Cs7SSTPG6Io~c78dKNpXl0gTuMw-noMzo-nlxIMocqWlZBnAFLjMCDW3URzVgemG0t2Y0PgMog__&Key-Pair-Id=APKAJXU52GAWWUFZNCCQ"
+                }
+            ]
+        }
+    }
+}
+
 const AdminMemberRequestDetail = (props) => {
     return (
         <div className="admin-member-request-detail">
@@ -20,7 +53,7 @@ const AdminMemberRequestDetail = (props) => {
                             <p><strong>이메일</strong></p>
                             <p>brickmate@gmail.com</p>
                         </Col>
-                        <Col span={24} className="style-positon">        
+                        <Col span={24} className="style-positon">
                             <p><strong>패스워드</strong></p>
                             <p>werr2334</p>
                         </Col>

@@ -25,15 +25,20 @@ todo:
 2. Fix some UI
 3. React lazy load - BackEnd
 
-2. Fix UI - User's page
-    a. Login ---- Done
-    b. Signup
-        a. Add more UI --> Logic resend sms
-    c. Popup after signup
-    d. Popup find password 
-    e. Sb miss a a page -- add to PJ 
-
 --
+todos: 
+12.21: Login
+12.22 - 12.23: SignUp
 
-Signup:
-    1. Use old - fix row col
+12.21 ---> Login
+1. UI
+    a. Html
+    b. Css
+    c. Res
+
+
+2. All pop-up
+
+
+
+
