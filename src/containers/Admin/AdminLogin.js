@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Row, Col } from 'antd';
 import { useLocation } from "react-router-dom";
-// import { API_URL } from '../constants/appConstants'
+import { API_URL } from '../../constants/appConstants'
 import axios from 'axios'
 import './AdminLogin.scss'
 
@@ -36,19 +36,26 @@ const AdminLogin = (props) => {
     }, [location])
 
     const onFinish = async (values) => {
-        // console.log('Success:', values);
-        // const { username, password } = values
-        // const body = {
-        //     username,
-        //     password
-        // }
+        console.log('Success:', values);
+        const { email, password } = values
+        const body = {
+            email,
+            password
+        }
 
-        // const config = {
-        //     headers: {
-        //         "Accept": "application/json",
-        //         'Content-Type': 'application/json'
-        //     }
-        // }
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json'
+            }
+        }
+        try {
+            const { data } = await axios.post(`${API_URL}/admin/logins`, body, config);
+            console.log(data)
+        } catch (error) {
+            console.log(error.data)
+        }
+
         // const { data } = await axios.post(`${API_URL}/logins`, body, config);
         // if (data.data.code === '20000' && data.data.message === 'Success') {
         //     console.log(data)
@@ -84,11 +91,11 @@ const AdminLogin = (props) => {
                         onFinishFailed={onFinishFailed}
                     >
                         <FormItem
-                            name="username"
+                            name="email"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your username!',
+                                    message: 'Please input your email!',
                                 },
                             ]}
                         >

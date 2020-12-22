@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Row, Col, Button, Space, Input, Table } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
+import { API_URL } from '../../../constants/appConstants'
+import axios from 'axios'
 import './AdminMember.scss'
 
 const AdminMember = (props) => {
+    const [data, setData] = useState('')
+
     // For Table
     const columns = [
         {
@@ -20,21 +24,9 @@ const AdminMember = (props) => {
         },
         {
             title: '연락처',
-            dataIndex: 'contact',
+            dataIndex: 'phone',
         },
     ];
-
-    const data = [];
-    for (let i = 0; i < 4; i++) {
-        data.push({
-            key: i,
-            name: `Edward King ${i}`,
-            email: 32,
-            password: `123456789`,
-            contact: '010-0000-0000',
-        });
-    }
-
 
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
@@ -44,6 +36,26 @@ const AdminMember = (props) => {
 
     // Props
     const { history } = props;
+
+    // Get Data
+    useEffect(async () => {
+        console.log(`object`)
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+                'X-Auth-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0FkbWluIjoxLCJzdWIiOjEsImV4cCI6MTYwODcxNDI4OX0.MceK2Vrf9fqLqAYhpMsqziPRms5a1CNFlaifl3mIr14'
+            }
+        }
+        try {
+            const { data } = await axios.get(`${API_URL}/usermanages`, config);
+            const { data: { result } } = data
+            const { member } = result
+            setData(member)
+        } catch (error) {
+            console.log(error.data)
+        }
+    }, [])
 
     return (
         <div className='admin-member'>
@@ -68,6 +80,7 @@ const AdminMember = (props) => {
                             ...rowSelection,
                         }}
                         scroll={{ x: 1300 }}
+                        rowKey={record => record.id}
                         columns={columns}
                         dataSource={data}
                         onRow={(record, rowIndex) => {
@@ -75,7 +88,7 @@ const AdminMember = (props) => {
                                 onClick: event => {
                                     history.push({
                                         pathname: '/member-detail',
-                                        state: { product: record }
+                                        state: { memberDetail: record }
                                     })
                                 }
                             }

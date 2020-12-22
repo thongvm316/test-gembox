@@ -27,18 +27,29 @@ todo:
 
 --
 todos: 
-12.21: Login
-12.22 - 12.23: SignUp
 
-12.21 ---> Login
-1. UI
-    a. Html
-    b. Css
-    c. Res
+Call API:
+    2. Intergate to React App
+        c. Approve / Reject
 
 
-2. All pop-up
+a. Login ----> Done
+1. AdminMember - Admin Member Detail ---- Done
+2. Member request - member request detail --- Done
+d. Del member ----> Done
 
+
+
+Api with AdminLogin:
+    1. Logic after success: store token
+    2. Logic when login failed
+
+AdminMember - AdminMemberRequest:
+    1. Process data
+    2. Logic with err
+    3. Use token in localstore and add to headers - not fix by myseft
+
+Logic when del user failed
 
 
 
