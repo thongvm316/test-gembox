@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import MainLayout from '../components/MainLayout';
 
 const AppRoute = (props) => {

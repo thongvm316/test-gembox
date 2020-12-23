@@ -86,113 +86,88 @@ const Login = (props) => {
     return (
         <div className="login-page">
             <Row gutter={24}>
-                <Col span={24}>
+                <Col span={24} style={{ textAlign: 'center' }}>
                     <h1 className="logo">GEM FACTORY</h1>
-                </Col>
-
-                <Col xs={20} sm={24} md={24} lg={24} xl={24}>
-                    <Row gutter={24}>
-                        <Col span={24}>
-                            <h1 className="login-title">로그인</h1>
-                            <p className="adv">최상의 상품판매 전략을 위한 빅데이터 서비스</p>
-                        </Col>
-                    </Row>
-                    <Form
-                        onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
-                    >
-                        <FormItem
-                            name="email"
-                            rules={[
-                                {
-                                    required: true,
-                                    type: 'email',
-                                    message: 'The input is not valid E-mail!',
-                                },
-                            ]}
-                        >
-                            <Input
-                                size="large"
-                                placeholder="이메일"
-                                type="text"
-                                bordered={true}
-                            />
-                        </FormItem>
-
-                        <FormItem
-                            name="password"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your password!',
-                                },
-                            ]}
-                        >
-                            <Input.Password
-                                size="large"
-                                type="password"
-                                placeholder="비밀번호 8자리"
-                                iconRender={(visible) => (visible ? <EyeOutlined /> : "Show")}
-                            />
-                        </FormItem>
-                        <Button className="btn-text-type" type="text">비밀번호 찾기</Button>
-
-                        <FormItem>
-                            <Button className="btn-login" htmlType="submit">로그인</Button>
-                        </FormItem>
-                    </Form>
-                    <Row gutter={24}>
-                        <Col span={24}>
-                            <p>Gem Factory를 처음 사용하십니까? <strong>회원가입</strong></p>
-                            <p>오직 잼팩토리와 협약된 계정만 사용가능합니다</p>
-                        </Col>
-                        <Divider />
-                        <Col span={12}>관리자로 로그인</Col>
-                    </Row>
                 </Col>
             </Row>
 
-            {/* <Row justify='center' className="footer" style={{ marginTop: '50px' }}>
-                <Col span={20}>
+            <Row gutter={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Row gutter={24} justify="start">
+                            <Col span={12}>
+                                <h1 className="login-title">로그인</h1>
+                                <p className="adv">최상의 상품판매 전략을 위한 빅데이터 서비스</p>
+                            </Col>
+                        </Row>
+                        <Form
+                            onFinish={onFinish}
+                            onFinishFailed={onFinishFailed}
+                        >
+                            <FormItem
+                                name="email"
+                                rules={[
+                                    {
+                                        required: true,
+                                        type: 'email',
+                                        message: 'The input is not valid E-mail!',
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    size="large"
+                                    placeholder="이메일"
+                                    type="text"
+                                    bordered={true}
+                                />
+                            </FormItem>
+
+                            <FormItem
+                                name="password"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your password!',
+                                    },
+                                ]}
+                            >
+                                <Input.Password
+                                    size="large"
+                                    type="password"
+                                    placeholder="비밀번호 8자리"
+                                    iconRender={(visible) => (visible ? <EyeOutlined /> : "Show")}
+                                />
+                            </FormItem>
+                            <Button className="btn-text-type" type="text">비밀번호 찾기</Button>
+
+                            <FormItem>
+                                <Button size="large" shape="round" className="btn-login" htmlType="submit">로그인</Button>
+                            </FormItem>
+                        </Form>
+                        <Row gutter={24}>
+                            <Col span={24}>
+                                <p>Gem Factory를 처음 사용하십니까? <strong>회원가입</strong></p>
+                                <p>오직 잼팩토리와 협약된 계정만 사용가능합니다</p>
+                            </Col>
+                            <Divider />
+                            <Col span={12}>관리자로 로그인</Col>
+                        </Row>
+                    </Col>
+                </Col>
+            </Row>
+
+            {/* <Row gutter={24}>
+                <Col span={24}>
                     <p style={{ color: '#335b63' }}> <strong>잼토이즈 &nbsp; &nbsp;</strong>
                         <strong>상호</strong>:주식회사 잼팩토리   <strong>대표</strong>:이수진    <strong>사업자등록번호</strong>:220-88-93741    <strong>통신판매업신고번호</strong>:제2020-서울강남-01686호[사업자정보확인]     <strong>대표번호</strong>:1899-5704    <strong>메일</strong>:gemtoys@gemtoys.co.kr
                         </p>
                 </Col>
-                <Col span={20}>
+                <Col span={24}>
                     <p style={{ color: '#335b63' }}>
                         <strong>주소 </strong>:서울특별시 강남구 언주로 311 (로즈1타워) 3층    <strong>개인정보관리자</strong>:심규민    copyright &copy; gemtoys.co.kr all rights reserved.
                         </p>
                 </Col>
             </Row> */}
-
-            <Modal
-                title="비밀 번호 찾기"
-                visible={findPassword}
-                onOk={handleOkModalFindPassword}
-                onCancel={() => setFindPassword(false)}
-                okText="확인"
-                okButtonProps={{ type: "default" }}
-                cancelButtonProps={{ style: { display: 'none' } }}
-            >
-                <div style={{ textAlign: 'center' }}>
-                    <p>비밀번호 분실의 경우 관리자에게 문의바랍니다</p>
-                    <p>gemtoys@gemtoys.co.kr</p>
-                    <p>1899-5704</p>
-                </div>
-            </Modal>
-
-            <Modal
-                okButtonProps={{ type: "default" }}
-                cancelButtonProps={{ style: { display: 'none' } }}
-                visible={loginFailed}
-                onOk={handleOkModalLoginFailed}
-            >
-                <div style={{ textAlign: 'center' }}>
-                    <h1>계정정보가 올바르지 않습니다</h1>
-                    <p>비밀번호 분실의 경우 관리자에게 문의바랍니다</p>
-                    <p>1899-5704</p>
-                </div>
-            </Modal>
         </div>
     )
 }

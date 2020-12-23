@@ -47,17 +47,12 @@ const AdminMemberRequest = (props) => {
             headers: {
                 "Accept": "application/json",
                 'Content-Type': 'application/json',
-                'X-Auth-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0FkbWluIjoxLCJzdWIiOjEsImV4cCI6MTYwODcwNDQwNX0.ax0SxJpUZNhg3poQkMlcodYDMjcUD3qXny2IY2f-UWY'
             }
         }
-        try {
-            const { data } = await axios.get(`${API_URL}/usermanages`, config);
-            const { data: { result } } = data
-            const { member_request } = result
-            setData(member_request)
-        } catch (error) {
-            console.log(error.response)
-        }
+        const { data } = await axios.get(`${API_URL}/usermanages`, config);
+        const { data: { result } } = data
+        const { member_request } = result
+        setData(member_request)
     }, [])
 
 

@@ -8,14 +8,12 @@ import './MemberDetail.scss'
 const MemberDetail = (props) => {
     const location = useLocation();
     const { memberDetail } = location.state;
-    console.log(memberDetail);
 
     const deleteMember = async () => {
         const config = {
             headers: {
                 "Accept": "application/json",
                 'Content-Type': 'application/json',
-                'X-Auth-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0FkbWluIjoxLCJzdWIiOjEsImV4cCI6MTYwODcxNDI4OX0.MceK2Vrf9fqLqAYhpMsqziPRms5a1CNFlaifl3mIr14'
             }
         }
         try {
@@ -23,7 +21,7 @@ const MemberDetail = (props) => {
             await axios.delete(`${API_URL}/usermanages/7`, config) // Demo
             props.history.push('/admin-member')
         } catch (error) {
-            console.log(error.response);
+            console.log(error.response)
         }
     }
 
@@ -44,7 +42,7 @@ const MemberDetail = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className="style-positon">
                     <p><strong>패스워드</strong></p>
-                    <p>werr2334 <strong>Will Del</strong></p>
+                    <p>werr2334 <strong>Will Delete</strong></p>
                 </Col>
             </Row>
 

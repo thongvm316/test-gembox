@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Row, Col } from 'antd';
+import { Form, Input, Button, Row, Col, message, Alert } from 'antd';
 import { useLocation } from "react-router-dom";
 import { API_URL } from '../../constants/appConstants'
 import axios from 'axios'
@@ -35,6 +35,18 @@ const AdminLogin = (props) => {
         }
     }, [location])
 
+    const showAlertWhenLoginFailed = () => {
+        message.error({
+            content: <Alert
+                description="Incorrect username or password."
+                type="error"
+            />,
+            style: {
+                marginTop: '10vh',
+            },
+        });
+    }
+
     const onFinish = async (values) => {
         console.log('Success:', values);
         const { email, password } = values
@@ -49,25 +61,24 @@ const AdminLogin = (props) => {
                 'Content-Type': 'application/json'
             }
         }
+
         try {
             const { data } = await axios.post(`${API_URL}/admin/logins`, body, config);
             console.log(data)
+            localStorage.setItem('token', data.data.result.token);
+            history.push('/admin-member')
         } catch (error) {
-            console.log(error.data)
+            // console.log(error.response)
+            message.error({
+                content: <Alert
+                    description="Incorrect username or password."
+                    type="error"
+                />,
+                style: {
+                    marginTop: '10vh',
+                },
+            });
         }
-
-        // const { data } = await axios.post(`${API_URL}/logins`, body, config);
-        // if (data.data.code === '20000' && data.data.message === 'Success') {
-        //     console.log(data)
-        //     localStorage.setItem('token', data.data.result.token);
-        //     history.push('/home');
-        // } else {
-        //     console.log(`Handle Err`)
-        // }
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
     };
 
     const handleOk = () => {
@@ -88,7 +99,6 @@ const AdminLogin = (props) => {
                 <Col xs={20} sm={24} md={24} lg={24} xl={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Form
                         onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
                     >
                         <FormItem
                             name="email"

@@ -11,41 +11,33 @@ const AdminMemberRequestDetail = (props) => {
     console.log(memberRequestDetail)
 
     const approve = async () => {
-        try {
-            const config = {
-                headers: {
-                    "Accept": "application/json",
-                    'Content-Type': 'application/json',
-                    'X-Auth-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0FkbWluIjoxLCJzdWIiOjEsImV4cCI6MTYwODcxNDI4OX0.MceK2Vrf9fqLqAYhpMsqziPRms5a1CNFlaifl3mIr14'
-                }
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
             }
-            const body = {
-                action: "approve"
-            }
-            // axios.put(`${API_URL}/usermanages/${memberRequestDetail.id}`, config)
-            axios.put(`${API_URL}/usermanages/2`, body, config) // Demo
-        } catch (error) {
-            console.log(error.response)
         }
+        const body = {
+            action: "approve"
+        }
+        // axios.put(`${API_URL}/usermanages/${memberRequestDetail.id}`, config)
+        axios.put(`${API_URL}/usermanages/2`, body, config) // Demo
+        props.history.push('/member-request')
     }
 
     const reject = () => {
-        try {
-            const config = {
-                headers: {
-                    "Accept": "application/json",
-                    'Content-Type': 'application/json',
-                    'X-Auth-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0FkbWluIjoxLCJzdWIiOjEsImV4cCI6MTYwODcxNDI4OX0.MceK2Vrf9fqLqAYhpMsqziPRms5a1CNFlaifl3mIr14'
-                }
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
             }
-            const body = {
-                action: "reject"
-            }
-            // axios.put(`${API_URL}/usermanages/${memberRequestDetail.id}`, config)
-            axios.put(`${API_URL}/usermanages/2`, body, config) // Demo
-        } catch (error) {
-            console.log(error.response)
         }
+        const body = {
+            action: "reject"
+        }
+        // axios.put(`${API_URL}/usermanages/${memberRequestDetail.id}`, config)
+        axios.put(`${API_URL}/usermanages/2`, body, config) // Demo
+        props.history.push('/member-request')
     }
 
     return (

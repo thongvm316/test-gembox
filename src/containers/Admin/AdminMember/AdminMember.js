@@ -3,7 +3,12 @@ import { Row, Col, Button, Space, Input, Table } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import { API_URL } from '../../../constants/appConstants'
 import axios from 'axios'
+import setAuthToken from '../../../utils/setAuthToken'
 import './AdminMember.scss'
+
+// if (localStorage.token) {
+//     setAuthToken(localStorage.token);
+// } // set x-auth-herder for request header from user
 
 const AdminMember = (props) => {
     const [data, setData] = useState('')
@@ -39,22 +44,16 @@ const AdminMember = (props) => {
 
     // Get Data
     useEffect(async () => {
-        console.log(`object`)
         const config = {
             headers: {
                 "Accept": "application/json",
                 'Content-Type': 'application/json',
-                'X-Auth-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0FkbWluIjoxLCJzdWIiOjEsImV4cCI6MTYwODcxNDI4OX0.MceK2Vrf9fqLqAYhpMsqziPRms5a1CNFlaifl3mIr14'
             }
         }
-        try {
-            const { data } = await axios.get(`${API_URL}/usermanages`, config);
-            const { data: { result } } = data
-            const { member } = result
-            setData(member)
-        } catch (error) {
-            console.log(error.data)
-        }
+        const { data } = await axios.get(`${API_URL}/usermanages`, config);
+        const { data: { result } } = data
+        const { member } = result
+        setData(member)
     }, [])
 
     return (

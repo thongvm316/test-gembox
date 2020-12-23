@@ -12,7 +12,6 @@ import SignUp from '../containers/Register/SignUp'
 import VideoSearch from '../containers/VideoSearch/VideoSearch'
 import SaleStatus from '../containers/SaleStatus/SaleStatus'
 import ProductDetail from '../components/ProductDetail/ProductDetail'
-
 import AdminMember from '../containers/Admin/AdminMember/AdminMember'
 import MemberDetail from '../containers/Admin/AdminMember/MemberDetail'
 import AdminLogin from '../containers/Admin/AdminLogin'
@@ -20,11 +19,14 @@ import AdminFindPassword from '../containers/Admin/AdminFindPassword'
 import AdminMemberRequest from '../containers/Admin/AdminMemberRequest/AdminMemberRequest'
 import AdminMemberRequestDetail from '../containers/Admin/AdminMemberRequest/AdminMemberRequestDetail'
 
+// PrivateRoute
+import PrivateRoute from './PrivateRoute'
+
+// Utils
 import setAuthToken from '../utils/setAuthToken'
-// if (localStorage.token) {
-//     console.log(localStorage.token)
-//     setAuthToken(localStorage.token);
-// } 
+if (localStorage.token) {
+    setAuthToken(localStorage.token);
+}
 
 const Routes = () => {
     return (
@@ -32,10 +34,10 @@ const Routes = () => {
             {/* Admin */}
             <AppRoute exact path="/admin-login" component={AdminLogin} layout={LoginLayout} />
             <AppRoute exact path="/admin-find-password" component={AdminFindPassword} layout={LoginLayout} />
-            <AppRoute exact path="/admin-member" component={AdminMember} />
-            <AppRoute exact path="/member-detail" component={MemberDetail} />
-            <AppRoute exact path="/member-request" component={AdminMemberRequest} />
-            <AppRoute exact path="/member-request-detail" component={AdminMemberRequestDetail} />   
+            <PrivateRoute exact path="/admin-member" component={AdminMember} />
+            <PrivateRoute exact path="/member-detail" component={MemberDetail} />
+            <PrivateRoute exact path="/member-request" component={AdminMemberRequest} />
+            <PrivateRoute exact path="/member-request-detail" component={AdminMemberRequestDetail} />
 
             <AppRoute exact path="/" component={Login} layout={LoginLayout} />
             <AppRoute exact path="/home" component={Home} />

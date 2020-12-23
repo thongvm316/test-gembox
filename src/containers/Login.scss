@@ -17,12 +17,14 @@
         font-weight: 700;
         font-size: 26px;
         color: #42ABBC;
+        text-align: center;
     }
 
     .login-title {
         font-weight: 700;
-        font-size: 28px;
+        font-size: 26px;
         color: #333333;
+        margin-bottom: 0px;
     }
 
     .adv {
@@ -36,5 +38,14 @@
         font-size: 16px;
         color: #42ABBC;
         padding: 0;
+    }
+
+    .btn-login {
+        margin-top: 22px;
+        background-color: #3F537D;
+        span {
+            color: #fff;
+            font-weight: 700;
+        }
     }
 }

@@ -43,13 +43,13 @@ const MainLayout = (props) => {
                 <Header style={{ background: '#fff', padding: 0 }}>
                     {
                         collapsed ?
-                        <MenuUnfoldOutlined className="trigger" onClick={() => toggle()} />
-                        :
-                        <MenuFoldOutlined className="trigger" onClick={() => toggle()}/>
+                            <MenuUnfoldOutlined className="trigger" onClick={() => toggle()} />
+                            :
+                            <MenuFoldOutlined className="trigger" onClick={() => toggle()} />
                     }
                     <Dropdown overlay={renderUserInfor()}>
                         <div>
-                            <Avatar style={{marginRight: '10px'}} icon={<UserOutlined />} size="small" />
+                            <Avatar style={{ marginRight: '10px' }} icon={<UserOutlined />} size="small" />
                         </div>
                     </Dropdown>
                 </Header>
