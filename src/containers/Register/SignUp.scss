@@ -1,32 +1,66 @@
-.ant-input{
-    background-color: #DDDDDD !important;
+.signup {
+    .ant-input{
+        background-color: transparent !important;
+        border-color: #A6B0CF !important;
+    }
+
+    .ant-input-affix-wrapper {
+        border-color: #A6B0CF !important;
+    }
+    .ant-form-item{
+        margin-bottom: 3px !important;
+    }
+    .submit{
+        width: 80% !important;
+    }
+    .logo {
+        font-weight: 700;
+        font-size: 26px;
+        color: #42ABBC;
+    }
+    .background-color {
+        background-color: #fff;
+        padding: 2rem !important;
+        border-radius: 8px;
+        box-shadow: 0px 0px 12px 0px #80808036;
+    }
+    .send-sms {
+        span {
+            color: #42ABBC;
+            font-weight: bold;
+        }
+    }
+    .agreement {
+        p {
+            font-weight: 400;
+            font-size: 14px;
+            color: #4c4c4c;
+        }
+    }
+    .submit {
+        margin-top: 22px;
+        background-color: #3F537D;
+        span {
+            color: #fff;
+            font-weight: 700;
+        }
+        &:hover {
+            background-color: #3F537D;
+            border-color: #3F537D;
+        }
+    }
+    .btn-forgot-password {
+        padding: 0;
+        span {
+            color: #42ABBC;
+            font-weight: 500;
+            font-size: 12px;
+        }
+    }
 }
-
-.verified{
-    display: flex;
-    width: 100%;
-}
-
-.ant-form-item{
-    margin-bottom: 6px !important;
-
-
-}
-.submit{
-    width: 80% !important;
-}
-
-
 
 @media (max-width: 767px) {
     .submit{
         width: auto;
-    }
-}
-
-.signup {
-    .agreement {
-        background-color: #f4f6f8;
-        padding: 2rem;
     }
 }

@@ -1,8 +1,9 @@
 import React from 'react'
 import { Form, Input, Button, Row, Col } from 'antd';
+import Footer from '../../components/Footer'
 import './AdminFindPassword.scss'
 
-const AdminFindPassword = () => {
+const AdminFindAccount = () => {
 
     const onFinish = async (values) => {
         console.log('Success:', values);
@@ -13,7 +14,9 @@ const AdminFindPassword = () => {
     };
 
     return (
-        <div className="admin-find-password">
+        <div className="admin-find-password" style={{
+            display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100vh', paddingTop: '5rem'
+        }}>
             <Row justify="center" gutter={24} style={{ textAlign: 'center' }}>
                 <Col span={24}>
                     <h1>GEM FACTORY</h1>
@@ -63,8 +66,9 @@ const AdminFindPassword = () => {
                     </Form>
                 </Col>
             </Row>
+            <Footer />
         </div>
     )
 }
 
-export default AdminFindPassword
+export default AdminFindAccount

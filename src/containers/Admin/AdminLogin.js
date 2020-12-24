@@ -3,6 +3,7 @@ import { Form, Input, Button, Row, Col, message, Alert } from 'antd';
 import { useLocation } from "react-router-dom";
 import { API_URL } from '../../constants/appConstants'
 import axios from 'axios'
+import Footer from '../../components/Footer'
 import './AdminLogin.scss'
 
 const layout = {
@@ -91,8 +92,10 @@ const AdminLogin = (props) => {
 
 
     return (
-        <>
-            <Row className="admin-login" justify="center" gutter={24} style={{ textAlign: 'center' }}>
+        <div className="admin-login" style={{
+            display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100vh', paddingTop: '5rem'
+        }}>
+            <Row justify="center" gutter={24} style={{ textAlign: 'center' }}>
                 <Col span={24}>
                     <h1>GEM FACTORY</h1>
                 </Col>
@@ -141,7 +144,8 @@ const AdminLogin = (props) => {
                     <Button className="btn-login" onClick={() => setFindPassword(true)}>계정찾기</Button>
                 </Col>
             </Row>
-        </>
+            <Footer />
+        </div >
     )
 }
 

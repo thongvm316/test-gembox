@@ -11,6 +11,9 @@
         font-weight: 500;
         font-size: 14px;
         color: #42ABBC;
+        &:hover {
+            color: #42ABBC;
+        }
     }
  
     .logo {
@@ -33,11 +36,14 @@
         color: #333333;
     }
 
-    .btn-text-type {
+    .btn-forgot-password {
         font-weight: 500;
         font-size: 16px;
         color: #42ABBC;
         padding: 0;
+        &:hover {
+            color: #42ABBC;
+        }
     }
 
     .btn-login {
@@ -47,5 +53,34 @@
             color: #fff;
             font-weight: 700;
         }
+        &:hover {
+            background-color: #3F537D;
+            border-color: #3F537D;
+        }
+    }
+    .background-color {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0px 0px 12px 0px #80808036;
+        margin-bottom: 40px;
+    }
+    .sign-up {
+        margin-bottom: 0;
+       .ant-btn {
+           padding: 0;
+           color: #42ABBC;
+           font-weight: bold;
+        }
+    }
+    .info {
+        font-weight: 400;
+        font-size: 12px;
+        color: #8D8D8D;
+    }
+    .login-admin {
+        font-weight: 500;
+        font-size: 14px;
+        color: #414141;
     }
 }
