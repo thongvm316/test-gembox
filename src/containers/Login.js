@@ -8,6 +8,7 @@ import Footer from '../components/Footer'
 import './Login.scss'
 
 import { EyeOutlined } from '@ant-design/icons';
+import { color } from 'highcharts';
 
 
 const layout = {
@@ -87,10 +88,10 @@ const Login = (props) => {
     }
 
     return (
-        <div className="login-page" style={{ marginTop: '2rem' }}>
+        <div className="login-page" style={{ height: '100vh' }}>
             <Row gutter={24}>
                 <Col span={24} style={{ textAlign: 'center' }}>
-                    <h1 className="logo">GEM FACTORY</h1>
+                    <h1 style={{ paddingTop: '3rem' }} className="logo">GEM FACTORY</h1>
                 </Col>
             </Row>
 
@@ -145,13 +146,17 @@ const Login = (props) => {
                                 <Button onClick={handleOkModalFindPassword} className="btn-forgot-password" type="text">비밀번호 찾기</Button>
 
                                 <FormItem>
-                                    <Button size="large" shape="round" className="btn-login" htmlType="submit">로그인</Button>
+                                    <Row justify="center">
+                                        <Col span={12} style={{ textAlign: 'center' }}>
+                                            <Button style={{ width: '10rem', backgroundColor: '#3F537D', color: '#fff', marginTop: '22px' }} size="large" shape="round" className="btn-login" htmlType="submit">로그인</Button>
+                                        </Col>
+                                    </Row>
                                 </FormItem>
                             </Form>
                         </div>
                         <Row gutter={24}>
                             <Col span={24} style={{ textAlign: 'center' }}>
-                                <p className="sign-up">Gem Factory를 처음 사용하십니까? <Button type="text">회원가입</Button></p>
+                                <p className="sign-up">Gem Factory를 처음 사용하십니까? <Button onClick={() => { history.push('/signup') }} type="text">회원가입</Button></p>
                                 <p style={{ textAlign: 'center', fontWeight: '400', fontSize: '12px', color: '#8D8D8D' }}>오직 잼팩토리와 협약된 계정만 사용가능합니다</p>
                             </Col>
                             <Col span={24}>
@@ -162,41 +167,32 @@ const Login = (props) => {
                                 </Row>
                             </Col>
                             <Col span={24} style={{ textAlign: 'center' }}>
-                                <Button type="text" className="login-admin">관리자로 로그인</Button>
+                                <Button onClick={() => { history.push('admin-login') }} type="text" className="login-admin">관리자로 로그인</Button>
                             </Col>
                         </Row>
                     </Col>
                 </Col>
             </Row>
-
             <Footer />
             <Modal
-                // title="비밀 번호 찾기"
                 visible={findPassword}
-                onOk={() => setFindPassword(false)}
-                okText="확인"
                 okButtonProps={{ style: { display: 'none' } }}
                 cancelButtonProps={{ style: { display: 'none' } }}
             >
-                {/* <div style={{ textAlign: 'center' }}>
-                    <p>비밀번호 분실의 경우 관리자에게 문의바랍니다</p>
-                    <p>gemtoys@gemtoys.co.kr</p>
-                    <p>1899-5704</p>
-                </div> */}
                 <div className="modal-forgot-password">
                     <Row gutter={24} align='middle' style={{ flexDirection: 'column' }}>
                         <Col span={24}>
-                            <h1 style={{ textAlign: 'center', fontWeight: '500', fontSize: '36px', color: '#495057' }}>비밀 번호 찾기</h1>
+                            <h1 style={{ textAlign: 'center', fontWeight: '500', fontSize: '30px', color: '#495057' }}>비밀 번호 찾기</h1>
                         </Col>
                         <Col span={15}>
                             <Image width={250} src="/img/img-forgot-password.png" />
                         </Col>
                         <Col span={15}>
-                            <p>비밀번호 분실의 경우 관리자에게 문의바랍니다</p>
-                            <p>gemtoys@gemtoys.co.kr or 1899-5704</p>
+                            <p style={{ fontWeight: '700', fontSize: '14px', color: '#74788D', marginTop: '40px', marginBottom: '0' }}>비밀번호 분실의 경우 관리자에게 문의바랍니다</p>
+                            <p style={{ fontWeight: '700', fontSize: '14px', color: '#495057' }}>gemtoys@gemtoys.co.kr or 1899-5704</p>
                         </Col>
-                        <Col span={12}>
-                            <Button>확인</Button>
+                        <Col span={24}>
+                            <Button onClick={() => setFindPassword(false)} style={{ width: '10rem', backgroundColor: '#3F537D', color: '#fff', marginTop: '50px' }} className="btn-modal-forgot-password" shape="round" size="large">확인</Button>
                         </Col>
                     </Row>
                 </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './SignUp.scss'
-import { Row, Col, Input, Modal, Button, Form, message, Checkbox } from 'antd';
+import { Row, Col, Input, Modal, Button, Form, message, Checkbox, Image, Upload } from 'antd';
 import { API_URL } from '../../constants/appConstants'
 import Footer from '../../components/Footer'
 import axios from 'axios'
@@ -10,26 +10,16 @@ const FormItem = Form.Item;
 // Component for Add more Input Url
 const AddMoreInput = () => {
     return (
-        <div className="verified">
-            <FormItem
-                name="url"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input your 신청 마켓 url 입력*',
-                    },
-                ]}
-            >
-                <Input
-                    placeholder="신청 마켓 url 입력*"
-                    type="text"
-                />
-            </FormItem>
-            <Button>+</Button>
-        </div>
+        <>
+            <Input
+                placeholder="신청 마켓 url 입력*"
+                type="text"
+                style={{ marginBottom: '2px' }}
+            // suffix={<Button>+</Button>}
+            />
+        </>
     )
 }
-
 
 const SignUp = (props) => {
 
@@ -37,8 +27,8 @@ const SignUp = (props) => {
     const [signUp, setSignUp] = useState(false); // For Moal
     const [email, setEmail] = useState('') // For verify email
     const [basePdf, setBasePdf] = useState(""); // For convert pdf-file
-    const [inputs, addMoreInput] = useState([1]) // For Add more input
     const [resendSms, setResemdSms] = useState('')
+    const [inputs, setInputs] = useState({ inputs: ['input-0'] }) // For Add more input
     const [validatePassword, setValidatePassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -160,6 +150,11 @@ const SignUp = (props) => {
         });
     };
 
+    const appendInput = () => {
+        var newInput = `input-${inputs.inputs.length}`;
+        setInputs(prevState => ({ inputs: prevState.inputs.concat([newInput]) }));
+    }
+
     return (
         <div className="signup">
             <Row gutter={24}>
@@ -201,7 +196,7 @@ const SignUp = (props) => {
                                     },
                                 ]}
                             >
-                                <Input
+                                <Input.Password
                                     placeholder="비밀번호 8자리*"
                                     type="text"
                                     onChange={e => { setValidatePassword(e.target.value); }}
@@ -227,7 +222,7 @@ const SignUp = (props) => {
                                     }),
                                 ]}
                             >
-                                <Input
+                                <Input.Password
                                     placeholder="비밀번호 재확인*"
                                     type="text"
                                     onChange={e => { setConfirmPassword(e.target.value) }}
@@ -292,28 +287,12 @@ const SignUp = (props) => {
                                     : ''
                             }
                             <br />
-                            <FormItem
-                                name="url"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please input your 신청 마켓 url 입력*',
-                                    },
-                                ]}
-                            >
-                                <Input
-                                    placeholder="신청 마켓 url 입력*"
-                                    type="text"
-                                    suffix={<Button>+</Button>}
-                                />
-                            </FormItem>
-                            {/* {
-                                inputs.map((input) => {
-                                    return (
-                                        <AddMoreInput key={input} />
-                                    )
-                                })
-                            } */}
+                            {
+                                inputs.inputs.map(input => <AddMoreInput key={input} />)
+                            }
+                            <Button style={{ borderColor: '#A6B0CF', color: '#fff', backgroundColor: '#3F537D' }} onClick={appendInput}>URL 추가</Button>
+                            <br />
+                            <br />
                             <FormItem
                                 name="file"
                                 rules={[
@@ -322,8 +301,19 @@ const SignUp = (props) => {
                                         message: 'Please attach your PDF file',
                                     },
                                 ]}
+                                style={{ border: '1px dashed #A6B0CF', padding: '1rem' }}
                             >
-                                <Input type='file' addonBefore="사업자 등록증 pdf 첨부" accept=".pdf" onChange={(e) => { uploadPdfFile(e) }} />
+                                <Row gutter={24} justify="center">
+                                    <Col span={18} style={{ textAlign: 'center' }}>
+                                        <Image src="/img/Upload.png" />
+                                        <p style={{ fontWeight: '400', fontSize: '10px', color: '#14141A', marginTop: '16px', marginBottom: '0' }}>사업자 등록증 pdf 또는 이미지 첨부</p>
+                                        <p style={{ fontWeight: '400', fontSize: '10px', color: '#14141A' }}>or</p>
+                                        <label className="custom-file-upload">
+                                            <Input style={{ display: 'none' }} id="file-upload" type='file' accept=".pdf" onChange={(e) => { uploadPdfFile(e) }} />
+                                            Browse
+                                        </label>
+                                    </Col>
+                                </Row>
                             </FormItem>
                             <br />
                             <br />
@@ -354,7 +344,7 @@ const SignUp = (props) => {
                             <Row gutter={24} justify="center">
                                 <Col span={24} style={{ textAlign: 'center', marginTop: '24px' }}>
                                     <FormItem>
-                                        <Button shape="round" htmlType="submit" className="submit">회원가입 신청</Button>
+                                        <Button style={{ width: '10rem', backgroundColor: '#3F537D', color: '#fff', marginTop: '50px' }} onClick={() => { setSignUp(true) }} size="large" shape="round" htmlType="submit" className="submit">회원가입 신청</Button>
                                     </FormItem>
                                 </Col>
                             </Row>
@@ -374,16 +364,25 @@ const SignUp = (props) => {
                 visible={signUp}
                 onOk={handleOk}
                 okText="확인"
-                okButtonProps={{ type: "default" }}
+                okButtonProps={{ style: { display: 'none' } }}
                 cancelButtonProps={{ style: { display: 'none' } }}
             >
-                <Row gutter={24} justify="center">
-                    <Col span={12} style={{ textAlign: 'center' }}>
-                        <h1>회원가입 신청</h1>
-                        <br />
-                        <p>관리자 승인 후 사용가능합니다승인 완료시 가입하신 이메일로 안내 메일 보내드리겠습니다</p>
-                    </Col>
-                </Row>
+                <div className="modal-signup">
+                    <Row gutter={24} align='middle' style={{ flexDirection: 'column' }}>
+                        <Col span={24}>
+                            <h1 style={{ textAlign: 'center', fontWeight: '500', fontSize: '30px', color: '#495057' }}>회원가입 신청</h1>
+                        </Col>
+                        <Col span={15}>
+                            <Image width={250} src="/img/signup-modal.png" />
+                        </Col>
+                        <Col span={15}>
+                            <p style={{ fontWeight: '700', fontSize: '14px', color: '#74788D', textAlign: 'center', marginTop: '40px' }}>관리자 승인 후 사용가능합니다승인 완료시 등록하신 이메일로 안내 메일 보내드리겠습니다</p>
+                        </Col>
+                        <Col span={24}>
+                            <Button onClick={() => { setSignUp(false) }} style={{ width: '10rem', backgroundColor: '#3F537D', color: '#fff', marginTop: '50px' }} className="btn-modal-forgot-password" shape="round" size="large">확인</Button>
+                        </Col>
+                    </Row>
+                </div>
             </Modal>
         </div>
     )

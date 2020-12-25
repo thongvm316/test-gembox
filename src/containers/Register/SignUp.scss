@@ -8,7 +8,7 @@
         border-color: #A6B0CF !important;
     }
     .ant-form-item{
-        margin-bottom: 3px !important;
+        margin-bottom: 2px !important;
     }
     .submit{
         width: 80% !important;
@@ -37,18 +37,6 @@
             color: #4c4c4c;
         }
     }
-    .submit {
-        margin-top: 22px;
-        background-color: #3F537D;
-        span {
-            color: #fff;
-            font-weight: 700;
-        }
-        &:hover {
-            background-color: #3F537D;
-            border-color: #3F537D;
-        }
-    }
     .btn-forgot-password {
         padding: 0;
         span {
@@ -56,6 +44,15 @@
             font-weight: 500;
             font-size: 12px;
         }
+    }
+    .custom-file-upload {
+        border: 1px solid #3F537D;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+        background-color: #3F537D;
+        color: #fff;
+        border-radius: 4px;
     }
 }
 

@@ -17,23 +17,49 @@ Fix:
         "heroku-postbuild": "npm run build"
     }
 ---------------------------------------------------------
-API: Register - Login - Product - Vender
+Plan:
 
-----
-todo:
-1. Story Board ---- Done
-2. Fix some UI
-3. React lazy load - BackEnd
+Admin - User (Login - SignUp)
+1. UI: Login - SignUp User - Fix UI Admin
+2. Call API with Login - SignUp
+3. Test with user after call API
+----> Exp Fn 2020.12.29
 
---
-todos: 
- 2. UI - SignUp - Modal
- 3. Call API with that
- 4. Logic after call API for all button with every page
+Home --> 4 - 11 /1
+Mypage ---> 12 - 16/1
+Search Fn All Page -- 18 - 19/1 
+Other ---> Ok
+Possible
 
-Done:
- 1. Continues make UI Login User ----> Done
- 4. Add Footer to Admin Page ----- > Done
+
+---------------------------------------------------------
+todos:
+    1. Style field submit pdf in SignUp Page ---- Done
+    2. Logic with input URL
+    3. Check Submit
+    4. Check API: Login - SignUp
+    5. Test with admin
+
+    Other:
+    1. Logic with Modal login success: Dont show if err in input / SignUp
+    2. Logic --> Store data from input URL and submit all
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
