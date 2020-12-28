@@ -17,8 +17,9 @@ const MemberDetail = (props) => {
             }
         }
         try {
-            // await axios.delete(`${API_URL}/usermanages/${memberDetail.id}`, config)
-            await axios.delete(`${API_URL}/usermanages/7`, config) // Demo
+            await axios.delete(`${API_URL}/usermanages/${memberDetail.id}`, config)
+            // await axios.delete(`${API_URL}/usermanages/7`, config) // Demo
+            console.log('Delete User')
             props.history.push('/admin-member')
         } catch (error) {
             console.log(error.response)

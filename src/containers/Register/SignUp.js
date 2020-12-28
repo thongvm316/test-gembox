@@ -6,15 +6,17 @@ import Footer from '../../components/Footer'
 import axios from 'axios'
 
 const FormItem = Form.Item;
+const dataUrl = []; // For add more URL
 
 // Component for Add more Input Url
-const AddMoreInput = () => {
+const AddMoreInput = ({ onChangeUrl }) => {
     return (
         <>
             <Input
                 placeholder="신청 마켓 url 입력*"
                 type="text"
                 style={{ marginBottom: '2px' }}
+                onChange={onChangeUrl}
             // suffix={<Button>+</Button>}
             />
         </>
@@ -25,30 +27,39 @@ const SignUp = (props) => {
 
     const [verifiedPhone, setVerifiedPhone] = useState(false);  // For show or hidden input to type code sms
     const [signUp, setSignUp] = useState(false); // For Moal
-    const [email, setEmail] = useState('') // For verify email
     const [basePdf, setBasePdf] = useState(""); // For convert pdf-file
     const [resendSms, setResemdSms] = useState('')
     const [inputs, setInputs] = useState({ inputs: ['input-0'] }) // For Add more input
     const [validatePassword, setValidatePassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const onFinish = async (values) => {
-        values.file = basePdf;
-        console.log(basePdf)
-        console.log('Success:', values);
+    // For Add more URL
+    const [url, seturl] = useState({ urlInput: '' });
+    const onChangeUrl = (e) => {
+        seturl({ ...url, urlInput: e.target.value });
+        dataUrl.unshift(url.urlInput)
+    }
 
-        if (validatePassword.length < 6) {
-            message.error('The password is not enough characters');
-            return;
-        }
+    const appendInput = () => {
+        var newInput = `input-${inputs.inputs.length}`;
+        setInputs(prevState => ({ inputs: prevState.inputs.concat([newInput]) }));
+    }
 
-        // if (validatePassword !== confirmPassword) {
-        //     message.error('Passwords do not match');
-        //     return;
-        // }
+    // For Verify Phone
+    const [bodyphone, setBodyPhone] = useState({
+        email: '',
+        password: '',
+        name: '',
+        phone: '',
+    })
 
-        const { confirmPassword, email, file, password, phone, url, username, verifiedPhone } = values
+    const { name, email, password, phone } = bodyphone;
+    const onChange = (e) =>
+        setBodyPhone({ ...bodyphone, [e.target.name]: e.target.value });
 
+    const verifySmsCode = async () => {
+        setVerifiedPhone(true)
+        setResemdSms('재전송')
         const config = {
             headers: {
                 "Accept": "application/json",
@@ -57,21 +68,48 @@ const SignUp = (props) => {
         }
 
         const body = {
-            "email": "ldminh@brickmate.vn",
-            "verify_code": "aHwe12nD",
-            "url_market": "aHwe12nD",
-            "business_liciense": "aHwe12nD",
+            email,
+            password,
+            name,
+            phone
         }
 
-        setSignUp(true)
+        try {
+            const { data } = await axios.post(`${API_URL}/verify`, body, config)
+            console.log(data)
+        } catch (error) {
+            console.log(error.response)
+        }
+    }
 
+    // Submit
+    const onFinish = async (values) => {
+        values.business_license = basePdf;
+        values.url_market = dataUrl;
+        console.log('Success:', values);
+
+        if (validatePassword.length < 6) {
+            message.error('The password is not enough characters');
+            return;
+        }
+
+        const { confirmPassword, email, business_license, password, phone, url_market, verify_code } = values
+        const body = { confirmPassword, email, business_license, password, phone, url_market, verify_code }
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+            }
+        }
 
         // try {
         //     const { data } = await axios.post(`${API_URL}/signup`, body, config)
+        //     console.log(data);
         //     setSignUp(true)
         // } catch (error) {
         //     console.log(error.response)
         // }
+        dataUrl = [];
     };
 
     const handleOk = () => {
@@ -86,53 +124,17 @@ const SignUp = (props) => {
         })
     }
 
-    const verifySmsCode = async () => {
-        setVerifiedPhone(true)
-        setResemdSms('재전송')
-        const config = {
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-            }
-        }
+    const onFinishFailed = errorInfo => {
+        console.log('Failed:', errorInfo);
+    };
 
-        const body = {
-            email: "thongvm@brickmate.vn",
-            password: "123456789",
-            name: "Minh Le",
-            phone: "+84931318752"
-        }
-
-        // try {
-        //     const { data } = await axios.post(`${API_URL}/verify`, body, config)
-        //     console.log(data)
-        // } catch (error) {
-        //     console.log(error.response)
-        // }
-    }
-
-    const verifyEmail = async () => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }
-        try {
-            const { data } = await axios.get(`${API_URL}/check?email=${email}`, config)
-            // console.log(data)
-            message.success('This email is available');
-        } catch (error) {
-            // console.log(error.response.data)
-            message.error('This email already exists');
-        }
-    }
 
     // For PDF file 
     const uploadPdfFile = async (e) => {
         const file = e.target.files[0];
         const base64 = await convertBase64(file);
-        setBasePdf(base64);
+        const data = base64.split(',').slice(1)[0]
+        setBasePdf(data);
     };
 
     const convertBase64 = (file) => {
@@ -150,11 +152,6 @@ const SignUp = (props) => {
         });
     };
 
-    const appendInput = () => {
-        var newInput = `input-${inputs.inputs.length}`;
-        setInputs(prevState => ({ inputs: prevState.inputs.concat([newInput]) }));
-    }
-
     return (
         <div className="signup">
             <Row gutter={24}>
@@ -171,8 +168,9 @@ const SignUp = (props) => {
                         </div>
                         <Form
                             onFinish={onFinish}
+                            onFinishFailed={onFinishFailed}
                         >
-                            <FormItem
+                            {/* <FormItem
                                 name="email"
                                 rules={[
                                     {
@@ -185,6 +183,9 @@ const SignUp = (props) => {
                                 <Input
                                     placeholder="이메일*"
                                     type="text"
+                                    onChange={onChange}
+                                    name='email'
+                                    value={email}
                                 />
                             </FormItem>
                             <FormItem
@@ -225,12 +226,17 @@ const SignUp = (props) => {
                                 <Input.Password
                                     placeholder="비밀번호 재확인*"
                                     type="text"
-                                    onChange={e => { setConfirmPassword(e.target.value) }}
+                                    name='password'
+                                    value={password}
+                                    onChange={e => {
+                                        setConfirmPassword(e.target.value)
+                                        onChange(e)
+                                    }}
                                 />
                             </FormItem>
                             <br />
                             <FormItem
-                                name="username"
+                                name="name"
                                 rules={[
                                     {
                                         required: true,
@@ -241,6 +247,9 @@ const SignUp = (props) => {
                                 <Input
                                     placeholder="이름 / 업체명*"
                                     type="text"
+                                    name='name'
+                                    value={name}
+                                    onChange={onChange}
                                 />
                             </FormItem>
                             <FormItem
@@ -256,17 +265,20 @@ const SignUp = (props) => {
                                     placeholder="핸드폰 번호 입력*"
                                     suffix={<Button onClick={verifySmsCode} className="send-sms" type="text">{resendSms ? resendSms : '인증번호 전송'}</Button>}
                                     type="tel"
-                                    onChange={e => {
-                                        if (!Number(e.target.value)) {
-                                            message.error('Your phone must be a number');
-                                        }
-                                    }}
+                                    name='phone'
+                                    value={phone}
+                                    onChange={onChange}
+                                // onChange={e => {
+                                //     if (!Number(e.target.value)) {
+                                //         message.error('Your phone must be a number');
+                                //     }
+                                // }}
                                 />
                             </FormItem>
                             {
                                 verifiedPhone ?
                                     <FormItem
-                                        name="verifiedPhone"
+                                        name="verify_code"
                                         rules={[
                                             {
                                                 required: true,
@@ -276,24 +288,19 @@ const SignUp = (props) => {
                                     >
                                         <Input
                                             placeholder="인증번호 입력"
-                                            type="tel"
-                                            onChange={e => {
-                                                if (!Number(e.target.value)) {
-                                                    message.error('Your phone must be a number');
-                                                }
-                                            }}
+                                            type="text"
                                         />
                                     </FormItem>
                                     : ''
-                            }
+                            } */}
                             <br />
                             {
-                                inputs.inputs.map(input => <AddMoreInput key={input} />)
+                                inputs.inputs.map(input => <AddMoreInput onChangeUrl={onChangeUrl} key={input} />)
                             }
                             <Button style={{ borderColor: '#A6B0CF', color: '#fff', backgroundColor: '#3F537D' }} onClick={appendInput}>URL 추가</Button>
                             <br />
                             <br />
-                            <FormItem
+                            {/* <FormItem
                                 name="file"
                                 rules={[
                                     {
@@ -314,7 +321,7 @@ const SignUp = (props) => {
                                         </label>
                                     </Col>
                                 </Row>
-                            </FormItem>
+                            </FormItem> */}
                             <br />
                             <br />
                             <br />
@@ -344,7 +351,13 @@ const SignUp = (props) => {
                             <Row gutter={24} justify="center">
                                 <Col span={24} style={{ textAlign: 'center', marginTop: '24px' }}>
                                     <FormItem>
-                                        <Button style={{ width: '10rem', backgroundColor: '#3F537D', color: '#fff', marginTop: '50px' }} onClick={() => { setSignUp(true) }} size="large" shape="round" htmlType="submit" className="submit">회원가입 신청</Button>
+                                        <Button
+                                            style={{ width: '10rem', backgroundColor: '#3F537D', color: '#fff', marginTop: '50px' }}
+                                            onClick={() => { setSignUp(true) }}
+                                            size="large"
+                                            shape="round"
+                                            htmlType="submit"
+                                            className="submit">회원가입 신청</Button>
                                     </FormItem>
                                 </Col>
                             </Row>
@@ -379,7 +392,12 @@ const SignUp = (props) => {
                             <p style={{ fontWeight: '700', fontSize: '14px', color: '#74788D', textAlign: 'center', marginTop: '40px' }}>관리자 승인 후 사용가능합니다승인 완료시 등록하신 이메일로 안내 메일 보내드리겠습니다</p>
                         </Col>
                         <Col span={24}>
-                            <Button onClick={() => { setSignUp(false) }} style={{ width: '10rem', backgroundColor: '#3F537D', color: '#fff', marginTop: '50px' }} className="btn-modal-forgot-password" shape="round" size="large">확인</Button>
+                            <Button
+                                onClick={() => {
+                                    setSignUp(false)
+                                    props.history.push('/')
+                                }}
+                                style={{ width: '10rem', backgroundColor: '#3F537D', color: '#fff', marginTop: '50px' }} className="btn-modal-forgot-password" shape="round" size="large">확인</Button>
                         </Col>
                     </Row>
                 </div>

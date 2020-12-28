@@ -20,8 +20,9 @@ const AdminMemberRequestDetail = (props) => {
         const body = {
             action: "approve"
         }
-        // axios.put(`${API_URL}/usermanages/${memberRequestDetail.id}`, config)
-        axios.put(`${API_URL}/usermanages/2`, body, config) // Demo
+        axios.put(`${API_URL}/usermanages/${memberRequestDetail.id}`, body, config)
+        console.log('Approve')
+        // axios.put(`${API_URL}/usermanages/2`, body, config) // Demo
         props.history.push('/member-request')
     }
 
@@ -35,8 +36,9 @@ const AdminMemberRequestDetail = (props) => {
         const body = {
             action: "reject"
         }
-        // axios.put(`${API_URL}/usermanages/${memberRequestDetail.id}`, config)
-        axios.put(`${API_URL}/usermanages/2`, body, config) // Demo
+        axios.put(`${API_URL}/usermanages/${memberRequestDetail.id}`, body, config)
+        console.log('Reject')
+        // axios.put(`${API_URL}/usermanages/2`, body, config) // Demo
         props.history.push('/member-request')
     }
 

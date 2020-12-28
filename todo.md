@@ -34,15 +34,19 @@ Possible
 
 ---------------------------------------------------------
 todos:
-    1. Style field submit pdf in SignUp Page ---- Done
-    2. Logic with input URL
-    3. Check Submit
-    4. Check API: Login - SignUp
-    5. Test with admin
-
     Other:
-    1. Logic with Modal login success: Dont show if err in input / SignUp
-    2. Logic --> Store data from input URL and submit all
+     2. Logic --> Store data from input URL and submit all
+    3. Logout - Clear local stogare
+
+Remove prefix after convert base64 ----> Done
+Set some field when call verify phone ----> Done
+Test with admin  ----> Done
+Continues Logic Add more URL in SignUp
+
+tom:
+1. Modal when err
+2. Add Url
+
 
 
 

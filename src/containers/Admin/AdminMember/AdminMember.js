@@ -51,6 +51,7 @@ const AdminMember = (props) => {
             }
         }
         const { data } = await axios.get(`${API_URL}/usermanages`, config);
+        console.log(data)
         const { data: { result } } = data
         const { member } = result
         setData(member)

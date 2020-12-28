@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Row, Col, Modal, Divider, Image } from 'antd';
+import { Form, Input, Button, Row, Col, Modal, Divider, Image, message, Alert } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useLocation } from "react-router-dom";
 import { API_URL } from '../constants/appConstants'
@@ -56,20 +56,38 @@ const Login = (props) => {
 
     const onFinish = async (values) => {
         console.log('Success:', values);
-        const { username, password } = values
+        const { email, password } = values
         const body = {
-            username,
+            email,
             password
         }
 
-        // showModalLoginFailed(); // Process logic when call API
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json'
+            }
+        }
 
-        // const config = {
-        //     headers: {
-        //         "Accept": "application/json",
-        //         'Content-Type': 'application/json'
-        //     }
-        // }
+        try {
+            const { data } = await axios.post(`${API_URL}/logins`, body, config);
+            console.log(data)
+            localStorage.setItem('token', data.data.result.token);
+            history.push('/home')
+        } catch (error) {
+            console.log(error.response)
+            message.error({
+                content: <Alert
+                    description="Incorrect username or password."
+                    type="error"
+                />,
+                style: {
+                    marginTop: '10vh',
+                },
+            });
+        }
+
+        // showModalLoginFailed(); // Process logic when call API
         // const { data } = await axios.post(`${API_URL}/logins`, body, config);
         // if (data.data.code === '20000' && data.data.message === 'Success') {
         //     console.log(data)
