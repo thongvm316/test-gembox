@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SignUp.scss'
 import { Row, Col, Input, Modal, Button, Form, message, Checkbox, Image, Upload } from 'antd';
 import { API_URL } from '../../constants/appConstants'
@@ -15,7 +15,9 @@ const AddMoreInput = ({ onChangeUrl, appendInput }) => {
                 placeholder="신청 마켓 url 입력*"
                 type="text"
                 style={{ marginBottom: '2px' }}
-                onChange={onChangeUrl}
+                onChange={(e) => {
+                    onChangeUrl(e)
+                }}
                 suffix={<Button style={{ borderColor: '#A6B0CF' }} onClick={appendInput}>+</Button>
                 }
             />
@@ -34,24 +36,21 @@ const SignUp = (props) => {
     const [validatePassword, setValidatePassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    let timeout = null;
-
     // For Add more URL
     const [dataUrl, setDataUrl] = useState({ dataUrl: [] });
     const [url, seturl] = useState({ urlInput: '' });
-    console.log(dataUrl)
     const onChangeUrl = (e) => {
         seturl({ ...url, urlInput: e.target.value });
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-            setDataUrl(prevState => ({ dataUrl: prevState.dataUrl.concat([url.urlInput]) }))
-        }, 500);
     }
 
     const appendInput = () => {
         var newInput = `input-${inputs.inputs.length}`;
         setInputs(prevState => ({ inputs: prevState.inputs.concat([newInput]) }));
     }
+
+    // setDataUrl(prevState => ({ dataUrl: prevState.dataUrl.concat([url.urlInput]) }))
+
+
 
     // For Verify Phone
     const [bodyphone, setBodyPhone] = useState({
@@ -326,7 +325,7 @@ const SignUp = (props) => {
                             <br />
                             <br />
                             <br />
-                            <Form.Item
+                            {/* <Form.Item
                                 name="agreement"
                                 valuePropName="checked"
                                 rules={[
@@ -348,7 +347,7 @@ const SignUp = (props) => {
                                 ο 마케팅 및 광고에 활용접속 빈도 파악 또는 회원의 서비스 이용에 대한 통계</p>
                                 <p><span style={{ color: '#A6B0CF' }}>■</span> 개인정보의 보유 및 이용기간
                                 회사는 개인정보 수집 및 이용목적이 달성된 후에는 예외 없이 해당 정보를 지체 없이 파기합니다.</p>
-                            </div>
+                            </div> */}
                             <Row gutter={24} justify="center">
                                 <Col span={24} style={{ textAlign: 'center', marginTop: '24px' }}>
                                     <FormItem>

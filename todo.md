@@ -3,6 +3,9 @@ How to add more remote repo:
     2. Push master: git push -u repo2 master
     3. Push branch: git push -u repo2 development
 
+git remote remove origin
+
+
 Fix Cors in localhost-chorme: 
 /usr/bin/google-chrome-stable --disable-web-security --user-data-dir=/home/jossnaz/.config/google-chrome/
 
