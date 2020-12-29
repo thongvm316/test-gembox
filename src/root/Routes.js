@@ -18,6 +18,7 @@ import AdminLogin from '../containers/Admin/AdminLogin'
 import AdminFindAccount from '../containers/Admin/AdminFindAccount'
 import AdminMemberRequest from '../containers/Admin/AdminMemberRequest/AdminMemberRequest'
 import AdminMemberRequestDetail from '../containers/Admin/AdminMemberRequest/AdminMemberRequestDetail'
+import UserDetail from '../containers/UserDetail/UserDetail';
 
 // PrivateRoute
 import PrivateRoute from './PrivateRoute'
@@ -48,6 +49,8 @@ const Routes = () => {
             <AppRoute exact path="/video-search" component={VideoSearch} />
             <AppRoute exact path="/sale-status" component={SaleStatus} />
             <AppRoute exact path="/product-detail" component={ProductDetail} />
+            <AppRoute exact path="/user-detail" component={UserDetail} />
+
         </Switch>
     )
 }

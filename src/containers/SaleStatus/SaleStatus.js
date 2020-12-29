@@ -83,7 +83,6 @@ const SaleStatus = () => {
 
     return (
         <div className="sale-status">
-            <Row className='title' span={24}><strong>이수진</strong>님 안녕하세요</Row>
 
             <Row className='card-style' gutter={[24, 24]} style={{ width: '85vw', margin: '0 auto 70px auto' }}>
                 <Col xs={24} sm={24} md={12} xl={6} className='col-one'>
@@ -111,7 +110,7 @@ const SaleStatus = () => {
                         </Row>
                     </Card>
                 </Col>
-                <Col xs={24} sm={24} md={12} xl={6} className='col-three'>t
+                <Col xs={24} sm={24} md={12} xl={6} className='col-three'>
                     <Card style={{ width: '100%', height: 150 }}>
                         <Row>
                             <Col className='one-in-col-three'>
@@ -139,20 +138,19 @@ const SaleStatus = () => {
             </Row>
 
             <Row className='bar-style'>
-                <Col sm={24} md={4} lg={4} xl={4}><h1>판매 채널</h1></Col>
-                <Col sm={24} md={20} lg={20} xl={20}>
-                    <Row className="info-search" style={{ justifyContent: 'flex-end', marginBottom: '16px' }}>
-                        <Col className="date-picker">
+                <Col sm={24} md={24} lg={24} xl={24}>
+                    <div className="info-search card-border">
+                        <div>
                             <Space direction="" size={12}>
                                 <RangePicker onChange={onChange} onOk={onOk} />
                             </Space>
                             <Button style={{ marginLeft: '8px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
-                        </Col>
-                        <Col>
+                        </div>
+                        <div>
                             <Input style={{ width: '392px', marginLeft: '60px' }} placeholder="Search" />
                             <Button style={{ marginLeft: '18px', backgroundColor: '#71c4d5', border: 'none', width: 81 }} type="primary">EXCEL</Button>
-                        </Col>
-                    </Row>
+                        </div>
+                    </div>
                 </Col>
             </Row>
 

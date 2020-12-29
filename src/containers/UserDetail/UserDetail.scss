@@ -1,0 +1,50 @@
+.user-info{
+    display: flex;
+    flex-direction: column;
+    padding: 0 40px;
+
+    .user-item{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .upload{
+        border-width: 2px;  
+        border-style: dashed;
+        border-color: #CCCCCC;
+        padding: 16px 0;
+        display: flex;
+        justify-content: center;
+
+        .upload-content{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .image{
+            text-align: center;
+        }
+    }
+
+    .actions{
+
+        text-align: center;
+
+        .btn-save{
+            width: 300px;
+            border-radius: 15px;
+        }
+    }
+
+}
+
+.actions-change-password{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+
+    .btn-save{
+        margin-bottom: 16px;
+        border-radius: 22px;
+    }
+}

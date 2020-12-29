@@ -36,24 +36,39 @@ const MainLayout = (props) => {
         setCollapsed(!collapsed)
     }
 
+    const goDetail = () => {
+        props.children.props.history.push({
+            pathname: '/user-detail',
+        })
+    }
+
     return (
         <Layout className="admin-layout">
             <Sidebar collapsed={collapsed} />
             <Layout style={{ background: '#fff' }}>
-                <Header style={{ background: '#fff', padding: 0 }}>
+                <Header style={{ background: '#fff', padding: 0 }} className="main-header">
                     {
                         collapsed ?
                             <MenuUnfoldOutlined className="trigger" onClick={() => toggle()} />
                             :
                             <MenuFoldOutlined className="trigger" onClick={() => toggle()} />
                     }
-                    <Dropdown overlay={renderUserInfor()}>
-                        <div>
-                            <Avatar style={{ marginRight: '10px' }} icon={<UserOutlined />} size="small" />
-                        </div>
-                    </Dropdown>
+                    <div style={{ display: 'flex' }}>
+                        <a onClick={() => goDetail()}>
+                            이수진
+                        </a>
+                        <a style={{ margin: '0 10px' }}>
+                            님 안녕하세요
+
+                        </a>
+                        <Dropdown overlay={renderUserInfor()}>
+                            <div>
+                                <Avatar style={{ marginRight: '10px' }} icon={<UserOutlined />} size="small" />
+                            </div>
+                        </Dropdown>
+                    </div>
                 </Header>
-                <Content style={{ margin: '24px 16px', padding: 24, height: 'auto', minHeight: 'initial' }}>
+                <Content className="main-layout-content" style={{ height: 'auto', minHeight: 'initial' }}>
                     {props.children}
                 </Content>
             </Layout>
