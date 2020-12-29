@@ -22,9 +22,9 @@ const ProductDetail = (props) => {
         },
         credits: {
             enabled: false
-        },  
+        },
         series: [
-            {   
+            {
                 data: [1, 5, 3, 5, 4, 7, 5, 3, 6, 4, 9, 12],
                 name: 'Product 1',
                 color: '#FF21B4'
@@ -44,7 +44,7 @@ const ProductDetail = (props) => {
                 rangeDescription: 'Range: 1 to 12'
             },
             labels: {
-                formatter: function() {
+                formatter: function () {
                     return this.value + '월';
                 },
                 style: {
@@ -57,7 +57,7 @@ const ProductDetail = (props) => {
                 text: ''
             },
             labels: {
-                formatter: function() {
+                formatter: function () {
                     return this.value + 'M';
                 },
                 style: {
@@ -77,7 +77,7 @@ const ProductDetail = (props) => {
     // const optionsLineChart2 = {
     //     series: [
     //         {
-    //             type: 'spline',
+    //             type: 'spline', 
     //             data: [1, 5, 3, 6, 7, 9, 4]
     //         },
     //         {
@@ -105,9 +105,9 @@ const ProductDetail = (props) => {
         },
         credits: {
             enabled: false
-        },  
+        },
         series: [
-            {   
+            {
                 data: [1, 5, 3],
                 name: 'Product 1',
                 color: '#FF21B4'
@@ -147,7 +147,7 @@ const ProductDetail = (props) => {
                 rangeDescription: 'Range: 10 to 12'
             },
             labels: {
-                formatter: function() {
+                formatter: function () {
                     return this.value + '월';
                 },
                 style: {
@@ -160,7 +160,7 @@ const ProductDetail = (props) => {
                 text: ''
             },
             labels: {
-                formatter: function() {
+                formatter: function () {
                     return this.value + 'M';
                 },
                 style: {
@@ -181,7 +181,7 @@ const ProductDetail = (props) => {
             borderColor: 'none',
             borderRadius: 10,
             shadow: true,
-            useHTML: true,           
+            useHTML: true,
             headerFormat: '<strong>판매건수 비교 &nbsp; &nbsp; &nbsp; &nbsp;{point.key}</strong><table>',
             pointFormat: '<tr><td style="color: {series.color}">{series.name}:&nbsp; &nbsp; &nbsp; </td>' +
                 '<td style="text-align: right"><b>{point.y}</b></td></tr>',
@@ -243,7 +243,7 @@ const ProductDetail = (props) => {
 
     return (
         <>
-            <Row gutter={24} style={{marginBottom: '30px'}}>
+            <Row gutter={24} style={{ marginBottom: '30px' }}>
                 <Col span={24}>
                     <Button onClick={() => props.history.push('/product-search')}>목록으로 돌아가기</Button>
                 </Col>
@@ -318,7 +318,7 @@ const ProductDetail = (props) => {
                     </div>
                 </Col>
             </Row>
-            <Row gutter={24} style={{margin: '28px', border: '1px solid black'}}>
+            <Row gutter={24} style={{ margin: '28px', border: '1px solid black' }}>
                 <Col span={24}>
                     <HighchartsReact
                         highcharts={Highcharts}
@@ -327,7 +327,7 @@ const ProductDetail = (props) => {
                     />
                 </Col>
             </Row>
-            <Row gutter={24} style={{margin: '28px', border: '1px solid black'}}>
+            <Row gutter={24} style={{ margin: '28px', border: '1px solid black' }}>
                 <Col span={24}>
                     <HighchartsReact
                         highcharts={Highcharts}

@@ -44,7 +44,7 @@ Test with admin  ----> Done
 Continues Logic Add more URL in SignUp
 
 tom:
-1. Modal when err
+1. Modal when err ---- Done
 2. Add Url
 
 

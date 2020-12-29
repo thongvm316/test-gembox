@@ -6,10 +6,9 @@ import Footer from '../../components/Footer'
 import axios from 'axios'
 
 const FormItem = Form.Item;
-const dataUrl = []; // For add more URL
 
 // Component for Add more Input Url
-const AddMoreInput = ({ onChangeUrl }) => {
+const AddMoreInput = ({ onChangeUrl, appendInput }) => {
     return (
         <>
             <Input
@@ -17,27 +16,36 @@ const AddMoreInput = ({ onChangeUrl }) => {
                 type="text"
                 style={{ marginBottom: '2px' }}
                 onChange={onChangeUrl}
-            // suffix={<Button>+</Button>}
+                suffix={<Button style={{ borderColor: '#A6B0CF' }} onClick={appendInput}>+</Button>
+                }
             />
         </>
+
     )
 }
 
 const SignUp = (props) => {
 
     const [verifiedPhone, setVerifiedPhone] = useState(false);  // For show or hidden input to type code sms
-    const [signUp, setSignUp] = useState(false); // For Moal
+    const [signUp, setSignUp] = useState(false); // For Moal SignUp
     const [basePdf, setBasePdf] = useState(""); // For convert pdf-file
     const [resendSms, setResemdSms] = useState('')
     const [inputs, setInputs] = useState({ inputs: ['input-0'] }) // For Add more input
     const [validatePassword, setValidatePassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    let timeout = null;
+
     // For Add more URL
+    const [dataUrl, setDataUrl] = useState({ dataUrl: [] });
     const [url, seturl] = useState({ urlInput: '' });
+    console.log(dataUrl)
     const onChangeUrl = (e) => {
         seturl({ ...url, urlInput: e.target.value });
-        dataUrl.unshift(url.urlInput)
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            setDataUrl(prevState => ({ dataUrl: prevState.dataUrl.concat([url.urlInput]) }))
+        }, 500);
     }
 
     const appendInput = () => {
@@ -85,13 +93,13 @@ const SignUp = (props) => {
     // Submit
     const onFinish = async (values) => {
         values.business_license = basePdf;
-        values.url_market = dataUrl;
+        values.url_market = dataUrl.dataUrl;
         console.log('Success:', values);
 
-        if (validatePassword.length < 6) {
-            message.error('The password is not enough characters');
-            return;
-        }
+        // if (validatePassword.length < 6) {
+        //     message.error('The password is not enough characters');
+        //     return;
+        // }
 
         const { confirmPassword, email, business_license, password, phone, url_market, verify_code } = values
         const body = { confirmPassword, email, business_license, password, phone, url_market, verify_code }
@@ -109,7 +117,6 @@ const SignUp = (props) => {
         // } catch (error) {
         //     console.log(error.response)
         // }
-        dataUrl = [];
     };
 
     const handleOk = () => {
@@ -123,11 +130,6 @@ const SignUp = (props) => {
             state: { findPassword: true }
         })
     }
-
-    const onFinishFailed = errorInfo => {
-        console.log('Failed:', errorInfo);
-    };
-
 
     // For PDF file 
     const uploadPdfFile = async (e) => {
@@ -168,7 +170,6 @@ const SignUp = (props) => {
                         </div>
                         <Form
                             onFinish={onFinish}
-                            onFinishFailed={onFinishFailed}
                         >
                             {/* <FormItem
                                 name="email"
@@ -295,9 +296,9 @@ const SignUp = (props) => {
                             } */}
                             <br />
                             {
-                                inputs.inputs.map(input => <AddMoreInput onChangeUrl={onChangeUrl} key={input} />)
+                                inputs.inputs.map(input => <AddMoreInput onChangeUrl={onChangeUrl} appendInput={appendInput} key={input} />)
                             }
-                            <Button style={{ borderColor: '#A6B0CF', color: '#fff', backgroundColor: '#3F537D' }} onClick={appendInput}>URL 추가</Button>
+                            {/* <Button style={{ borderColor: '#A6B0CF', color: '#fff', backgroundColor: '#3F537D' }} onClick={appendInput}>URL 추가</Button> */}
                             <br />
                             <br />
                             {/* <FormItem
@@ -353,7 +354,6 @@ const SignUp = (props) => {
                                     <FormItem>
                                         <Button
                                             style={{ width: '10rem', backgroundColor: '#3F537D', color: '#fff', marginTop: '50px' }}
-                                            onClick={() => { setSignUp(true) }}
                                             size="large"
                                             shape="round"
                                             htmlType="submit"

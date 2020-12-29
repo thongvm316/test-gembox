@@ -7,47 +7,47 @@ const { RangePicker } = DatePicker;
 const SaleStatus = () => {
 
     // Table
-    const [ countSelected, setCountSelected ] = useState(0)
-  
+    const [countSelected, setCountSelected] = useState(0)
+
     const columns = [
-    {
-        title: '상품명',
-        dataIndex: '마켓명',
-    },
-    {
-        title: '카테고리',
-        dataIndex: '벤더명',
-    },
-    {
-        title: '마켓명',
-        dataIndex: '카테고리',
-    },
-    {
-        title: '가격',
-        dataIndex: '상품명',
-    },
-    {
-        title: '리뷰',
-        dataIndex: '가격',
-    },
-    {
-        title: '판매수',
-        dataIndex: '리뷰',
-    },
+        {
+            title: '상품명',
+            dataIndex: '마켓명',
+        },
+        {
+            title: '카테고리',
+            dataIndex: '벤더명',
+        },
+        {
+            title: '마켓명',
+            dataIndex: '카테고리',
+        },
+        {
+            title: '가격',
+            dataIndex: '상품명',
+        },
+        {
+            title: '리뷰',
+            dataIndex: '가격',
+        },
+        {
+            title: '판매수',
+            dataIndex: '리뷰',
+        },
     ];
 
     const data = [];
     for (let i = 0; i < 46; i++) {
-    data.push({
-        key: i,
-        마켓명: `Edward King ${i}`,
-        벤더명: 32,
-        카테고리: `London, Park Lane no. ${i}`,
-        상품명: '유아완구(category)',
-        가격: '￦55,500',
-        리뷰: 140.244,
-        판매수: '1,000,000,000,000'
-    });
+        data.push({
+            key: i,
+            마켓명: `Edward King ${i}`,
+            벤더명: 32,
+            카테고리: `London, Park Lane no. ${i}`,
+            상품명: '유아완구(category)',
+            가격: '￦55,500',
+            리뷰: 140.244,
+            판매수: '1,000,000,000,000'
+        });
     }
 
     const onSearch = (e) => {
@@ -75,64 +75,64 @@ const SaleStatus = () => {
     function onChange(date, dateString) {
         // console.log('Formatted Selected Time: ', dateString);
         // console.log(date)
-      }
-      
+    }
+
     function onOk(value) {
-    console.log('onOk: ', value);
+        console.log('onOk: ', value);
     }
 
     return (
         <div className="sale-status">
             <Row className='title' span={24}><strong>이수진</strong>님 안녕하세요</Row>
-            
-            <Row className='card-style' gutter={[24,24]} style={{ width: '85vw', margin: '0 auto 70px auto' }}>
-                <Col xs={24} sm={24} md={12}  xl={6} className='col-one'>
+
+            <Row className='card-style' gutter={[24, 24]} style={{ width: '85vw', margin: '0 auto 70px auto' }}>
+                <Col xs={24} sm={24} md={12} xl={6} className='col-one'>
                     <Card style={{ width: '100%', height: 150 }}>
                         <Row>
-                             <Col className='one-in-col-one'>
+                            <Col className='one-in-col-one'>
                                 <p>총 리뷰</p>
-                             </Col>
-                             <Col className='two-in-col-one'> 
+                            </Col>
+                            <Col className='two-in-col-one'>
                                 <p>56위</p>
-                             </Col>
+                            </Col>
                         </Row>
                     </Card>
                 </Col>
                 <Col xs={24} sm={24} md={12} xl={6} className='col-two'>
                     <Card style={{ width: '100%', height: 150 }}>
                         <Row>
-                             <Col className='one-in-col-two'>
+                            <Col className='one-in-col-two'>
                                 <p>총 리뷰</p>
-                             </Col>
-                             <Col className='two-in-col-two'> 
+                            </Col>
+                            <Col className='two-in-col-two'>
                                 <p>56위</p>
                                 <p>5,050,505,050 건</p>
-                             </Col>
+                            </Col>
                         </Row>
                     </Card>
                 </Col>
-                <Col xs={24} sm={24} md={12} xl={6} className='col-three'>
+                <Col xs={24} sm={24} md={12} xl={6} className='col-three'>t
                     <Card style={{ width: '100%', height: 150 }}>
                         <Row>
-                             <Col className='one-in-col-three'>
+                            <Col className='one-in-col-three'>
                                 <p>총 리뷰</p>
-                             </Col>
-                             <Col className='two-in-col-three'> 
+                            </Col>
+                            <Col className='two-in-col-three'>
                                 <p>56위</p>
-                             </Col>
+                            </Col>
                         </Row>
                     </Card>
                 </Col>
                 <Col xs={24} sm={24} md={12} xl={6} className='col-four'>
                     <Card style={{ width: '100%', height: 150 }}>
                         <Row>
-                             <Col className='one-in-col-four'>
+                            <Col className='one-in-col-four'>
                                 <p>총 리뷰</p>
-                             </Col>
-                             <Col className='two-in-col-four'> 
+                            </Col>
+                            <Col className='two-in-col-four'>
                                 <p>56위</p>
                                 <p>5,050,505,050 건</p>
-                             </Col>
+                            </Col>
                         </Row>
                     </Card>
                 </Col>
@@ -152,7 +152,7 @@ const SaleStatus = () => {
                             <Input style={{ width: '392px', marginLeft: '60px' }} placeholder="Search" />
                             <Button style={{ marginLeft: '18px', backgroundColor: '#71c4d5', border: 'none', width: 81 }} type="primary">EXCEL</Button>
                         </Col>
-                    </Row>       
+                    </Row>
                 </Col>
             </Row>
 
