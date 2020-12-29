@@ -8,7 +8,7 @@ import axios from 'axios'
 const FormItem = Form.Item;
 
 // Component for Add more Input Url
-const AddMoreInput = ({ onChangeUrl, appendInput }) => {
+const AddMoreInput = ({ onChangeUrl, appendInput, index }) => {
     return (
         <>
             <Input
@@ -38,9 +38,16 @@ const SignUp = (props) => {
 
     // For Add more URL
     const [dataUrl, setDataUrl] = useState({ dataUrl: [] });
-    const [url, seturl] = useState({ urlInput: '' });
-    const onChangeUrl = (e) => {
-        seturl({ ...url, urlInput: e.target.value });
+    const [url, seturl] = useState([]);
+
+    const onChangeUrl = (e, indexOfInput) => {
+        const urlTemp = JSON.parse(JSON.stringify(url));
+        urlTemp[indexOfInput] = e.target.value
+        seturl(urlTemp)
+        console.log(urlTemp)
+
+
+
     }
 
     const appendInput = () => {
@@ -295,7 +302,16 @@ const SignUp = (props) => {
                             } */}
                             <br />
                             {
-                                inputs.inputs.map(input => <AddMoreInput onChangeUrl={onChangeUrl} appendInput={appendInput} key={input} />)
+                                inputs.inputs.map((input, index) => <Input
+                                    placeholder="신청 마켓 url 입력*"
+                                    type="text"
+                                    style={{ marginBottom: '2px' }}
+                                    onChange={(e) => {
+                                        onChangeUrl(e, index)
+                                    }}
+                                    suffix={<Button style={{ borderColor: '#A6B0CF' }} onClick={appendInput}>+</Button>
+                                    }
+                                />)
                             }
                             {/* <Button style={{ borderColor: '#A6B0CF', color: '#fff', backgroundColor: '#3F537D' }} onClick={appendInput}>URL 추가</Button> */}
                             <br />
