@@ -33,9 +33,14 @@ code {
 
 .admin-layout {
   height: 100%;
+
+}
+
+.main-header{
+  display: flex;
+  justify-content: space-between;
 }
 .admin-layout .ant-dropdown-trigger {
-  float: right;
   padding-right: 10px;
   padding-left: 10px;
   cursor: pointer;
@@ -108,4 +113,16 @@ code {
 
 .admin-layout .logo img {
   width: inherit;
+}
+
+.main-layout-content{
+  background-color: #F8F8FB;
+  padding: 20px;
+}
+
+.card-border{
+  background-color: white;
+  padding: 16px;
+  border-radius: 10px;
+
 }

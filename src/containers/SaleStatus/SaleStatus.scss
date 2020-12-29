@@ -61,12 +61,17 @@
       }
     }
   }
+
+  .info-search{
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 @media (min-width: 768px){ 
     .info-search {
         .ant-btn {
-            margin-top: 1rem !important;
+            // margin-top: 1rem !important;
         }
     }
 }
