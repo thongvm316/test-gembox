@@ -11,7 +11,7 @@ import './AdminMember.scss'
 // } // set x-auth-herder for request header from user
 
 const AdminMember = (props) => {
-    const [data, setData] = useState('')
+    const [data, setData] = useState(null)
 
     // For Table
     const columns = [
@@ -50,7 +50,7 @@ const AdminMember = (props) => {
                 'Content-Type': 'application/json',
             }
         }
-        const { data } = await axios.get(`${API_URL}/usermanages`, config);
+        const { data } = await axios.get(`${API_URL}/users`, config);
         console.log(data)
         const { data: { result } } = data
         const { member } = result

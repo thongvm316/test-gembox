@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './SignUp.scss'
-import { Row, Col, Input, Modal, Button, Form, message, Checkbox, Image, Upload } from 'antd';
+import { Row, Col, Input, Modal, Button, Form, message, Checkbox, Image, Alert } from 'antd';
 import { API_URL } from '../../constants/appConstants'
 import Footer from '../../components/Footer'
 import axios from 'axios'
@@ -74,6 +74,28 @@ const SignUp = (props) => {
         values.business_license = basePdf;
         values.url_market = url;
         console.log('Success:', values);
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+            }
+        }
+
+        try {
+            const { data } = await axios.get(`${API_URL}/check?email=${values.email}`, config);
+            console.log(data)
+        } catch (error) {
+            console.log(error.response)
+            message.error({
+                content: <Alert
+                    description="Email Existed"
+                    type="error"
+                />,
+                style: {
+                    marginTop: '10vh',
+                },
+            });
+        }
 
         if (validatePassword.length < 6) {
             message.error('The password is not enough characters');
@@ -82,13 +104,6 @@ const SignUp = (props) => {
 
         const { confirmPassword, email, business_license, password, phone, url_market, verify_code } = values
         const body = { confirmPassword, email, business_license, password, phone, url_market, verify_code }
-        console.log(body)
-        const config = {
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-            }
-        }
         try {
             const { data } = await axios.post(`${API_URL}/signup`, body, config)
             console.log(data);

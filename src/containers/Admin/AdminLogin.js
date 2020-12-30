@@ -59,7 +59,10 @@ const AdminLogin = (props) => {
         const config = {
             headers: {
                 "Accept": "application/json",
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                // 'Access-Control-Allow-Origin': '*',
+                // "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+                // "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
             }
         }
 
@@ -69,7 +72,7 @@ const AdminLogin = (props) => {
             localStorage.setItem('token', data.data.result.token);
             history.push('/admin-member')
         } catch (error) {
-            // console.log(error.response)
+            console.log(error.response)
             message.error({
                 content: <Alert
                     description="Incorrect username or password."
