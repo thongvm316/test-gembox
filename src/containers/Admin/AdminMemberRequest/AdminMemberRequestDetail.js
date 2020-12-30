@@ -20,10 +20,13 @@ const AdminMemberRequestDetail = (props) => {
         const body = {
             action: "approve"
         }
-        axios.put(`${API_URL}/usermanages/${memberRequestDetail.id}`, body, config)
-        console.log('Approve')
-        // axios.put(`${API_URL}/usermanages/2`, body, config) // Demo
-        props.history.push('/member-request')
+        try {
+            await axios.put(`${API_URL}/users/${memberRequestDetail.id}`, body, config)
+            console.log('Approve')
+            props.history.push('/member-request')
+        } catch (error) {
+            console.log(error.response)
+        }
     }
 
     const reject = () => {
@@ -36,10 +39,15 @@ const AdminMemberRequestDetail = (props) => {
         const body = {
             action: "reject"
         }
-        axios.put(`${API_URL}/usermanages/${memberRequestDetail.id}`, body, config)
-        console.log('Reject')
-        // axios.put(`${API_URL}/usermanages/2`, body, config) // Demo
-        props.history.push('/member-request')
+
+        try {
+            const { data } = axios.put(`${API_URL}/users/${memberRequestDetail.id}`, body, config)
+            console.log('Reject')
+            console.log(data)
+            props.history.push('/member-request')
+        } catch (error) {
+            console.log(error.response)
+        }
     }
 
     return (

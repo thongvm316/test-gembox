@@ -37,20 +37,15 @@ Possible
 ---------------------------------------------------------
 Todos: 
 
-2. Change local API - Call again
+1. Edit UI SignUp - Test submit ---- Done
+2. Change local API - Call again ---- Done
 
 3. Admin
-    a. Change cocal API
-    b. Call and test
-4. Fix route page
-4. Push to Github - Clone and test - Share
-
-
-
-1. Edit UI SignUp - Test submit ---- Done
-
-
-
+    a. Change local API ---- Done
+    b. Call and test ---- Done
+4. After reject/approve --> Data note re render ---- Done
+5. Add btn check email ---> Done
+4. Push to Github - Clone and test - Share - Heroku
 
 
 

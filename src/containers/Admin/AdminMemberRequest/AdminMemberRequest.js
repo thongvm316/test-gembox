@@ -6,7 +6,7 @@ import { SearchOutlined } from '@ant-design/icons'
 
 
 const AdminMemberRequest = (props) => {
-    const [data, setData] = useState('')
+    const [data, setData] = useState(null)
 
     // For Table
     const columns = [
@@ -49,12 +49,13 @@ const AdminMemberRequest = (props) => {
                 'Content-Type': 'application/json',
             }
         }
-        const { data } = await axios.get(`${API_URL}/usermanages`, config);
-        const { data: { result } } = data
-        const { member_request } = result
-        setData(member_request)
+        try {
+            const res = await axios.get(`${API_URL}/users`, config)
+            setData(res.data.data.result.member_request)
+        } catch (error) {
+            console.log(error.response)
+        }
     }, [])
-
 
     return (
         <div className='admin-member'>
