@@ -5,7 +5,6 @@ How to add more remote repo:
 
 git remote remove origin
 
-
 Fix Cors in localhost-chorme: 
 /usr/bin/google-chrome-stable --disable-web-security --user-data-dir=/home/jossnaz/.config/google-chrome/
 
@@ -36,21 +35,19 @@ Possible
 
 
 ---------------------------------------------------------
-todos:
-    Other:
-     2. Logic --> Store data from input URL and submit all
-    3. Logout - Clear local stogare
+Todos: 
 
-Remove prefix after convert base64 ----> Done
-Set some field when call verify phone ----> Done
-Test with admin  ----> Done
-Continues Logic Add more URL in SignUp
+2. Change local API - Call again
 
-tom:
-1. Modal when err ---- Done
-2. Add Url
+3. Admin
+    a. Change cocal API
+    b. Call and test
+4. Fix route page
+4. Push to Github - Clone and test - Share
 
 
+
+1. Edit UI SignUp - Test submit ---- Done
 
 
 

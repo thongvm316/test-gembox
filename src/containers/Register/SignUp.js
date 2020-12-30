@@ -7,25 +7,6 @@ import axios from 'axios'
 
 const FormItem = Form.Item;
 
-// Component for Add more Input Url
-const AddMoreInput = ({ onChangeUrl, appendInput, index }) => {
-    return (
-        <>
-            <Input
-                placeholder="신청 마켓 url 입력*"
-                type="text"
-                style={{ marginBottom: '2px' }}
-                onChange={(e) => {
-                    onChangeUrl(e)
-                }}
-                suffix={<Button style={{ borderColor: '#A6B0CF' }} onClick={appendInput}>+</Button>
-                }
-            />
-        </>
-
-    )
-}
-
 const SignUp = (props) => {
 
     const [verifiedPhone, setVerifiedPhone] = useState(false);  // For show or hidden input to type code sms
@@ -37,7 +18,6 @@ const SignUp = (props) => {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     // For Add more URL
-    const [dataUrl, setDataUrl] = useState({ dataUrl: [] });
     const [url, seturl] = useState([]);
 
     const onChangeUrl = (e, indexOfInput) => {
@@ -45,19 +25,12 @@ const SignUp = (props) => {
         urlTemp[indexOfInput] = e.target.value
         seturl(urlTemp)
         console.log(urlTemp)
-
-
-
     }
 
     const appendInput = () => {
         var newInput = `input-${inputs.inputs.length}`;
         setInputs(prevState => ({ inputs: prevState.inputs.concat([newInput]) }));
     }
-
-    // setDataUrl(prevState => ({ dataUrl: prevState.dataUrl.concat([url.urlInput]) }))
-
-
 
     // For Verify Phone
     const [bodyphone, setBodyPhone] = useState({
@@ -99,30 +72,31 @@ const SignUp = (props) => {
     // Submit
     const onFinish = async (values) => {
         values.business_license = basePdf;
-        values.url_market = dataUrl.dataUrl;
+        values.url_market = url;
         console.log('Success:', values);
 
-        // if (validatePassword.length < 6) {
-        //     message.error('The password is not enough characters');
-        //     return;
-        // }
+        if (validatePassword.length < 6) {
+            message.error('The password is not enough characters');
+            return;
+        }
 
         const { confirmPassword, email, business_license, password, phone, url_market, verify_code } = values
         const body = { confirmPassword, email, business_license, password, phone, url_market, verify_code }
+        console.log(body)
         const config = {
             headers: {
                 "Accept": "application/json",
                 'Content-Type': 'application/json',
             }
         }
-
-        // try {
-        //     const { data } = await axios.post(`${API_URL}/signup`, body, config)
-        //     console.log(data);
-        //     setSignUp(true)
-        // } catch (error) {
-        //     console.log(error.response)
-        // }
+        try {
+            const { data } = await axios.post(`${API_URL}/signup`, body, config)
+            console.log(data);
+            console.log(`${API_URL}/signup`)
+            setSignUp(true)
+        } catch (error) {
+            console.log(error.response)
+        }
     };
 
     const handleOk = () => {
@@ -177,7 +151,7 @@ const SignUp = (props) => {
                         <Form
                             onFinish={onFinish}
                         >
-                            {/* <FormItem
+                            <FormItem
                                 name="email"
                                 rules={[
                                     {
@@ -282,7 +256,21 @@ const SignUp = (props) => {
                                 // }}
                                 />
                             </FormItem>
-                            {
+                            <FormItem
+                                name="verify_code"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your 인증번호 입력',
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    placeholder="인증번호 입력"
+                                    type="text"
+                                />
+                            </FormItem>
+                            {/* {
                                 verifiedPhone ?
                                     <FormItem
                                         name="verify_code"
@@ -303,6 +291,7 @@ const SignUp = (props) => {
                             <br />
                             {
                                 inputs.inputs.map((input, index) => <Input
+                                    key={index}
                                     placeholder="신청 마켓 url 입력*"
                                     type="text"
                                     style={{ marginBottom: '2px' }}
@@ -313,10 +302,9 @@ const SignUp = (props) => {
                                     }
                                 />)
                             }
-                            {/* <Button style={{ borderColor: '#A6B0CF', color: '#fff', backgroundColor: '#3F537D' }} onClick={appendInput}>URL 추가</Button> */}
                             <br />
                             <br />
-                            {/* <FormItem
+                            <FormItem
                                 name="file"
                                 rules={[
                                     {
@@ -337,11 +325,11 @@ const SignUp = (props) => {
                                         </label>
                                     </Col>
                                 </Row>
-                            </FormItem> */}
+                            </FormItem>
                             <br />
                             <br />
                             <br />
-                            {/* <Form.Item
+                            <Form.Item
                                 name="agreement"
                                 valuePropName="checked"
                                 rules={[
@@ -363,7 +351,7 @@ const SignUp = (props) => {
                                 ο 마케팅 및 광고에 활용접속 빈도 파악 또는 회원의 서비스 이용에 대한 통계</p>
                                 <p><span style={{ color: '#A6B0CF' }}>■</span> 개인정보의 보유 및 이용기간
                                 회사는 개인정보 수집 및 이용목적이 달성된 후에는 예외 없이 해당 정보를 지체 없이 파기합니다.</p>
-                            </div> */}
+                            </div>
                             <Row gutter={24} justify="center">
                                 <Col span={24} style={{ textAlign: 'center', marginTop: '24px' }}>
                                     <FormItem>
