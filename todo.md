@@ -37,17 +37,16 @@ Possible
 ---------------------------------------------------------
 Todos: 
 
-2. Change local API - Call again
+1. Edit UI SignUp - Test submit ---- Done
+2. Change local API - Call again ---- Done
 
 3. Admin
-    a. Change cocal API
+    a. Change local API ---- Done
     b. Call and test
-4. Fix route page
 4. Push to Github - Clone and test - Share
 
 
 
-1. Edit UI SignUp - Test submit ---- Done
 
 
 
