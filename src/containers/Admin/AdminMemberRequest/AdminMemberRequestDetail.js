@@ -29,7 +29,7 @@ const AdminMemberRequestDetail = (props) => {
         }
     }
 
-    const reject = () => {
+    const reject = async () => {
         const config = {
             headers: {
                 "Accept": "application/json",
@@ -41,9 +41,8 @@ const AdminMemberRequestDetail = (props) => {
         }
 
         try {
-            const { data } = axios.put(`${API_URL}/users/${memberRequestDetail.id}`, body, config)
+            await axios.put(`${API_URL}/users/${memberRequestDetail.id}`, body, config)
             console.log('Reject')
-            console.log(data)
             props.history.push('/member-request')
         } catch (error) {
             console.log(error.response)

@@ -95,6 +95,7 @@ const SignUp = (props) => {
                     marginTop: '10vh',
                 },
             });
+            return;
         }
 
         if (validatePassword.length < 6) {
