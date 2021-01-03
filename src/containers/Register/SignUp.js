@@ -153,7 +153,7 @@ const SignUp = (props) => {
         <div className="signup">
             <Row gutter={24}>
                 <Col span={24} style={{ textAlign: 'center' }}>
-                    <h1 className="logo">GEM FACTORY</h1>
+                    <h1 className="logo">GEM BOX</h1>
                 </Col>
             </Row>
 
