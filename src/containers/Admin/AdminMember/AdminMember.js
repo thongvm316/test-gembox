@@ -6,9 +6,9 @@ import axios from 'axios'
 import setAuthToken from '../../../utils/setAuthToken'
 import './AdminMember.scss'
 
-// if (localStorage.token) {
-//     setAuthToken(localStorage.token);
-// } // set x-auth-herder for request header from user
+if (localStorage.token) {
+    setAuthToken(localStorage.token);
+} // set x-auth-herder for request header from user
 
 const AdminMember = (props) => {
     const [data, setData] = useState(null)
@@ -50,11 +50,16 @@ const AdminMember = (props) => {
                 'Content-Type': 'application/json',
             }
         }
-        const { data } = await axios.get(`${API_URL}/users`, config);
-        console.log(data)
-        const { data: { result } } = data
-        const { member } = result
-        setData(member)
+        console.log(localStorage.getItem('token'))
+        try {
+            const { data } = await axios.get(`${API_URL}/users`, config);
+            console.log(data)
+            const { data: { result } } = data
+            const { member } = result
+            setData(member)
+        } catch (error) {
+            console.log(error.response)
+        }
     }, [])
 
     return (
