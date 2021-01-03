@@ -39,7 +39,6 @@ Todos:
 
 1. Edit UI SignUp - Test submit ---- Done
 2. Change local API - Call again ---- Done
-<<<<<<< HEAD
 
 3. Admin
     a. Change local API ---- Done
@@ -48,8 +47,6 @@ Todos:
 
 
 
-=======
->>>>>>> development
 
 3. Admin
     a. Change local API ---- Done
@@ -59,7 +56,7 @@ Todos:
 4. Push to Github - Clone and test - Share - Heroku
 
 
-
+Test
 
 
 
