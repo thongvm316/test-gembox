@@ -3,6 +3,7 @@ import { Form, Input, Button, Row, Col, message, Alert } from 'antd';
 import { useLocation } from "react-router-dom";
 import { API_URL } from '../../constants/appConstants'
 import axios from 'axios'
+import setAuthToken from '../../utils/setAuthToken'
 import Footer from '../../components/Footer'
 import './AdminLogin.scss'
 
@@ -67,6 +68,7 @@ const AdminLogin = (props) => {
             const { data } = await axios.post(`${API_URL}/admin/logins`, body, config);
             console.log(data)
             localStorage.setItem('token', data.data.result.token);
+            setAuthToken(localStorage.token);
             history.push('/admin-member')
         } catch (error) {
             console.log(error.response)
