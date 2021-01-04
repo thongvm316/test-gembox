@@ -59,6 +59,7 @@ const AdminMemberRequestDetail = (props) => {
         }
         try {
             const { data } = await axios.get(`${API_URL}/admin/exportlicense?user_id=${memberRequestDetail.id}`, config)
+            console.log(data)
             fileDownload(data, 'license.pdf')
         } catch (error) {
             console.log(error.response)
