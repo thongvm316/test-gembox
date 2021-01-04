@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Button, Space, Input, Table } from 'antd'
+import { Row, Col, Button, Space, Input, Table, Radio } from 'antd'
 import { API_URL } from '../../../constants/appConstants'
 import axios from 'axios'
-import { SearchOutlined } from '@ant-design/icons'
+import { SearchOutlined } from '@ant-design/icons';
+import './AdminMemberRequest.scss';
 
 
 const AdminMemberRequest = (props) => {
@@ -19,16 +20,34 @@ const AdminMemberRequest = (props) => {
             dataIndex: 'email',
         },
         {
-            title: '비밀번호',
-            dataIndex: 'password',
-        },
-        {
             title: '연락처',
             dataIndex: 'phone',
         },
         {
             title: '상태',
             dataIndex: 'state',
+            render: (text, record) => {
+                const setState = () => {
+                    // console.log(record);
+                    let color = '#2400FF';
+                    if (record.status === 0) {
+                        record.state = '가입 요청'
+                    } else if (record.status === 2) {
+                        record.state = '가입 거부'
+                        color = '#FF0000'
+                    }
+                    return (
+                        <p style={{ color, fontWeight: 'bold' }}>{record.state}</p>
+                    )
+                }
+                return (
+                    <>
+                        {
+                            setState()
+                        }
+                    </>
+                )
+            }
         }
     ];
 
@@ -58,13 +77,19 @@ const AdminMemberRequest = (props) => {
     }, [])
 
     return (
-        <div className='admin-member'>
+        <div className='admin-member-request'>
             <Row gutter={[0, 16]} className='top' justify='space-between'>
-                <Col>
-                    <Space size='middle'>
+                <Col className="style-click-btn">
+                    {/* <Space size='middle'>
                         <Button onClick={() => { history.push('/admin-member') }}>가입회원만 보기</Button>
                         <Button onClick={() => { history.push('/member-request') }}>가입요청 보기</Button>
-                    </Space>
+                    </Space> */}
+                    <Radio.Group size="middle" defaultValue="b">
+                        <Space>
+                            <Radio.Button onClick={() => { history.push('/admin-member') }} value='a' >가입회원만 보기</Radio.Button>
+                            <Radio.Button onClick={() => { history.push('/member-request') }} value='b'>가입요청 보기</Radio.Button>
+                        </Space>
+                    </Radio.Group>
                 </Col>
                 <Col className='style-input'>
                     <Input

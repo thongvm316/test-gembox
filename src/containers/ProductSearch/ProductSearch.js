@@ -129,14 +129,16 @@ const ProductSearch = (props) => {
   const getExcelFile = async () => {
     const config = {
       headers: {
-        'X-Auth-Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImV4cCI6IjIwMTcwMTAxMDAwMCJ9.eyJzaWQiOiIxMjM0NTY3ODkwMTIzNDU2Nzg5MCIsImNvZGUiOiJhYmNkZXJmZ2hpIiwic2Vzc2lvbiI6IklHUURQeTYrSWZPR003OUZqT3dDIn0.wPM7MqaXIlbJxZ8Mb4Qgd2vhiB1KIBpKmGtVbF7eZtg'
+        "Accept": "application/json",
+        'Content-Type': 'application/json',
       }
     }
     try {
-      const { data } = await axios.get(`http://192.168.1.90/product/export?first=1&last=100`, {
+      const { data } = await axios.get(`${API_URL}/product/export?first=1&last=100`, {
         responseType: 'blob',
       }, config)
-      fileDownload(data, 'data.xls');
+      // fileDownload(data, 'data.xls');
+      console.log(data)
     } catch (error) {
       console.log(error.response.data)
     }

@@ -41,8 +41,11 @@ const SignUp = (props) => {
     })
 
     const { name, email, password, phone } = bodyphone;
-    const onChange = (e) =>
+    const onChange = (e) => {
         setBodyPhone({ ...bodyphone, [e.target.name]: e.target.value });
+        setEmailVerify({ email: e.target.value })
+    }
+
 
     const verifySmsCode = async () => {
         setVerifiedPhone(true)
@@ -69,11 +72,9 @@ const SignUp = (props) => {
         }
     }
 
-    // Submit
-    const onFinish = async (values) => {
-        values.business_license = basePdf;
-        values.url_market = url;
-        console.log('Success:', values);
+    // Verify Email
+    const [emailVerify, setEmailVerify] = useState({ email: '' })
+    const handleInputBlur = async () => {
         const config = {
             headers: {
                 "Accept": "application/json",
@@ -82,7 +83,7 @@ const SignUp = (props) => {
         }
 
         try {
-            const { data } = await axios.get(`${API_URL}/check?email=${values.email}`, config);
+            const { data } = await axios.get(`${API_URL}/check?email=${emailVerify.email}`, config);
             console.log(data)
         } catch (error) {
             console.log(error.response)
@@ -95,7 +96,19 @@ const SignUp = (props) => {
                     marginTop: '10vh',
                 },
             });
-            return;
+        }
+    }
+
+    // Submit
+    const onFinish = async (values) => {
+        values.business_license = basePdf;
+        values.url_market = url;
+        console.log('Success:', values);
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+            }
         }
 
         if (validatePassword.length < 6) {
@@ -183,6 +196,7 @@ const SignUp = (props) => {
                                     onChange={onChange}
                                     name='email'
                                     value={email}
+                                    onBlur={handleInputBlur}
                                 />
                             </FormItem>
                             <FormItem
@@ -272,7 +286,7 @@ const SignUp = (props) => {
                                 // }}
                                 />
                             </FormItem>
-                            <FormItem
+                            {/* <FormItem
                                 name="verify_code"
                                 rules={[
                                     {
@@ -285,8 +299,8 @@ const SignUp = (props) => {
                                     placeholder="인증번호 입력"
                                     type="text"
                                 />
-                            </FormItem>
-                            {/* {
+                            </FormItem> */}
+                            {
                                 verifiedPhone ?
                                     <FormItem
                                         name="verify_code"
@@ -303,7 +317,7 @@ const SignUp = (props) => {
                                         />
                                     </FormItem>
                                     : ''
-                            } */}
+                            }
                             <br />
                             {
                                 inputs.inputs.map((input, index) => <Input

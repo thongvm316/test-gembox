@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Button, Space, Input, Table } from 'antd'
+import { Row, Col, Button, Space, Input, Table, Radio } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import { API_URL } from '../../../constants/appConstants'
 import axios from 'axios'
@@ -24,10 +24,6 @@ const AdminMember = (props) => {
             dataIndex: 'email',
         },
         {
-            title: '비밀번호',
-            dataIndex: 'password',
-        },
-        {
             title: '연락처',
             dataIndex: 'phone',
         },
@@ -50,7 +46,6 @@ const AdminMember = (props) => {
                 'Content-Type': 'application/json',
             }
         }
-        console.log(localStorage.getItem('token'))
         try {
             const { data } = await axios.get(`${API_URL}/users`, config);
             console.log(data)
@@ -65,11 +60,17 @@ const AdminMember = (props) => {
     return (
         <div className='admin-member'>
             <Row gutter={[0, 16]} className='top' justify='space-between'>
-                <Col>
-                    <Space size='middle'>
+                <Col className='style-click-btn'>
+                    {/* <Space size='middle'>
                         <Button onClick={() => { history.push('/admin-member') }}>가입회원만 보기</Button>
                         <Button onClick={() => { history.push('/member-request') }}>가입요청 보기</Button>
-                    </Space>
+                    </Space> */}
+                    <Radio.Group size="middle" defaultValue="a">
+                        <Space>
+                            <Radio.Button onClick={() => { history.push('/admin-member') }} value="a">가입회원만 보기</Radio.Button>
+                            <Radio.Button onClick={() => { history.push('/member-request') }} value="b">가입요청 보기</Radio.Button>
+                        </Space>
+                    </Radio.Group>
                 </Col>
                 <Col className='style-input'>
                     <Input

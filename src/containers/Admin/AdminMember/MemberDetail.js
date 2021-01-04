@@ -3,6 +3,7 @@ import { Row, Col, Button, Space } from 'antd'
 import { useLocation } from "react-router-dom";
 import { API_URL } from '../../../constants/appConstants'
 import axios from 'axios'
+import fileDownload from 'js-file-download';
 import './MemberDetail.scss'
 
 const MemberDetail = (props) => {
@@ -21,6 +22,21 @@ const MemberDetail = (props) => {
             // await axios.delete(`${API_URL}/usermanages/7`, config) // Demo
             console.log('Delete User')
             props.history.push('/admin-member')
+        } catch (error) {
+            console.log(error.response)
+        }
+    }
+
+    const dowloadPdfFile = async () => {
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+            }
+        }
+        try {
+            const { data } = await axios.get(`${API_URL}/admin/exportlicense?user_id=${memberDetail.id}`, config)
+            fileDownload(data, 'license.pdf')
         } catch (error) {
             console.log(error.response)
         }
@@ -74,7 +90,7 @@ const MemberDetail = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className="style-positon">
                     <p style={{ width: '200px' }}>첨부된 이미지를 확인하여 사업자 등록번호를 입력바랍니다</p>
-                    <p className='border-solid'><a style={{ color: '#222' }} href={memberDetail.business_license}>사업자 등록증 다운로드</a></p>
+                    <Button onClick={dowloadPdfFile}>사업자 등록증 다운로드</Button>
                 </Col>
             </Row>
 

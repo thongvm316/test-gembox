@@ -1,0 +1,12 @@
+.style-click-btn {
+    .ant-radio-button-wrapper-checked {
+        border-color: black !important;
+        color: white !important;
+        background-color: black !important;
+    }
+    .ant-radio-button-wrapper {
+        &:hover {
+            color: black;
+        }
+    }
+}

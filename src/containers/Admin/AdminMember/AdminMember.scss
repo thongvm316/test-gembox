@@ -1,14 +1,14 @@
 .admin-member {
-    .top {
-        .style-input {
-            .ant-input {
-                background-color: #fff !important;
+    .style-click-btn {
+        .ant-radio-button-wrapper-checked {
+            border-color: black !important;
+            color: white !important;
+            background-color: black !important;
+        }
+        .ant-radio-button-wrapper {
+            &:hover {
+                color: black;
             }
         }
-    }
-    .ant-btn:hover, .ant-btn:focus {
-        color: #fff;
-        background-color: black;
-        border-color: black;
     }
 }

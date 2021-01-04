@@ -21,12 +21,6 @@ Fix:
 ---------------------------------------------------------
 Plan:
 
-Admin - User (Login - SignUp)
-1. UI: Login - SignUp User - Fix UI Admin
-2. Call API with Login - SignUp
-3. Test with user after call API
-----> Exp Fn 2020.12.29
-
 Home --> 4 - 11 /1
 Mypage ---> 12 - 16/1
 Search Fn All Page -- 18 - 19/1 
@@ -36,27 +30,21 @@ Possible
 
 ---------------------------------------------------------
 Todos: 
-
-1. Edit UI SignUp - Test submit ---- Done
-2. Change local API - Call again ---- Done
-
-3. Admin
-    a. Change local API ---- Done
-    b. Call and test
-4. Push to Github - Clone and test - Share
+4. Clean code
+5. Render data when user type more url
 
 
+4. check email in verify sms - api -> remove one ------- Done
+2. status approve/reject -- logic show ----- Done
+3. Hover when click btn in admin member - request ---- Done
+1. Show pdf file to image - test dowload ---- Done
 
 
-3. Admin
-    a. Change local API ---- Done
-    b. Call and test ---- Done
-4. After reject/approve --> Data note re render ---- Done
-5. Add btn check email ---> Done
-4. Push to Github - Clone and test - Share - Heroku
 
+0 request
+1 approve
+2 reject
 
-Test
 
 
 

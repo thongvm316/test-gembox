@@ -3,6 +3,7 @@ import { Row, Col, Button, Space, Image } from 'antd'
 import { useLocation } from "react-router-dom";
 import axios from 'axios'
 import { API_URL } from '../../../constants/appConstants'
+import fileDownload from 'js-file-download';
 import './AdminMemberRequestDetail.scss'
 
 const AdminMemberRequestDetail = (props) => {
@@ -44,6 +45,21 @@ const AdminMemberRequestDetail = (props) => {
             await axios.put(`${API_URL}/users/${memberRequestDetail.id}`, body, config)
             console.log('Reject')
             props.history.push('/member-request')
+        } catch (error) {
+            console.log(error.response)
+        }
+    }
+
+    const dowloadPdfFile = async () => {
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+            }
+        }
+        try {
+            const { data } = await axios.get(`${API_URL}/admin/exportlicense?user_id=${memberRequestDetail.id}`, config)
+            fileDownload(data, 'license.pdf')
         } catch (error) {
             console.log(error.response)
         }
@@ -103,14 +119,24 @@ const AdminMemberRequestDetail = (props) => {
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Row gutter={[24, 24]} justify="center">
                         <Col span={18}>
-                            <Image
-                                src="https://via.placeholder.com/407x600"
-                            />
+                            {/* <Image
+                                src={memberRequestDetail.business_license}
+                                width={500}
+                                height={500}
+                            /> */}
+                            <embed
+                                src={memberRequestDetail.business_license}
+                                type="application/pdf"
+                                frameBorder="0"
+                                scrolling="auto"
+                                height="600"
+                                width="400"
+                            ></embed>
                         </Col>
                     </Row>
                     <Row justify="center">
                         <Col span={12} style={{ textAlign: 'center' }}>
-                            <Button><a href={memberRequestDetail.business_license}>사업자 등록증 다운로드</a></Button>
+                            <Button onClick={dowloadPdfFile}>사업자 등록증 다운로드</Button>
                         </Col>
                     </Row>
                 </Col>
