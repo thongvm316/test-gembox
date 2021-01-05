@@ -5,6 +5,7 @@ import { API_URL } from '../../../constants/appConstants'
 import axios from 'axios'
 import fileDownload from 'js-file-download';
 import './MemberDetail.scss'
+import { BorderOutlined } from '@ant-design/icons';
 
 const MemberDetail = (props) => {
     const location = useLocation();
@@ -41,6 +42,24 @@ const MemberDetail = (props) => {
         }
     }
 
+    const resetPassword = async () => {
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+            }
+        }
+        const body = {
+            user_id: memberDetail.id
+        }
+        try {
+            const { data } = await axios.put(`${API_URL}/admin/resetpassword`, body, config)
+            console.log(data)
+        } catch (error) {
+            console.log(error.response)
+        }
+    }
+
     return (
         <div className="member-detail">
             <Row gutter={24}>
@@ -60,18 +79,16 @@ const MemberDetail = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className="style-positon">
                             <p><strong>패스워드</strong></p>
-                            <p>werr2334 <strong>Will Delete</strong></p>
+                            <Button onClick={resetPassword} type="default">Reset Password</Button>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className="style-positon" style={{ marginTop: '31px' }}>
                             <p>신청 채널</p>
-                            <p>
-                                <List
-                                    size="small"
-                                    bordered
-                                    dataSource={memberDetail.markets}
-                                    renderItem={item => <List.Item>{item}</List.Item>}
-                                />
-                            </p>
+                            <List
+                                size="small"
+                                bordered
+                                dataSource={memberDetail.markets}
+                                renderItem={item => <List.Item>{item}</List.Item>}
+                            />
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className="style-positon" style={{ marginTop: '31px' }}>
                             <p><strong>가입신청일</strong></p>
@@ -107,11 +124,6 @@ const MemberDetail = (props) => {
                             <Button onClick={dowloadPdfFile}>사업자 등록증 다운로드</Button>
                         </Col>
                     </Row>
-                    {/* <Row justify="center">
-                        <Col span={12} style={{ textAlign: 'center' }}>
-                            <Button onClick={dowloadPdfFile}>사업자 등록증 다운로드</Button>
-                        </Col>
-                    </Row> */}
                 </Col>
             </Row>
 
@@ -123,7 +135,7 @@ const MemberDetail = (props) => {
                     </Space>
                 </Col>
             </Row>
-        </div>
+        </div >
     )
 }
 

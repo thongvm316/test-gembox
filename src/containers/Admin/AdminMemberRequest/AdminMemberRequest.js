@@ -80,10 +80,6 @@ const AdminMemberRequest = (props) => {
         <div className='admin-member-request'>
             <Row gutter={[0, 16]} className='top' justify='space-between'>
                 <Col className="style-click-btn">
-                    {/* <Space size='middle'>
-                        <Button onClick={() => { history.push('/admin-member') }}>가입회원만 보기</Button>
-                        <Button onClick={() => { history.push('/member-request') }}>가입요청 보기</Button>
-                    </Space> */}
                     <Radio.Group size="middle" defaultValue="b">
                         <Space>
                             <Radio.Button onClick={() => { history.push('/admin-member') }} value='a' >가입회원만 보기</Radio.Button>

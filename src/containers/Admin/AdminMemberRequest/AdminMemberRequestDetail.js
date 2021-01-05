@@ -9,7 +9,7 @@ import './AdminMemberRequestDetail.scss'
 const AdminMemberRequestDetail = (props) => {
     const location = useLocation();
     const { memberRequestDetail } = location.state;
-    console.log(memberRequestDetail)
+    // console.log(memberRequestDetail)
 
     const approve = async () => {
         const config = {
@@ -68,6 +68,24 @@ const AdminMemberRequestDetail = (props) => {
         }
     }
 
+    const resetPassword = async () => {
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+            }
+        }
+        const body = {
+            user_id: memberRequestDetail.id
+        }
+        try {
+            const { data } = await axios.put(`${API_URL}/admin/resetpassword`, body, config)
+            console.log(data)
+        } catch (error) {
+            console.log(error.response)
+        }
+    }
+
     return (
         <div className="admin-member-request-detail">
             <Row gutter={24}>
@@ -87,18 +105,16 @@ const AdminMemberRequestDetail = (props) => {
                         </Col>
                         <Col span={24} className="style-positon">
                             <p><strong>패스워드</strong></p>
-                            <p>werr2334 <strong>Will Del in Fea</strong></p>
+                            <Button onClick={resetPassword} type="default">Reset Password</Button>
                         </Col>
                         <Col span={24} className="style-positon" style={{ marginTop: '31px' }}>
                             <p>신청 채널</p>
-                            <p>
-                                <List
-                                    size="small"
-                                    bordered
-                                    dataSource={memberRequestDetail.markets}
-                                    renderItem={item => <List.Item>{item}</List.Item>}
-                                />
-                            </p>
+                            <List
+                                size="small"
+                                bordered
+                                dataSource={memberRequestDetail.markets}
+                                renderItem={item => <List.Item>{item}</List.Item>}
+                            />
                         </Col>
                         <Col span={24} className="style-positon" style={{ marginTop: '100px' }}>
                             <p><strong>사업자 등록번호</strong></p>
@@ -131,10 +147,12 @@ const AdminMemberRequestDetail = (props) => {
 
             <Row style={{ textAlign: 'center', marginTop: '3rem' }}>
                 <Col span={24}>
-                    <Space size="large">
-                        <Button onClick={reject}>거부하기</Button>
-                        <Button onClick={approve}>승인 하기</Button>
-                    </Space>
+                    {
+                        memberRequestDetail.status === 2 ? '' : <Space size="large">
+                            <Button onClick={reject}>거부하기</Button>
+                            <Button onClick={approve}>승인 하기</Button>
+                        </Space>
+                    }
                 </Col>
             </Row>
         </div>

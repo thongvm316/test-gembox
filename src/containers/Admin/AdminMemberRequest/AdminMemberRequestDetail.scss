@@ -6,6 +6,14 @@
     .ant-list-bordered {
         border: 1px solid gray !important;
     }
+    .ant-btn {
+        border-color: gray;
+        background: transparent;
+        &:hover {
+            color: #000000;
+            border-color: gray;
+        }
+    }
 }
 
 @media (min-width: 992px) {

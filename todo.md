@@ -31,12 +31,20 @@ Possible
 ---------------------------------------------------------
 Todos: 
 4. Clean code - test admin-login-signup again
-6. Navbar in all admin page
 7. Admin setting page
 
 
 8. Show pdf as img in member detail - Render data when user type more url ---- Done
 5. find password page  ---- Done
+6. Navbar in all admin page ---- Done
+8. Logic hide btn after user be reject ----- Done
+9. Fix reset password in member detail ---- Done
+
+
+Ask: 
+1. Reset pass just use for member, not memberrequest
+2. After reset, what is the new password
+
 
 
 

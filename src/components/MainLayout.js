@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import { Layout, Avatar, Dropdown, Menu, Input } from 'antd';
-import { UserOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import { Layout, Dropdown, Menu, Badge } from 'antd';
+import { MenuUnfoldOutlined, MenuFoldOutlined, DownOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import Logout from '../images/logout.png';
+import MyProfile from '../images/profile.png';
+import Notify from '../images/notify.png';
+import Setting from '../images/Setting.png';
+import './MainLayout.scss';
 
 import Sidebar from './Sidebar';
 
-const Search = Input.Search;
+// const Search = Input.Search;
 const { Header, Content } = Layout;
 
 const MainLayout = (props) => {
@@ -13,9 +19,9 @@ const MainLayout = (props) => {
     const renderUserInfor = () => {
         return (
             <Menu selectedKeys={[]} onClick={() => onMenuClick()}>
-                <Menu.Item key="user"><UserOutlined /> Thông tin tài khoản</Menu.Item>
+                <Menu.Item key="user"><img src={MyProfile} /> <span style={{ marginLeft: '13px' }}>My Profile</span></Menu.Item>
                 <Menu.Divider />
-                <Menu.Item key="logout"><UserOutlined /> Đăng xuất</Menu.Item>
+                <Menu.Item key="logout"><img src={Logout} /> <span style={{ marginLeft: '13px' }}>Logout</span></Menu.Item>
             </Menu>
         )
     }
@@ -54,18 +60,19 @@ const MainLayout = (props) => {
                             <MenuFoldOutlined className="trigger" onClick={() => toggle()} />
                     }
                     <div style={{ display: 'flex' }}>
-                        <a onClick={() => goDetail()}>
-                            이수진
-                        </a>
-                        <a style={{ margin: '0 10px' }}>
-                            님 안녕하세요
-
-                        </a>
                         <Dropdown overlay={renderUserInfor()}>
-                            <div>
-                                <Avatar style={{ marginRight: '10px' }} icon={<UserOutlined />} size="small" />
-                            </div>
+                            <a style={{ color: '#42ABBC' }} onClick={() => goDetail()}>
+                                <span style={{ fontWeight: 'bold' }}>Admin Name</span>
+                                <span style={{ paddingLeft: '8px' }}>님 안녕하세요</span>
+                                <span style={{ paddingLeft: '11px' }}><DownOutlined /></span>
+                            </a>
                         </Dropdown>
+                        <Badge count={5}>
+                            <img style={{ padding: '21px 0' }} src={Notify} />
+                        </Badge>
+                        <div style={{ marginLeft: '20px' }}>
+                            <Link to=""><img style={{ marginBottom: '9px' }} src={Setting} alt="" /></Link>
+                        </div>
                     </div>
                 </Header>
                 <Content className="main-layout-content" style={{ height: 'auto', minHeight: 'initial' }}>

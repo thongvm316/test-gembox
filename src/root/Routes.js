@@ -50,7 +50,6 @@ const Routes = () => {
             <AppRoute exact path="/sale-status" component={SaleStatus} />
             <AppRoute exact path="/product-detail" component={ProductDetail} />
             <AppRoute exact path="/user-detail" component={UserDetail} />
-
         </Switch>
     )
 }

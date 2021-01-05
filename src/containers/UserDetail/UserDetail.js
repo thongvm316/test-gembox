@@ -101,7 +101,7 @@ const UserDetail = () => {
             </Row>
 
             <Modal title="Change Password" visible={isModalVisible} footer={false} onCancel={handleCancel}>
-                <div style={{padding: '0 80px'}}>
+                <div style={{ padding: '0 80px' }}>
                     <div style={{ marginBottom: 20 }}>
                         <Input.Password size="large" placeholder="Your Password" />
                     </div>
