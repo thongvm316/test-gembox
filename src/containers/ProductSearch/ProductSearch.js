@@ -137,7 +137,7 @@ const ProductSearch = (props) => {
       const { data } = await axios.get(`${API_URL}/product/export?first=1&last=100`, {
         responseType: 'blob',
       }, config)
-      // fileDownload(data, 'data.xls');
+      fileDownload(data, 'data.xls');
       console.log(data)
     } catch (error) {
       console.log(error.response.data)

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form, Input, Button, Row, Col } from 'antd';
 import Footer from '../../components/Footer'
-import './AdminFindPassword.scss'
+import './AdminFindAccount.scss'
 
 const AdminFindAccount = () => {
 
@@ -14,19 +14,19 @@ const AdminFindAccount = () => {
     };
 
     return (
-        <div className="admin-find-password" style={{
-            display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100vh', paddingTop: '5rem'
+        <div className="admin-find-account" style={{
+            display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100vh', paddingTop: '17rem'
         }}>
             <Row justify="center" gutter={24} style={{ textAlign: 'center' }}>
                 <Col span={24}>
-                    <h1>GEM FACTORY</h1>
+                    <h1>GEM BOX</h1>
                 </Col>
                 <Col xs={20} sm={24} md={24} lg={24} xl={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Form
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
                     >
-                        <div className="verified">
+                        <div className="verified" style={{ display: 'flex' }}>
                             <Form.Item
                                 name="email"
                                 rules={[

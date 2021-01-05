@@ -3,25 +3,15 @@
         display: flex;
         justify-content: space-between;
     }
-    .border-solid {
-        padding: .5rem;
-        border: 1px solid gray;
+    .ant-list-bordered {
+        border: 1px solid gray !important;
     }
 }
 
-@media (max-width: '576px') {
+@media (min-width: 992px) {
     .member-detail {
-        .ant-row {
-            width: 95% !important;
-        }
-    }
-}
-
-@media (max-width: '320px') {
-    .member-detail {
-        .border-solid {
-            width: 200px;
-            border: none !important;
+        .set-width {
+            width: 500px;
         }
     }
 }

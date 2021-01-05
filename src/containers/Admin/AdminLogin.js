@@ -95,7 +95,7 @@ const AdminLogin = (props) => {
 
     return (
         <div className="admin-login" style={{
-            display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100vh', paddingTop: '5rem'
+            display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100vh', paddingTop: '17rem'
         }}>
             <Row justify="center" gutter={24} style={{ textAlign: 'center' }}>
                 <Col span={24}>

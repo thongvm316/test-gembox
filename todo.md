@@ -30,23 +30,13 @@ Possible
 
 ---------------------------------------------------------
 Todos: 
-4. Clean code
-5. Render data when user type more url
+4. Clean code - test admin-login-signup again
+6. Navbar in all admin page
+7. Admin setting page
 
 
-4. check email in verify sms - api -> remove one ------- Done
-2. status approve/reject -- logic show ----- Done
-3. Hover when click btn in admin member - request ---- Done
-1. Show pdf file to image - test dowload ---- Done
-
-
-
-0 request
-1 approve
-2 reject
-
-
-
+8. Show pdf as img in member detail - Render data when user type more url ---- Done
+5. find password page  ---- Done
 
 
 

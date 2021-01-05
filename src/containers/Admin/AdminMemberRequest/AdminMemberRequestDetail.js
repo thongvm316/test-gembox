@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Button, Space, Image } from 'antd'
+import { Row, Col, Button, Space, List } from 'antd'
 import { useLocation } from "react-router-dom";
 import axios from 'axios'
 import { API_URL } from '../../../constants/appConstants'
@@ -58,7 +58,9 @@ const AdminMemberRequestDetail = (props) => {
             }
         }
         try {
-            const { data } = await axios.get(`${API_URL}/admin/exportlicense?user_id=${memberRequestDetail.id}`, config)
+            const { data } = await axios.get(`${API_URL}/admin/exportlicense?user_id=${memberRequestDetail.id}`, {
+                responseType: 'blob',
+            }, config)
             console.log(data)
             fileDownload(data, 'license.pdf')
         } catch (error) {
@@ -69,8 +71,8 @@ const AdminMemberRequestDetail = (props) => {
     return (
         <div className="admin-member-request-detail">
             <Row gutter={24}>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Row>
+                <Col xs={24} sm={24} md={24} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Row className="set-width">
                         <Col span={24} className="style-positon">
                             <p><strong>이름</strong></p>
                             <p>{memberRequestDetail.name}</p>
@@ -87,44 +89,30 @@ const AdminMemberRequestDetail = (props) => {
                             <p><strong>패스워드</strong></p>
                             <p>werr2334 <strong>Will Del in Fea</strong></p>
                         </Col>
-                    </Row>
-
-                    <Row style={{ marginTop: '31px' }}>
-                        <Col span={24} className="style-positon">
+                        <Col span={24} className="style-positon" style={{ marginTop: '31px' }}>
                             <p>신청 채널</p>
-                            <p className='border-solid'>
-                                <a style={{ color: 'black' }} href={memberRequestDetail.markets}>{memberRequestDetail.markets}</a>
+                            <p>
+                                <List
+                                    size="small"
+                                    bordered
+                                    dataSource={memberRequestDetail.markets}
+                                    renderItem={item => <List.Item>{item}</List.Item>}
+                                />
                             </p>
                         </Col>
-                    </Row>
-
-                    {/* <Row style={{ marginTop: '31px' }}>
-                        <Col span={24} className="style-positon">
-                            <p><strong>가입신청일</strong></p>
-                            <p>{memberRequestDetail.register_date}</p>
-                        </Col>
-                    </Row> */}
-
-                    <Row style={{ marginTop: '31px' }}>
-                        <Col span={24} className="style-positon">
+                        <Col span={24} className="style-positon" style={{ marginTop: '100px' }}>
                             <p><strong>사업자 등록번호</strong></p>
-                            <p className='border-solid'>{memberRequestDetail.company_number} <strong>null</strong></p>
+                            <p className='border-solid'>{memberRequestDetail.company_number} <strong>입력</strong></p>
                         </Col>
                         <Col span={24} className="style-positon">
                             <p>첨부된 이미지를 확인하여 사업자 등록번호를 입력바랍니다</p>
-                            {/* <p className='border-solid'>사업자 등록증 다운로드</p> */}
                         </Col>
                     </Row>
                 </Col>
 
-                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                     <Row gutter={[24, 24]} justify="center">
-                        <Col span={18}>
-                            {/* <Image
-                                src={memberRequestDetail.business_license}
-                                width={500}
-                                height={500}
-                            /> */}
+                        <Col span={24} style={{ textAlign: 'center' }}>
                             <embed
                                 src={memberRequestDetail.business_license}
                                 type="application/pdf"
@@ -134,9 +122,7 @@ const AdminMemberRequestDetail = (props) => {
                                 width="400"
                             ></embed>
                         </Col>
-                    </Row>
-                    <Row justify="center">
-                        <Col span={12} style={{ textAlign: 'center' }}>
+                        <Col span={24} style={{ textAlign: 'center' }}>
                             <Button onClick={dowloadPdfFile}>사업자 등록증 다운로드</Button>
                         </Col>
                     </Row>
