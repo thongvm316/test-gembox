@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Row, Col, Modal, Divider, Image, message, Alert } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
 import { useLocation } from "react-router-dom";
 import { API_URL } from '../constants/appConstants'
 import axios from 'axios'
 import Footer from '../components/Footer'
 import './Login.scss'
-
 import { EyeOutlined } from '@ant-design/icons';
-import { color } from 'highcharts';
+
+import setAuthToken from '../utils/setAuthToken'
 
 
 const layout = {
@@ -35,14 +34,7 @@ const Login = (props) => {
     const { history } = props;
     const location = useLocation();
     const [findPassword, setFindPassword] = useState(false); // Modal forget password
-    const [loginFailed, setLoginFailed] = useState(false); // Modal login failed
 
-    // const showModalLoginFailed = () => {
-    //     setLoginFailed(true);
-    // };
-    // const handleOkModalLoginFailed = () => {
-    //     setLoginFailed(false);
-    // };
     const handleOkModalFindPassword = () => {
         setFindPassword(true)
     }
@@ -72,7 +64,8 @@ const Login = (props) => {
         try {
             const { data } = await axios.post(`${API_URL}/logins`, body, config);
             console.log(data)
-            localStorage.setItem('token', data.data.result.token);
+            localStorage.setItem('token-user', data.data.result.token);
+            setAuthToken(localStorage.getItem('token-user '))
             history.push('/home')
         } catch (error) {
             console.log(error.response)
@@ -88,14 +81,6 @@ const Login = (props) => {
         }
 
         // showModalLoginFailed(); // Process logic when call API
-        // const { data } = await axios.post(`${API_URL}/logins`, body, config);
-        // if (data.data.code === '20000' && data.data.message === 'Success') {
-        //     console.log(data)
-        //     localStorage.setItem('token', data.data.result.token);
-        //     history.push('/home');
-        // } else {
-        //     console.log(`Handle Err`)
-        // }
     };
 
     const onFinishFailed = (errorInfo) => {

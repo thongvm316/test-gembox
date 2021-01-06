@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './SignUp.scss'
 import { Row, Col, Input, Modal, Button, Form, message, Checkbox, Image, Alert } from 'antd';
 import { API_URL } from '../../constants/appConstants'
@@ -286,20 +286,6 @@ const SignUp = (props) => {
                                 // }}
                                 />
                             </FormItem>
-                            {/* <FormItem
-                                name="verify_code"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please input your 인증번호 입력',
-                                    },
-                                ]}
-                            >
-                                <Input
-                                    placeholder="인증번호 입력"
-                                    type="text"
-                                />
-                            </FormItem> */}
                             {
                                 verifiedPhone ?
                                     <FormItem
@@ -410,6 +396,7 @@ const SignUp = (props) => {
                 visible={signUp}
                 onOk={handleOk}
                 okText="확인"
+                onCancel={() => setSignUp(false)}
                 okButtonProps={{ style: { display: 'none' } }}
                 cancelButtonProps={{ style: { display: 'none' } }}
             >

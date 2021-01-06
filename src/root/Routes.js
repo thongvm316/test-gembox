@@ -19,15 +19,13 @@ import AdminFindAccount from '../containers/Admin/AdminFindAccount'
 import AdminMemberRequest from '../containers/Admin/AdminMemberRequest/AdminMemberRequest'
 import AdminMemberRequestDetail from '../containers/Admin/AdminMemberRequest/AdminMemberRequestDetail'
 import UserDetail from '../containers/UserDetail/UserDetail';
+import AdminSetting from '../containers/Admin/AdminSetting'
 
-// PrivateRoute
 import PrivateRoute from './PrivateRoute'
-
-// Utils
 import setAuthToken from '../utils/setAuthToken'
-if (localStorage.token) {
-    setAuthToken(localStorage.token);
-}
+// if (localStorage.token) {
+//     setAuthToken(localStorage.token);
+// }
 
 const Routes = () => {
     return (
@@ -39,6 +37,7 @@ const Routes = () => {
             <PrivateRoute exact path="/member-detail" component={MemberDetail} />
             <PrivateRoute exact path="/member-request" component={AdminMemberRequest} />
             <PrivateRoute exact path="/member-request-detail" component={AdminMemberRequestDetail} />
+            <PrivateRoute exact path="/admin-setting" component={AdminSetting} />
 
             <AppRoute exact path="/" component={Login} layout={LoginLayout} />
             <AppRoute exact path="/home" component={Home} />

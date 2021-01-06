@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Button, Space, Input, Table, Radio } from 'antd'
+import { Row, Col, Space, Input, Table, Radio } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import { API_URL } from '../../../constants/appConstants'
 import axios from 'axios'
-import setAuthToken from '../../../utils/setAuthToken'
 import './AdminMember.scss'
 
+import setAuthToken from '../../../utils/setAuthToken'
 if (localStorage.token) {
     setAuthToken(localStorage.token);
-} // set x-auth-herder for request header from user
+}
 
 const AdminMember = (props) => {
     const [data, setData] = useState(null)
@@ -47,7 +47,8 @@ const AdminMember = (props) => {
             }
         }
         try {
-            const { data } = await axios.get(`${API_URL}/users`, config);
+            const res = await axios.get(`${API_URL}/users`, config);
+            const { data } = res
             console.log(data)
             const { data: { result } } = data
             const { member } = result
@@ -61,10 +62,6 @@ const AdminMember = (props) => {
         <div className='admin-member'>
             <Row gutter={[0, 16]} className='top' justify='space-between'>
                 <Col className='style-click-btn'>
-                    {/* <Space size='middle'>
-                        <Button onClick={() => { history.push('/admin-member') }}>가입회원만 보기</Button>
-                        <Button onClick={() => { history.push('/member-request') }}>가입요청 보기</Button>
-                    </Space> */}
                     <Radio.Group size="middle" defaultValue="a">
                         <Space>
                             <Radio.Button onClick={() => { history.push('/admin-member') }} value="a">가입회원만 보기</Radio.Button>

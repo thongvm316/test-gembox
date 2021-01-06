@@ -5,19 +5,20 @@ import { API_URL } from '../../../constants/appConstants'
 import axios from 'axios'
 import fileDownload from 'js-file-download';
 import './MemberDetail.scss'
-import { BorderOutlined } from '@ant-design/icons';
 
 const MemberDetail = (props) => {
     const location = useLocation();
     const { memberDetail } = location.state;
 
-    const deleteMember = async () => {
-        const config = {
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-            }
+    // Congif for call API
+    const config = {
+        headers: {
+            "Accept": "application/json",
+            'Content-Type': 'application/json',
         }
+    }
+
+    const deleteMember = async () => {
         try {
             await axios.delete(`${API_URL}/users/${memberDetail.id}`, config)
             console.log('Delete User')
@@ -28,12 +29,6 @@ const MemberDetail = (props) => {
     }
 
     const dowloadPdfFile = async () => {
-        const config = {
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-            }
-        }
         try {
             const { data } = await axios.get(`${API_URL}/admin/exportlicense?user_id=${memberDetail.id}`, config)
             fileDownload(data, 'license.pdf')
@@ -43,12 +38,6 @@ const MemberDetail = (props) => {
     }
 
     const resetPassword = async () => {
-        const config = {
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-            }
-        }
         const body = {
             user_id: memberDetail.id
         }

@@ -67,6 +67,7 @@ const AdminLogin = (props) => {
         try {
             const { data } = await axios.post(`${API_URL}/admin/logins`, body, config);
             console.log(data)
+            localStorage.removeItem('token-user')
             localStorage.setItem('token', data.data.result.token);
             setAuthToken(localStorage.token);
             history.push('/admin-member')
@@ -99,7 +100,7 @@ const AdminLogin = (props) => {
         }}>
             <Row justify="center" gutter={24} style={{ textAlign: 'center' }}>
                 <Col span={24}>
-                    <h1>GEM FACTORY</h1>
+                    <h1>GEM BOX</h1>
                 </Col>
                 <Col xs={20} sm={24} md={24} lg={24} xl={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Form
@@ -143,7 +144,7 @@ const AdminLogin = (props) => {
                     </Form>
                 </Col>
                 <Col span={6} style={{ marginTop: '36px' }}>
-                    <Button className="btn-login" onClick={() => setFindPassword(true)}>계정찾기</Button>
+                    <Button className="btn-login" onClick={() => history.push('/admin-find-account')}>계정찾기</Button>
                 </Col>
             </Row>
             <Footer />

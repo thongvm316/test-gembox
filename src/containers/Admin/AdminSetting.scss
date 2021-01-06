@@ -1,0 +1,51 @@
+.admin-setting {
+    .setting-detail {
+        width: 85vw;
+        height: 400px;
+        margin: 70px auto auto auto !important;
+        background-color: #fff;
+        padding: 50px;
+        border-radius: 16px;
+    }
+    .style-positon{
+        display: flex;
+        justify-content: space-between;
+    }
+    .ant-divider-horizontal {
+        margin: 0;
+    }
+    .ant-btn-primary {
+        background-color: #3F537D;
+        border-color: #3F537D;
+    }
+    .ant-btn-primary:hover, .ant-btn-primary:focus {
+        background-color: #3F537D;
+        border-color: #3F537D;
+    }
+}
+
+.modal-admin-setting {
+    h1 {
+        font-size: 36px;
+        font-weight: 500;
+        color: #495057;
+    }
+    p{
+        font-size: 17px;
+        font-weight: bold;
+        color: #74788D;
+    }
+    .ant-btn {
+        color: #3F537D;
+        margin-top: 60px;
+        border-color: #3F537D;
+        width: 200px;
+        &:hover, &:focus {
+            color: #fff;
+            border-color: #3F537D;
+            background-color: #3F537D;
+        }
+
+    }
+}
+

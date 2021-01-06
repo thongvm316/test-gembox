@@ -20,30 +20,34 @@ Fix:
     }
 ---------------------------------------------------------
 Plan:
-
-Home --> 4 - 11 /1
-Mypage ---> 12 - 16/1
-Search Fn All Page -- 18 - 19/1 
-Other ---> Ok
-Possible
+ Home: 5days (7 8 9 11 12)
+ Product-Detail: 5days (13 14 15 16 18)
+ Search vender: 3days (19 20 21)
+ My page: 3days (22 23 25)
 
 
 ---------------------------------------------------------
 Todos: 
-4. Clean code - test admin-login-signup again
-7. Admin setting page
+5. Intergate Redux
 
 
-8. Show pdf as img in member detail - Render data when user type more url ---- Done
-5. find password page  ---- Done
-6. Navbar in all admin page ---- Done
-8. Logic hide btn after user be reject ----- Done
-9. Fix reset password in member detail ---- Done
+6. Logout ---- Done
+4. Ke hoach cac phan tiep theo - UI, ho tro ---- Done
 
 
-Ask: 
-1. Reset pass just use for member, not memberrequest
-2. After reset, what is the new password
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
