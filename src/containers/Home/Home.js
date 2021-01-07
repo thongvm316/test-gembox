@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { DatePicker, Space, Button, Row, Col, Card, Divider, Radio } from 'antd';
+import React from 'react';
+import { DatePicker, Button, Row, Col, Card, Divider } from 'antd';
 import Footer from '../../components/Footer'
+import GroupButton from './GroupButton/GroupButton'
 import './home.scss'
 import moment from 'moment';
 
@@ -146,32 +147,20 @@ const RenderData = (props) => {
   )
 }
 
-// Date Picker
-function onChange(date, dateString) {
-  console.log(date, dateString);
-}
+const Home = (props) => {
+  // Date Picker
+  function onChange(date, dateString) {
+    console.log(date, dateString);
+  }
 
-const Home = () => {
   return (
     <div className="home-page">
-      <Row gutter={24} style={{ marginLeft: '24px' }}>
-        <Col span={24} className="style-click-btn">
-          <Radio.Group size="middle" defaultValue="a">
-            <Radio.Button value="a" shape="round" size="middle">전체 요약분석</Radio.Button>
-            <Radio.Button style={{ marginLeft: '10px', marginRight: '10px' }} value="b" shape="round" size="middle">카테고리 별 분석</Radio.Button>
-            <Radio.Button value="c" shape="round" size="middle">마켓별 분석</Radio.Button>
-          </Radio.Group>
-        </Col>
-      </Row>
+      <GroupButton redirect={props.history.push} clickable="a" />
 
-      <Row className="aggregate-month" >
-        <Col xl={2}>
-          <h1>집계 월</h1>
-        </Col>
+      <Row className="aggregate-month card-border">
+        <h1 style={{ marginRight: '41px', paddingTop: '5px' }}>집계 월</h1>
         <Col xl={20} className="date-picker">
-          <Space direction="vertical">
-            <DatePicker style={{ marginRight: '8px' }} onChange={onChange} picker="month" />
-          </Space>
+          <DatePicker onChange={onChange} bordered={false} picker="month" />
           <Button style={{ background: '#71c4d5', borderColor: '#71c4d5', fontWeight: 'bold' }} type="primary">적용하기</Button>
         </Col>
       </Row>

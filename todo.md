@@ -27,8 +27,11 @@ Plan:
 
 ---------------------------------------------------------
 Todos: 
-1. Res
-2. Date Picker
+1. PrivateRoute with all Home Page
+
+
+1. Res ---- Done
+2. Date Picker ---- Done
 
 
 

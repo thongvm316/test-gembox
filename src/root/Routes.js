@@ -1,16 +1,20 @@
 import React from 'react';
 import { Switch } from "react-router-dom";
 
-import AppRoute from './AppRoute';
+import SignUp from '../containers/Register/SignUp'
+import Login from '../containers/Login';
+
 import LoginLayout from '../components/LoginLayout'
 import RegisterLayout from '../components/RegisterLayout'
+
 import Home from '../containers/Home/Home';
-import Login from '../containers/Login';
+import CategoryAnalysis from '../containers/Home/CategoryAnalysis'
+
 import ProductSearch from '../containers/ProductSearch/ProductSearch'
-import VendorSearch from '../containers/VendorSearch/VendorSearch'
-import SignUp from '../containers/Register/SignUp'
-import SaleStatus from '../containers/SaleStatus/SaleStatus'
 import ProductDetail from '../components/ProductDetail/ProductDetail'
+import VendorSearch from '../containers/VendorSearch/VendorSearch'
+import SaleStatus from '../containers/SaleStatus/SaleStatus'
+
 import AdminMember from '../containers/Admin/AdminMember/AdminMember'
 import MemberDetail from '../containers/Admin/AdminMember/MemberDetail'
 import AdminLogin from '../containers/Admin/AdminLogin'
@@ -21,6 +25,7 @@ import UserDetail from '../containers/UserDetail/UserDetail';
 import AdminSetting from '../containers/Admin/AdminSetting'
 
 import PrivateRoute from './PrivateRoute'
+import AppRoute from './AppRoute';
 import setAuthToken from '../utils/setAuthToken'
 // if (localStorage.token) {
 //     setAuthToken(localStorage.token);
@@ -38,9 +43,14 @@ const Routes = () => {
             <PrivateRoute exact path="/member-request-detail" component={AdminMemberRequestDetail} />
             <PrivateRoute exact path="/admin-setting" component={AdminSetting} />
 
+            {/* Signup - Login */}
             <AppRoute exact path="/" component={Login} layout={LoginLayout} />
-            <AppRoute exact path="/home" component={Home} />
             <AppRoute exact path="/signup" component={SignUp} layout={RegisterLayout} />
+
+            {/* Home Page */}
+            <AppRoute exact path="/home" component={Home} />
+            <AppRoute exact path="/category-analysis" component={CategoryAnalysis} />
+
 
             <AppRoute exact path="/product-search" component={ProductSearch} />
             <AppRoute exact path="/vendor-search" component={VendorSearch} />
