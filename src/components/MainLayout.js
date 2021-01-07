@@ -74,7 +74,7 @@ const MainLayout = (props) => {
                         </div>
                     </div>
                 </Header>
-                <Content className="main-layout-content" style={{ height: 'auto', minHeight: 'initial' }}>
+                <Content className="main-layout-content">
                     {props.children}
                 </Content>
             </Layout>
