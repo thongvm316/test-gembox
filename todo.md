@@ -25,14 +25,10 @@ Plan:
  Search vender: 3days (19 20 21)
  My page: 3days (22 23 25)
 
-
 ---------------------------------------------------------
 Todos: 
-5. Intergate Redux
-
-
-6. Logout ---- Done
-4. Ke hoach cac phan tiep theo - UI, ho tro ---- Done
+1. Res
+2. Date Picker
 
 
 
@@ -59,37 +55,3 @@ Todos:
 
 
 
-
-
-
-
-
-
-  {/* <Modal
-                title="비밀 번호 찾기"
-                visible={findPassword}
-                onOk={handleOkModalFindPassword}
-                onCancel={() => setFindPassword(false)}
-                okText="확인"
-                okButtonProps={{ type: "default" }}
-                cancelButtonProps={{ style: { display: 'none' } }}
-            >
-                <div style={{ textAlign: 'center' }}>
-                    <p>비밀번호 분실의 경우 관리자에게 문의바랍니다</p>
-                    <p>gemtoys@gemtoys.co.kr</p>
-                    <p>1899-5704</p>
-                </div>
-            </Modal>
-
-            <Modal
-                okButtonProps={{ type: "default" }}
-                cancelButtonProps={{ style: { display: 'none' } }}
-                visible={loginFailed}
-                onOk={handleOkModalLoginFailed}
-            >
-                <div style={{ textAlign: 'center' }}>
-                    <h1>계정정보가 올바르지 않습니다</h1>
-                    <p>비밀번호 분실의 경우 관리자에게 문의바랍니다</p>
-                    <p>1899-5704</p>
-                </div>
-            </Modal> */}

@@ -9,7 +9,6 @@ import Login from '../containers/Login';
 import ProductSearch from '../containers/ProductSearch/ProductSearch'
 import VendorSearch from '../containers/VendorSearch/VendorSearch'
 import SignUp from '../containers/Register/SignUp'
-import VideoSearch from '../containers/VideoSearch/VideoSearch'
 import SaleStatus from '../containers/SaleStatus/SaleStatus'
 import ProductDetail from '../components/ProductDetail/ProductDetail'
 import AdminMember from '../containers/Admin/AdminMember/AdminMember'
@@ -45,7 +44,6 @@ const Routes = () => {
 
             <AppRoute exact path="/product-search" component={ProductSearch} />
             <AppRoute exact path="/vendor-search" component={VendorSearch} />
-            <AppRoute exact path="/video-search" component={VideoSearch} />
             <AppRoute exact path="/sale-status" component={SaleStatus} />
             <AppRoute exact path="/product-detail" component={ProductDetail} />
             <AppRoute exact path="/user-detail" component={UserDetail} />

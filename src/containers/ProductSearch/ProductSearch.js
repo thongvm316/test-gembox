@@ -146,7 +146,7 @@ const ProductSearch = (props) => {
 
 
   return (
-    <div className="product-search">
+    <div className="product-search" style={{ height: '100vh' }}>
       <Row className="info-search" style={{ marginBottom: '5rem' }} justify='space-between' align='middle'>
         <Col className='style-col-1'>
           <Button onClick={showModal}>필터</Button>

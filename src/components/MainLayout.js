@@ -66,7 +66,7 @@ const MainLayout = (props) => {
                             <a style={{ color: '#42ABBC' }}>
                                 <span style={{ fontWeight: 'bold' }}>Admin Name</span>
                                 <span style={{ paddingLeft: '8px' }}>님 안녕하세요</span>
-                                <span style={{ paddingLeft: '11px' }}><DownOutlined /></span>
+                                {/* <span style={{ paddingLeft: '11px' }}><DownOutlined /></span> */}
                             </a>
                         </Dropdown>
                         <div style={{ marginLeft: '10px' }}>

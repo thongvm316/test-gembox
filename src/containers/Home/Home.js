@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { DatePicker, Space, Button, Row, Col, Card, Divider } from 'antd';
+import { DatePicker, Space, Button, Row, Col, Card, Divider, Radio } from 'antd';
+import Footer from '../../components/Footer'
 import './home.scss'
 import moment from 'moment';
 
@@ -150,16 +151,21 @@ function onChange(date, dateString) {
   console.log(date, dateString);
 }
 
-
 const Home = () => {
   return (
     <div className="home-page">
-      <Row>
-        <Col><h1 className='first'>잼팩토리 데이터 랩 <small>잼팩토리 랩은 검증된 데이터만을 송출합니다.</small></h1></Col>
+      <Row gutter={24} style={{ marginLeft: '24px' }}>
+        <Col span={24} className="style-click-btn">
+          <Radio.Group size="middle" defaultValue="a">
+            <Radio.Button value="a" shape="round" size="middle">전체 요약분석</Radio.Button>
+            <Radio.Button style={{ marginLeft: '10px', marginRight: '10px' }} value="b" shape="round" size="middle">카테고리 별 분석</Radio.Button>
+            <Radio.Button value="c" shape="round" size="middle">마켓별 분석</Radio.Button>
+          </Radio.Group>
+        </Col>
       </Row>
 
-      <Row className="aggregate-month">
-        <Col xl={4}>
+      <Row className="aggregate-month" >
+        <Col xl={2}>
           <h1>집계 월</h1>
         </Col>
         <Col xl={20} className="date-picker">
@@ -185,7 +191,7 @@ const Home = () => {
         </Col>
 
         <Col xs={24} sm={24} md={24} lg={12} xl={12} className='style-small-device'>
-          <Card title="TOP 20">
+          <Card title="TOP 20 판매 상품">
             <Row gutter={32}>
               <Col span={12}>
                 <RenderData data={data1} />
@@ -197,23 +203,7 @@ const Home = () => {
           </Card>
         </Col>
       </Row>
-
-      <div className="footer" style={{ marginTop: '50px' }}>
-        <Row justify='center'>
-          <Col span={24}>
-            <p style={{ color: '#335b63' }}> <strong>잼토이즈 &nbsp; &nbsp;</strong>
-              <strong>상호</strong>:주식회사 잼팩토리   <strong>대표</strong>:이수진    <strong>사업자등록번호</strong>:220-88-93741    <strong>통신판매업신고번호</strong>:제2020-서울강남-01686호[사업자정보확인]     <strong>대표번호</strong>:1899-5704    <strong>메일</strong>:gemtoys@gemtoys.co.kr
-              </p>
-          </Col>
-        </Row>
-        <Row justify='center'>
-          <Col span={24}>
-            <p style={{ color: '#335b63' }}>
-              <strong>주소 </strong>:서울특별시 강남구 언주로 311 (로즈1타워) 3층    <strong>개인정보관리자</strong>:심규민    copyright &copy; gemtoys.co.kr all rights reserved.
-              </p>
-          </Col>
-        </Row>
-      </div>
+      <Footer />
     </div>
   )
 }

@@ -1,0 +1,19 @@
+.sidebar-left-menu {
+    .ant-menu-dark .ant-menu-item > a{
+        // color: #fff !important;
+    }
+    .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+        background-color: transparent !important;
+        position: relative;
+        &::after {
+            content: '';
+            height: 2px;
+            width: 135px;
+
+            position: absolute;
+            top: 38px;
+            left: 22px;
+            background-color: #42ABBC;
+        }
+    }
+}
