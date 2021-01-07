@@ -32,7 +32,6 @@ code {
 
 
 .admin-layout {
-  height: 100%;
 
 }
 
@@ -124,4 +123,32 @@ code {
   background-color: white;
   padding: 16px;
   border-radius: 10px;
+<<<<<<< HEAD
+=======
+
+  .card-item-border{
+    padding: 16px;
+    border-radius: 20px;
+    border: 1px solid #EFF2F7;
+    box-shadow: 0px 10px 20px rgba(18, 38, 63, 0.031);
+  }
+}
+
+.ant-btn.main-btn-style{
+  background-color: #F8F8FB;
+  color: #78869B;
+  border-color: #E3E9F1;
+}
+
+.ant-btn.btn-light-blue{
+  background-color: #42ABBC;
+  color: white;
+  border-color: #42ABBC;
+}
+
+.ant-btn.btn-light-orange{
+  background-color: #FBF2E2;
+  color: #E7A330;
+  border-color: #FBF2E2;
+>>>>>>> 9fc2308f59f4d85350c9ad183e001d09276184e4
 }

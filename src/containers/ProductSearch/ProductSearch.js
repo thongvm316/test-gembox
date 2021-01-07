@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Button, DatePicker, Row, Col, Input, Space, Table, Modal } from 'antd';
+import { Button, DatePicker, Row, Col, Input, Space, Table, Modal, Select } from 'antd';
 import Filter from './Filter'
 import Chart from './Chart'
 import './ProductSearch.scss'
 import { API_URL } from '../../constants/appConstants'
 import axios from 'axios'
 import fileDownload from 'js-file-download';
+const { Option } = Select;
 
 const ProductSearch = (props) => {
   // Of Modal Filter
@@ -32,12 +33,21 @@ const ProductSearch = (props) => {
     setVisibleTwo(false)
   };
 
+  const renderName = (record) => {
+    return (
+      <div style={{display: 'flex'}}>
+        <Button style={{marginRight: '5px'}} className="btn-light-orange">판매 사이트 가기</Button>
+        <div>{record.마켓명}</div>
+      </div>
+    )
+  }
+
   // Of Table
   const [countSelected, setCountSelected] = useState(0)
   const columns = [
     {
-      title: '마켓명',
-      dataIndex: '마켓명',
+      title: '상품명',
+      render: renderName
     },
     {
       title: '벤더명',
@@ -46,22 +56,31 @@ const ProductSearch = (props) => {
     {
       title: '카테고리',
       dataIndex: '카테고리',
+      sorter: (a, b) => a.카테고리.length - b.카테고리.length,
     },
     {
-      title: '상품명',
-      dataIndex: '상품명',
+      title: '마켓명',
+      dataIndex: '마켓명',
+      sorter: (a, b) => a.마켓명.length - b.마켓명.length,
+
     },
     {
       title: '가격',
       dataIndex: '가격',
+      sorter: (a, b) => a.가격.length - b.가격.length,
+
     },
     {
       title: '리뷰',
       dataIndex: '리뷰',
+      sorter: (a, b) => a.리뷰.length - b.리뷰.length,
+
     },
     {
       title: '판매수',
       dataIndex: '판매수',
+      sorter: (a, b) => a.판매수.length - b.판매수.length,
+
     },
   ];
 
@@ -144,33 +163,40 @@ const ProductSearch = (props) => {
     }
   }
 
+  const selectAfter = (
+    <Select defaultValue="카테고리" className="select-after">
+      <Option value="카테고리">카테고리</Option>
+      <Option value="밴더명">밴더명</Option>
+      <Option value="제품명">제품명</Option>
+    </Select>
+  );
+
 
   return (
-    <div className="product-search" style={{ height: '100vh' }}>
-      <Row className="info-search" style={{ marginBottom: '5rem' }} justify='space-between' align='middle'>
-        <Col className='style-col-1'>
-          <Button onClick={showModal}>필터</Button>
-          <Button onClick={showModalTwo}>선택된 항목 그래프 비교</Button>
-        </Col>
-        <Col className="date-picker">
-          <Space direction="" size={12}>
-            <RangePicker onChange={onChange} />
-          </Space>
-          <Button onClick={getDateFilter} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
-        </Col>
-        <Col className='style-col-3'>
-          <Input style={{ width: '392px' }} placeholder="Search" />
-          <Button onClick={getExcelFile} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
+    <div className="product-search">
+      <Row className="card-border" style={{ marginBottom: '5rem' }}>
+        <Col span={24} className="wraper-actions">
+          <div>
+            <Button className="main-btn-style" onClick={showModal}>필터</Button>
+            {/* <Button onClick={showModalTwo}>선택된 항목 그래프 비교</Button> */}
+          </div>
+          <div>
+            <RangePicker onChange={onChange} style={{ marginRight: '5px' }} />
+            <Button className="btn-light-blue" onClick={getDateFilter} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
+          </div>
+          <div style={{ display: 'flex' }}>
+            <Input style={{ marginRight: '5px' }} addonAfter={selectAfter} defaultValue="카테고리" />
+            <Button className="btn-light-blue" onClick={getExcelFile} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
+          </div>
         </Col>
       </Row>
 
-      <Row className='res-small-device'>
+      <Row className='res-small-device card-border'>
         <Col span={24}>
           <Table
             columns={columns}
             dataSource={data}
             scroll={{ x: 1300 }}
-            rowSelection={{ ...rowSelection, checkStrictly }}
             onRow={(record, rowIndex) => {
               return {
                 onClick: event => {
