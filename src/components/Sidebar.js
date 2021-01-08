@@ -14,7 +14,7 @@ const Sidebar = (props) => {
         <Layout.Sider style={{ background: '#414955', height: 'auto' }} className="sidebar-left-menu" collapsedWidth="0" trigger={null} collapsible collapsed={collapsed}>
             <Menu theme='dark' style={{ background: '#414955' }} mode="inline" defaultSelectedKeys={['1']}>
                 <Menu.Item className="app-menu-item" key="/home">
-                    <h1 to="" style={{ fontWeight: 'bold', color: 'white' }}>GEM BOX</h1>
+                    <h1 to="" style={{ fontWeight: '900', color: 'white', fontSize: '24px' }}>GEM BOX</h1>
                 </Menu.Item>
                 <Menu.Item style={{ marginTop: '50px' }} className="app-menu-item" key="/page1">
                     <NavLink to="/home"><Image src={Home} style={{ marginRight: '11px' }} />홈</NavLink>

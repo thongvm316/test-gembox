@@ -225,7 +225,7 @@ const CategoryAnalysis = (props) => {
             <GroupButton redirect={props.history.push} clickable="b" />
 
             <Row className="aggregate-month card-border">
-                <h1 style={{ marginRight: '41px', paddingTop: '3px' }}>집계 월</h1>
+                <h1 style={{ marginRight: '41px', paddingTop: '3px', color: '#495057', fontWeight: '700px', fontSize: '16px' }}>집계 월</h1>
                 <Col xs={24} sm={20} md={20} lg={20} xl={20} className="date-picker">
                     <RangePicker onChange={onChange} bordered={false} />
                     <Button style={{ background: '#71c4d5', borderColor: '#71c4d5', fontWeight: 'bold' }} type="primary">적용하기</Button>

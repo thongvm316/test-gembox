@@ -122,14 +122,14 @@ const ListItem = (props) => {
   return (
     <>
       <ul className="ul-list">
-        <li><strong>{value.id}</strong></li>
-        <li>
-          <ul className='list-in'>
-            <li><small>{value.title}</small></li>
-            <li><strong>{value.name}</strong></li>
+        <li style={{ display: 'flex', alignItems: 'center' }}>
+          <li style={{ paddingRight: '40px', fontWeight: '700', fontSize: '20px', color: '#495057' }}><strong>{value.id}</strong></li>
+          <ul style={{ listStyle: 'none' }}>
+            <li><small style={{ fontWeight: '400', fontSize: '12px', color: '#74788D' }}>{value.title}</small></li>
+            <li><strong style={{ fontWeight: '700', fontSize: '14px', color: '#495057' }}>{value.name}</strong></li>
           </ul>
         </li>
-        <li><strong>₩{value.price}</strong></li>
+        <li><strong style={{ fontWeight: '700p', fontSize: '14px', color: '#495057' }}>₩{value.price}</strong></li>
       </ul>
       <Divider className='edit-margin' />
     </>
@@ -159,7 +159,7 @@ const Home = (props) => {
       <GroupButton redirect={props.history.push} clickable="a" />
 
       <Row className="aggregate-month card-border">
-        <h1 style={{ marginRight: '41px', paddingTop: '5px' }}>집계 월</h1>
+        <h1 style={{ marginRight: '41px', paddingTop: '5px', color: '#495057', fontWeight: '700px', fontSize: '16px' }}>집계 월</h1>
         <Col xl={20} className="date-picker">
           <DatePicker onChange={onChange} bordered={false} picker="month" />
           <Button style={{ background: '#71c4d5', borderColor: '#71c4d5', fontWeight: 'bold' }} type="primary">적용하기</Button>
@@ -170,10 +170,10 @@ const Home = (props) => {
         <Col xs={24} sm={24} md={24} lg={12} xl={12} className='style-small-device'>
           <Card title="TOP 20 매출 벤더">
             <Row gutter={32}>
-              <Col span={12}>
+              <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                 <RenderData data={data1} />
               </Col>
-              <Col span={12}>
+              <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                 <RenderData data={data2} />
               </Col>
             </Row>
@@ -183,10 +183,10 @@ const Home = (props) => {
         <Col xs={24} sm={24} md={24} lg={12} xl={12} className='style-small-device'>
           <Card title="TOP 20 판매 상품">
             <Row gutter={32}>
-              <Col span={12}>
+              <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                 <RenderData data={data1} />
               </Col>
-              <Col span={12}>
+              <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                 <RenderData data={data2} />
               </Col>
             </Row>

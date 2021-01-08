@@ -19,11 +19,6 @@
     .edit-margin {
       margin: 10px 0;
     }
-    .ant-card-head-title {
-      font-weight: 700;
-      font-size: 20px;
-      color: #495057;
-    }
     .ant-card {
       border-radius: 10px !important;
     }
@@ -47,11 +42,13 @@
           align-items: center;
           margin-bottom: 0;
           font-family: 'Open Sans', sans-serif !important;
-          .list-in {
-            list-style: none;
-          }
         }
       }
+    }
+    .ant-card-head-title {
+      font-weight: 700;
+      font-size: 20px;
+      color: #495057;
     }
   }
   
@@ -72,14 +69,14 @@
     h1 {
       font-size: 20px;
     }
-    .ant-row {
-      .ant-col {
-        .ul-list {
-          flex-direction: column;
-          text-align: center;
-        }
-      }
-    }
+    // .ant-row {
+    //   .ant-col {
+    //     .ul-list {
+    //       flex-direction: column;
+    //       text-align: center;
+    //     }
+    //   }
+    // }
   }
 }
 

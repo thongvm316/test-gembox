@@ -29,15 +29,19 @@ Plan:
 
 ---------------------------------------------------------
 Todos: 
-1. PrivateRoute with all Home Page
+1. PrivateRoute with all Home Page - Logic with expire token
 2. Make 2 page 
-3. Think about style DatePicker
+3. Think about style DatePicker: 3 page
 4. SelectMaket
 
 Page2:
 1. Res
 2. Select Market
 3. DatePicker
+
+Now:
+Style Home Page like design ---- Done
+
 
 
 
