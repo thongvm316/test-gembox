@@ -3,7 +3,6 @@ import { Row, Col, Radio } from 'antd';
 import './GroupButton.scss'
 
 const GroupButton = ({ redirect, clickable }) => {
-    console.log(clickable)
     return (
         <>
             <Row gutter={24} className="group-button">

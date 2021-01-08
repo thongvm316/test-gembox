@@ -217,8 +217,8 @@ const ProductDetail = (props) => {
                 <div className="gust-header">
                     <div className="card-item-border card-item">
                         <div className="card-item-text">
-                            <h2 style={{color: '#2A4EAA'}}>유아 인형 카테고리 순위</h2>
-                            <h2 style={{color: '#6E798C'}}>24위</h2>
+                            <h2 style={{ color: '#2A4EAA' }}>유아 인형 카테고리 순위</h2>
+                            <h2 style={{ color: '#6E798C' }}>24위</h2>
                         </div>
                         <div className="card-item-icon">
                             <img src={Card2} />
@@ -226,8 +226,8 @@ const ProductDetail = (props) => {
                     </div>
                     <div className="card-item-border card-item">
                         <div className="card-item-text">
-                            <h2 style={{color: '#2A4EAA'}}>종합 판매순위</h2>
-                            <h2 style={{color: '#6E798C'}}>56위</h2>
+                            <h2 style={{ color: '#2A4EAA' }}>종합 판매순위</h2>
+                            <h2 style={{ color: '#6E798C' }}>56위</h2>
                         </div>
                         <div className="card-item-icon">
                             <img src={Card3} />
@@ -352,7 +352,6 @@ const ProductDetail = (props) => {
                     </div>
                 </Col>
             </Row>
-
         </>
     )
 }

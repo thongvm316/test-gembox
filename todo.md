@@ -4,6 +4,8 @@ How to add more remote repo:
     3. Push branch: git push -u repo2 development
 
 git remote remove origin
+https://github.com/thongvm316/JamFactory.git (fetch)
+https://gitlab.brickmate.kr/gemfactory/gemfactory-web.git (fetch)
 
 Fix Cors in localhost-chorme: 
 /usr/bin/google-chrome-stable --disable-web-security --user-data-dir=/home/jossnaz/.config/google-chrome/
@@ -28,11 +30,14 @@ Plan:
 ---------------------------------------------------------
 Todos: 
 1. PrivateRoute with all Home Page
+2. Make 2 page 
+3. Think about style DatePicker
+4. SelectMaket
 
-
-1. Res ---- Done
-2. Date Picker ---- Done
-
+Page2:
+1. Res
+2. Select Market
+3. DatePicker
 
 
 

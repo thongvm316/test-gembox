@@ -1,8 +1,8 @@
 .category-analysis {
     .aggregate-month {
         margin-top: 24px;
-        padding: 1rem;
-        border-radius: 16px;
+        // padding: 1rem;
+        // border-radius: 16px;
         h1 {
           font-size: 16px;
           font-weight: 700;
@@ -14,11 +14,82 @@
     .ant-picker.ant-picker-borderless {
         margin-right: 8px;
         height: 33px;
-        width: 316px;
         background-color: #F3F3F9 !important;
     }
 
     .ant-picker-range .ant-picker-active-bar {
         background: #A6B0CF;
     }
+
+  .ul-list {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .5rem;
+    font-family: 'Open Sans', sans-serif !important;
+    .list-in {
+      list-style: none;
+    }
+  }
+
+  .highcharts-title {
+      font-size: 20px !important;
+      font-weight: 700;
+      color: #495057 !important;
+  }
+
+  .highcharts-container {
+      border-radius: 10px;
+  }
+
+  .style-market {
+      margin-left: 8px;
+      font-weight: 500;
+      color: #495057;
+      font-size: 14px;
+  }
+
+  .style-border {
+      border: 1px solid #EFF2F7;
+      padding: .5rem;
+      position: relative;
+      &::after {
+          content: '';
+          position: absolute;
+          top: 0px;
+          right: -2px;
+          width: 2px;
+          height: 130px;
+          background-color: #EFF2F7;
+      }
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0px;
+        left: -2px;
+        width: 2px;
+        height: 130px;
+        background-color: #EFF2F7;
+      }
+  }
 }
+
+@media (max-width: 479px) { 
+    .category-analysis {
+        .style-small-device {
+            margin-top: .5rem;
+        }
+    }
+    .aggregate-month{
+        .ant-btn {
+            margin-top: 0.5rem;
+        }
+    }
+ }
+
+ @media (max-width: 380px) {
+    .aggregate-month{
+       
+    }
+ }

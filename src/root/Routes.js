@@ -26,10 +26,6 @@ import AdminSetting from '../containers/Admin/AdminSetting'
 
 import PrivateRoute from './PrivateRoute'
 import AppRoute from './AppRoute';
-import setAuthToken from '../utils/setAuthToken'
-// if (localStorage.token) {
-//     setAuthToken(localStorage.token);
-// }
 
 const Routes = () => {
     return (
@@ -61,3 +57,4 @@ const Routes = () => {
     )
 }
 export default Routes;
+
