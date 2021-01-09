@@ -1,69 +1,50 @@
-How to add more remote repo:
-    1. git remote add repo2 https://github.com/thongvm316/JamFactory.git
-    2. Push master: git push -u repo2 master
-    3. Push branch: git push -u repo2 development
+How to add more remote repo: 1. git remote add repo2 https://github.com/thongvm316/JamFactory.git 2. Push master: git push -u repo2 master 3. Push branch: git push -u repo2 development
 
 git remote remove origin
 https://github.com/thongvm316/JamFactory.git (fetch)
 https://gitlab.brickmate.kr/gemfactory/gemfactory-web.git (fetch)
 
-Fix Cors in localhost-chorme: 
+Fix Cors in localhost-chorme:
 /usr/bin/google-chrome-stable --disable-web-security --user-data-dir=/home/jossnaz/.config/google-chrome/
 
 Err when deploy to Heroku: Err=H10
 Fix:
-    "scripts": {
-        "dev": "react-scripts start",
-        "start": "serve -s build",
-        "build": "react-scripts build",
-        "test": "react-scripts test --env=jsdom",
-        "eject": "react-scripts     eject",
-        "heroku-postbuild": "npm run build"
-    }
----------------------------------------------------------
-Plan:
- Home: 5days (7 8 9 11 12)
- Product-Detail: 5days (13 14 15 16 18)
- Search vender: 3days (19 20 21)
- My page: 3days (22 23 25)
+"scripts": {
+"dev": "react-scripts start",
+"start": "serve -s build",
+"build": "react-scripts build",
+"test": "react-scripts test --env=jsdom",
+"eject": "react-scripts eject",
+"heroku-postbuild": "npm run build"
+}
 
----------------------------------------------------------
-Todos: 
+---
+
+Plan:
+Home: 5days (7 8 9 11 12)
+Product-Detail: 5days (13 14 15 16 18)
+Search vender: 3days (19 20 21)
+My page: 3days (22 23 25)
+
+---
+
+Todos:
+
 1. PrivateRoute with all Home Page - Logic with expire token
-2. Make 2 page 
+2. Make 2 page
 3. Think about style DatePicker: 3 page
 4. SelectMaket
 
 Page2:
-1. Res
+
+1. Res: Res aggregate-month after done logic select market
 2. Select Market
 3. DatePicker
 
 Now:
-Style Home Page like design ---- Done
+Res:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+1. Style color chart ---- Done
+2. Res section Chart ---- Done
+3. Res age-month
+4. Logic select market

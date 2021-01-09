@@ -64,8 +64,8 @@ const MainLayout = (props) => {
                     <div style={{ display: 'flex' }}>
                         <Dropdown overlay={renderUserInfor()}>
                             <a style={{ color: '#42ABBC' }}>
-                                <span style={{ fontWeight: 'bold' }}>Admin Name</span>
-                                <span style={{ paddingLeft: '8px' }}>님 안녕하세요</span>
+                                <span style={{ fontWeight: '500', fontSize: '13px' }}>Admin Name</span>
+                                <span style={{ paddingLeft: '8px', fontWeight: '400', fontSize: '13px' }}>님 안녕하세요</span>
                                 <span style={{ paddingLeft: '11px' }}><DownOutlined /></span>
                             </a>
                         </Dropdown>

@@ -11,8 +11,7 @@
       color: #222;
       margin-bottom: 0;
     }
-   }
-  
+  }
 
   .site-card-wrapper {
     margin-top: 30px;
@@ -51,12 +50,12 @@
       color: #495057;
     }
   }
-  
+
   .ant-picker.ant-picker-borderless {
     margin-right: 8px;
     height: 33px;
     width: 140px;
-    background-color: #F3F3F9 !important;
+    background-color: #f3f3f9 !important;
   }
 
   .ant-radio-button-wrapper:not(:first-child)::before {
@@ -80,7 +79,7 @@
   }
 }
 
-@media (max-width: 575.98px) { 
+@media (max-width: 575.98px) {
   .home-page {
     .aggregate-month {
       > div {
@@ -90,15 +89,15 @@
         .ant-space {
           margin-bottom: 0.5rem;
         }
-      } 
+      }
     }
     .style-small-device {
-      margin-top: .5rem;
+      margin-top: 0.5rem;
     }
   }
 }
 
-@media (max-width: 767.98px) { 
+@media (max-width: 767.98px) {
   .home-page {
     .site-card-wrapper {
       .style-small-device {
@@ -106,6 +105,4 @@
       }
     }
   }
- }
-
-
+}
