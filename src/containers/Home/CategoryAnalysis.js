@@ -548,22 +548,22 @@ const CategoryAnalysis = (props) => {
 
                     <Row gutter={[16, 16]} style={{ marginTop: "1rem" }}>
                         <Col xs={12} sm={12} md={12} lg={6} xl={6}>
-                            <Card title={titileCard("11번가")} bordered={false}>
+                            <Card title={titileCard("옥션")} bordered={false}>
                                 <RenderData data={data} />
                             </Card>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={6} xl={6}>
-                            <Card title={titileCard("G마켓")} bordered={false}>
+                            <Card title={titileCard("스마트스토어")} bordered={false}>
                                 <RenderData data={data} />
                             </Card>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={6} xl={6}>
-                            <Card title={titileCard("쿠팡")} bordered={false}>
+                            <Card title={titileCard("티몬")} bordered={false}>
                                 <RenderData data={data} />
                             </Card>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={6} xl={6}>
-                            <Card title={titileCard("인터파크")} bordered={false}>
+                            <Card title={titileCard("위메프")} bordered={false}>
                                 <RenderData data={data} />
                             </Card>
                         </Col>

@@ -29,22 +29,14 @@ My page: 3days (22 23 25)
 ---
 
 Todos:
+Page 1: 
+1. Style DatePicker
 
-1. PrivateRoute with all Home Page - Logic with expire token
-2. Make 2 page
-3. Think about style DatePicker: 3 page
-4. SelectMaket
+Page 2:
+1. Logic select market - style
+2. Res aggregate-month
+3. Style DatePicker
 
-Page2:
+Page 3: All
 
-1. Res: Res aggregate-month after done logic select market
-2. Select Market
-3. DatePicker
-
-Now:
-Res:
-
-1. Style color chart ---- Done
-2. Res section Chart ---- Done
-3. Res age-month
-4. Logic select market
+PrivateRoute with all Home Page - Logic with expire token
