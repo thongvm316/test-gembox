@@ -21,10 +21,11 @@ Fix:
 ---
 
 Plan:
-Home: 5days (7 8 9 11 12)
-Product-Detail: 5days (13 14 15 16 18)
-Search vender: 3days (19 20 21)
-My page: 3days (22 23 25)
+Home: 5days (7 8 9 11 15)
+Search vender: 3days (16 18 19)
+My page: 3days (20 21 22 25)
+
+Spent more time at evening
 
 ---
 
@@ -33,10 +34,19 @@ Page 1:
 1. Style DatePicker
 
 Page 2:
-1. Logic select market - style
-2. Res aggregate-month
+1. Logic select market - style  
+2. Res aggregate-month  
 3. Style DatePicker
 
-Page 3: All
+Page 3:
+1. Html
+2. Css
+3. Res
 
 PrivateRoute with all Home Page - Logic with expire token
+1. PrivateRoute
+2. Logic with expire token
+
+Must finished at 20200112
+
+Intergrate API - Debug --- Will fn at 20200115

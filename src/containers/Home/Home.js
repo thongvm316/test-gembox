@@ -137,41 +137,47 @@ const ListItem = (props) => {
     <>
       <ul className="ul-list">
         <li style={{ display: "flex", alignItems: "center" }}>
-          <li
-            style={{
-              paddingRight: "40px",
-              fontWeight: "700",
-              fontSize: "20px",
-              color: "#495057"
-            }}
-          >
-            <strong>{value.id}</strong>
-          </li>
-          <ul style={{ listStyle: "none" }}>
-            <li>
-              <small
-                style={{
-                  fontWeight: "400",
-                  fontSize: "12px",
-                  color: "#74788D"
-                }}
-              >
-                {value.title}
-              </small>
+          <ul style={{ listStyle: "none", display: 'flex', alignItems: 'center' }}>
+            <li
+              style={{
+                paddingRight: "40px",
+                fontWeight: "700",
+                fontSize: "20px",
+                color: "#495057"
+              }}
+            >
+              <strong>{value.id}</strong>
             </li>
+
             <li>
-              <strong
-                style={{
-                  fontWeight: "700",
-                  fontSize: "14px",
-                  color: "#495057"
-                }}
-              >
-                {value.name}
-              </strong>
+              <ul style={{ listStyle: 'none' }}>
+                <li>
+                  <small
+                    style={{
+                      fontWeight: "400",
+                      fontSize: "12px",
+                      color: "#74788D"
+                    }}
+                  >
+                    {value.title}
+                  </small>
+                </li>
+                <li>
+                  <strong
+                    style={{
+                      fontWeight: "700",
+                      fontSize: "14px",
+                      color: "#495057"
+                    }}
+                  >
+                    {value.name}
+                  </strong>
+                </li>
+              </ul>
             </li>
           </ul>
         </li>
+
         <li>
           <strong
             style={{ fontWeight: "700p", fontSize: "14px", color: "#495057" }}

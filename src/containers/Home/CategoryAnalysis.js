@@ -257,7 +257,7 @@ const CategoryAnalysis = (props) => {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
             <h3 style={{ fontSize: "24px", fontWeight: "700", color: "#495057" }}>
                 완구TOP10
-      </h3>
+             </h3>
             <h3 style={{ fontWeight: "700", fontSize: "24px", color: "#495057" }}>
                 {props}
             </h3>
@@ -296,7 +296,7 @@ const CategoryAnalysis = (props) => {
                     </Button>
                 </Col>
                 <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                    <Dropdown overlay={menu} trigger={['click']}>
+                    {/* <Dropdown overlay={menu} trigger={['click']}>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             {
                                 selectMaket === null
@@ -304,7 +304,7 @@ const CategoryAnalysis = (props) => {
                                     : selectMaket
                             }
                         </a>
-                    </Dropdown>
+                    </Dropdown> */}
                 </Col>
             </Row>
 
