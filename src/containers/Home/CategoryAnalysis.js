@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import GroupButton from "./GroupButton/GroupButton";
 import Footer from "../../components/Footer";
 import { DatePicker, Button, Row, Col, Card, Select } from "antd";
@@ -18,102 +18,98 @@ import Market8 from "../../images/market8.png";
 import "./CategoryAnalysis.scss";
 const { Option } = Select;
 
-const data = [
-    {
-        id: 1,
-        title: "11번가",
-        name: "Polar bear",
-        price: 30
-    },
-    {
-        id: 2,
-        title: "11번가",
-        name: "Killer whale",
-        price: 84
-    },
-    {
-        id: 3,
-        title: "11번가",
-        name: "Chuckwalla",
-        price: 71
-    },
-    {
-        id: 4,
-        title: "11번가",
-        name: "Polar bear",
-        price: 35
-    },
-    {
-        id: 5,
-        title: "11번가",
-        name: "Killer whale",
-        price: 84
-    },
-    {
-        id: 6,
-        title: "11번가",
-        name: "Chuckwalla",
-        price: 71
-    },
-    {
-        id: 7,
-        title: "11번가",
-        name: "Polar bear",
-        price: 30
-    },
-    {
-        id: 8,
-        title: "11번가",
-        name: "Killer whale",
-        price: 84
-    },
-    {
-        id: 9,
-        title: "11번가",
-        name: "Chuckwalla",
-        price: 71
-    },
-    {
-        id: 10,
-        title: "11번가",
-        name: "Polar bear",
-        price: 35
-    }
-];
-
-const ListItem = (props) => {
-    const value = props.value;
-    return (
-        <>
-            <ul
-                className="ul-list"
-                style={{ fontWeight: "400", fontSize: "16px", color: "#495057" }}
-            >
-                <ul className="list-in" style={{ display: "flex" }}>
-                    <li style={{ marginRight: "24px", fontWeight: "bold" }}>
-                        {value.id}
-                    </li>
-                    <li>{value.name}</li>
-                </ul>
-                <li>₩{value.price}</li>
-            </ul>
-        </>
-    );
-};
-
-const RenderData = (props) => {
-    const data = props.data;
-    const listitems = data.map((product) => (
-        <ListItem key={product.id} value={product} />
-    ));
-    return <>{listitems}</>;
-};
-
 const CategoryAnalysis = (props) => {
-    // Date Picker
-    function onChange(date, dateString) {
-        console.log(date, dateString);
-    }
+    // Render Data
+    const data = [
+        {
+            id: 1,
+            title: "11번가",
+            name: "Polar bear",
+            price: 30
+        },
+        {
+            id: 2,
+            title: "11번가",
+            name: "Killer whale",
+            price: 84
+        },
+        {
+            id: 3,
+            title: "11번가",
+            name: "Chuckwalla",
+            price: 71
+        },
+        {
+            id: 4,
+            title: "11번가",
+            name: "Polar bear",
+            price: 35
+        },
+        {
+            id: 5,
+            title: "11번가",
+            name: "Killer whale",
+            price: 84
+        },
+        {
+            id: 6,
+            title: "11번가",
+            name: "Chuckwalla",
+            price: 71
+        },
+        {
+            id: 7,
+            title: "11번가",
+            name: "Polar bear",
+            price: 30
+        },
+        {
+            id: 8,
+            title: "11번가",
+            name: "Killer whale",
+            price: 84
+        },
+        {
+            id: 9,
+            title: "11번가",
+            name: "Chuckwalla",
+            price: 71
+        },
+        {
+            id: 10,
+            title: "11번가",
+            name: "Polar bear",
+            price: 35
+        }
+    ];
+
+    const ListItem = (props) => {
+        const value = props.value;
+        return (
+            <>
+                <ul
+                    className="ul-list"
+                    style={{ fontWeight: "400", fontSize: "16px", color: "#495057" }}
+                >
+                    <ul className="list-in" style={{ display: "flex" }}>
+                        <li style={{ marginRight: "24px", fontWeight: "bold" }}>
+                            {value.id}
+                        </li>
+                        <li>{value.name}</li>
+                    </ul>
+                    <li>₩{value.price}</li>
+                </ul>
+            </>
+        );
+    };
+
+    const RenderData = (props) => {
+        const data = props.data;
+        const listitems = data.map((product) => (
+            <ListItem key={product.id} value={product} />
+        ));
+        return <>{listitems}</>;
+    };
 
     // Chart
     const options = {
@@ -210,39 +206,81 @@ const CategoryAnalysis = (props) => {
         </div>
     );
 
-    const { RangePicker } = DatePicker;
+    // DatePicker
+    const [dates, setDates] = useState([]);
+    const [hackValue, setHackValue] = useState();
+    const [value, setValue] = useState();
+    console.log(value)
+    const disabledDate = current => {
+        if (!dates || dates.length === 0) {
+            return false;
+        }
+        const tooLate = dates[0] && current.diff(dates[0], 'days') > 13;
+        const tooEarly = dates[1] && dates[1].diff(current, 'days') > 13;
+        return tooEarly || tooLate;
+    };
+
+    const onOpenChange = open => {
+        if (open) {
+            setHackValue([]);
+            setDates([]);
+        } else {
+            setHackValue(undefined);
+        }
+    };
+
+    function onChange(date, dateString) {
+        console.log(date, dateString);
+    }
 
     return (
         <div className="category-analysis">
             <GroupButton redirect={props.history.push} clickable="b" />
 
-            <Row className="aggregate-month card-border">
-                <Col xs={20} sm={20} md={20} lg={20} xl={20} className="date-picker" style={{ display: 'flex' }}>
-                    <h1
-                        style={{
-                            marginRight: "41px",
-                            paddingTop: "3px",
-                            color: "#495057",
-                            fontWeight: "700px",
-                            fontSize: "16px"
-                        }}
-                    >
-                        집계 월
-                    </h1>
-                    <RangePicker onChange={onChange} bordered={false} />
-                    <Button
-                        style={{
-                            background: "#71c4d5",
-                            borderColor: "#71c4d5",
-                            fontWeight: "bold"
-                        }}
-                        type="primary"
-                    >
-                        적용하기
-                    </Button>
+            <Row gutter={16} className="aggregate-month card-border" justify="space-between" align="middle">
+                <Col xs={17} sm={20} md={21} lg={21} xl={21} className="date-picker">
+                    <Row gutter={[4, 4]}>
+                        <Col xs={24} sm={3} md={3} lg={2} xl={1}>
+                            <h1
+                                style={{
+                                    paddingTop: "3px",
+                                    color: "#495057",
+                                    fontWeight: "700px",
+                                    fontSize: "16px"
+                                }}
+                            >
+                                집계 월
+                            </h1>
+                        </Col>
+                        <Col xs={24} sm={10} md={10} lg={10} xl={6}>
+                            {/* <RangePicker onChange={onChange} bordered={false} /> */}
+                            <DatePicker.RangePicker
+                                value={hackValue || value}
+                                disabledDate={disabledDate}
+                                onCalendarChange={val => setDates(val)}
+                                onChange={val => setValue(val)}
+                                onOpenChange={onOpenChange}
+                                bordered={false}
+                                allowEmpty={[false, true]}
+                            />
+                        </Col>
+                        <Col xs={24} sm={2} md={2} lg={2} xl={2}>
+                            <Button
+                                style={{
+                                    background: "#71c4d5",
+                                    borderColor: "#71c4d5",
+                                    fontWeight: "bold"
+                                }}
+                                type="primary"
+                            >
+                                적용하기
+                            </Button>
+                        </Col>
+                    </Row>
                 </Col>
-                <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                    <Select defaultValue="11번가" style={{ width: 120 }}>
+
+                <Col xs={7} sm={4} md={3} lg={3} xl={3} style={{ textAlign: 'end' }} className="select-category-analysis">
+                    <Select defaultValue="11번가" >
                         <Option value="11번가">11번가</Option>
                         <Option value="G마켓">G마켓</Option>
                         <Option value="쿠팡">쿠팡</Option>
@@ -470,22 +508,22 @@ const CategoryAnalysis = (props) => {
             <Row gutter={24}>
                 <Col span={24}>
                     <Row gutter={[16, 16]}>
-                        <Col xs={12} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("11번가")} bordered={false}>
                                 <RenderData data={data} />
                             </Card>
                         </Col>
-                        <Col xs={12} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("G마켓")} bordered={false}>
                                 <RenderData data={data} />
                             </Card>
                         </Col>
-                        <Col xs={12} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("쿠팡")} bordered={false}>
                                 <RenderData data={data} />
                             </Card>
                         </Col>
-                        <Col xs={12} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("인터파크")} bordered={false}>
                                 <RenderData data={data} />
                             </Card>
@@ -493,22 +531,22 @@ const CategoryAnalysis = (props) => {
                     </Row>
 
                     <Row gutter={[16, 16]} style={{ marginTop: "1rem" }}>
-                        <Col xs={12} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("옥션")} bordered={false}>
                                 <RenderData data={data} />
                             </Card>
                         </Col>
-                        <Col xs={12} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("스마트스토어")} bordered={false}>
                                 <RenderData data={data} />
                             </Card>
                         </Col>
-                        <Col xs={12} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("티몬")} bordered={false}>
                                 <RenderData data={data} />
                             </Card>
                         </Col>
-                        <Col xs={12} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("위메프")} bordered={false}>
                                 <RenderData data={data} />
                             </Card>

@@ -32,7 +32,7 @@ const GroupButton = ({ redirect, clickable }) => {
                             value="c"
                             shape="round"
                             size="middle"
-                            onClick={() => redirect('/analysis-markets')}
+                            onClick={() => redirect('/analysis-market')}
                         >
                             마켓별 분석
                         </Radio.Button>

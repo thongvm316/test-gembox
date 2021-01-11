@@ -1,0 +1,64 @@
+.analysis-market {
+    .aggregate-month {
+        margin-top: 24px;
+        h1 {
+          font-size: 16px;
+          font-weight: 700;
+          color: #222;
+          margin-bottom: 0;
+        }
+        .ant-select-selector {
+          background-color: #EFF2F7 !important;
+          border: 1px solid #ced4da !important;
+        }
+        .ant-select-focused:not(.ant-select-disabled).ant-select-single:not(.ant-select-customize-input) .ant-select-selector, .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+          border-color: #ced4da;
+        }
+        
+        .ant-select-dropdown {
+          background-color: #EFF2F7 !important;
+        }
+
+        .ant-picker-panels {
+            div:nth-child(2) {
+                display: none;
+            }
+        }
+      }
+
+      .ant-picker.ant-picker-borderless {
+        margin-right: 8px;
+        height: 33px;
+        background-color: #f3f3f9 !important;
+      }
+    
+      .ant-picker-range .ant-picker-active-bar {
+        background: #a6b0cf;
+      }
+
+      .chart-one {
+          .highcharts-title {
+              font-size: 20px !important;
+              font-weight: 700;
+          }
+
+          .ant-card-head-title {
+              font-weight: 700;
+              font-size: 24px;
+              color: #495057;
+              text-align: end;
+          }
+      }
+
+      .chart-two {
+          .highcharts-credits, .highcharts-legend {
+              display: none !important;
+          }
+      }
+}
+
+// .ant-picker-panels {
+//     div.ant-picker-panel:last-child {
+//         display: none;
+//     }
+// }

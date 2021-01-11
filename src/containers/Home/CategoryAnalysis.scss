@@ -84,31 +84,25 @@
   }
 }
 
-.ant-select-dropdown {
-  background-color: #fff !important;
-  border: 1px solid #CED4DA;
-  border-radius: 10px !important;
-}
-
-.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-  background-color: #EFF2F7 !important;
-} 
-
-.ant-select-item   {
-  &:hover {
-    background-color: blue;
-  }
-}
-
+// Media query
 @media (max-width: 479px) {
   .category-analysis {
     .style-small-device {
       margin-top: 0.5rem;
     }
   }
+}
+
+@media (min-width: 1140px) {
   .aggregate-month {
-    .ant-btn {
-      margin-top: 0.5rem;
+    .select-category-analysis {
+      .ant-select {
+        width: 124px;
+      }
     }
   }
 }
+
+
+
+

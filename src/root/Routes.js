@@ -9,6 +9,7 @@ import RegisterLayout from '../components/RegisterLayout'
 
 import Home from '../containers/Home/Home';
 import CategoryAnalysis from '../containers/Home/CategoryAnalysis'
+import AnalysisMarket from '../containers/Home/AnalysisMarket'
 
 import ProductSearch from '../containers/ProductSearch/ProductSearch'
 import ProductDetail from '../components/ProductDetail/ProductDetail'
@@ -46,7 +47,7 @@ const Routes = () => {
             {/* Home Page */}
             <AppRoute exact path="/home" component={Home} />
             <AppRoute exact path="/category-analysis" component={CategoryAnalysis} />
-
+            <AppRoute exact path="/analysis-market" component={AnalysisMarket} />
 
             <AppRoute exact path="/product-search" component={ProductSearch} />
             <AppRoute exact path="/vendor-search" component={VendorSearch} />

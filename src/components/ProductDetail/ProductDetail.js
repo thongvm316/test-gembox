@@ -276,6 +276,7 @@ const ProductDetail = (props) => {
                     />
                 </Col>
             </Row>
+
             <Row gutter={16} className="card-border">
                 <Col span={6}>
                     <div className="card-item-border">

@@ -149,3 +149,29 @@ code {
   color: #E7A330;
   border-color: #FBF2E2;
 }
+
+// Select option in all Home Page
+.ant-select-dropdown {
+  background-color: #fff !important;
+  border-radius: 10px !important;
+}
+
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background-color: #EFF2F7 !important;
+} 
+
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background-color: #EFF2F7 !important;
+}
+
+.ant-select-selection-item {
+  font-weight: 500;
+  font-size: 12px;
+  color: #74788D;
+}
+
+.ant-select-item-option-content {
+  font-weight: 400;
+  font-size: 12px;
+  color: #74788D;
+}

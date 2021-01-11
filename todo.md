@@ -34,19 +34,29 @@ Page 1:
 1. Style DatePicker
 
 Page 2:
-1. Logic select market - style  
-2. Res aggregate-month  
-3. Style DatePicker
+2. Res aggregate-month ------- Pending
+3. Style DatePicker ------- Pending
 
-Page 3:
+Page 3: ------- Pending
 1. Html
 2. Css
 3. Res
 
-PrivateRoute with all Home Page - Logic with expire token
+PrivateRoute with all Home Page - Logic with expire token ------- At evening
 1. PrivateRoute
 2. Logic with expire token
 
 Must finished at 20200112
 
 Intergrate API - Debug --- Will fn at 20200115
+----
+today:
+3. DatePicker - Select two week problems
+
+More time at evening - For 1 Hour: 
+1. Style DatePicker: Page 2
+2. Read more SB
+
+
+1. Res aggregate-month / Check all Page 2 at home --- Done
+2. Page 3 --- Done
