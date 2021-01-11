@@ -1,7 +1,7 @@
 import React from "react";
 import GroupButton from "./GroupButton/GroupButton";
 import Footer from "../../components/Footer";
-import { DatePicker, Button, Row, Col, Dropdown, Menu, Card } from "antd";
+import { DatePicker, Button, Row, Col, Card, Select } from "antd";
 
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
@@ -16,6 +16,7 @@ import Market7 from "../../images/market7.png";
 import Market8 from "../../images/market8.png";
 
 import "./CategoryAnalysis.scss";
+const { Option } = Select;
 
 const data = [
     {
@@ -113,61 +114,6 @@ const CategoryAnalysis = (props) => {
     function onChange(date, dateString) {
         console.log(date, dateString);
     }
-
-    // Dropdown Menu
-    const [dropdownMenus, setDropdownMenus] = React.useState([
-        "11번가",
-        "G마켓",
-        "쿠팡",
-        "인터파크",
-        "옥션",
-        "스마트스토어",
-        "티몬"
-    ]);
-    const [selectMaket, setSelectMaket] = React.useState(null);
-    const select = (e) => {
-        console.log(e);
-        setSelectMaket(e.target.value);
-    };
-    const menu = (
-        <Menu>
-            <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer" onClick={select}>
-                    11번가
-        </a>
-            </Menu.Item>
-            <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer">
-                    G마켓
-        </a>
-            </Menu.Item>
-            <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer">
-                    쿠팡
-        </a>
-            </Menu.Item>
-            <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer">
-                    인터파크
-        </a>
-            </Menu.Item>
-            <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer">
-                    옥션
-        </a>
-            </Menu.Item>
-            <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer">
-                    스마트스토어
-        </a>
-            </Menu.Item>
-            <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer">
-                    티몬
-        </a>
-            </Menu.Item>
-        </Menu>
-    );
 
     // Chart
     const options = {
@@ -296,15 +242,15 @@ const CategoryAnalysis = (props) => {
                     </Button>
                 </Col>
                 <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                    {/* <Dropdown overlay={menu} trigger={['click']}>
-                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                            {
-                                selectMaket === null
-                                    ? dropdownMenus[0]
-                                    : selectMaket
-                            }
-                        </a>
-                    </Dropdown> */}
+                    <Select defaultValue="11번가" style={{ width: 120 }}>
+                        <Option value="11번가">11번가</Option>
+                        <Option value="G마켓">G마켓</Option>
+                        <Option value="쿠팡">쿠팡</Option>
+                        <Option value="인터파크">인터파크</Option>
+                        <Option value="옥션">옥션</Option>
+                        <Option value="스마트스토어">스마트스토어</Option>
+                        <Option value="티몬">티몬</Option>
+                    </Select>
                 </Col>
             </Row>
 
