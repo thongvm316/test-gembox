@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import GroupButton from "./GroupButton/GroupButton";
 import Footer from "../../components/Footer";
 import { DatePicker, Button, Row, Col, Card, Select } from "antd";
+import { MinusOutlined } from '@ant-design/icons';
 
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
@@ -253,15 +254,15 @@ const CategoryAnalysis = (props) => {
                             </h1>
                         </Col>
                         <Col xs={24} sm={10} md={10} lg={10} xl={6}>
-                            {/* <RangePicker onChange={onChange} bordered={false} /> */}
                             <DatePicker.RangePicker
                                 value={hackValue || value}
                                 disabledDate={disabledDate}
                                 onCalendarChange={val => setDates(val)}
                                 onChange={val => setValue(val)}
+                                // onChange={onChange}
                                 onOpenChange={onOpenChange}
                                 bordered={false}
-                                allowEmpty={[false, true]}
+                                separator={<MinusOutlined />}
                             />
                         </Col>
                         <Col xs={24} sm={2} md={2} lg={2} xl={2}>
