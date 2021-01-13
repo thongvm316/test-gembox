@@ -32,10 +32,20 @@ Todos:
 3. Intergrate API - Debug --- Will fn at 20200115
 
 At evening
-1. PrivateRoute 
 2. Logic with expire token
 3. Fix field input of ten/company in signup
 4. Hover icon in sider
 5. Fix Method Call API like Easy FrontEnd -- https://www.youtube.com/watch?v=LXz_7WQpob4
+6. Style DatePicker Home Page - Chang month to Kr language in P2, P3
+7. Method show spiner when get data
 ----
 today:
+1. PrivateRoute for all Home Page ---- Done
+2. Intergrate API
+    a. P1 --- Done
+    b. P2 ---- 
+    c. P3 ---- Done
+
+
+
+

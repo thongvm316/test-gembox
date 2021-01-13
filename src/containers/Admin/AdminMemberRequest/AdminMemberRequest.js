@@ -69,7 +69,7 @@ const AdminMemberRequest = (props) => {
             }
         }
         try {
-            const res = await axios.get(`${API_URL}/users`, config)
+            const res = await axios.get(`${API_URL}/members`, config)
             setData(res.data.data.result.member_request)
         } catch (error) {
             console.log(error.response)

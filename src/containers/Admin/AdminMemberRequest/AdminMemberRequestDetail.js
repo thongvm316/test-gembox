@@ -22,7 +22,7 @@ const AdminMemberRequestDetail = (props) => {
             action: "approve"
         }
         try {
-            await axios.put(`${API_URL}/users/${memberRequestDetail.id}`, body, config)
+            await axios.put(`${API_URL}/members/${memberRequestDetail.id}`, body, config)
             console.log('Approve')
             props.history.push('/member-request')
         } catch (error) {
@@ -42,7 +42,7 @@ const AdminMemberRequestDetail = (props) => {
         }
 
         try {
-            await axios.put(`${API_URL}/users/${memberRequestDetail.id}`, body, config)
+            await axios.put(`${API_URL}/members/${memberRequestDetail.id}`, body, config)
             console.log('Reject')
             props.history.push('/member-request')
         } catch (error) {

@@ -1,5 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from 'axios'
+import moment from 'moment'
+import { API_URL } from '../../constants/appConstants'
+
 import { DatePicker, Button, Row, Col, Select, Card } from "antd";
+import { MinusOutlined } from "@ant-design/icons";
 import Footer from "../../components/Footer";
 import GroupButton from "./GroupButton/GroupButton";
 
@@ -8,75 +13,15 @@ import HighchartsReact from "highcharts-react-official";
 
 import "./AnalysisMarket.scss";
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 const AnalysisMarket = (props) => {
-    // Render - Data
-    const data = [
-        {
-            id: 1,
-            title: "11번가",
-            name: "Polar bear",
-            price: 30
-        },
-        {
-            id: 2,
-            title: "11번가",
-            name: "Killer whale",
-            price: 84
-        },
-        {
-            id: 3,
-            title: "11번가",
-            name: "Chuckwalla",
-            price: 71
-        },
-        {
-            id: 4,
-            title: "11번가",
-            name: "Polar bear",
-            price: 35
-        },
-        {
-            id: 5,
-            title: "11번가",
-            name: "Killer whale",
-            price: 84
-        },
-        {
-            id: 6,
-            title: "11번가",
-            name: "Chuckwalla",
-            price: 71
-        },
-        {
-            id: 7,
-            title: "11번가",
-            name: "Polar bear",
-            price: 30
-        },
-        {
-            id: 8,
-            title: "11번가",
-            name: "Killer whale",
-            price: 84
-        },
-        {
-            id: 9,
-            title: "11번가",
-            name: "Chuckwalla",
-            price: 71
-        },
-        {
-            id: 10,
-            title: "11번가",
-            name: "Polar bear",
-            price: 35
-        }
-    ];
+    // Handle data
+    const [data, setData] = useState([])
+    console.log(data)
 
     const ListItem = (props) => {
         const value = props.value;
+        console.log(value)
         return (
             <>
                 <ul
@@ -92,7 +37,7 @@ const AnalysisMarket = (props) => {
                 >
                     <li style={{ fontWeight: 700, fontSize: "16px", color: "#495057" }}>
                         category
-            </li>
+                    </li>
                     <li style={{ fontWeight: 400, fontSize: "12px", color: "#74788D" }}>
                         ₩{value.price}
                     </li>
@@ -109,10 +54,39 @@ const AnalysisMarket = (props) => {
         return <>{listitems}</>;
     };
 
-    // Date Picker
-    function onChange(date, dateString) {
-        console.log(date, dateString);
+    // DatePicker
+    const [dates, setDates] = useState([]);
+    const [hackValue, setHackValue] = useState();
+    const [value, setValue] = useState();
+    const dayPicker = [];
+
+    const toTimestamp = (strDate) => {
+        var datum = Date.parse(strDate);
+        return datum / 1000;
     }
+
+    if (value !== undefined) {
+        dayPicker.unshift(toTimestamp(moment.utc(value[1]._d).format('YYYY-MM-DD')))
+        dayPicker.unshift(toTimestamp(moment.utc(value[0]._d).format('YYYY-MM-DD')))
+    }
+
+    const disabledDate = (current) => {
+        if (!dates || dates.length === 0) {
+            return false;
+        }
+        const tooLate = dates[0] && current.diff(dates[0], "days") > 13;
+        const tooEarly = dates[1] && dates[1].diff(current, "days") > 13;
+        return tooEarly || tooLate;
+    };
+
+    const onOpenChange = (open) => {
+        if (open) {
+            setHackValue([]);
+            setDates([]);
+        } else {
+            setHackValue(undefined);
+        }
+    };
 
     // Option of chart
     const options = {
@@ -295,6 +269,28 @@ const AnalysisMarket = (props) => {
         ]
     };
 
+
+    // Get Data 
+    const getData = async () => {
+        const config = {
+            headers: {
+                'Accept': "application/json",
+                "Content-Type": "application/json",
+                "X-Auth-Token": `${localStorage.getItem('token-user')}`
+            }
+        };
+
+        try {
+            // const { data } = await axios.get(`${API_URL}/home/market?start=${dayPicker[0]}&end=${dayPicker[1]}&key=쿠팡`, config)
+            const { data } = await axios.get(`${API_URL}/home/market?start=1234567890&end=2345678901&key=쿠팡`, config)
+            const { data: { result } } = data;
+            console.log(result)
+            setData(result.total_sale)
+        } catch (error) {
+            console.log(error.response)
+        }
+    }
+
     return (
         <div className="analysis-market">
             <GroupButton redirect={props.history.push} clickable="c" />
@@ -317,10 +313,18 @@ const AnalysisMarket = (props) => {
                                 }}
                             >
                                 집계 월
-                             </h1>
+              </h1>
                         </Col>
                         <Col xs={24} sm={10} md={10} lg={10} xl={6}>
-                            <RangePicker onChange={onChange} bordered={false} />
+                            <DatePicker.RangePicker
+                                value={hackValue || value}
+                                disabledDate={disabledDate}
+                                onCalendarChange={val => setDates(val)}
+                                onChange={val => setValue(val)}
+                                onOpenChange={onOpenChange}
+                                bordered={false}
+                                separator={<MinusOutlined />}
+                            />
                         </Col>
                         <Col xs={24} sm={2} md={2} lg={2} xl={2}>
                             <Button
@@ -330,9 +334,10 @@ const AnalysisMarket = (props) => {
                                     fontWeight: "bold"
                                 }}
                                 type="primary"
+                                onClick={getData}
                             >
                                 적용하기
-                            </Button>
+              </Button>
                         </Col>
                     </Row>
                 </Col>

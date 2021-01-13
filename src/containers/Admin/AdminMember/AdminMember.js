@@ -47,7 +47,7 @@ const AdminMember = (props) => {
             }
         }
         try {
-            const res = await axios.get(`${API_URL}/users`, config);
+            const res = await axios.get(`${API_URL}/members`, config);
             const { data } = res
             console.log(data)
             const { data: { result } } = data

@@ -85,7 +85,7 @@ const SignUp = (props) => {
     const handleInputBlur = async () => {
         const config = {
             headers: {
-                Accept: "application/json",
+                'Accept': "application/json",
                 "Content-Type": "application/json"
             }
         };
