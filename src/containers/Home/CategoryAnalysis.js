@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import moment from 'moment'
+import axios from 'axios'
+import { API_URL } from '../../constants/appConstants'
+
 import GroupButton from "./GroupButton/GroupButton";
 import Footer from "../../components/Footer";
-import { DatePicker, Button, Row, Col, Card, Select } from "antd";
-import { MinusOutlined } from '@ant-design/icons';
+import { DatePicker, Button, Row, Col, Card, Select, Spin } from "antd";
+import { MinusOutlined, LoadingOutlined } from '@ant-design/icons';
 
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
@@ -20,7 +24,27 @@ import "./CategoryAnalysis.scss";
 const { Option } = Select;
 
 const CategoryAnalysis = (props) => {
-    // Render Data
+    const [loading, setLoading] = useState(false);
+    const [selectMarket, setSelectMarket] = useState('11번가');
+    const [totalSale, setTotalSale] = useState([]);
+    const [topProduct, setTopProduct] = useState({
+        topcoupang: [],
+        topauction: [],
+        topsmartstore: [],
+        topwemake: [],
+        toptmon: [],
+        topinterpark: [],
+        top11str: [],
+        topgmarket: []
+    })
+    console.log(topProduct)
+
+    /* Select Market */
+    function handleChangeSelectMarket(value) {
+        setSelectMarket(value)
+    }
+
+    /* Render Data */
     const data = [
         {
             id: 1,
@@ -93,12 +117,12 @@ const CategoryAnalysis = (props) => {
                     style={{ fontWeight: "400", fontSize: "16px", color: "#495057" }}
                 >
                     <ul className="list-in" style={{ display: "flex" }}>
-                        <li style={{ marginRight: "24px", fontWeight: "bold" }}>
+                        <li style={{ marginRight: "24px", fontWeight: "bold", flex: 1 }}>
                             {value.id}
                         </li>
                         <li>{value.name}</li>
                     </ul>
-                    <li>₩{value.price}</li>
+                    <li>₩{value.seller_price}</li>
                 </ul>
             </>
         );
@@ -106,13 +130,13 @@ const CategoryAnalysis = (props) => {
 
     const RenderData = (props) => {
         const data = props.data;
-        const listitems = data.map((product) => (
-            <ListItem key={product.id} value={product} />
+        const listitems = data.map((product, i) => (
+            <ListItem key={i} value={product} />
         ));
         return <>{listitems}</>;
     };
 
-    // Chart
+    /* Chart */
     const options = {
         chart: {
             height: 300,
@@ -207,11 +231,22 @@ const CategoryAnalysis = (props) => {
         </div>
     );
 
-    // DatePicker
+    /* DatePicker */
     const [dates, setDates] = useState([]);
     const [hackValue, setHackValue] = useState();
     const [value, setValue] = useState();
-    console.log(value)
+    const dayPicker = [];
+
+    const toTimestamp = (strDate) => {
+        var datum = Date.parse(strDate);
+        return datum / 1000;
+    }
+
+    if (value !== undefined) {
+        dayPicker.unshift(toTimestamp(moment.utc(value[1]._d).format('YYYY-MM-DD')))
+        dayPicker.unshift(toTimestamp(moment.utc(value[0]._d).format('YYYY-MM-DD')))
+    }
+
     const disabledDate = current => {
         if (!dates || dates.length === 0) {
             return false;
@@ -230,9 +265,88 @@ const CategoryAnalysis = (props) => {
         }
     };
 
-    function onChange(date, dateString) {
-        console.log(date, dateString);
+    /* Get data */
+    const config = {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+            "X-Auth-Token": `${localStorage.getItem('token-user')}`
+        }
+    };
+
+    const getData = async () => {
+        setLoading(true)
+        console.log('Waiting for data.....')
+        await Promise.all([
+            axios.get(`${API_URL}/home/category/totalsales?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
+                const result = value.data.data.result;
+                setTotalSale(result)
+            }).catch(error => console.log(error.response)),
+
+            axios.get(`${API_URL}/home/category/topcoupang?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
+                const result = value.data.data.result;
+                setTopProduct(prevState => ({ ...prevState, topcoupang: result }))
+            }).catch(error => console.log(error.response)),
+
+            axios.get(`${API_URL}/home/category/topauction?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
+                const result = value.data.data.result;
+                setTopProduct(prevState => ({ ...prevState, topauction: result }))
+            }).catch(error => console.log(error.response)),
+
+            axios.get(`${API_URL}/home/category/topsmartstore?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
+                const result = value.data.data.result;
+                setTopProduct(prevState => ({ ...prevState, topsmartstore: result }))
+            }).catch(error => console.log(error.response)),
+
+            axios.get(`${API_URL}/home/category/topwemake?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
+                const result = value.data.data.result;
+                setTopProduct(prevState => ({ ...prevState, topwemake: result }))
+            }).catch(error => console.log(error.response)),
+
+            axios.get(`${API_URL}/home/category/toptmon?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
+                const result = value.data.data.result;
+                setTopProduct(prevState => ({ ...prevState, toptmon: result }))
+            }).catch(error => console.log(error.response)),
+
+            axios.get(`${API_URL}/home/category/topinterpark?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
+                const result = value.data.data.result;
+                setTopProduct(prevState => ({ ...prevState, topinterpark: result }))
+            }).catch(error => console.log(error.response)),
+
+            axios.get(`${API_URL}/home/category/top11str?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
+                const result = value.data.data.result;
+                setTopProduct(prevState => ({ ...prevState, top11str: result }))
+            }).catch(error => console.log(error.response)),
+
+            axios.get(`${API_URL}/home/category/topgmarket?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
+                const result = value.data.data.result;
+                setTopProduct(prevState => ({ ...prevState, topgmarket: result }))
+            }).catch(error => console.log(error.response))
+        ])
+        setLoading(false)
     }
+
+    const markets = [
+        { market: '11번가', img: Market1 },
+        { market: 'G마켓', img: Market2 },
+        { market: '쿠팡', img: Market3 },
+        { market: '인터파크', img: Market4 },
+        { market: '옥션', img: Market5 },
+        { market: '스마트스토어', img: Market6 },
+        { market: '티몬', img: Market7 },
+        { market: '위메프', img: Market8 }
+    ]
+
+    // const test = [
+    //     { market_name: "11번가", total: "1" },
+    //     { market_name: "G마켓", total: "2" },
+    //     { market_name: "쿠팡", total: "3" },
+    //     { market_name: "인터파크", total: "100" },
+    //     { market_name: "옥션", total: "5" },
+    //     { market_name: "스마트스토어", total: "6" },
+    //     { market_name: "티몬", total: "200" },
+    //     { market_name: "위메프", total: "8" },
+    // ]
 
     return (
         <div className="category-analysis">
@@ -259,7 +373,6 @@ const CategoryAnalysis = (props) => {
                                 disabledDate={disabledDate}
                                 onCalendarChange={val => setDates(val)}
                                 onChange={val => setValue(val)}
-                                // onChange={onChange}
                                 onOpenChange={onOpenChange}
                                 bordered={false}
                                 separator={<MinusOutlined />}
@@ -273,15 +386,20 @@ const CategoryAnalysis = (props) => {
                                     fontWeight: "bold"
                                 }}
                                 type="primary"
+                                onClick={getData}
                             >
-                                적용하기
+                                {loading ? (
+                                    <Spin indicator={<LoadingOutlined style={{ color: "#fff" }} />} />
+                                ) : (
+                                        ""
+                                    )}<span style={loading ? { marginLeft: "5px" } : {}}>적용하기</span>
                             </Button>
                         </Col>
                     </Row>
                 </Col>
 
                 <Col xs={7} sm={4} md={3} lg={3} xl={3} style={{ textAlign: 'end' }} className="select-category-analysis">
-                    <Select defaultValue="11번가" >
+                    <Select onChange={handleChangeSelectMarket} defaultValue="11번가" >
                         <Option value="11번가">11번가</Option>
                         <Option value="G마켓">G마켓</Option>
                         <Option value="쿠팡">쿠팡</Option>
@@ -318,190 +436,40 @@ const CategoryAnalysis = (props) => {
                         총 매출액
                     </h1>
                     <Row>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market1} />
-                                <span className="style-market">11번가</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market2} />
-                                <span className="style-market">G마켓</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market3} />
-                                <span className="style-market">쿠팡</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market4} />
-                                <span className="style-market">인터파크</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market5} />
-                                <span className="style-market">옥션</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market6} />
-                                <span className="style-market">스마트스토어</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market7} />
-                                <span className="style-market">티몬</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market8} />
-                                <span className="style-market">위메프</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
+                        {
+                            markets.map((market, i) => (
+                                <Col
+                                    key={i}
+                                    xs={12}
+                                    sm={12}
+                                    md={6}
+                                    lg={3}
+                                    xl={3}
+                                    style={{ textAlign: "center" }}
+                                >
+                                    <div className="style-border">
+                                        <img src={market.img} />
+                                        <span className="style-market">{market.market}</span>
+                                    </div>
+                                    <p
+                                        style={{
+                                            paddingTop: "2rem",
+                                            fontWeight: "400",
+                                            fontSize: "16px",
+                                            color: "#495057"
+                                        }}
+                                    >
+                                        {
+                                            totalSale.map(total => {
+                                                if (total.market_name === market.market) {
+                                                    return total.total
+                                                }
+                                            })
+                                        }
+                                    </p>
+                                </Col>
+                            ))
+                        }
                     </Row>
                 </Col>
             </Row>
@@ -511,22 +479,22 @@ const CategoryAnalysis = (props) => {
                     <Row gutter={[16, 16]}>
                         <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("11번가")} bordered={false}>
-                                <RenderData data={data} />
+                                <RenderData data={topProduct.topcoupang} />
                             </Card>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("G마켓")} bordered={false}>
-                                <RenderData data={data} />
+                                <RenderData data={topProduct.topcoupang} />
                             </Card>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("쿠팡")} bordered={false}>
-                                <RenderData data={data} />
+                                <RenderData data={topProduct.topcoupang} />
                             </Card>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("인터파크")} bordered={false}>
-                                <RenderData data={data} />
+                                <RenderData data={topProduct.topcoupang} />
                             </Card>
                         </Col>
                     </Row>
@@ -534,22 +502,22 @@ const CategoryAnalysis = (props) => {
                     <Row gutter={[16, 16]} style={{ marginTop: "1rem" }}>
                         <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("옥션")} bordered={false}>
-                                <RenderData data={data} />
+                                <RenderData data={topProduct.topcoupang} />
                             </Card>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("스마트스토어")} bordered={false}>
-                                <RenderData data={data} />
+                                <RenderData data={topProduct.topcoupang} />
                             </Card>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("티몬")} bordered={false}>
-                                <RenderData data={data} />
+                                <RenderData data={topProduct.topcoupang} />
                             </Card>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                             <Card title={titileCard("위메프")} bordered={false}>
-                                <RenderData data={data} />
+                                <RenderData data={topProduct.topcoupang} />
                             </Card>
                         </Col>
                     </Row>

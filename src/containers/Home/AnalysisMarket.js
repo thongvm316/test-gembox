@@ -3,8 +3,8 @@ import axios from 'axios'
 import moment from 'moment'
 import { API_URL } from '../../constants/appConstants'
 
-import { DatePicker, Button, Row, Col, Select, Card } from "antd";
-import { MinusOutlined } from "@ant-design/icons";
+import { DatePicker, Button, Row, Col, Select, Card, Spin } from "antd";
+import { MinusOutlined, LoadingOutlined } from "@ant-design/icons";
 import Footer from "../../components/Footer";
 import GroupButton from "./GroupButton/GroupButton";
 
@@ -15,13 +15,120 @@ import "./AnalysisMarket.scss";
 const { Option } = Select;
 
 const AnalysisMarket = (props) => {
+    const [selectMarket, setSelectMarket] = useState('11번가');
+    const [loading, setLoading] = useState(false);
+
     // Handle data
-    const [data, setData] = useState([])
-    console.log(data)
+    const [data, setData] = useState([]);
+    const fakeData = [
+        {
+            "category_tag": "물티슈",
+            "total_sold": "1308508",
+            "total": "19409557830"
+        },
+        {
+            "category_tag": "분유/어린이식품",
+            "total_sold": "380618",
+            "total": "8632872960"
+        },
+        {
+            "category_tag": "유기농/친환경 전문관",
+            "total_sold": "243950",
+            "total": "6493994750"
+        },
+        {
+            "category_tag": "콘솔/휴대용게임기",
+            "total_sold": "52549",
+            "total": "6182040760"
+        },
+        {
+            "category_tag": "기저귀",
+            "total_sold": "145579",
+            "total": "5914114400"
+        },
+        {
+            "category_tag": "수유용품",
+            "total_sold": "306460",
+            "total": "4201522770"
+        },
+        {
+            "category_tag": "위생/건강/세제",
+            "total_sold": "381026",
+            "total": "3879137140"
+        },
+        {
+            "category_tag": "욕실용품/스킨케어",
+            "total_sold": "285463",
+            "total": "3291188090"
+        },
+        {
+            "category_tag": "승용완구",
+            "total_sold": "31681",
+            "total": "2071030080"
+        },
+        {
+            "category_tag": "놀이매트/안전용품",
+            "total_sold": "74285",
+            "total": "2041339090"
+        },
+        {
+            "category_tag": "보드게임",
+            "total_sold": "109870",
+            "total": "1912832930"
+        },
+        {
+            "category_tag": "블록놀이",
+            "total_sold": "34242",
+            "total": "1843860460"
+        },
+        {
+            "category_tag": "신생아/영아완구",
+            "total_sold": "76279",
+            "total": "1587438760"
+        },
+        {
+            "category_tag": "학습완구/교구",
+            "total_sold": "97738",
+            "total": "1434251220"
+        },
+        {
+            "category_tag": "캐릭터별완구",
+            "total_sold": "80197",
+            "total": "1382433030"
+        },
+        {
+            "category_tag": "완구/교구",
+            "total_sold": "57865",
+            "total": "1194131660"
+        },
+        {
+            "category_tag": "스포츠/야외완구",
+            "total_sold": "35568",
+            "total": "1188197420"
+        },
+        {
+            "category_tag": "유아동도서",
+            "total_sold": "63518",
+            "total": "1182313670"
+        },
+        {
+            "category_tag": "유아/어린이",
+            "total_sold": "63518",
+            "total": "1182313670"
+        },
+        {
+            "category_tag": "유아가구/인테리어",
+            "total_sold": "27758",
+            "total": "1150779340"
+        }
+    ]
+
+    const data1 = data.slice(0, 10);
+    const data2 = data.slice(10, 20);
 
     const ListItem = (props) => {
         const value = props.value;
-        console.log(value)
+        // console.log(value)
         return (
             <>
                 <ul
@@ -36,10 +143,10 @@ const AnalysisMarket = (props) => {
                     }}
                 >
                     <li style={{ fontWeight: 700, fontSize: "16px", color: "#495057" }}>
-                        category
+                        {value.category_tag}
                     </li>
                     <li style={{ fontWeight: 400, fontSize: "12px", color: "#74788D" }}>
-                        ₩{value.price}
+                        ₩ {value.total}
                     </li>
                 </ul>
             </>
@@ -48,8 +155,8 @@ const AnalysisMarket = (props) => {
 
     const RenderData = (props) => {
         const data = props.data;
-        const listitems = data.map((product) => (
-            <ListItem key={product.id} value={product} />
+        const listitems = data.map((product, i) => (
+            <ListItem key={i} value={product} />
         ));
         return <>{listitems}</>;
     };
@@ -269,6 +376,10 @@ const AnalysisMarket = (props) => {
         ]
     };
 
+    // Select Market
+    function handleChangeSelectMarket(value) {
+        setSelectMarket(value)
+    }
 
     // Get Data 
     const getData = async () => {
@@ -281,11 +392,13 @@ const AnalysisMarket = (props) => {
         };
 
         try {
-            // const { data } = await axios.get(`${API_URL}/home/market?start=${dayPicker[0]}&end=${dayPicker[1]}&key=쿠팡`, config)
+            setLoading(true);
+            // const { data } = await axios.get(`${API_URL}/home/market?start=${dayPicker[0]}&end=${dayPicker[1]}&key=${selectMarket}`, config)
             const { data } = await axios.get(`${API_URL}/home/market?start=1234567890&end=2345678901&key=쿠팡`, config)
             const { data: { result } } = data;
             console.log(result)
             setData(result.total_sale)
+            setLoading(false);
         } catch (error) {
             console.log(error.response)
         }
@@ -336,8 +449,12 @@ const AnalysisMarket = (props) => {
                                 type="primary"
                                 onClick={getData}
                             >
-                                적용하기
-              </Button>
+                                {loading ? (
+                                    <Spin indicator={<LoadingOutlined style={{ color: "#fff" }} />} />
+                                ) : (
+                                        ""
+                                    )}<span style={loading ? { marginLeft: "5px" } : {}}>적용하기</span>
+                            </Button>
                         </Col>
                     </Row>
                 </Col>
@@ -351,7 +468,7 @@ const AnalysisMarket = (props) => {
                     style={{ textAlign: "end" }}
                     className="select-category-analysis"
                 >
-                    <Select defaultValue="11번가">
+                    <Select onChange={handleChangeSelectMarket} defaultValue="11번가">
                         <Option value="11번가">11번가</Option>
                         <Option value="G마켓">G마켓</Option>
                         <Option value="쿠팡">쿠팡</Option>
@@ -380,12 +497,12 @@ const AnalysisMarket = (props) => {
                     <Row gutter={[16, 16]} justify="center">
                         <Col xs={24} sm={12} md={12} lg={10} xl={10}>
                             <Card title="매출액" style={{ borderRadius: "16px" }}>
-                                <RenderData data={data} />
+                                <RenderData data={data1} />
                             </Card>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={10} xl={10}>
                             <Card title="매출액" style={{ borderRadius: "16px" }}>
-                                <RenderData data={data} />
+                                <RenderData data={data2} />
                             </Card>
                         </Col>
                     </Row>

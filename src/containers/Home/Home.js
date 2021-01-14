@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import moment from "moment";
-import axios from 'axios'
+import axios from "axios";
 
-import { DatePicker, Button, Row, Col, Card, Divider } from "antd";
+import { DatePicker, Button, Row, Col, Card, Divider, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+
 import Footer from "../../components/Footer";
 import GroupButton from "./GroupButton/GroupButton";
-import { API_URL } from '../../constants/appConstants'
+import { API_URL } from "../../constants/appConstants";
 import "./home.scss";
 
 const Home = (props) => {
@@ -14,20 +16,44 @@ const Home = (props) => {
 
   // Handle Data
   const [dataTopBander, setDataTopBander] = useState([]);
-  const dataTopBander1 = dataTopBander.slice(0, 10);
-  const dataTopBander2 = dataTopBander.slice(10, 20);
-
   const [dataTopProduct, setDataTopProduct] = useState([]);
-  const dataTopProduct1 = dataTopProduct.slice(0, 10);
-  const dataTopProduct2 = dataTopProduct.slice(10, 20);
+
+  const id1 = [1, 11];
+  const dataTopBander1 = dataTopBander.slice(0, 10).map((db) => {
+    db.id = id1[0]++;
+    return db;
+  });
+
+  const dataTopBander2 = dataTopBander.slice(10, 20).map((db) => {
+    db.id = id1[1]++;
+    return db;
+  });
+
+  const id2 = [1, 11];
+  const dataTopProduct1 = dataTopProduct.slice(0, 10).map((db) => {
+    db.id = id2[0]++;
+    return db;
+  });
+
+  const dataTopProduct2 = dataTopProduct.slice(10, 20).map((db) => {
+    db.id = id2[1]++;
+    return db;
+  });
 
   const ListItem = (props) => {
     const value = props.value;
+    console.log(value);
     return (
       <>
         <ul className="ul-list">
           <li style={{ display: "flex", alignItems: "center" }}>
-            <ul style={{ listStyle: "none", display: 'flex', alignItems: 'center' }}>
+            <ul
+              style={{
+                listStyle: "none",
+                display: "flex",
+                alignItems: "center"
+              }}
+            >
               <li
                 style={{
                   paddingRight: "40px",
@@ -40,7 +66,7 @@ const Home = (props) => {
               </li>
 
               <li>
-                <ul style={{ listStyle: 'none' }}>
+                <ul style={{ listStyle: "none" }}>
                   <li>
                     <small
                       style={{
@@ -60,11 +86,7 @@ const Home = (props) => {
                         color: "#495057"
                       }}
                     >
-                      {
-                        value.bander_name ?
-                          value.bander_name :
-                          value.name
-                      }
+                      {value.bander_name ? value.bander_name : value.name}
                     </strong>
                   </li>
                 </ul>
@@ -76,11 +98,7 @@ const Home = (props) => {
             <strong
               style={{ fontWeight: "700p", fontSize: "14px", color: "#495057" }}
             >
-              {
-                value.total ?
-                  `₩ ${value.total}` :
-                  value.sold
-              }
+              {value.revenue ? `₩ ${value.revenue}` : value.sold}
             </strong>
           </li>
         </ul>
@@ -91,8 +109,9 @@ const Home = (props) => {
 
   const RenderData = (props) => {
     const data = props.data;
+    // console.log(data)
     const listitems = data.map((product, i) => (
-      <ListItem key={i} value={product} index={i} />
+      <ListItem key={i} value={product} />
     ));
     return <>{listitems}</>;
   };
@@ -102,38 +121,46 @@ const Home = (props) => {
   const toTimestamp = (strDate) => {
     var datum = Date.parse(strDate);
     return datum / 1000;
-  }
+  };
 
-  function onChange(date, dateString) {
-    const startDay = dateString.concat('-01')
+  function onChange(dateString) {
+    const startDay = dateString.concat("-01");
     const allDayInMonth = moment(dateString, "YYYY-MM").daysInMonth();
-    const endDay = dateString.concat(`-${allDayInMonth}`)
+    const endDay = dateString.concat(`-${allDayInMonth}`);
 
     const startAndEndDay = [];
-    startAndEndDay.unshift(toTimestamp(endDay))
-    startAndEndDay.unshift(toTimestamp(startDay))
-    setDay(startAndEndDay)
+    startAndEndDay.unshift(toTimestamp(endDay));
+    startAndEndDay.unshift(toTimestamp(startDay));
+    setDay(startAndEndDay);
   }
 
   // Get Data
   const getData = async () => {
     const config = {
       headers: {
-        'Accept': "application/json",
+        Accept: "application/json",
         "Content-Type": "application/json",
-        "X-Auth-Token": `${localStorage.getItem('token-user')}`
+        "X-Auth-Token": `${localStorage.getItem("token-user")}`
       }
     };
     try {
-      const { data } = await axios.get(`${API_URL}/home/revenue?start=${day[0]}&end=${day[1]}`, config)
-      const { data: { result } } = data;
-      console.log(result)
-      setDataTopBander(result.top_20_revenue)
-      setDataTopProduct(result.top_20_selling)
+      setLoading(true);
+      // const { data } = await axios.get(`${API_URL}/home/revenue?start=${day[0]}&end=${day[1]}`, config)
+      const { data } = await axios.get(
+        `${API_URL}/home/revenue?start=1606780800&end=1609372800`,
+        config
+      );
+      const {
+        data: { result }
+      } = data;
+      console.log(result);
+      setDataTopBander(result.top_20_revenue);
+      setDataTopProduct(result.top_20_selling);
+      setLoading(false);
     } catch (error) {
-      console.log(error.response)
+      console.log(error.response);
     }
-  }
+  };
 
   return (
     <div className="home-page">
@@ -162,7 +189,12 @@ const Home = (props) => {
             type="primary"
             onClick={getData}
           >
-            적용하기
+            {loading ? (
+              <Spin indicator={<LoadingOutlined style={{ color: "#fff" }} />} />
+            ) : (
+                ""
+              )}{" "}
+            <span style={loading ? { marginLeft: "5px" } : {}}>적용하기</span>
           </Button>
         </Col>
       </Row>
