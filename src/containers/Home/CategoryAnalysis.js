@@ -5,8 +5,8 @@ import { API_URL } from '../../constants/appConstants'
 
 import GroupButton from "./GroupButton/GroupButton";
 import Footer from "../../components/Footer";
-import { DatePicker, Button, Row, Col, Card, Select, Spin } from "antd";
-import { MinusOutlined, LoadingOutlined } from '@ant-design/icons';
+import { DatePicker, Button, Row, Col, Card, Select, Spin, Dropdown, Menu } from "antd";
+import { MinusOutlined, LoadingOutlined, DownOutlined } from '@ant-design/icons';
 
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
@@ -27,6 +27,41 @@ const CategoryAnalysis = (props) => {
     const [loading, setLoading] = useState(false);
     const [selectMarket, setSelectMarket] = useState('11번가');
     const [totalSale, setTotalSale] = useState([]);
+    const fakeTotalSale = [
+        {
+            "market_name": "11번가",
+            "total": "1500"
+        },
+        {
+            "market_name": "G마켓",
+            "total": "2000"
+        },
+        {
+            "market_name": "쿠팡",
+            "total": "1000"
+        },
+        {
+            "market_name": "인터파크",
+            "total": "3000"
+        },
+        {
+            "market_name": "옥션",
+            "total": "3500"
+        },
+        {
+            "market_name": "스마트스토어",
+            "total": "1200"
+        },
+        {
+            "market_name": "티몬",
+            "total": "4000"
+        },
+        {
+            "market_name": "위메프",
+            "total": "4300"
+        }
+    ]
+
     const [topProduct, setTopProduct] = useState({
         topcoupang: [],
         topauction: [],
@@ -37,7 +72,7 @@ const CategoryAnalysis = (props) => {
         top11str: [],
         topgmarket: []
     })
-    console.log(topProduct)
+    console.log(topProduct);
 
     /* Select Market */
     function handleChangeSelectMarket(value) {
@@ -45,95 +80,69 @@ const CategoryAnalysis = (props) => {
     }
 
     /* Render Data */
-    const data = [
-        {
-            id: 1,
-            title: "11번가",
-            name: "Polar bear",
-            price: 30
-        },
-        {
-            id: 2,
-            title: "11번가",
-            name: "Killer whale",
-            price: 84
-        },
-        {
-            id: 3,
-            title: "11번가",
-            name: "Chuckwalla",
-            price: 71
-        },
-        {
-            id: 4,
-            title: "11번가",
-            name: "Polar bear",
-            price: 35
-        },
-        {
-            id: 5,
-            title: "11번가",
-            name: "Killer whale",
-            price: 84
-        },
-        {
-            id: 6,
-            title: "11번가",
-            name: "Chuckwalla",
-            price: 71
-        },
-        {
-            id: 7,
-            title: "11번가",
-            name: "Polar bear",
-            price: 30
-        },
-        {
-            id: 8,
-            title: "11번가",
-            name: "Killer whale",
-            price: 84
-        },
-        {
-            id: 9,
-            title: "11번가",
-            name: "Chuckwalla",
-            price: 71
-        },
-        {
-            id: 10,
-            title: "11번가",
-            name: "Polar bear",
-            price: 35
-        }
-    ];
+    let id = [1, 1, 1, 1, 1, 1, 1, 1];
+    const topcoupang = topProduct.topcoupang.map(value => {
+        value.id = id[0]++;
+        return value
+    })
 
-    const ListItem = (props) => {
-        const value = props.value;
-        return (
-            <>
-                <ul
-                    className="ul-list"
-                    style={{ fontWeight: "400", fontSize: "16px", color: "#495057" }}
-                >
-                    <ul className="list-in" style={{ display: "flex" }}>
-                        <li style={{ marginRight: "24px", fontWeight: "bold", flex: 1 }}>
-                            {value.id}
-                        </li>
-                        <li>{value.name}</li>
-                    </ul>
-                    <li>₩{value.seller_price}</li>
-                </ul>
-            </>
-        );
-    };
+    const topauction = topProduct.topauction.map(value => {
+        value.id = id[1]++;
+        return value
+    })
+
+    const topsmartstore = topProduct.topsmartstore.map(value => {
+        value.id = id[2]++;
+        return value
+    })
+
+    const topwemake = topProduct.topwemake.map(value => {
+        value.id = id[3]++;
+        return value
+    })
+
+    const toptmon = topProduct.toptmon.map(value => {
+        value.id = id[4]++;
+        return value
+    })
+
+    const topinterpark = topProduct.topinterpark.map(value => {
+        value.id = id[5]++;
+        return value
+    })
+
+    const top11str = topProduct.top11str.map(value => {
+        value.id = id[6]++;
+        return value
+    })
+
+    const topgmarket = topProduct.topgmarket.map(value => {
+        value.id = id[7]++;
+        return value
+    })
 
     const RenderData = (props) => {
         const data = props.data;
-        const listitems = data.map((product, i) => (
-            <ListItem key={i} value={product} />
-        ));
-        return <>{listitems}</>;
+        return <>
+            {
+                data.map((product, i) => (
+                    <React.Fragment key={i}>
+                        <ul
+                            className="ul-list"
+                            style={{ fontWeight: "400", fontSize: "16px", color: "#495057" }}
+                        >
+                            <ul className="list-in" style={{ display: "flex", alignItems: 'center' }}>
+                                <li style={{ marginRight: "24px", fontWeight: "bold" }}>
+                                    {product.id}
+                                </li>
+                                <li>{product.name}</li>
+                            </ul>
+                            <li>₩ {product.seller_price}</li>
+                        </ul>
+                    </React.Fragment>
+                ))
+            }
+        </>;
     };
 
     /* Chart */
@@ -184,36 +193,36 @@ const CategoryAnalysis = (props) => {
                 showInLegend: false,
                 data: [
                     {
-                        name: "Chrome",
-                        y: 15
-                    },
-                    {
-                        name: "Internet Explorer",
-                        y: 15
-                    },
-                    {
-                        name: "Firefox",
-                        y: 15
-                    },
-                    {
-                        name: "Edge",
-                        y: 15
-                    },
-                    {
-                        name: "Safari",
+                        name: "11번가",
                         y: 10
                     },
                     {
-                        name: "Other",
+                        name: "G마켓",
+                        y: 15
+                    },
+                    {
+                        name: "쿠팡",
+                        y: 15
+                    },
+                    {
+                        name: "인터파크",
+                        y: 15
+                    },
+                    {
+                        name: "옥션",
                         y: 10
                     },
                     {
-                        name: "VBN",
+                        name: "스마트스토어",
                         y: 10
                     },
                     {
-                        name: "HJK",
+                        name: "티몬",
                         y: 10
+                    },
+                    {
+                        name: "위메프",
+                        y: 30
                     }
                 ]
             }
@@ -265,6 +274,667 @@ const CategoryAnalysis = (props) => {
         }
     };
 
+    /* For render total sale component */
+    const markets = [
+        { market: '11번가', img: Market1 },
+        { market: 'G마켓', img: Market2 },
+        { market: '쿠팡', img: Market3 },
+        { market: '인터파크', img: Market4 },
+        { market: '옥션', img: Market5 },
+        { market: '스마트스토어', img: Market6 },
+        { market: '티몬', img: Market7 },
+        { market: '위메프', img: Market8 }
+    ]
+
+    /* Select category */
+    const [category, setCategory] = useState('완구');
+    const selectCategory = (e) => {
+        setCategory(e.currentTarget.textContent)
+    }
+
+    const menu = (
+        <Menu>
+            <Menu.SubMenu title="쿠팡">
+                <Menu.Item>
+                    <div onClick={selectCategory}>콘솔/휴대용게임기</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>베이비패션</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>여아키즈패션</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>남아키즈패션</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>기저귀</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>물티슈</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>분유/어린이식품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>수유용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>이유용품/유아식기</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유모차/웨건</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>카시트</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>아기띠/외출용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동침구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>놀이매트/안전용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아가구/인테리어</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>욕실용품/스킨케어</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>위생/건강/세제</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>완구/교구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동도서</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아/어린이</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>소설/에세이/시</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>초중고참고서</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>캐릭터별완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>신생아/영아완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>로봇/작동완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>역할놀이</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>블록놀이</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>인형</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>물놀이/계절완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>승용완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>스포츠/야외완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>실내대형완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>STEAM완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>학습완구/교구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>보드게임</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>RC완구/부품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>퍼즐/큐브/피젯토이</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>프라모델</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>피규어/다이캐스트</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유기농/친환경 전문관</div>
+                </Menu.Item>
+            </Menu.SubMenu>
+
+            <Menu.SubMenu title="티몬">
+                <Menu.Item>
+                    <div onClick={selectCategory}>기저귀·물티슈</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>분유·유아식품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>수유·이유용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>위생·건강·세제</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아목욕·스킨케어</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>외출용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>안전·실내용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동침구·가구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>완구·교구·도서</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동잡화</div>
+                </Menu.Item>
+            </Menu.SubMenu>
+
+            <Menu.SubMenu title="11번가">
+                <Menu.Item>
+                    <div onClick={selectCategory}>기저귀</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>분유</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>물티슈</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>장난감</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>출산/돌기념품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>순금/돌반지</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>이유용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>수유용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동식/영양제</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아목욕/스킨케어</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아세제/위생용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아안전/실내용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>외출용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아가구/침구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>신생아의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>아동/주니어의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동신발</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동찹화</div>
+                </Menu.Item>
+            </Menu.SubMenu>
+
+            <Menu.SubMenu title="네이버쇼핑">
+                <Menu.Item>
+                    <div onClick={selectCategory}>분유</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>기저귀</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>물티슈</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>이유식</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>아기간식</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유모차</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>카시트</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아세제</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>구강청결용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>소독/살균용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>수유용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>스킨/바디용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>위출용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>목욕용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>안전용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>이유식용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아침구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아가구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>임산부용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>임부복</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>출산/돌기념품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동 주얼리</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>신생아의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동언더웨어/잠옷</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>수영복/용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아발육용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>교재/서적</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>인형</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>위생/건강용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유라동잡화</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>완구/매트</div>
+                </Menu.Item>
+            </Menu.SubMenu>
+
+            <Menu.SubMenu title="인터파크">
+                <Menu.Item>
+                    <div onClick={selectCategory}>완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>기저귀/분유/물티슈/생리대</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>출산/임부/유아용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동의류/잡화/임부복</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>북마켓</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>아동</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>청소년</div>
+                </Menu.Item>
+            </Menu.SubMenu>
+
+            <Menu.SubMenu title="옥션">
+                <Menu.Item>
+                    <div onClick={selectCategory}>유모차/카시트</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아외출용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>놀이방매트</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아발육용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아안전용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아가구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>수유용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>이유식용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>소독/세정용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아스킨/바디케어</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아구강용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아위생용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아목욕용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아세탁용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>임부복</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>임산부용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>출산/돌기념품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>분유</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>기저귀</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>이유식/유아간식</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>신생아/영유아완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>감각발달완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>블록</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>승용완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>공간놀이완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>스포츠완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>로봇/캐릭터완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>작동완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>역할놀이완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>인형</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>미술/공작놀이</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>음악/악기놀이</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>자연/과학완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>언어/학습완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>원목교구/가베</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동퍼즐</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>물놀이완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>RC완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>신생아의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>여아의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>남아의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동공용의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동내의/잠옷</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동테마의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동스포츠의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동신발</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동가방</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동잡화</div>
+                </Menu.Item>
+            </Menu.SubMenu>
+
+            <Menu.SubMenu title="G마켓">
+                <Menu.Item>
+                    <div onClick={selectCategory}>분유</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>수유용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>이유식/유아간식</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>이유식용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>기저귀</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아외출용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>소독/세정용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아위생용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아스킨/바디케어</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아구강용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아목욕용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아세탁용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아발육용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유모차/카시트</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>놀이방매트</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아안전용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아가구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>임부복</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>임산부용품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>출산/돌기념품</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>신생아/영유아완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>감각발달완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>블록</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>미술/공작놀</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>언어/학습완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>역할놀이완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>음악/악기놀이</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>자연/과학완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동퍼즐</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>원목교구/가베</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>인형</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>승용완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>스포츠완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>공간놀이완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>물놀이완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>RC완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>로봇/캐릭터완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>작동완구</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>여아의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>남아의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동공용의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>신생아의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동내의/잠옷</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동스포츠의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동테마의류</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동신발</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동잡화</div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div onClick={selectCategory}>유아동가방</div>
+                </Menu.Item>
+            </Menu.SubMenu>
+        </Menu>
+    );
+
     /* Get data */
     const config = {
         headers: {
@@ -278,75 +948,44 @@ const CategoryAnalysis = (props) => {
         setLoading(true)
         console.log('Waiting for data.....')
         await Promise.all([
-            axios.get(`${API_URL}/home/category/totalsales?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
-                const result = value.data.data.result;
-                setTotalSale(result)
+            axios.get(`${API_URL}/home/category/totalsales?start=1234567890&end=2134567890&key=${category}`, config).then((value) => {
+                setTotalSale(value.data.data.result)
             }).catch(error => console.log(error.response)),
 
-            axios.get(`${API_URL}/home/category/topcoupang?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
-                const result = value.data.data.result;
-                setTopProduct(prevState => ({ ...prevState, topcoupang: result }))
+            axios.get(`${API_URL}/home/category/topcoupang?start=1234567890&end=2134567890&key=${category}`, config).then((value) => {
+                setTopProduct(prevState => ({ ...prevState, topcoupang: value.data.data.result }))
             }).catch(error => console.log(error.response)),
 
-            axios.get(`${API_URL}/home/category/topauction?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
-                const result = value.data.data.result;
-                setTopProduct(prevState => ({ ...prevState, topauction: result }))
+            axios.get(`${API_URL}/home/category/topauction?start=1234567890&end=2134567890&key=${category}`, config).then((value) => {
+                setTopProduct(prevState => ({ ...prevState, topauction: value.data.data.result }))
             }).catch(error => console.log(error.response)),
 
-            axios.get(`${API_URL}/home/category/topsmartstore?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
-                const result = value.data.data.result;
-                setTopProduct(prevState => ({ ...prevState, topsmartstore: result }))
+            axios.get(`${API_URL}/home/category/topsmartstore?start=1234567890&end=2134567890&key=${category}`, config).then((value) => {
+                setTopProduct(prevState => ({ ...prevState, topsmartstore: value.data.data.result }))
             }).catch(error => console.log(error.response)),
 
-            axios.get(`${API_URL}/home/category/topwemake?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
-                const result = value.data.data.result;
-                setTopProduct(prevState => ({ ...prevState, topwemake: result }))
+            axios.get(`${API_URL}/home/category/topwemake?start=1234567890&end=2134567890&key=${category}`, config).then((value) => {
+                setTopProduct(prevState => ({ ...prevState, topwemake: value.data.data.result }))
             }).catch(error => console.log(error.response)),
 
-            axios.get(`${API_URL}/home/category/toptmon?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
-                const result = value.data.data.result;
-                setTopProduct(prevState => ({ ...prevState, toptmon: result }))
+            axios.get(`${API_URL}/home/category/toptmon?start=1234567890&end=2134567890&key=${category}`, config).then((value) => {
+                setTopProduct(prevState => ({ ...prevState, toptmon: value.data.data.result }))
             }).catch(error => console.log(error.response)),
 
-            axios.get(`${API_URL}/home/category/topinterpark?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
-                const result = value.data.data.result;
-                setTopProduct(prevState => ({ ...prevState, topinterpark: result }))
+            axios.get(`${API_URL}/home/category/topinterpark?start=1234567890&end=2134567890&key=${category}`, config).then((value) => {
+                setTopProduct(prevState => ({ ...prevState, topinterpark: value.data.data.result }))
             }).catch(error => console.log(error.response)),
 
-            axios.get(`${API_URL}/home/category/top11str?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
-                const result = value.data.data.result;
-                setTopProduct(prevState => ({ ...prevState, top11str: result }))
+            axios.get(`${API_URL}/home/category/top11str?start=1234567890&end=2134567890&key=${category}`, config).then((value) => {
+                setTopProduct(prevState => ({ ...prevState, top11str: value.data.data.result }))
             }).catch(error => console.log(error.response)),
 
-            axios.get(`${API_URL}/home/category/topgmarket?start=1234567890&end=2134567890&key=유기농/친환경 전문관`, config).then((value) => {
-                const result = value.data.data.result;
-                setTopProduct(prevState => ({ ...prevState, topgmarket: result }))
+            axios.get(`${API_URL}/home/category/topgmarket?start=1234567890&end=2134567890&key=${category}`, config).then((value) => {
+                setTopProduct(prevState => ({ ...prevState, topgmarket: value.data.data.result }))
             }).catch(error => console.log(error.response))
         ])
         setLoading(false)
     }
-
-    const markets = [
-        { market: '11번가', img: Market1 },
-        { market: 'G마켓', img: Market2 },
-        { market: '쿠팡', img: Market3 },
-        { market: '인터파크', img: Market4 },
-        { market: '옥션', img: Market5 },
-        { market: '스마트스토어', img: Market6 },
-        { market: '티몬', img: Market7 },
-        { market: '위메프', img: Market8 }
-    ]
-
-    // const test = [
-    //     { market_name: "11번가", total: "1" },
-    //     { market_name: "G마켓", total: "2" },
-    //     { market_name: "쿠팡", total: "3" },
-    //     { market_name: "인터파크", total: "100" },
-    //     { market_name: "옥션", total: "5" },
-    //     { market_name: "스마트스토어", total: "6" },
-    //     { market_name: "티몬", total: "200" },
-    //     { market_name: "위메프", total: "8" },
-    // ]
 
     return (
         <div className="category-analysis">
@@ -399,7 +1038,7 @@ const CategoryAnalysis = (props) => {
                 </Col>
 
                 <Col xs={7} sm={4} md={3} lg={3} xl={3} style={{ textAlign: 'end' }} className="select-category-analysis">
-                    <Select onChange={handleChangeSelectMarket} defaultValue="11번가" >
+                    {/* <Select onChange={handleChangeSelectMarket} defaultValue="11번가" >
                         <Option value="11번가">11번가</Option>
                         <Option value="G마켓">G마켓</Option>
                         <Option value="쿠팡">쿠팡</Option>
@@ -407,7 +1046,12 @@ const CategoryAnalysis = (props) => {
                         <Option value="옥션">옥션</Option>
                         <Option value="스마트스토어">스마트스토어</Option>
                         <Option value="티몬">티몬</Option>
-                    </Select>
+                    </Select> */}
+                    <Dropdown overlay={menu}>
+                        <span className="ant-dropdown-link">
+                            {category}
+                        </span>
+                    </Dropdown>
                 </Col>
             </Row>
 
@@ -446,6 +1090,7 @@ const CategoryAnalysis = (props) => {
                                     lg={3}
                                     xl={3}
                                     style={{ textAlign: "center" }}
+                                    className="total-sale"
                                 >
                                     <div className="style-border">
                                         <img src={market.img} />
@@ -453,14 +1098,14 @@ const CategoryAnalysis = (props) => {
                                     </div>
                                     <p
                                         style={{
-                                            paddingTop: "2rem",
+                                            paddingTop: "1rem",
                                             fontWeight: "400",
                                             fontSize: "16px",
                                             color: "#495057"
                                         }}
                                     >
                                         {
-                                            totalSale.map(total => {
+                                            fakeTotalSale.map(total => {
                                                 if (total.market_name === market.market) {
                                                     return total.total
                                                 }
@@ -477,47 +1122,47 @@ const CategoryAnalysis = (props) => {
             <Row gutter={24}>
                 <Col span={24}>
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card title={titileCard("11번가")} bordered={false}>
-                                <RenderData data={topProduct.topcoupang} />
+                                <RenderData data={topcoupang} />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card title={titileCard("G마켓")} bordered={false}>
-                                <RenderData data={topProduct.topcoupang} />
+                                <RenderData data={topauction} />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card title={titileCard("쿠팡")} bordered={false}>
-                                <RenderData data={topProduct.topcoupang} />
+                                <RenderData data={topsmartstore} />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card title={titileCard("인터파크")} bordered={false}>
-                                <RenderData data={topProduct.topcoupang} />
+                                <RenderData data={topwemake} />
                             </Card>
                         </Col>
                     </Row>
 
                     <Row gutter={[16, 16]} style={{ marginTop: "1rem" }}>
-                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card title={titileCard("옥션")} bordered={false}>
-                                <RenderData data={topProduct.topcoupang} />
+                                <RenderData data={toptmon} />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card title={titileCard("스마트스토어")} bordered={false}>
-                                <RenderData data={topProduct.topcoupang} />
+                                <RenderData data={topinterpark} />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card title={titileCard("티몬")} bordered={false}>
-                                <RenderData data={topProduct.topcoupang} />
+                                <RenderData data={top11str} />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card title={titileCard("위메프")} bordered={false}>
-                                <RenderData data={topProduct.topcoupang} />
+                                <RenderData data={topgmarket} />
                             </Card>
                         </Col>
                     </Row>

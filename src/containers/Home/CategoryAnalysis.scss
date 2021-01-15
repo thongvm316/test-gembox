@@ -69,8 +69,8 @@
       top: 0px;
       right: -2px;
       width: 2px;
-      height: 130px;
-      background-color: #eff2f7;
+      height: 100px;
+      background-color: #f8f8fb;
     }
     &::before {
       content: '';
@@ -78,11 +78,54 @@
       top: 0px;
       left: -2px;
       width: 2px;
-      height: 130px;
-      background-color: #eff2f7;
+      height: 100px;
+      background-color: #f8f8fb;
+    }
+  }
+  .total-sale {
+    p { margin-bottom: 0; }
+  }
+
+  .select-category-analysis {
+    span {
+      font-weight: 500;
+      font-size: 12px;
+      color: #74788D;
+      background-color: #F3F3F9;
+      padding: 10px 25px;
+      border-radius: 6px;
+      width: fit-content;
+    }
+    .ant-dropdown-trigger{
+      &:hover {
+        background-color: #F3F3F9 !important;
+      }
     }
   }
 }
+
+// .ant-dropdown-menu .ant-dropdown-menu-vertical {
+//   overflow-y: scroll !important;
+//   height: 400px !important;
+// }
+
+// .ant-dropdown-menu-submenu-title:hover, .ant-dropdown-menu-item:hover {
+//   background-color: #F3F3F9 !important;
+// }
+
+// .ant-dropdown-menu-submenu-title {
+//   font-weight: 400 !important;
+//   font-size: 12px !important;
+//   color: #74788D !important;
+// }
+
+// .ant-dropdown-menu-item {
+//   div {
+//     font-weight: 400 !important;
+//     font-size: 12px !important;
+//     color: #74788D !important;
+//   }
+// }
 
 // Media query
 @media (max-width: 479px) {
@@ -102,6 +145,11 @@
     }
   }
 }
+
+
+
+
+
 
 
 

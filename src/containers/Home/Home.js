@@ -42,7 +42,7 @@ const Home = (props) => {
 
   const ListItem = (props) => {
     const value = props.value;
-    console.log(value);
+    // console.log(value);
     return (
       <>
         <ul className="ul-list">

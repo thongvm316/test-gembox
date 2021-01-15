@@ -29,210 +29,109 @@ Spent more time at evening
 
 ---
 At evening
-2. Logic with expire token
-4. Hover icon in sider
-5. Fix Method Call API like Easy FrontEnd -- https://www.youtube.com/watch?v=LXz_7WQpob4
-6. Style DatePicker Home Page - Chang month to Kr language in P2, P3
-7. Change old input search in all Page to search box in Select Comp
+1. Logic with expire token
+2. Hover icon in sider
+4. Style DatePicker Home Page - Chang month to Kr language in P2, P3
+5. Change old input search in all Page to search box in Select Comp
+6. Research - Lodash
+7. Problem with Sider when click
 ----
-today:
+Tom:
 3. Fix field input of ten/company in signup
-4. Think about chart: page 2 - page 3
-
-8. Page 2:
-    b. Map data - problem with stt
-    g. Add category to UI
-    
-    d. Spiner ---- Done
-    e. Select Market ---- Done
-    a. DatePicker - timestamp ---- Done
-    f. Solution to call api as async ---- Done
+4. Map fake data to chart: page 2 - page 3
+3. Fix Method Call API like Easy FrontEnd -- https://www.youtube.com/watch?v=LXz_7WQpob4
 
 
 
 
 
- <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market1} />
-                                <span className="style-market">11번가</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market2} />
-                                <span className="style-market">G마켓</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market3} />
-                                <span className="style-market">쿠팡</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market4} />
-                                <span className="style-market">인터파크</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market5} />
-                                <span className="style-market">옥션</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market6} />
-                                <span className="style-market">스마트스토어</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market7} />
-                                <span className="style-market">티몬</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
-                        <Col
-                            xs={12}
-                            sm={12}
-                            md={6}
-                            lg={3}
-                            xl={3}
-                            style={{ textAlign: "center" }}
-                        >
-                            <div className="style-border">
-                                <img src={Market8} />
-                                <span className="style-market">위메프</span>
-                            </div>
-                            <p
-                                style={{
-                                    paddingTop: "2rem",
-                                    fontWeight: "400",
-                                    fontSize: "16px",
-                                    color: "#495057"
-                                }}
-                            >
-                                1500
-                            </p>
-                        </Col>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
