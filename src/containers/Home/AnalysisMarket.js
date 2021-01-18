@@ -399,7 +399,7 @@ const AnalysisMarket = (props) => {
         try {
             setLoading(true);
             // const { data } = await axios.get(`${API_URL}/home/market?start=${datePicker[0]}&end=${datePicker[1]}&key=${selectMarket}`, config)
-            const { data } = await axios.get(`${API_URL}/home/market?start=1234567890&end=2345678901&key=쿠팡`, config)
+            const { data } = await axios.get(`${API_URL}/home/market?start=1234567890&end=2345678901&key=${selectMarket}`, config)
             const { data: { result } } = data;
             console.log(result)
             setData(result.total_sale)
