@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import axios from "axios";
 
@@ -118,6 +118,9 @@ const Home = (props) => {
 
   // Date Picker
   const [day, setDay] = useState([]);
+  const date = new Date();
+  const currentMonth = moment.utc(date).format('YYYY-MM');
+
   const toTimestamp = (strDate) => {
     var datum = Date.parse(strDate);
     return datum / 1000;
@@ -134,14 +137,15 @@ const Home = (props) => {
     setDay(startAndEndDay);
   }
 
-  // Get Data
+  /* Get Data */
+  const config = {
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+    }
+  };
+
   const getData = async () => {
-    const config = {
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-      }
-    };
     try {
       setLoading(true);
       // const { data } = await axios.get(`${API_URL}/home/revenue?start=${day[0]}&end=${day[1]}`, config)
@@ -149,17 +153,30 @@ const Home = (props) => {
         `${API_URL}/home/revenue?start=123456789&end=2134567890`,
         config
       );
-      const {
-        data: { result }
-      } = data;
-      console.log(result);
-      setDataTopBander(result.top_20_revenue);
-      setDataTopProduct(result.top_20_selling);
+      setDataTopBander(data.data.result.top_20_revenue);
+      setDataTopProduct(data.data.result.top_20_selling);
       setLoading(false);
     } catch (error) {
       console.log(error.response);
     }
   };
+
+  // Get data of current month
+  useEffect(async () => {
+    let startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD');
+    let endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD');
+    let allDateOfCurrentMonth = [toTimestamp(startOfMonth), toTimestamp(endOfMonth)];
+
+    try {
+      const { data } = await axios.get(`${API_URL}/home/revenue?start=123456789&end=2134567890`, config);
+      // const { data } = await axios.get(`${API_URL}/home/revenue?start=${allDateOfCurrentMonth[0]}&end=${allDateOfCurrentMonth[1]}`, config);
+      setDataTopBander(data.data.result.top_20_revenue);
+      setDataTopProduct(data.data.result.top_20_selling);
+    } catch (error) {
+      console.log(error.response)
+    }
+  }, [])
+
 
   return (
     <div className="home-page">
@@ -178,7 +195,7 @@ const Home = (props) => {
           집계 월
         </h1>
         <Col xl={20} className="date-picker">
-          <DatePicker onChange={onChange} bordered={false} picker="month" />
+          <DatePicker defaultValue={moment(currentMonth, 'YYYY-MM')} onChange={onChange} bordered={false} picker="month" />
           <Button
             style={{
               background: "#71c4d5",
