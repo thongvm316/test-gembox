@@ -11,13 +11,15 @@ const AdminMemberRequestDetail = (props) => {
     const { memberRequestDetail } = location.state;
     // console.log(memberRequestDetail)
 
-    const approve = async () => {
-        const config = {
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-            }
+    // Config for call API
+    const config = {
+        headers: {
+            "Accept": "application/json",
+            'Content-Type': 'application/json',
         }
+    }
+
+    const approve = async () => {
         const body = {
             action: "approve"
         }
@@ -31,12 +33,6 @@ const AdminMemberRequestDetail = (props) => {
     }
 
     const reject = async () => {
-        const config = {
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-            }
-        }
         const body = {
             action: "reject"
         }
@@ -51,12 +47,6 @@ const AdminMemberRequestDetail = (props) => {
     }
 
     const dowloadPdfFile = async () => {
-        const config = {
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-            }
-        }
         try {
             const { data } = await axios.get(`${API_URL}/admin/exportlicense?user_id=${memberRequestDetail.id}`, {
                 responseType: 'blob',
@@ -69,12 +59,6 @@ const AdminMemberRequestDetail = (props) => {
     }
 
     const resetPassword = async () => {
-        const config = {
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-            }
-        }
         const body = {
             user_id: memberRequestDetail.id
         }

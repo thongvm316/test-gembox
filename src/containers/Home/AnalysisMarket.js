@@ -387,7 +387,6 @@ const AnalysisMarket = (props) => {
             headers: {
                 'Accept': "application/json",
                 "Content-Type": "application/json",
-                "X-Auth-Token": `${localStorage.getItem('token-user')}`
             }
         };
 

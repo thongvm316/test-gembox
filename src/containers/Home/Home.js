@@ -138,9 +138,8 @@ const Home = (props) => {
   const getData = async () => {
     const config = {
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json",
-        "X-Auth-Token": `${localStorage.getItem("token-user")}`
       }
     };
     try {

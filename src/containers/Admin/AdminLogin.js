@@ -67,9 +67,8 @@ const AdminLogin = (props) => {
         try {
             const { data } = await axios.post(`${API_URL}/admin/logins`, body, config);
             console.log(data)
-            localStorage.removeItem('token-user')
+            localStorage.clear();
             localStorage.setItem('token', data.data.result.token);
-            setAuthToken(localStorage.token);
             history.push('/admin-member')
         } catch (error) {
             console.log(error.response)
