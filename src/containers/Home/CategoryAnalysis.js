@@ -6,7 +6,7 @@ import { API_URL } from '../../constants/appConstants'
 import GroupButton from "./GroupButton/GroupButton";
 import Footer from "../../components/Footer";
 import { DatePicker, Button, Row, Col, Card, Select, Spin, Dropdown, Menu } from "antd";
-import { MinusOutlined, LoadingOutlined, DownOutlined } from '@ant-design/icons';
+import { MinusOutlined, LoadingOutlined } from '@ant-design/icons';
 
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
@@ -244,35 +244,42 @@ const CategoryAnalysis = (props) => {
     const [dates, setDates] = useState([]);
     const [hackValue, setHackValue] = useState();
     const [value, setValue] = useState();
-    const dayPicker = [];
+    const [datePicker, setDatePicker] = useState([]);
 
     const toTimestamp = (strDate) => {
         var datum = Date.parse(strDate);
         return datum / 1000;
     }
 
-    if (value !== undefined) {
-        dayPicker.unshift(toTimestamp(moment.utc(value[1]._d).format('YYYY-MM-DD')))
-        dayPicker.unshift(toTimestamp(moment.utc(value[0]._d).format('YYYY-MM-DD')))
+    function onChange(date, dateString) {
+        // console.log(date, dateString);
+        let storeDay = [toTimestamp(dateString[0]), toTimestamp(dateString[1])];
+        setDatePicker(storeDay)
+        console.log(storeDay)
     }
 
-    const disabledDate = current => {
-        if (!dates || dates.length === 0) {
-            return false;
-        }
-        const tooLate = dates[0] && current.diff(dates[0], 'days') > 13;
-        const tooEarly = dates[1] && dates[1].diff(current, 'days') > 13;
-        return tooEarly || tooLate;
-    };
+    // if (value !== undefined) {
+    //     dayPicker.unshift(toTimestamp(moment.utc(value[1]._d).format('YYYY-MM-DD')))
+    //     dayPicker.unshift(toTimestamp(moment.utc(value[0]._d).format('YYYY-MM-DD')))
+    // }
 
-    const onOpenChange = open => {
-        if (open) {
-            setHackValue([]);
-            setDates([]);
-        } else {
-            setHackValue(undefined);
-        }
-    };
+    // const disabledDate = current => {
+    //     if (!dates || dates.length === 0) {
+    //         return false;
+    //     }
+    //     const tooLate = dates[0] && current.diff(dates[0], 'days') > 13;
+    //     const tooEarly = dates[1] && dates[1].diff(current, 'days') > 13;
+    //     return tooEarly || tooLate;
+    // };
+
+    // const onOpenChange = open => {
+    //     if (open) {
+    //         setHackValue([]);
+    //         setDates([]);
+    //     } else {
+    //         setHackValue(undefined);
+    //     }
+    // };
 
     /* For render total sale component */
     const markets = [
@@ -946,6 +953,7 @@ const CategoryAnalysis = (props) => {
     const getData = async () => {
         setLoading(true)
         console.log('Waiting for data.....')
+        console.log(`${API_URL}/home/category/totalsales?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`)
         await Promise.all([
             axios.get(`${API_URL}/home/category/totalsales?start=1234567890&end=2134567890&key=${category}`, config).then((value) => {
                 setTotalSale(value.data.data.result)
@@ -1007,12 +1015,14 @@ const CategoryAnalysis = (props) => {
                         </Col>
                         <Col xs={24} sm={10} md={10} lg={10} xl={6}>
                             <DatePicker.RangePicker
-                                value={hackValue || value}
-                                disabledDate={disabledDate}
-                                onCalendarChange={val => setDates(val)}
-                                onChange={val => setValue(val)}
-                                onOpenChange={onOpenChange}
-                                bordered={false}
+                                // value={hackValue || value}
+                                // disabledDate={disabledDate}
+                                // onCalendarChange={val => setDates(val)}
+                                // onChange={val => setValue(val)}
+                                // onOpenChange={onOpenChange}
+                                // bordered={false}
+                                // separator={<MinusOutlined />}
+                                onChange={onChange}
                                 separator={<MinusOutlined />}
                             />
                         </Col>
@@ -1037,15 +1047,6 @@ const CategoryAnalysis = (props) => {
                 </Col>
 
                 <Col xs={7} sm={4} md={3} lg={3} xl={3} style={{ textAlign: 'end' }} className="select-category-analysis">
-                    {/* <Select onChange={handleChangeSelectMarket} defaultValue="11번가" >
-                        <Option value="11번가">11번가</Option>
-                        <Option value="G마켓">G마켓</Option>
-                        <Option value="쿠팡">쿠팡</Option>
-                        <Option value="인터파크">인터파크</Option>
-                        <Option value="옥션">옥션</Option>
-                        <Option value="스마트스토어">스마트스토어</Option>
-                        <Option value="티몬">티몬</Option>
-                    </Select> */}
                     <Dropdown overlay={menu}>
                         <span className="ant-dropdown-link">
                             {category}
@@ -1104,7 +1105,7 @@ const CategoryAnalysis = (props) => {
                                         }}
                                     >
                                         {
-                                            fakeTotalSale.map(total => {
+                                            totalSale.map(total => {
                                                 if (total.market_name === market.market) {
                                                     return total.total
                                                 }

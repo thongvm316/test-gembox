@@ -163,37 +163,43 @@ const AnalysisMarket = (props) => {
 
     // DatePicker
     const [dates, setDates] = useState([]);
-    const [hackValue, setHackValue] = useState();
+    // const [hackValue, setHackValue] = useState();
     const [value, setValue] = useState();
-    const dayPicker = [];
+    const [datePicker, setDatePicker] = useState([]);
 
     const toTimestamp = (strDate) => {
         var datum = Date.parse(strDate);
         return datum / 1000;
     }
 
-    if (value !== undefined) {
-        dayPicker.unshift(toTimestamp(moment.utc(value[1]._d).format('YYYY-MM-DD')))
-        dayPicker.unshift(toTimestamp(moment.utc(value[0]._d).format('YYYY-MM-DD')))
+    function onChange(date, dateString) {
+        console.log(date, dateString);
+        let storeDay = [toTimestamp(dateString[0]), toTimestamp(dateString[1])];
+        setDatePicker(storeDay)
+        console.log(storeDay)
     }
 
-    const disabledDate = (current) => {
-        if (!dates || dates.length === 0) {
-            return false;
-        }
-        const tooLate = dates[0] && current.diff(dates[0], "days") > 13;
-        const tooEarly = dates[1] && dates[1].diff(current, "days") > 13;
-        return tooEarly || tooLate;
-    };
+    // if (value !== undefined) {
+    //     dayPicker.unshift(toTimestamp(moment.utc(value[1]._d).format('YYYY-MM-DD')))
+    //     dayPicker.unshift(toTimestamp(moment.utc(value[0]._d).format('YYYY-MM-DD')))
+    // }
+    // const disabledDate = (current) => {
+    //     if (!dates || dates.length === 0) {
+    //         return false;
+    //     }
+    //     const tooLate = dates[0] && current.diff(dates[0], "days") > 13;
+    //     const tooEarly = dates[1] && dates[1].diff(current, "days") > 13;
+    //     return tooEarly || tooLate;
+    // };
 
-    const onOpenChange = (open) => {
-        if (open) {
-            setHackValue([]);
-            setDates([]);
-        } else {
-            setHackValue(undefined);
-        }
-    };
+    // const onOpenChange = (open) => {
+    //     if (open) {
+    //         setHackValue([]);
+    //         setDates([]);
+    //     } else {
+    //         setHackValue(undefined);
+    //     }
+    // };
 
     // Option of chart
     const options = {
@@ -392,7 +398,7 @@ const AnalysisMarket = (props) => {
 
         try {
             setLoading(true);
-            // const { data } = await axios.get(`${API_URL}/home/market?start=${dayPicker[0]}&end=${dayPicker[1]}&key=${selectMarket}`, config)
+            // const { data } = await axios.get(`${API_URL}/home/market?start=${datePicker[0]}&end=${datePicker[1]}&key=${selectMarket}`, config)
             const { data } = await axios.get(`${API_URL}/home/market?start=1234567890&end=2345678901&key=쿠팡`, config)
             const { data: { result } } = data;
             console.log(result)
@@ -429,12 +435,13 @@ const AnalysisMarket = (props) => {
                         </Col>
                         <Col xs={24} sm={10} md={10} lg={10} xl={6}>
                             <DatePicker.RangePicker
-                                value={hackValue || value}
-                                disabledDate={disabledDate}
-                                onCalendarChange={val => setDates(val)}
-                                onChange={val => setValue(val)}
-                                onOpenChange={onOpenChange}
-                                bordered={false}
+                                // value={hackValue || value}
+                                // disabledDate={disabledDate}
+                                // onCalendarChange={val => setDates(val)}
+                                // onChange={val => setValue(val)}
+                                // onOpenChange={onOpenChange}
+                                // bordered={false}
+                                onChange={onChange}
                                 separator={<MinusOutlined />}
                             />
                         </Col>

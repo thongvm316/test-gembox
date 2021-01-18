@@ -104,28 +104,28 @@
   }
 }
 
-// .ant-dropdown-menu .ant-dropdown-menu-vertical {
-//   overflow-y: scroll !important;
-//   height: 400px !important;
-// }
+.ant-dropdown-menu .ant-dropdown-menu-vertical {
+  overflow-y: scroll !important;
+  height: 400px !important;
+}
 
-// .ant-dropdown-menu-submenu-title:hover, .ant-dropdown-menu-item:hover {
-//   background-color: #F3F3F9 !important;
-// }
+.ant-dropdown-menu-submenu-title:hover, .ant-dropdown-menu-item:hover {
+  background-color: #F3F3F9 !important;
+}
 
-// .ant-dropdown-menu-submenu-title {
-//   font-weight: 400 !important;
-//   font-size: 12px !important;
-//   color: #74788D !important;
-// }
+.ant-dropdown-menu-submenu-title {
+  font-weight: 400 !important;
+  font-size: 12px !important;
+  color: #74788D !important;
+}
 
-// .ant-dropdown-menu-item {
-//   div {
-//     font-weight: 400 !important;
-//     font-size: 12px !important;
-//     color: #74788D !important;
-//   }
-// }
+.ant-dropdown-menu-item {
+  div {
+    font-weight: 400 !important;
+    font-size: 12px !important;
+    color: #74788D !important;
+  }
+}
 
 // Media query
 @media (max-width: 479px) {
