@@ -6,17 +6,77 @@ import './ProductSearch.scss'
 import { API_URL } from '../../constants/appConstants'
 import axios from 'axios'
 import fileDownload from 'js-file-download';
+import { LineOutlined } from '@ant-design/icons';
+import * as _ from 'lodash';
 const { Option } = Select;
 
 const ProductSearch = (props) => {
-  // Of Modal Filter
+
+  const [params, setParams] = useState(
+    {
+      searchBy: '카테고리'
+    })
+
   const [visible, setVisible] = useState(false)
   const showModal = () => {
     setVisible(true)
   };
-  const handleOk = e => {
+  const handleOk = (values) => {
+
+    let paramsClone = _.cloneDeep(params);
+    paramsClone = {
+      ...paramsClone,
+      category: values.category,
+      markets: values.markets,
+      price: values.price,
+      reviews: values.reviews,
+      searchs: values.searchs,
+    }
+    setParams(paramsClone)
     setVisible(false)
+
+    getProducts(paramsClone)
   };
+
+  const getProducts = async (paramsData) => {
+    console.log(paramsData)
+
+    let marketParams = '';
+    _.each(paramsData.markets, (market, index) => {
+      marketParams += `&market[]=${market}`
+    })
+
+    const config = {
+      headers: {
+        "Accept": "application/json",
+        'Content-Type': 'application/json',
+        'X-Auth-Token': localStorage.getItem('token-user')
+      }
+    }
+    try {
+      const res = await axios.get(`
+        ${API_URL}/product/search?
+        minPrice=${paramsData.price[0]}
+        &maxPrice=${paramsData.price[1]}
+        &category=${paramsData.category}
+        ${marketParams}
+        &minReview=${paramsData.reviews[0]}
+        &maxReview=${paramsData.reviews[1]}
+        &minSale=${paramsData.searchs[0]}
+        &maxSale=${paramsData.searchs[1]}
+        &searchBy=${paramsData.searchBy}
+        &key=${paramsData.key}
+        &lastIndex=100
+      `, {
+        responseType: 'blob',
+      }, config)
+
+      console.log(res)
+    } catch (error) {
+      console.log(error.response.data)
+    }
+
+  }
   const handleCancel = e => {
     setVisible(false)
   };
@@ -35,8 +95,8 @@ const ProductSearch = (props) => {
 
   const renderName = (record) => {
     return (
-      <div style={{display: 'flex'}}>
-        <Button style={{marginRight: '5px'}} className="btn-light-orange">판매 사이트 가기</Button>
+      <div style={{ display: 'flex' }}>
+        <Button style={{ marginRight: '5px' }} className="btn-light-orange">판매 사이트 가기</Button>
         <div>{record.마켓명}</div>
       </div>
     )
@@ -85,18 +145,6 @@ const ProductSearch = (props) => {
   ];
 
   const data = [];
-  for (let i = 0; i < 46; i++) {
-    data.push({
-      key: i,
-      마켓명: `Edward King ${i}`,
-      벤더명: 32,
-      카테고리: `London, Park Lane no. ${i}`,
-      상품명: '유아완구(category)',
-      가격: '￦55,500',
-      리뷰: 140.244,
-      판매수: '1,000,000,000,000'
-    });
-  }
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -171,22 +219,35 @@ const ProductSearch = (props) => {
     </Select>
   );
 
+  const onChangeSearch = (e) => {
+    setParams({ ...params, key: e.target.value })
+  }
 
   return (
     <div className="product-search">
       <Row className="card-border" style={{ marginBottom: '5rem' }}>
         <Col span={24} className="wraper-actions">
           <div>
-            <Button className="main-btn-style" onClick={showModal}>필터</Button>
+            <Button className="main-btn-style border-radius-6" onClick={showModal}>필터</Button>
             {/* <Button onClick={showModalTwo}>선택된 항목 그래프 비교</Button> */}
           </div>
-          <div>
-            <RangePicker onChange={onChange} style={{ marginRight: '5px' }} />
-            <Button className="btn-light-blue" onClick={getDateFilter} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
+          <div className="filter-date">
+            <Space>
+              <DatePicker onChange={onChange} />
+              <LineOutlined style={{ width: '40px', height: '8px', color: '#6A7187' }} />
+              <DatePicker onChange={onChange} />
+
+              <Button className="btn-light-blue  border-radius-6" onClick={getDateFilter} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
+            </Space>
           </div>
-          <div style={{ display: 'flex' }}>
-            <Input style={{ marginRight: '5px' }} addonAfter={selectAfter} defaultValue="카테고리" />
-            <Button className="btn-light-blue" onClick={getExcelFile} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
+          <div className="input-product-search" style={{ display: 'flex' }}>
+            <Input style={{ marginRight: '5px' }} placeholder="Search" onChange={onChangeSearch} />
+            <Select defaultValue="카테고리" className="select-after">
+              <Option value="카테고리">카테고리</Option>
+              <Option value="밴더명">밴더명</Option>
+              <Option value="제품명">제품명</Option>
+            </Select>
+            <Button className="btn-light-blue border-radius-6" onClick={getExcelFile} style={{ backgroundColor: '#71c4d5', border: 'none', marginLeft: '10px' }} type="primary">EXCEL</Button>
           </div>
         </Col>
       </Row>
@@ -197,6 +258,7 @@ const ProductSearch = (props) => {
             columns={columns}
             dataSource={data}
             scroll={{ x: 1300 }}
+            pagination={false}
             onRow={(record, rowIndex) => {
               return {
                 onClick: event => {
@@ -217,17 +279,9 @@ const ProductSearch = (props) => {
         onCancel={handleCancel}
         width={800}
         className='style-btn'
-        footer={[
-          <Button key="back" onClick={handleCancel}>
-            Cancel
-          </Button>,
-
-          <Button style={{ backgroundColor: '#f4f2ff', border: 'none', color: '#6b5db0', fontWeight: 700 }} key="submit" type="primary" onClick={handleOk}>
-            OK
-          </Button>
-        ]}
+        footer={false}
       >
-        <Filter />
+        <Filter onOk={(values) => handleOk(values)} />
       </Modal>
 
       <Modal

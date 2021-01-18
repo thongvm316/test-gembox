@@ -1,54 +1,104 @@
-import React from 'react'
-import { Checkbox, Row, Col, Slider, Button, Input, Select, Option } from 'antd'
-import './Filter.scss'
+import React, { useState } from 'react'
+import { Checkbox, Row, Col, Slider, Button, Input, Select } from 'antd'
 
-const Filter = () => {
-    function onChange(checkedValues) {
-        console.log('checked = ', checkedValues);
+import './Filter.scss'
+const { Option } = Select;
+
+
+const Filter = (props) => {
+
+    const [price, setPrice] = useState([50000, 7500000])
+
+    const [filter, setFilter] = useState(
+        {
+            category: '11번가',
+            price: [50000, 7500000],
+            reviews: [],
+            searchs: []
+        });
+
+
+    function onChangeMarket(value) {
+        setFilter({ ...filter, markets: value })
     }
 
     function onChangeSlider(value) {
-        console.log('onChange: ', value);
-      }
-      
-    function onAfterChange(value) {
-    console.log('onAfterChange: ', value);
+        setFilter({ ...filter, price: value })
     }
 
+    const handleChangeCategory = (value) => {
+        setFilter({ ...filter, category: value })
+    }
+
+    const onSave = () => {
+        props.onOk(filter)
+    }
+
+    const minReviews = (e) => {
+        const review = filter.reviews;
+        review[0] = e.target.value
+        setFilter({...filter, reviews: review})
+    }
+
+    const maxReviews = (e) => {
+        const review = filter.reviews;
+        review[1] = e.target.value
+        setFilter({...filter, reviews: review})
+    }
+
+    const minSearchs = (e) => {
+        const search = filter.searchs;
+        search[0] = e.target.value
+        setFilter({...filter, searchs: search})
+    }
+
+    const maxSearchs = (e) => {
+        const search = filter.searchs;
+        search[1] = e.target.value
+        setFilter({...filter, searchs: search})
+    }
     return (
         <div className='modal'>
             <Row className='market'>
                 <Col span={4}><h4>마켓</h4></Col>
                 <Col span={20}>
-                    <Row>
-                        <Col md={5}>
-                            <Checkbox onChange={onChange}>11번가</Checkbox>
-                        </Col>
-                        <Col md={5}>
-                            <Checkbox>G마켓</Checkbox>
-                        </Col>
-                        <Col md={5}>
-                            <Checkbox>쿠팡</Checkbox>
-                        </Col>
-                        <Col md={5}>
-                            <Checkbox>위메프</Checkbox>
-                        </Col>
-                        <Col md={5}>
-                            <Checkbox>티몬</Checkbox>
-                        </Col>
-                        <Col md={5}>
-                            <Checkbox>인터파크</Checkbox>
-                        </Col>
-                        <Col md={5}>
-                            <Checkbox>스마트스토어</Checkbox>
-                        </Col>
-                        <Col md={5}>
-                            <Checkbox>잼토이즈</Checkbox>
-                        </Col>
-                        <Col md={4}>
-                            <Checkbox>전제 선택</Checkbox>
-                        </Col>
-                    </Row>
+                    <Checkbox.Group onChange={onChangeMarket}>
+                        <Row>
+                            <Col md={6}>
+                                <Checkbox value="11번가">11번가</Checkbox>
+                            </Col>
+                            <Col md={6}>
+                                <Checkbox value="G마켓">G마켓</Checkbox>
+                            </Col>
+                            <Col md={6}>
+                                <Checkbox value="쿠팡">쿠팡</Checkbox>
+                            </Col>
+                            <Col md={6}>
+                                <Checkbox value="위메프">위메프</Checkbox>
+                            </Col>
+                            <Col md={6}>
+                                <Checkbox value="티몬">티몬</Checkbox>
+                            </Col>
+                            <Col md={6}>
+                                <Checkbox value="인터파크">인터파크</Checkbox>
+                            </Col>
+                            <Col md={6}>
+                                <Checkbox value="스마트스토어">스마트스토어</Checkbox>
+                            </Col>
+                            <Col md={6}>
+                                <Checkbox value="전제 선택">전제 선택</Checkbox>
+                            </Col>
+                        </Row>
+                    </Checkbox.Group>
+                </Col>
+            </Row>
+
+            <Row style={{ marginTop: '2rem' }}>
+                <Col span={4}><h4>카테고리</h4></Col>
+                <Col>
+                    <Select defaultValue="11번가" onChange={handleChangeCategory}>
+                        <Option value="11번가">11번가</Option>
+                    </Select>
                 </Col>
             </Row>
 
@@ -56,17 +106,32 @@ const Filter = () => {
                 <Col span={4}><h4>가격</h4></Col>
                 <Col span={20} >
                     <Row>
-                        <Col span={1}><h5>₩ 0</h5></Col>
+                        <Col span={1}>
+                            <div>₩ 0</div>
+                        </Col>
                         <Col span={19}>
                             <Slider
+                                min={0}
+                                max={10000000}
                                 range
-                                defaultValue={[20, 50]}
+                                defaultValue={[filter.price[0], filter.price[1]]}
                                 onChange={onChangeSlider}
-                                onAfterChange={onAfterChange}
-                            />     
+                                onAfterChange={onChangeSlider}
+                            />
                         </Col>
-                        <Col span={4}>₩ 10,000,000</Col>
-                    </Row>           
+                        <Col span={4}>
+                            <div>₩ 10,000,000</div>
+                        </Col>
+
+                        <Col span={4}>
+                            <div style={{ color: '#42ABBC' }}>₩ {price[0]}</div>
+                        </Col>
+                        <Col span={16}>
+                        </Col>
+                        <Col span={4}>
+                            <div style={{ color: '#42ABBC' }}>₩ {price[1]}</div>
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
 
@@ -75,41 +140,7 @@ const Filter = () => {
                 <Col span={20}>
                     <Row>
                         <Input.Group compact>
-                            <Input style={{ width: 150, textAlign: 'center' }} suffix='최소' />
-                            <Input
-                                className="site-input-split"
-                                style={{
-                                width: 30,
-                                borderLeft: 0,
-                                borderRight: 0,
-                                pointerEvents: 'none',
-                                backgroundColor: '#f4f2ff !important',
-                                border: 'none',
-                                margin: '0 1rem'
-                                }}
-                                placeholder="~"
-                                disabled
-                            />
-                            <Input
-                                className="site-input-right"
-                                style={{
-                                width: 150,
-                                textAlign: 'center',
-                                }}
-                                suffix='최소'
-                                
-                            />
-                        </Input.Group>
-                    </Row>
-                </Col>
-            </Row>
-
-            <Row className='sale-search' style={{ marginBottom: '1rem' }}>
-                <Col span={4}><h4>판매수 검색</h4></Col>
-                <Col span={20}>
-                    <Row>
-                        <Input.Group compact>
-                            <Input style={{ width: 150, textAlign: 'center' }} suffix='최소'/>
+                            <Input onChange={minReviews} style={{ width: 150, textAlign: 'center' }} suffix='최소' />
                             <Input
                                 className="site-input-split"
                                 style={{
@@ -125,10 +156,10 @@ const Filter = () => {
                                 disabled
                             />
                             <Input
-                                className="site-input-right"
+                                onChange={maxReviews}
                                 style={{
-                                width: 150,
-                                textAlign: 'center',
+                                    width: 150,
+                                    textAlign: 'center',
                                 }}
                                 suffix='최소'
                             />
@@ -137,19 +168,60 @@ const Filter = () => {
                 </Col>
             </Row>
 
-            <Row className='jam-factory-average'>
+            <Row className='sale-search' style={{ marginBottom: '1rem' }}>
+                <Col span={4}><h4>판매수 검색</h4></Col>
+                <Col span={20}>
+                    <Row>
+                        <Input.Group compact>
+                            <Input onChange={minSearchs} style={{ width: 150, textAlign: 'center' }} suffix='최소' />
+                            <Input
+                                className="site-input-split"
+                                style={{
+                                    width: 30,
+                                    borderLeft: 0,
+                                    borderRight: 0,
+                                    pointerEvents: 'none',
+                                    backgroundColor: '#f4f2ff !important',
+                                    border: 'none',
+                                    margin: '0 1rem'
+                                }}
+                                placeholder="~"
+                                disabled
+                            />
+                            <Input
+                                onChange={maxSearchs}
+                                className="site-input-right"
+                                style={{
+                                    width: 150,
+                                    textAlign: 'center',
+                                }}
+                                suffix='최소'
+                            />
+                        </Input.Group>
+                    </Row>
+                </Col>
+            </Row>
+
+            <Row>
+                <Col span={24} style={{ textAlign: 'right' }}>
+                    <Button onClick={onSave}>확인</Button>
+
+                </Col>
+            </Row>
+
+            {/* <Row className='jam-factory-average'>
                 <Col span={4}>
                     <h4>잼팩토리 평균</h4>
                 </Col>
                 <Col span={20}>
-                    <Button className='style-btn'>잼팩토리 평균판매 건 보다 높은 상품 보기 </Button> {/* May be other component, check after have sb */}
-                    <Button className='style-btn'>잼팩토리 평균판매 건 보다 낮은 상품 보기 </Button> {/* May be other component, check after have sb */}
+                    <Button className='style-btn'>잼팩토리 평균판매 건 보다 높은 상품 보기 </Button>
+                    <Button className='style-btn'>잼팩토리 평균판매 건 보다 낮은 상품 보기 </Button>
                 </Col>
-            </Row>
+            </Row> */}
 
-            <Row className='modal-btn' style={{ justifyContent: 'center' }}>
+            {/* <Row className='modal-btn' style={{ justifyContent: 'center' }}>
                 <Col style={{ padding: '1rem'}} span={3}><Button  className='style-btn' >적용하기</Button></Col>
-            </Row>
+            </Row> */}
         </div>
     )
 }

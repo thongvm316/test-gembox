@@ -65,7 +65,7 @@ const Login = (props) => {
             const { data } = await axios.post(`${API_URL}/logins`, body, config);
             console.log(data)
             localStorage.setItem('token-user', data.data.result.token);
-            setAuthToken(localStorage.getItem('token-user '))
+            setAuthToken(localStorage.getItem('token-user'))
             history.push('/home')
         } catch (error) {
             console.log(error.response)

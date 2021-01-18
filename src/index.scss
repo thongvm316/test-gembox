@@ -302,3 +302,22 @@ code {
     }
   }
 }
+
+
+//Produc Search
+.border-radius-6{
+  border-radius: 6px !important;
+}
+
+.input-product-search .ant-input{
+  border-top-left-radius: 6px !important;
+  border-bottom-left-radius: 6px !important;
+  border-right: none !important;
+  margin: 0!important;
+}
+
+.input-product-search .ant-select-selector{
+  border-top-right-radius: 6px !important;
+  border-bottom-right-radius: 6px !important;
+  background-color: #EFF2F7 !important;
+}
