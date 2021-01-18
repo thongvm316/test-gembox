@@ -123,7 +123,7 @@ const Home = (props) => {
     return datum / 1000;
   };
 
-  function onChange(dateString) {
+  function onChange(date, dateString) {
     const startDay = dateString.concat("-01");
     const allDayInMonth = moment(dateString, "YYYY-MM").daysInMonth();
     const endDay = dateString.concat(`-${allDayInMonth}`);
@@ -138,16 +138,15 @@ const Home = (props) => {
   const getData = async () => {
     const config = {
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json",
-        "X-Auth-Token": `${localStorage.getItem("token-user")}`
       }
     };
     try {
       setLoading(true);
       // const { data } = await axios.get(`${API_URL}/home/revenue?start=${day[0]}&end=${day[1]}`, config)
       const { data } = await axios.get(
-        `${API_URL}/home/revenue?start=1606780800&end=1609372800`,
+        `${API_URL}/home/revenue?start=123456789&end=2134567890`,
         config
       );
       const {

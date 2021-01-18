@@ -7,9 +7,6 @@ import Footer from '../components/Footer'
 import './Login.scss'
 import { EyeOutlined } from '@ant-design/icons';
 
-import setAuthToken from '../utils/setAuthToken'
-
-
 const layout = {
     labelCol: {
         span: 8,
@@ -27,8 +24,6 @@ const tailLayout = {
 };
 
 const FormItem = Form.Item;
-
-
 
 const Login = (props) => {
     const { history } = props;
@@ -64,8 +59,12 @@ const Login = (props) => {
         try {
             const { data } = await axios.post(`${API_URL}/logins`, body, config);
             console.log(data)
+            localStorage.clear();
             localStorage.setItem('token-user', data.data.result.token);
+<<<<<<< HEAD
             setAuthToken(localStorage.getItem('token-user'))
+=======
+>>>>>>> e4d6d5bac6f47f3d8ba356706f6a0fe89c548f13
             history.push('/home')
         } catch (error) {
             console.log(error.response)

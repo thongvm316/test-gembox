@@ -17,38 +17,26 @@ Fix:
 "eject": "react-scripts eject",
 "heroku-postbuild": "npm run build"
 }
-
----
-
-Plan:
-Home: 5days (7 8 9 11 15)
-Search vender: 3days (16 18 19)
-My page: 3days (20 21 22 25)
-
-Spent more time at evening
-
 ---
 At evening
-1. Logic with expire token
-2. Hover icon in sider
-4. Style DatePicker Home Page - Chang month to Kr language in P2, P3
-5. Change old input search in all Page to search box in Select Comp
-6. Research - Lodash
-7. Problem with Sider when click
-----
-Tom:
-3. Fix field input of ten/company in signup
+2. Hover icon in sider - Problem with Sider when click
+3. Style DatePicker Home Page - Chang month to Kr language in P2, P3
 4. Map fake data to chart: page 2 - page 3
-3. Fix Method Call API like Easy FrontEnd -- https://www.youtube.com/watch?v=LXz_7WQpob4
+5. Fix Method Call API like Easy FrontEnd -- https://www.youtube.com/watch?v=LXz_7WQpob4
+
+Research - Lodash // Code with less err in solution of EasyFrontEnd
+----
+Setting Page: 
+1. Fix field input of ten/company in signup
+2. UI
+3. Call API
 
 
-
-
-
-
-
-
-
+----
+today: 
+My Sale:
+1. UI - Change old input search in My Sale Page
+2. Call API
 
 
 

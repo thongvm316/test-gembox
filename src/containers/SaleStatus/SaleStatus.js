@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Row, Col, Button, Input, DatePicker, Space, Table, Card } from 'antd';
 import './SaleStatus.scss'
 
+import Card3 from '../../images/Card_3.png'
+
 const { RangePicker } = DatePicker;
 
 const SaleStatus = () => {
