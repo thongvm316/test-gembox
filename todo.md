@@ -20,7 +20,7 @@ Fix:
 ---
 At evening
 2. Hover icon in sider - Problem with Sider when click
-3. Style DatePicker Home Page - Chang month to Kr language in P2, P3
+3. Style DatePicker Home Page - Chang month to Kr language in P2, P3 - Show default month in CategoryAn
 4. Map fake data to chart: page 2 - page 3
 5. Fix Method Call API like Easy FrontEnd -- https://www.youtube.com/watch?v=LXz_7WQpob4
 
@@ -30,7 +30,6 @@ Setting Page:
 1. Fix field input of ten/company in signup
 2. UI
 3. Call API
-
 
 ----
 today: 
