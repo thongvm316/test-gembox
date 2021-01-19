@@ -5,14 +5,6 @@ import { API_URL } from '../../../constants/appConstants'
 import axios from 'axios'
 import './AdminMember.scss'
 
-// import setAuthToken from '../../../utils/setAuthToken'
-// if (localStorage.token) {
-//     setAuthToken(localStorage.token);
-// }
-
-// console.log(localStorage.getItem('token'), localStorage.getItem('token-user'))
-
-
 const AdminMember = (props) => {
     const [data, setData] = useState(null)
 
@@ -47,6 +39,7 @@ const AdminMember = (props) => {
             headers: {
                 "Accept": "application/json",
                 'Content-Type': 'application/json',
+                'X-Auth-Token': `${localStorage.getItem('token')}`
             }
         }
         try {

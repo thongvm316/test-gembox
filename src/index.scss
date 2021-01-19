@@ -64,6 +64,10 @@ code {
   color: #1890ff;
 }
 
+.ant-layout-content {
+  min-height: 100vh !important;
+}
+
 .app-menu-item {
   display: flex;
   align-items: center;
