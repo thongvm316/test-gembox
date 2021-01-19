@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
-import moment from 'moment'
+import React, { useState } from "react";
 import axios from 'axios'
 import { API_URL } from '../../constants/appConstants'
 
 import GroupButton from "./GroupButton/GroupButton";
 import Footer from "../../components/Footer";
-import { DatePicker, Button, Row, Col, Card, Select, Spin, Dropdown, Menu } from "antd";
+import { DatePicker, Button, Row, Col, Card, Spin, Dropdown, Menu } from "antd";
 import { MinusOutlined, LoadingOutlined } from '@ant-design/icons';
 
 import Highcharts from "highcharts/highstock";
@@ -21,47 +20,10 @@ import Market7 from "../../images/market7.png";
 import Market8 from "../../images/market8.png";
 
 import "./CategoryAnalysis.scss";
-const { Option } = Select;
 
 const CategoryAnalysis = (props) => {
     const [loading, setLoading] = useState(false);
-    const [selectMarket, setSelectMarket] = useState('11번가');
     const [totalSale, setTotalSale] = useState([]);
-    const fakeTotalSale = [
-        {
-            "market_name": "11번가",
-            "total": "1500"
-        },
-        {
-            "market_name": "G마켓",
-            "total": "2000"
-        },
-        {
-            "market_name": "쿠팡",
-            "total": "1000"
-        },
-        {
-            "market_name": "인터파크",
-            "total": "3000"
-        },
-        {
-            "market_name": "옥션",
-            "total": "3500"
-        },
-        {
-            "market_name": "스마트스토어",
-            "total": "1200"
-        },
-        {
-            "market_name": "티몬",
-            "total": "4000"
-        },
-        {
-            "market_name": "위메프",
-            "total": "4300"
-        }
-    ]
-
     const [topProduct, setTopProduct] = useState({
         topcoupang: [],
         topauction: [],
@@ -72,12 +34,6 @@ const CategoryAnalysis = (props) => {
         top11str: [],
         topgmarket: []
     })
-    console.log(topProduct);
-
-    /* Select Market */
-    function handleChangeSelectMarket(value) {
-        setSelectMarket(value)
-    }
 
     /* Render Data */
     let id = [1, 1, 1, 1, 1, 1, 1, 1];
@@ -241,9 +197,6 @@ const CategoryAnalysis = (props) => {
     );
 
     /* DatePicker */
-    const [dates, setDates] = useState([]);
-    const [hackValue, setHackValue] = useState();
-    const [value, setValue] = useState();
     const [datePicker, setDatePicker] = useState([]);
 
     const toTimestamp = (strDate) => {
@@ -257,29 +210,6 @@ const CategoryAnalysis = (props) => {
         setDatePicker(storeDay)
         console.log(storeDay)
     }
-
-    // if (value !== undefined) {
-    //     dayPicker.unshift(toTimestamp(moment.utc(value[1]._d).format('YYYY-MM-DD')))
-    //     dayPicker.unshift(toTimestamp(moment.utc(value[0]._d).format('YYYY-MM-DD')))
-    // }
-
-    // const disabledDate = current => {
-    //     if (!dates || dates.length === 0) {
-    //         return false;
-    //     }
-    //     const tooLate = dates[0] && current.diff(dates[0], 'days') > 13;
-    //     const tooEarly = dates[1] && dates[1].diff(current, 'days') > 13;
-    //     return tooEarly || tooLate;
-    // };
-
-    // const onOpenChange = open => {
-    //     if (open) {
-    //         setHackValue([]);
-    //         setDates([]);
-    //     } else {
-    //         setHackValue(undefined);
-    //     }
-    // };
 
     /* For render total sale component */
     const markets = [
@@ -1015,13 +945,6 @@ const CategoryAnalysis = (props) => {
                         </Col>
                         <Col xs={24} sm={10} md={10} lg={10} xl={6}>
                             <DatePicker.RangePicker
-                                // value={hackValue || value}
-                                // disabledDate={disabledDate}
-                                // onCalendarChange={val => setDates(val)}
-                                // onChange={val => setValue(val)}
-                                // onOpenChange={onOpenChange}
-                                // bordered={false}
-                                // separator={<MinusOutlined />}
                                 onChange={onChange}
                                 separator={<MinusOutlined />}
                             />

@@ -1,179 +1,244 @@
-import React, { useState } from 'react'
-import { Row, Col, Button, Input, DatePicker, Space, Table, Card } from 'antd';
+import React, { useState, useEffect } from 'react'
+import { Row, Col, Button, Input, DatePicker, Space, Table, Spin } from 'antd';
+import { MinusOutlined, LoadingOutlined } from '@ant-design/icons';
+
+import axios from 'axios';
+import { API_URL } from '../../constants/appConstants'
+
+import SaleStatus1 from '../../images/SaleStatus1.png'
+import SaleStatus2 from '../../images/SaleStatus2.png'
+import SaleStatus3 from '../../images/SaleStatus3.png'
+import SaleStatus4 from '../../images/SaleStatus4.png'
+
+import Market1 from "../../images/market1.png";
+import Market2 from "../../images/market2.png";
+import Market3 from "../../images/market3.png";
+import Market4 from "../../images/market4.png";
+import Market5 from "../../images/market5.png";
+import Market6 from "../../images/market6.png";
+import Market7 from "../../images/market7.png";
+import Market8 from "../../images/market8.png";
 import './SaleStatus.scss'
 
-import Card3 from '../../images/Card_3.png'
-
-const { RangePicker } = DatePicker;
 
 const SaleStatus = () => {
 
     // Table
-    const [countSelected, setCountSelected] = useState(0)
-
     const columns = [
         {
             title: '상품명',
-            dataIndex: '마켓명',
+            dataIndex: 'name',
+            render: (text) => <p style={{ fontWeight: '500' }}>{text}</p>,
         },
         {
             title: '카테고리',
-            dataIndex: '벤더명',
+            dataIndex: 'category_tag',
         },
         {
             title: '마켓명',
-            dataIndex: '카테고리',
+            dataIndex: 'market_name',
         },
         {
             title: '가격',
-            dataIndex: '상품명',
+            dataIndex: 'seller_price',
+            render: (text) => <p>￦ {text}</p>,
         },
         {
             title: '리뷰',
-            dataIndex: '가격',
+            dataIndex: 'review',
         },
         {
             title: '판매수',
-            dataIndex: '리뷰',
+            dataIndex: 'sold',
         },
     ];
 
-    const data = [];
-    for (let i = 0; i < 46; i++) {
-        data.push({
-            key: i,
-            마켓명: `Edward King ${i}`,
-            벤더명: 32,
-            카테고리: `London, Park Lane no. ${i}`,
-            상품명: '유아완구(category)',
-            가격: '￦55,500',
-            리뷰: 140.244,
-            판매수: '1,000,000,000,000'
-        });
+    /* DatePicker */
+    const [datePicker, setDatePicker] = useState([]);
+
+    const toTimestamp = (strDate) => {
+        var datum = Date.parse(strDate);
+        return datum / 1000;
     }
 
-    const onSearch = (e) => {
-        console.log(e)
-    }
-
-    const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-            setCountSelected(selectedRows.length)
-
-        },
-        onSelect: (record, selected, selectedRows) => {
-            console.log(record, selected, selectedRows);
-        },
-        onSelectAll: (selected, selectedRows, changeRows) => {
-            console.log(selected, selectedRows, changeRows);
-            setCountSelected(selectedRows.length)
-        },
-    };
-    const [checkStrictly, setCheckStrictly] = useState(false);
-
-    // DatePicker
-    const { RangePicker } = DatePicker;
     function onChange(date, dateString) {
-        // console.log('Formatted Selected Time: ', dateString);
-        // console.log(date)
+        let storeDay = [toTimestamp(dateString[0]), toTimestamp(dateString[1])];
+        setDatePicker(storeDay)
     }
 
-    function onOk(value) {
-        console.log('onOk: ', value);
+    /* Get Data */
+    // Note: Lazy load and add lastindex - Redux
+    const [valueOfSearchInput, setValueOfSearchInput] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [dataSearch, setDataSearch] = useState([]);
+    const [data, setData] = useState({
+        totalProductCount: [],
+        totalReviewCount: [],
+        saleCountRank: [],
+        saleRank: [],
+    })
+    console.log(data);
+
+    const getValueOfInputSearch = (e) => {
+        setValueOfSearchInput(e.target.value);
     }
+
+    const lastIndex = 0;
+
+    const config = {
+        headers: {
+            'Accept': "application/json",
+            'Content-Type': "application/json",
+            'X-Auth-Token': `${localStorage.getItem('token-user')}`
+        }
+    };
+
+    const getDataSearch = async () => {
+        try {
+            setLoading(true);
+            // const { data } = await axios.get(`${API_URL}/myproduct/search?start=${datePicker[0]}&end=${datePicker[1]}&lastIndex=${lastIndex}&key=${valueOfSearchInput}`, config)
+            const { data } = await axios.get(`${API_URL}/myproduct/search?start=1234567890&end=2134567890&lastIndex=${lastIndex}&key=${valueOfSearchInput}`, config);
+            setDataSearch(data.data.result.product);
+            setLoading(false);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+
+    useEffect(async () => {
+        console.log('Waiting for data...');
+        await Promise.all([
+            axios.get(`${API_URL}/myproduct/productcount`, config).then((value) => {
+                setData(prevState => ({ ...prevState, totalProductCount: value.data.data.result }))
+            }).catch(error => console.log(error.response)),
+
+            axios.get(`${API_URL}/myproduct/reviewinfo`, config).then((value) => {
+                setData(prevState => ({ ...prevState, totalReviewCount: value.data.data.result }))
+            }).catch(error => console.log(error.response)),
+
+            axios.get(`${API_URL}/myproduct/saleinfo`, config).then((value) => {
+                setData(prevState => ({ ...prevState, saleCountRank: value.data.data.result }))
+            }).catch(error => console.log(error.response)),
+
+            axios.get(`${API_URL}/myproduct/revenueinfo`, config).then((value) => {
+                setData(prevState => ({ ...prevState, saleRank: value.data.data.result }))
+            }).catch(error => console.log(error.response)),
+        ])
+    }, [])
+
+    /*  For render market of user set */
+    const markets = [
+        { market: '11번가', img: Market1 },
+        { market: 'G마켓', img: Market2 },
+        { market: '쿠팡', img: Market3 },
+        { market: '인터파크', img: Market4 },
+        { market: '옥션', img: Market5 },
+        { market: '스마트스토어', img: Market6 },
+        { market: '티몬', img: Market7 },
+        { market: '위메프', img: Market8 }
+    ]
 
     return (
         <div className="sale-status">
-
-            <Row className='card-style' gutter={[24, 24]} style={{ width: '85vw', margin: '0 auto 70px auto' }}>
-                <Col xs={24} sm={24} md={12} xl={6} className='col-one'>
-                    <Card style={{ width: '100%', height: 150 }}>
-                        <Row>
-                            <Col className='one-in-col-one'>
-                                <p>총 리뷰</p>
-                            </Col>
-                            <Col className='two-in-col-one'>
-                                <p>56위</p>
-                            </Col>
-                        </Row>
-                    </Card>
+            <Row justify="space-around">
+                <Col sm={24} md={11} lg={11} xl={5} className="card-item-border card-item">
+                    <div className="card-item-text">
+                        <h2 style={{ color: '#2A4EAA', marginBottom: '0' }}>총 상품 수</h2>
+                        <h2 style={{ color: '#6E798C', fontSize: '36px', fontWeight: '700' }}>{data.totalProductCount}개</h2>
+                    </div>
+                    <div className="card-item-icon">
+                        <img src={SaleStatus1} />
+                    </div>
                 </Col>
-                <Col xs={24} sm={24} md={12} xl={6} className='col-two'>
-                    <Card style={{ width: '100%', height: 150 }}>
-                        <Row>
-                            <Col className='one-in-col-two'>
-                                <p>총 리뷰</p>
-                            </Col>
-                            <Col className='two-in-col-two'>
-                                <p>56위</p>
-                                <p>5,050,505,050 건</p>
-                            </Col>
-                        </Row>
-                    </Card>
+                <Col sm={24} md={11} lg={11} xl={5} className="card-item-border card-item">
+                    <div className="card-item-text">
+                        <h2 style={{ color: '#2A4EAA', marginBottom: '0' }}>총 리뷰</h2>
+                        <h2 style={{ color: '#6E798C', fontSize: '36px', fontWeight: '700', marginBottom: '0' }}>{data.totalReviewCount.review_rank}위</h2>
+                        <p style={{ fontSize: '16px', fontWeight: '500', color: '#495057' }}>{data.totalReviewCount.total_review}건</p>
+                    </div>
+                    <div className="card-item-icon">
+                        <img src={SaleStatus2} />
+                    </div>
                 </Col>
-                <Col xs={24} sm={24} md={12} xl={6} className='col-three'>
-                    <Card style={{ width: '100%', height: 150 }}>
-                        <Row>
-                            <Col className='one-in-col-three'>
-                                <p>총 리뷰</p>
-                            </Col>
-                            <Col className='two-in-col-three'>
-                                <p>56위</p>
-                            </Col>
-                        </Row>
-                    </Card>
+                <Col sm={24} md={11} lg={11} xl={5} className="card-item-border card-item">
+                    <div className="card-item-text">
+                        <h2 style={{ color: '#2A4EAA', marginBottom: '0' }}>종합 판매순위</h2>
+                        <h2 style={{ color: '#6E798C', fontSize: '36px', fontWeight: '700' }}>{data.saleCountRank.sale_rank}위</h2>
+                    </div>
+                    <div className="card-item-icon">
+                        <img src={SaleStatus3} />
+                    </div>
                 </Col>
-                <Col xs={24} sm={24} md={12} xl={6} className='col-four'>
-                    <Card style={{ width: '100%', height: 150 }}>
-                        <Row>
-                            <Col className='one-in-col-four'>
-                                <p>총 리뷰</p>
-                            </Col>
-                            <Col className='two-in-col-four'>
-                                <p>56위</p>
-                                <p>5,050,505,050 건</p>
-                            </Col>
-                        </Row>
-                    </Card>
-                </Col>
-            </Row>
-
-            <Row className='bar-style'>
-                <Col sm={24} md={24} lg={24} xl={24}>
-                    <div className="info-search card-border">
-                        <div>
-                            <Space direction="" size={12}>
-                                <RangePicker onChange={onChange} onOk={onOk} />
-                            </Space>
-                            <Button style={{ marginLeft: '8px', backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
-                        </div>
-                        <div>
-                            <Input style={{ width: '392px', marginLeft: '60px' }} placeholder="Search" />
-                            <Button style={{ marginLeft: '18px', backgroundColor: '#71c4d5', border: 'none', width: 81 }} type="primary">EXCEL</Button>
-                        </div>
+                <Col sm={24} md={11} lg={11} xl={5} className="card-item-border card-item">
+                    <div className="card-item-text">
+                        <h2 style={{ color: '#2A4EAA', marginBottom: '0' }}>종합 매출순위</h2>
+                        <h2 style={{ color: '#6E798C', fontSize: '36px', fontWeight: '700', marginBottom: '0' }}>{data.saleRank.revenue_rank}위</h2>
+                        <p style={{ fontSize: '16px', fontWeight: '500', color: '#495057' }}>₩ {data.saleRank.revenue}</p>
+                    </div>
+                    <div className="card-item-icon">
+                        <img src={SaleStatus4} />
                     </div>
                 </Col>
             </Row>
 
-            <Row className='row-3'>
-                <Col><p><span>12</span>11번가</p></Col>
-                <Col><p><span>12</span>G마켓</p></Col>
-                <Col><p><span>12</span>쿠팡</p></Col>
-                <Col><p><span>12</span>인터파크</p></Col>
-                <Col><p><span>12</span>옥션</p></Col>
-                <Col><p><span>12</span>스마트스토어</p></Col>
-                <Col><p><span>12</span>티몬</p></Col>
-                <Col><p><span>12</span>위메프</p></Col>
+            <Row className='bar-style'>
+                <Col sm={24} md={24} lg={24} xl={24} className="card-border info-search">
+                    <Space className="space-small" style={{ marginRight: '2rem' }}>
+                        <DatePicker.RangePicker bordered={false} separator={<MinusOutlined />} onChange={onChange} />
+                        <Button style={{ backgroundColor: '#71c4d5', border: 'none' }} onClick={getDataSearch} type="primary">
+                            {loading ? (
+                                <Spin indicator={<LoadingOutlined style={{ color: "#fff" }} />} />
+                            ) : (
+                                    ""
+                                )}<span style={loading ? { marginLeft: "5px" } : {}}>적용하기</span>
+                        </Button>
+                    </Space>
+                    <Space>
+                        <Input style={{ borderRadius: '6px' }} onChange={getValueOfInputSearch} placeholder="Search" />
+                        <Button style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">EXCEL</Button>
+                    </Space>
+                </Col>
+            </Row>
+
+            <Row gutter={24} className='market-of-user'>
+                {
+                    markets.map((market, i) => (
+                        <Col
+                            key={i}
+                            xs={12}
+                            sm={6}
+                            md={6}
+                            lg={3}
+                            xl={3}
+                            style={{ textAlign: "center" }}
+                            className="total-sale"
+                        >
+                            <div>
+                                <img src={market.img} />
+                                <span style={{ marginLeft: '.5rem' }}>{market.market}</span>
+                            </div>
+                            <p
+                                style={{
+                                    paddingTop: "1rem",
+                                    fontWeight: "400",
+                                    fontSize: "16px",
+                                    color: "#495057"
+                                }}
+                            >
+                            </p>
+                        </Col>
+                    ))
+                }
             </Row>
 
             <Row>
                 <Col span={24}>
                     <Table
                         columns={columns}
-                        dataSource={data}
+                        dataSource={dataSearch}
+                        pagination={false}
                         scroll={{ x: 1300 }}
-                        rowSelection={{ ...rowSelection, checkStrictly }}
+                        rowKey={obj => obj.id}
                     />
                 </Col>
             </Row>
