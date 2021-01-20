@@ -45,11 +45,11 @@ const SignUp = (props) => {
     const [bodyphone, setBodyPhone] = useState({
         email: "",
         password: "",
-        name: "",
+        nameAndCompany: "",
         phone: ""
     });
 
-    const { name, email, password, phone } = bodyphone;
+    const { nameAndCompany, email, password, phone } = bodyphone;
     const onChange = (e) => {
         setBodyPhone({ ...bodyphone, [e.target.name]: e.target.value });
         setEmailVerify({ email: e.target.value });
@@ -64,6 +64,8 @@ const SignUp = (props) => {
                 "Content-Type": "application/json"
             }
         };
+
+        const name = nameAndCompany.split('/')[0];
 
         const body = {
             email,
@@ -111,7 +113,10 @@ const SignUp = (props) => {
     const onFinish = async (values) => {
         values.business_license = basePdf;
         values.url_market = url;
+        values.name = values.nameAndCompany.split('/')[0].trim();
+        values.company = values.nameAndCompany.split('/')[1].trim();
         // console.log('Success:', values);
+
         const config = {
             headers: {
                 Accept: "application/json",
@@ -131,8 +136,11 @@ const SignUp = (props) => {
             password,
             phone,
             url_market,
-            verify_code
+            verify_code,
+            name,
+            company
         } = values;
+
         const body = {
             confirmPassword,
             email,
@@ -140,7 +148,9 @@ const SignUp = (props) => {
             password,
             phone,
             url_market,
-            verify_code
+            verify_code,
+            name,
+            company
         };
         try {
             const { data } = await axios.post(`${API_URL}/signup`, body, config);
@@ -164,13 +174,6 @@ const SignUp = (props) => {
     };
 
     // For PDF file
-    const uploadPdfFile = async (e) => {
-        const file = e.target.files[0];
-        const base64 = await convertBase64(file);
-        const data = base64.split(",").slice(1)[0];
-        setBasePdf(data);
-    };
-
     const convertBase64 = (file) => {
         return new Promise((resolve, reject) => {
             const fileReader = new FileReader();
@@ -184,6 +187,13 @@ const SignUp = (props) => {
                 reject(error);
             };
         });
+    };
+
+    const uploadPdfFile = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertBase64(file);
+        const data = base64.split(",").slice(1)[0];
+        setBasePdf(data);
     };
 
     return (
@@ -286,7 +296,7 @@ const SignUp = (props) => {
                             </FormItem>
                             <br />
                             <FormItem
-                                name="name"
+                                name="nameAndCompany"
                                 rules={[
                                     {
                                         required: true,
@@ -297,8 +307,8 @@ const SignUp = (props) => {
                                 <Input
                                     placeholder="이름 / 업체명*"
                                     type="text"
-                                    name="name"
-                                    value={name}
+                                    name="nameAndCompany"
+                                    // value={name}
                                     onChange={onChange}
                                 />
                             </FormItem>
@@ -393,7 +403,7 @@ const SignUp = (props) => {
                                             }}
                                         >
                                             사업자 등록증 pdf 또는 이미지 첨부
-                    </p>
+                                        </p>
                                         <p
                                             style={{
                                                 fontWeight: "400",
@@ -402,7 +412,7 @@ const SignUp = (props) => {
                                             }}
                                         >
                                             or
-                    </p>
+                                        </p>
                                         <label className="custom-file-upload">
                                             <Input
                                                 style={{ display: "none" }}
@@ -413,8 +423,8 @@ const SignUp = (props) => {
                                                     uploadPdfFile(e);
                                                 }}
                                             />
-                      Browse
-                    </label>
+                                             Browse
+                                        </label>
                                     </Col>
                                 </Row>
                             </FormItem>
@@ -485,7 +495,7 @@ const SignUp = (props) => {
                                             className="submit"
                                         >
                                             회원가입 신청
-                    </Button>
+                                        </Button>
                                     </FormItem>
                                 </Col>
                             </Row>
