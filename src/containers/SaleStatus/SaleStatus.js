@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Row, Col, Button, Input, DatePicker, Space, Table, Spin, Image } from 'antd';
 import { MinusOutlined, LoadingOutlined } from '@ant-design/icons';
 
+import fileDownload from 'js-file-download';
 import axios from 'axios';
 import { API_URL } from '../../constants/appConstants'
 
@@ -139,6 +140,19 @@ const SaleStatus = () => {
         { market: '티몬', img: Market7 },
         { market: '위메프', img: Market8 }
     ]
+
+    /* Get Excel */
+    const getExcelFile = async () => {
+        try {
+            const { data } = await axios.get(`${API_URL}/myproduct/export?key=${'abc'}&lastIndex=${100}`, {
+                responseType: 'blob',
+            }, config)
+            fileDownload(data, 'data.xls');
+            console.log(data)
+        } catch (error) {
+            console.log(error.response.data)
+        }
+    }
 
     return (
         <div className="sale-status">
