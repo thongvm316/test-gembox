@@ -45,3 +45,20 @@
     }
   }
 }
+
+.select-category-analysis {
+  span {
+    font-weight: 500;
+    font-size: 12px;
+    color: #74788D;
+    background-color: #F3F3F9;
+    padding: 10px 25px;
+    border-radius: 6px;
+    width: fit-content;
+  }
+  .ant-dropdown-trigger{
+    &:hover {
+      background-color: #F3F3F9 !important;
+    }
+  }
+}

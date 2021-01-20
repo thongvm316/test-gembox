@@ -6,6 +6,7 @@ import axios from 'axios'
 import Footer from '../components/Footer'
 import './Login.scss'
 import { EyeOutlined } from '@ant-design/icons';
+import setAuthToken from '../utils/setAuthToken';
 
 const layout = {
     labelCol: {
@@ -61,6 +62,7 @@ const Login = (props) => {
             console.log(data)
             localStorage.clear();
             localStorage.setItem('token-user', data.data.result.token);
+            setAuthToken(localStorage.getItem('token-user'))
             history.push('/home')
         } catch (error) {
             console.log(error.response)

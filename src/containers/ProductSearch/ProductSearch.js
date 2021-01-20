@@ -8,9 +8,15 @@ import axios from 'axios'
 import fileDownload from 'js-file-download';
 import { LineOutlined } from '@ant-design/icons';
 import * as _ from 'lodash';
+import moment from 'moment'
 const { Option } = Select;
 
 const ProductSearch = (props) => {
+
+  const [productList, setProductList] = useState([]);
+
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
 
   const [params, setParams] = useState(
     {
@@ -54,9 +60,10 @@ const ProductSearch = (props) => {
       }
     }
     try {
-      const res = await axios.get(`
-        ${API_URL}/product/search?
-        minPrice=${paramsData.price[0]}
+      const res = await axios.get(`${API_URL}/product/search?
+        start=${startDate}
+        &end=${endDate}
+        &minPrice=${paramsData.price[0]}
         &maxPrice=${paramsData.price[1]}
         &category=${paramsData.category}
         ${marketParams}
@@ -66,12 +73,12 @@ const ProductSearch = (props) => {
         &maxSale=${paramsData.searchs[1]}
         &searchBy=${paramsData.searchBy}
         &key=${paramsData.key}
-        &lastIndex=100
-      `, {
-        responseType: 'blob',
-      }, config)
+        &lastIndex=100`,
+        config)
 
-      console.log(res)
+      if (res.status == 200){
+        setProductList(res.data.data.result)
+      }
     } catch (error) {
       console.log(error.response.data)
     }
@@ -107,44 +114,32 @@ const ProductSearch = (props) => {
   const columns = [
     {
       title: '상품명',
-      render: renderName
+      dataIndex: 'name',
+
     },
     {
       title: '벤더명',
-      dataIndex: '벤더명',
+      dataIndex: 'market_name',
     },
     {
       title: '카테고리',
-      dataIndex: '카테고리',
-      sorter: (a, b) => a.카테고리.length - b.카테고리.length,
+      dataIndex: 'category_tag',
     },
     {
       title: '마켓명',
-      dataIndex: '마켓명',
-      sorter: (a, b) => a.마켓명.length - b.마켓명.length,
+      dataIndex: 'bander_name',
 
     },
     {
       title: '가격',
-      dataIndex: '가격',
-      sorter: (a, b) => a.가격.length - b.가격.length,
-
-    },
-    {
-      title: '리뷰',
-      dataIndex: '리뷰',
-      sorter: (a, b) => a.리뷰.length - b.리뷰.length,
+      dataIndex: 'seller_price',
 
     },
     {
       title: '판매수',
-      dataIndex: '판매수',
-      sorter: (a, b) => a.판매수.length - b.판매수.length,
-
+      dataIndex: 'sold',
     },
   ];
-
-  const data = [];
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -160,7 +155,6 @@ const ProductSearch = (props) => {
       setCountSelected(selectedRows.length)
     },
   };
-  const [checkStrictly, setCheckStrictly] = useState(false);
 
   // RanggePicker
   const { RangePicker } = DatePicker;
@@ -223,6 +217,16 @@ const ProductSearch = (props) => {
     setParams({ ...params, key: e.target.value })
   }
 
+  const onChangeStartDate = (date, dateString) => {
+    setStartDate(moment(dateString).unix())
+
+  }
+
+  const onChangeEndDate = (date, dateString) => {
+    setEndDate(moment(dateString).unix())
+
+  }
+
   return (
     <div className="product-search">
       <Row className="card-border" style={{ marginBottom: '5rem' }}>
@@ -233,19 +237,18 @@ const ProductSearch = (props) => {
           </div>
           <div className="filter-date">
             <Space>
-              <DatePicker onChange={onChange} />
+              <DatePicker onChange={onChangeStartDate} />
               <LineOutlined style={{ width: '40px', height: '8px', color: '#6A7187' }} />
-              <DatePicker onChange={onChange} />
+              <DatePicker onChange={onChangeEndDate} />
 
-              <Button className="btn-light-blue  border-radius-6" onClick={getDateFilter} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
+              {/* <Button className="btn-light-blue  border-radius-6" onClick={getDateFilter} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button> */}
             </Space>
           </div>
           <div className="input-product-search" style={{ display: 'flex' }}>
             <Input style={{ marginRight: '5px' }} placeholder="Search" onChange={onChangeSearch} />
-            <Select defaultValue="카테고리" className="select-after">
-              <Option value="카테고리">카테고리</Option>
-              <Option value="밴더명">밴더명</Option>
-              <Option value="제품명">제품명</Option>
+            <Select defaultValue="0" className="select-after">
+              <Option value="0">밴더명</Option>
+              <Option value="1">제품명</Option>
             </Select>
             <Button className="btn-light-blue border-radius-6" onClick={getExcelFile} style={{ backgroundColor: '#71c4d5', border: 'none', marginLeft: '10px' }} type="primary">EXCEL</Button>
           </div>
@@ -256,7 +259,7 @@ const ProductSearch = (props) => {
         <Col span={24}>
           <Table
             columns={columns}
-            dataSource={data}
+            dataSource={productList}
             scroll={{ x: 1300 }}
             pagination={false}
             onRow={(record, rowIndex) => {

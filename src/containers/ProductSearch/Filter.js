@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Checkbox, Row, Col, Slider, Button, Input, Select } from 'antd'
 
 import './Filter.scss'
+import CategoryList from '../CategoryList/CategoryList';
 const { Option } = Select;
 
 
@@ -27,6 +28,7 @@ const Filter = (props) => {
     }
 
     const handleChangeCategory = (value) => {
+        console.log(value)
         setFilter({ ...filter, category: value })
     }
 
@@ -95,10 +97,8 @@ const Filter = (props) => {
 
             <Row style={{ marginTop: '2rem' }}>
                 <Col span={4}><h4>카테고리</h4></Col>
-                <Col>
-                    <Select defaultValue="11번가" onChange={handleChangeCategory}>
-                        <Option value="11번가">11번가</Option>
-                    </Select>
+                <Col className="select-category-analysis">
+                    <CategoryList category={filter.category} onChangeCategory={(value) => handleChangeCategory(value)} />
                 </Col>
             </Row>
 
@@ -124,12 +124,12 @@ const Filter = (props) => {
                         </Col>
 
                         <Col span={4}>
-                            <div style={{ color: '#42ABBC' }}>₩ {price[0]}</div>
+                            <div style={{ color: '#42ABBC' }}>₩ {filter.price[0]}</div>
                         </Col>
                         <Col span={16}>
                         </Col>
                         <Col span={4}>
-                            <div style={{ color: '#42ABBC' }}>₩ {price[1]}</div>
+                            <div style={{ color: '#42ABBC' }}>₩ {filter.price[1]}</div>
                         </Col>
                     </Row>
                 </Col>
