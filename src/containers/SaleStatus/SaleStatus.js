@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Button, Input, DatePicker, Space, Table, Spin } from 'antd';
+import { Row, Col, Button, Input, DatePicker, Space, Table, Spin, Image } from 'antd';
 import { MinusOutlined, LoadingOutlined } from '@ant-design/icons';
 
 import axios from 'axios';
@@ -18,6 +18,8 @@ import Market5 from "../../images/market5.png";
 import Market6 from "../../images/market6.png";
 import Market7 from "../../images/market7.png";
 import Market8 from "../../images/market8.png";
+import Spiner from '../../images/spiner.gif';
+import Footer from '../../components/Footer';
 import './SaleStatus.scss'
 
 
@@ -242,6 +244,7 @@ const SaleStatus = () => {
                     />
                 </Col>
             </Row>
+            <Footer />
         </div>
     )
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Footer = () => {
-
     return (
         <div className="footer" style={{ textAlign: 'center', marginTop: '24vh' }}>
             <p style={{ color: '#74788D' }}> <strong>잼토이즈 &nbsp; &nbsp;</strong>
