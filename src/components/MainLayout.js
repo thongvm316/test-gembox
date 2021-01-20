@@ -8,8 +8,6 @@ import Setting from '../images/Setting.png';
 import './MainLayout.scss';
 
 import Sidebar from './Sidebar';
-
-// const Search = Input.Search;
 const { Header, Content } = Layout;
 
 const MainLayout = (props) => {

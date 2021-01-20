@@ -48,3 +48,10 @@
         border-radius: 22px;
     }
 }
+
+.user-detail {
+    .ant-btn:hover, .ant-btn:focus {
+        color: brown;
+        border-color: brown;
+    }
+}

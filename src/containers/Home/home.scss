@@ -61,6 +61,11 @@
   .ant-radio-button-wrapper:not(:first-child)::before {
     display: none;
   }
+
+  .ant-image {
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 @media (max-width: 576px) {

@@ -1,4 +1,7 @@
 .sale-status {
+  .ant-row {
+    margin-bottom: 40px;
+  }
   .title {
     justify-content: flex-end;
     margin-bottom: 64px;
@@ -13,152 +16,81 @@
       background-color: #fff !important;
     }
   }
-  .row-3 {
-    justify-content: space-between;
-    .ant-col {
-      p {
-        span {
-          height: 50px;
-          width: 50px;
-          background: #fd8dff;
-          color: #fd8dff;
-        }
-      }
-    }
-  }
-  .card-style {
-    .col-one, .col-two, .col-three, .col-four {
-      .ant-row {
-        justify-content: space-between;
-      }
 
-      .ant-card-body {
-        padding: 20px;
-        position: relative;
-        top: 52%;
-        transform: translateY(-50px);
-
-        .one-in-col-one, .one-in-col-two, .one-in-col-three, .one-in-col-four {
-          p {
-            font-weight: 700;
-            font-size: 9px;
-            position: relative;
-            top: 35%;
-            margin-bottom: 0;
-          }
-        }
-
-        .two-in-col-one, .two-in-col-two, .two-in-col-three, .two-in-col-four {
-          p:first-child {
-            font-weight: 700;
-            font-size: 25px;
-            margin-bottom: 0;
-          }
-          p:last-child {
-              font-weight: 700;
-          }
-        }
-      }
-    }
-  }
-
-  .info-search{
+  /* Total Product */
+  .card-item {
     display: flex;
     justify-content: space-between;
-  }
+    background-color: white;
 
-
-  .gust-header{
-    position: absolute;
-    left: 0;
-    bottom: -80px;
-    z-index: 9999;
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-
-    .card-item{
+    .card-item-icon{
         display: flex;
+        align-items: center;
+    }
+
+    .card-item-text{
+        display: flex;
+        flex-direction: column;
         justify-content: space-between;
-        width: 300px;
-        height: 150px;
-        background-color: white;
-
-        .card-item-icon{
-            display: flex;
-            align-items: center;
-        }
-
-        .card-item-text{
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
     }
-
-    .card-item-border {
-      padding: 16px;
-      border-radius: 20px;
-      border: 1px solid #eff2f7;
-      box-shadow: 0px 10px 20px rgba(18, 38, 63, 0.031);
+    
   }
 
-    img{
-        width: 60px;
-        height: 60px;
+  .card-item-border {
+    padding: 16px;
+    border-radius: 20px;
+    border: 1px solid #eff2f7;
+    box-shadow: 0px 10px 20px rgba(18, 38, 63, 0.031);
+  }
+
+  /* Date Picker */
+  .ant-picker {
+    border-radius: 6px !important;
+  }
+
+  .ant-picker.ant-picker-borderless {
+    margin-right: 8px;
+    height: 33px;
+    background-color: #f3f3f9 !important;
+  }
+
+  .ant-picker-range .ant-picker-active-bar {
+    background: #a6b0cf;
+  }
+
+  /* Table */
+  .ant-table-thead {
+    .ant-table-cell {
+      font-weight: 400;
+      font-size: 16px;
+      color: #74788D;
+    }
+  }
+
+  .ant-table-tbody {
+    .ant-table-row {
+      .ant-table-cell {
+        font-weight: 400;
+        font-size: 16px;
+        color: #74788D;
+      }
     }
   }
 }
 
-
-@media (min-width: 768px){ 
-    .info-search {
-        .ant-btn {
-            // margin-top: 1rem !important;
-        }
-    }
+@media (min-width: 575.98px){ 
+  .info-search{
+    display: flex !important;
+    justify-content: flex-end;
+  }
 }
-
-@media (min-width: 576px) and (max-width: 767.98px) { 
-    .bar-style {
-        h1 { text-align: center; }
-        .info-search {
-            .date-picker {
-                margin-bottom: 1rem;
-                .ant-space {
-                    width: 70vw;
-                }
-            }
-            .ant-input {
-                width: 68vw !important;
-                margin-left: 0 !important;
-            }
-        }
-    }
- }
 
 @media (max-width: 575.98px) { 
-    .bar-style {
-        h1 { text-align: center; }
-        .info-search {
-            .date-picker {
-                margin-bottom: 1rem;
-                .ant-space {
-                    width: 80vw;
-                }
-                .ant-btn {
-                    margin-left: 0 !important;
-                }
-            }
-            .ant-input {
-                width: 80vw !important;
-                margin-left: 0 !important;
-            }
-            .ant-btn {
-                margin-left: 0 !important;
-                margin-top: .5rem !important;
-            }
-        }
+    .space-small {
+      margin-bottom: .5rem !important;
+    }
+    .card-item {
+      width: 100vw !important;
     }
 }
+

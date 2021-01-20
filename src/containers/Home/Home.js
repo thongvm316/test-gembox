@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import axios from "axios";
 
-import { DatePicker, Button, Row, Col, Card, Divider, Spin } from "antd";
+import { DatePicker, Button, Row, Col, Card, Divider, Spin, Image } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import Footer from "../../components/Footer";
 import GroupButton from "./GroupButton/GroupButton";
 import { API_URL } from "../../constants/appConstants";
+import Spiner from '../../images/spiner.gif'
 import "./home.scss";
 
 const Home = (props) => {
@@ -118,6 +119,9 @@ const Home = (props) => {
 
   // Date Picker
   const [day, setDay] = useState([]);
+  const date = new Date();
+  const currentMonth = moment.utc(date).format('YYYY-MM');
+
   const toTimestamp = (strDate) => {
     var datum = Date.parse(strDate);
     return datum / 1000;
@@ -134,14 +138,16 @@ const Home = (props) => {
     setDay(startAndEndDay);
   }
 
-  // Get Data
+  /* Get Data */
+  const config = {
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "X-Auth-Token": `${localStorage.getItem('token-user')}`
+    }
+  };
+
   const getData = async () => {
-    const config = {
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-      }
-    };
     try {
       setLoading(true);
       // const { data } = await axios.get(`${API_URL}/home/revenue?start=${day[0]}&end=${day[1]}`, config)
@@ -149,17 +155,32 @@ const Home = (props) => {
         `${API_URL}/home/revenue?start=123456789&end=2134567890`,
         config
       );
-      const {
-        data: { result }
-      } = data;
-      console.log(result);
-      setDataTopBander(result.top_20_revenue);
-      setDataTopProduct(result.top_20_selling);
+      setDataTopBander(data.data.result.top_20_revenue);
+      setDataTopProduct(data.data.result.top_20_selling);
       setLoading(false);
     } catch (error) {
       console.log(error.response);
     }
   };
+
+  // Get data of current month
+  useEffect(async () => {
+    setLoading(true);
+    let startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD');
+    let endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD');
+    let allDateOfCurrentMonth = [toTimestamp(startOfMonth), toTimestamp(endOfMonth)];
+
+    try {
+      const { data } = await axios.get(`${API_URL}/home/revenue?start=123456789&end=2134567890`, config);
+      // const { data } = await axios.get(`${API_URL}/home/revenue?start=${allDateOfCurrentMonth[0]}&end=${allDateOfCurrentMonth[1]}`, config);
+      setDataTopBander(data.data.result.top_20_revenue);
+      setDataTopProduct(data.data.result.top_20_selling);
+      setLoading(false);
+    } catch (error) {
+      console.log(error.response)
+    }
+  }, [])
+
 
   return (
     <div className="home-page">
@@ -178,7 +199,7 @@ const Home = (props) => {
           집계 월
         </h1>
         <Col xl={20} className="date-picker">
-          <DatePicker onChange={onChange} bordered={false} picker="month" />
+          <DatePicker defaultValue={moment(currentMonth, 'YYYY-MM')} onChange={onChange} bordered={false} picker="month" />
           <Button
             style={{
               background: "#71c4d5",
@@ -188,58 +209,60 @@ const Home = (props) => {
             type="primary"
             onClick={getData}
           >
-            {loading ? (
-              <Spin indicator={<LoadingOutlined style={{ color: "#fff" }} />} />
-            ) : (
-                ""
-              )}{" "}
-            <span style={loading ? { marginLeft: "5px" } : {}}>적용하기</span>
+            적용하기
           </Button>
         </Col>
       </Row>
 
-      <Row className="site-card-wrapper" gutter={32}>
-        <Col
-          xs={24}
-          sm={24}
-          md={24}
-          lg={12}
-          xl={12}
-          className="style-small-device"
-        >
-          <Card title="TOP 20 매출 벤더">
-            <Row gutter={32}>
-              <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                <RenderData data={dataTopBander1} />
+      {
+        loading
+          ? <Image src={Spiner} width={100} />
+          : (
+            <Row className="site-card-wrapper" gutter={32}>
+              <Col
+                xs={24}
+                sm={24}
+                md={24}
+                lg={12}
+                xl={12}
+                className="style-small-device"
+              >
+                <Card title="TOP 20 매출 벤더">
+                  <Row gutter={32}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                      <RenderData data={dataTopBander1} />
+                    </Col>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                      <RenderData data={dataTopBander2} />
+                    </Col>
+                  </Row>
+                </Card>
               </Col>
-              <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                <RenderData data={dataTopBander2} />
-              </Col>
-            </Row>
-          </Card>
-        </Col>
 
-        <Col
-          xs={24}
-          sm={24}
-          md={24}
-          lg={12}
-          xl={12}
-          className="style-small-device"
-        >
-          <Card title="TOP 20 판매 상품">
-            <Row gutter={32}>
-              <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                <RenderData data={dataTopProduct1} />
-              </Col>
-              <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                <RenderData data={dataTopProduct2} />
+              <Col
+                xs={24}
+                sm={24}
+                md={24}
+                lg={12}
+                xl={12}
+                className="style-small-device"
+              >
+                <Card title="TOP 20 판매 상품">
+                  <Row gutter={32}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                      <RenderData data={dataTopProduct1} />
+                    </Col>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                      <RenderData data={dataTopProduct2} />
+                    </Col>
+                  </Row>
+                </Card>
               </Col>
             </Row>
-          </Card>
-        </Col>
-      </Row>
-      <Footer />
+          )
+
+      }
+      <Footer marginTop={'80vh'} />
     </div>
   );
 };

@@ -61,7 +61,10 @@ const Login = (props) => {
             console.log(data)
             localStorage.clear();
             localStorage.setItem('token-user', data.data.result.token);
+<<<<<<< HEAD
             setAuthToken(localStorage.getItem('token-user'))
+=======
+>>>>>>> b519bb18eb97218744b92108e8354b089b8154e2
             history.push('/home')
         } catch (error) {
             console.log(error.response)

@@ -23,12 +23,12 @@ const SignUp = (props) => {
     const [signUp, setSignUp] = useState(false); // For Moal SignUp
     const [basePdf, setBasePdf] = useState(""); // For convert pdf-file
     const [resendSms, setResemdSms] = useState("");
-    const [inputs, setInputs] = useState({ inputs: ["input-0"] }); // For Add more input
     const [validatePassword, setValidatePassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
     // For Add more URL
     const [url, seturl] = useState([]);
+    const [inputs, setInputs] = useState({ inputs: ["input-0"] }); // For Add more input
 
     const onChangeUrl = (e, indexOfInput) => {
         const urlTemp = JSON.parse(JSON.stringify(url));
@@ -364,7 +364,7 @@ const SignUp = (props) => {
                                             onClick={appendInput}
                                         >
                                             +
-                    </Button>
+                                        </Button>
                                     }
                                 />
                             ))}
