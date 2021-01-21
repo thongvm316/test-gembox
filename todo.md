@@ -24,14 +24,13 @@ At evening
 
 2. Hover icon in sider - Problem with Sider when click
 3. Style DatePicker Home Page - Chang month to Kr language in P2, P3
-4. Map fake data to chart: page 2 - page 3
-5. Lazy load and add lastindex - Redux
+4. Lazy load and add lastindex - Redux
 
 Fix Method Call API like Easy FrontEnd -- https://www.youtube.com/watch?v=LXz_7WQpob4
 Research - Lodash // Code with less err in solution of EasyFrontEnd
 
 ---
 
-1. PrivateRouter ---- Done
-2. Show name in header
-3. Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+1. Map fake data to chart: page 2 - page 3
+2. UI when render data
+3. Solution for redux
