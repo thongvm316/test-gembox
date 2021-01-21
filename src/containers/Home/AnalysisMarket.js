@@ -60,9 +60,6 @@ const AnalysisMarket = (props) => {
   }
 
   // DatePicker
-  const [dates, setDates] = useState([])
-  // const [hackValue, setHackValue] = useState();
-  const [value, setValue] = useState()
   const [datePicker, setDatePicker] = useState([])
 
   const toTimestamp = (strDate) => {
@@ -274,11 +271,14 @@ const AnalysisMarket = (props) => {
 
     try {
       setLoading(true)
-      // const { data } = await axios.get(`${API_URL}/home/market?start=${datePicker[0]}&end=${datePicker[1]}&key=${selectMarket}`, config)
       const { data } = await axios.get(
-        `${API_URL}/home/market?start=1234567890&end=2345678901&key=${selectMarket}`,
+        `${API_URL}/home/market?start=${datePicker[0]}&end=${datePicker[1]}&key=${selectMarket}`,
         config,
       )
+      // const { data } = await axios.get(
+      //   `${API_URL}/home/market?start=1234567890&end=2345678901&key=${selectMarket}`,
+      //   config,
+      // )
       const {
         data: { result },
       } = data
@@ -316,12 +316,6 @@ const AnalysisMarket = (props) => {
             </Col>
             <Col xs={24} sm={10} md={10} lg={10} xl={6}>
               <DatePicker.RangePicker
-                // value={hackValue || value}
-                // disabledDate={disabledDate}
-                // onCalendarChange={val => setDates(val)}
-                // onChange={val => setValue(val)}
-                // onOpenChange={onOpenChange}
-                // bordered={false}
                 onChange={onChange}
                 separator={<MinusOutlined />}
               />
@@ -351,15 +345,7 @@ const AnalysisMarket = (props) => {
           </Row>
         </Col>
 
-        <Col
-          xs={7}
-          sm={4}
-          md={3}
-          lg={3}
-          xl={3}
-          style={{ textAlign: 'end' }}
-          className="select-category-analysis"
-        >
+        <Col xs={7} sm={4} md={3} lg={3} xl={3} style={{ textAlign: 'end' }}>
           <Select onChange={handleChangeSelectMarket} defaultValue="11번가">
             <Option value="11번가">11번가</Option>
             <Option value="G마켓">G마켓</Option>

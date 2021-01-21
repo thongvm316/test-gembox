@@ -106,6 +106,66 @@ const CategoryAnalysis = (props) => {
   }
 
   /* Chart */
+  const fakeDataChart = [
+    {
+      name: '11번가',
+      y: 20,
+    },
+    {
+      name: 'G마켓',
+      y: 30,
+    },
+    {
+      name: '쿠팡',
+      y: 40,
+    },
+    {
+      name: '인터파크',
+      y: 60,
+    },
+    {
+      name: '옥션',
+      y: 120,
+    },
+    {
+      name: '스마트스토어',
+      y: 150,
+    },
+    {
+      name: '티몬',
+      y: 180,
+    },
+    {
+      name: '위메프',
+      y: 200,
+    },
+  ]
+
+  const renameKeys = (obj, newKeys) => {
+    const keyValues = Object.keys(obj).map((key) => {
+      const newKey = newKeys[key] || key
+      return { [newKey]: obj[key] }
+    })
+    return Object.assign({}, ...keyValues)
+  }
+
+  const dataChartRename = totalSale.map((data) => {
+    const newKeys = { market_name: 'name', total: 'y' }
+    const renamedObj = renameKeys(data, newKeys)
+    const convetToNumber = parseInt(renamedObj.y)
+    return { ...renamedObj, y: convetToNumber }
+  })
+
+  const conditionalRendering = () => {
+    if (totalSale.length === 0) {
+      return fakeDataChart
+    } else {
+      return dataChartRename
+    }
+  }
+
+  const dataRenderChart = conditionalRendering()
+
   const options = {
     chart: {
       height: 300,
@@ -130,7 +190,7 @@ const CategoryAnalysis = (props) => {
     tooltip: {
       enabled: true,
       formatter: function () {
-        return '<b>' + this.y + '%</b>'
+        return '<b>' + this.y + '</b>'
       },
     },
     credits: {
@@ -150,41 +210,8 @@ const CategoryAnalysis = (props) => {
         dataLabels: {
           enabled: false,
         },
-        showInLegend: false,
-        data: [
-          {
-            name: '11번가',
-            y: 10,
-          },
-          {
-            name: 'G마켓',
-            y: 15,
-          },
-          {
-            name: '쿠팡',
-            y: 15,
-          },
-          {
-            name: '인터파크',
-            y: 15,
-          },
-          {
-            name: '옥션',
-            y: 10,
-          },
-          {
-            name: '스마트스토어',
-            y: 10,
-          },
-          {
-            name: '티몬',
-            y: 10,
-          },
-          {
-            name: '위메프',
-            y: 30,
-          },
-        ],
+        showInLegend: true,
+        data: dataRenderChart,
       },
     ],
   }
@@ -230,10 +257,6 @@ const CategoryAnalysis = (props) => {
   /* Select category */
   const [category, setCategory] = useState('완구')
 
-  const selectCategory = (e) => {
-    setCategory(e.currentTarget.textContent)
-  }
-
   /* Get data */
   const config = {
     headers: {
@@ -251,7 +274,7 @@ const CategoryAnalysis = (props) => {
     await Promise.all([
       axios
         .get(
-          `${API_URL}/home/category/totalsales?start=1234567890&end=2134567890&key=${category}`,
+          `${API_URL}/home/category/totalsales?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
           config,
         )
         .then((value) => {
@@ -261,7 +284,7 @@ const CategoryAnalysis = (props) => {
 
       axios
         .get(
-          `${API_URL}/home/category/topcoupang?start=1234567890&end=2134567890&key=${category}`,
+          `${API_URL}/home/category/topcoupang?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
           config,
         )
         .then((value) => {
@@ -274,7 +297,7 @@ const CategoryAnalysis = (props) => {
 
       axios
         .get(
-          `${API_URL}/home/category/topauction?start=1234567890&end=2134567890&key=${category}`,
+          `${API_URL}/home/category/topauction?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
           config,
         )
         .then((value) => {
@@ -287,7 +310,7 @@ const CategoryAnalysis = (props) => {
 
       axios
         .get(
-          `${API_URL}/home/category/topsmartstore?start=1234567890&end=2134567890&key=${category}`,
+          `${API_URL}/home/category/topsmartstore?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
           config,
         )
         .then((value) => {
@@ -300,7 +323,7 @@ const CategoryAnalysis = (props) => {
 
       axios
         .get(
-          `${API_URL}/home/category/topwemake?start=1234567890&end=2134567890&key=${category}`,
+          `${API_URL}/home/category/topwemake?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
           config,
         )
         .then((value) => {
@@ -313,7 +336,7 @@ const CategoryAnalysis = (props) => {
 
       axios
         .get(
-          `${API_URL}/home/category/toptmon?start=1234567890&end=2134567890&key=${category}`,
+          `${API_URL}/home/category/toptmon?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
           config,
         )
         .then((value) => {
@@ -326,7 +349,7 @@ const CategoryAnalysis = (props) => {
 
       axios
         .get(
-          `${API_URL}/home/category/topinterpark?start=1234567890&end=2134567890&key=${category}`,
+          `${API_URL}/home/category/topinterpark?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
           config,
         )
         .then((value) => {
@@ -339,7 +362,7 @@ const CategoryAnalysis = (props) => {
 
       axios
         .get(
-          `${API_URL}/home/category/top11str?start=1234567890&end=2134567890&key=${category}`,
+          `${API_URL}/home/category/top11str?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
           config,
         )
         .then((value) => {
@@ -352,7 +375,7 @@ const CategoryAnalysis = (props) => {
 
       axios
         .get(
-          `${API_URL}/home/category/topgmarket?start=1234567890&end=2134567890&key=${category}`,
+          `${API_URL}/home/category/topgmarket?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
           config,
         )
         .then((value) => {
