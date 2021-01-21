@@ -1,80 +1,81 @@
-.user-info{
+.user-info {
+  display: flex;
+  flex-direction: column;
+  padding: 0 40px;
+
+  .user-item {
     display: flex;
-    flex-direction: column;
-    padding: 0 40px;
+    justify-content: space-between;
+  }
 
-    .user-item{
-        display: flex;
-        justify-content: space-between;
+  .upload {
+    border-width: 2px;
+    border-style: dashed;
+    border-color: #cccccc;
+    padding: 16px 0;
+    display: flex;
+    justify-content: center;
+
+    .upload-content {
+      display: flex;
+      flex-direction: column;
     }
 
-    .upload{
-        border-width: 2px;  
-        border-style: dashed;
-        border-color: #CCCCCC;
-        padding: 16px 0;
-        display: flex;
-        justify-content: center;
-
-        .upload-content{
-            display: flex;
-            flex-direction: column;
-        }
-
-        .image{
-            text-align: center;
-        }
+    .image {
+      text-align: center;
     }
+  }
 
-    .actions{
+  .actions {
+    text-align: center;
 
-        text-align: center;
-
-        .btn-save{
-            width: 300px;
-            border-radius: 15px;
-        }
+    .btn-save {
+      width: 300px;
+      border-radius: 15px;
     }
-    .ant-btn {
-        background-color: #3F537D;
-        color: #fff;
-        &:hover, &:focus {
-            color: #fff;
-            background-color: #3F537D;
-        }
+  }
+  .ant-btn {
+    background-color: #3f537d;
+    color: #fff;
+    &:hover,
+    &:focus {
+      color: #fff;
+      background-color: #3f537d;
     }
+  }
 }
 
-.actions-change-password{
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
+.actions-change-password {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
 
-    .btn-save{
-        margin-bottom: 16px;
-        border-radius: 22px;
-        color: #3F537D;
-        border-color: #3F537D;
-    }
-    .ant-btn:hover, .ant-btn:focus {
-        color: #fff !important;
-        background-color: #3F537D !important;
-    }
+  .btn-save {
+    margin-bottom: 16px;
+    border-radius: 22px;
+    color: #3f537d;
+    border-color: #3f537d;
+  }
+  .ant-btn:hover,
+  .ant-btn:focus {
+    color: #fff !important;
+    background-color: #3f537d !important;
+  }
 }
 
 .custom-file-upload {
-    border: 1px solid #3F537D;
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
-    background-color: #3F537D;
-    color: #fff;
-    border-radius: 4px;
+  border: 1px solid #3f537d;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  background-color: #3f537d;
+  color: #fff;
+  border-radius: 4px;
 }
 
 .position-spiner {
-    .ant-image {
-        margin-left: 50%;
-        transform: translateX(-50%);
-      }
+  .ant-image {
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
 }

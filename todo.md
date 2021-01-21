@@ -28,9 +28,8 @@ At evening
 Fix Method Call API like Easy FrontEnd -- https://www.youtube.com/watch?v=LXz_7WQpob4
 Research - Lodash // Code with less err in solution of EasyFrontEnd
 ----
-Setting Page: 
-1. UI - Fix field input of ten/company in signup
-2. Call API
+tommorow:
+1. Continue Setting - Peding change password
 
 
 
