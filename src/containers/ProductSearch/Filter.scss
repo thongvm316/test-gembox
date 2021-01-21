@@ -21,7 +21,8 @@
       @extend %style-btn;
     }
   }
-  .search-number-of-review, .sale-search {
+  .search-number-of-review,
+  .sale-search {
     .ant-input-affix-wrapper {
       background-color: #f4f2ff;
       border: none;
@@ -50,15 +51,15 @@
   span {
     font-weight: 500;
     font-size: 12px;
-    color: #74788D;
-    background-color: #F3F3F9;
+    color: #74788d;
+    background-color: #f3f3f9;
     padding: 10px 25px;
     border-radius: 6px;
     width: fit-content;
   }
-  .ant-dropdown-trigger{
+  .ant-dropdown-trigger {
     &:hover {
-      background-color: #F3F3F9 !important;
+      background-color: #f3f3f9 !important;
     }
   }
 }
