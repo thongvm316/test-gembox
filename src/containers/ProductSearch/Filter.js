@@ -93,23 +93,29 @@ const Filter = (props) => {
         <div className='modal'>
 
             <Row style={{ marginBottom: '2rem' }}>
-                <Col span={4}><h4>Start Date - End Date</h4></Col>
-                <Col span={20}>
+                <Col span={4}><h4>시작일, 종료일, 검색</h4></Col>
+                <Col span={16}>
                     <DatePicker onChange={onChangeStartDate} />
                     <LineOutlined style={{ width: '40px', height: '8px', color: '#6A7187' }} />
                     <DatePicker onChange={onChangeEndDate} />
                 </Col>
+                <Col span={4}>
+                    <Select onChange={handleChangeSearchBy} defaultValue="0" className="select-after">
+                        <Option value="0">밴더명</Option>
+                        <Option value="1">제품명</Option>
+                    </Select>
+                </Col>
             </Row>
-
+{/* 
             <Row style={{ marginBottom: '2rem' }}>
                 <Col span={4}><h4>Search Key</h4></Col>
                 <Col span={20}>
                     <Input style={{ marginRight: '5px' }} placeholder="Search" onChange={onChangeSearch} />
 
                 </Col>
-            </Row>
+            </Row> */}
 
-            <Row style={{ marginBottom: '2rem' }}>
+            {/* <Row style={{ marginBottom: '2rem' }}>
                 <Col span={4}><h4>Search By</h4></Col>
                 <Col span={20}>
                     <Select onChange={handleChangeSearchBy} defaultValue="0" className="select-after">
@@ -117,7 +123,7 @@ const Filter = (props) => {
                         <Option value="1">제품명</Option>
                     </Select>
                 </Col>
-            </Row>
+            </Row> */}
 
             <Row className='market'>
                 <Col span={4}><h4>마켓</h4></Col>

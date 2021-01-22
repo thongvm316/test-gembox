@@ -38,8 +38,6 @@ const ProductSearch = (props) => {
   }
 
   const getProducts = async () => {
-    console.log(lastIndex)
-    console.log(filters)
     setLoading(true)
     let params = ''
 
@@ -50,7 +48,9 @@ const ProductSearch = (props) => {
     }
 
     for (const key in filters) {
-      params += `&${key}=${filters[key]}`
+      if (filters[key]) {
+        params += `&${key}=${filters[key]}`
+      }
     }
 
     const config = {
@@ -97,13 +97,23 @@ const ProductSearch = (props) => {
     setVisibleTwo(false)
   }
 
+  const goToWeb = (e, record) => {
+    e.stopPropagation()
+    var win = window.open(record.url, '_blank')
+    win.focus()
+  }
+
   const renderName = (record) => {
     return (
       <div style={{ display: 'flex' }}>
-        <Button style={{ marginRight: '5px' }} className="btn-light-orange">
+        <Button
+          onClick={(e) => goToWeb(e, record)}
+          style={{ marginRight: '5px' }}
+          className="btn-light-orange"
+        >
           판매 사이트 가기
         </Button>
-        <div>{record.마켓명}</div>
+        <div>{record.name}</div>
       </div>
     )
   }
@@ -117,7 +127,8 @@ const ProductSearch = (props) => {
     },
     {
       title: '상품명',
-      dataIndex: 'name',
+      // dataIndex: 'name',
+      render: renderName,
     },
     {
       title: '벤더명',
@@ -197,6 +208,7 @@ const ProductSearch = (props) => {
   }
 
   const getExcelFile = async () => {
+    const lengthData = productList.length
     const config = {
       headers: {
         Accept: 'application/json',
@@ -205,14 +217,15 @@ const ProductSearch = (props) => {
     }
     try {
       const { data } = await axios.get(
-        `${API_URL}/product/export?first=1&last=100`,
+        `${API_URL}/product/export?first=${productList[0].id}&last=${
+          productList[lengthData - 1].id
+        }`,
         {
           responseType: 'blob',
         },
         config,
       )
       fileDownload(data, 'data.xls')
-      console.log(data)
     } catch (error) {
       console.log(error.response.data)
     }
@@ -297,9 +310,15 @@ const ProductSearch = (props) => {
             onRow={(record, rowIndex) => {
               return {
                 onClick: (event) => {
+                  let state = { product: record }
+
+                  if (filters && filters.start && filters.end) {
+                    state.data = { start: filters.start, end: filters.end }
+                  }
+
                   props.history.push({
                     pathname: '/product-detail',
-                    state: { product: record },
+                    state,
                   })
                 },
               }

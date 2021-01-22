@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, DatePicker, Space, Input, Row, Col, Table, Select } from 'antd';
 import { LineOutlined } from '@ant-design/icons';
 import { API_URL } from '../../constants/appConstants'
@@ -15,9 +15,18 @@ const VendorSearch = () => {
   const [endDate, setEndDate] = useState();
   const [key, setKey] = useState();
 
+  const [filter, setFilter] = useState();
+  const [lastIndex, setLastIndex] = useState(0);
+
+
 
   // Table
   const [countSelected, setCountSelected] = useState(0)
+
+  useEffect(() => {
+    getVendor()
+  }, [lastIndex])
+
   const columns = [
     {
       title: '마켓명',
@@ -61,12 +70,16 @@ const VendorSearch = () => {
   const { RangePicker } = DatePicker;
 
   const onChangeStartDate = (date, dateString) => {
-    setStartDate(moment(dateString).unix())
+    // setStartDate(moment(dateString).unix())
+    setFilter({ ...filter, start: moment(dateString).unix() })
+
 
   }
 
   const onChangeEndDate = (date, dateString) => {
-    setEndDate(moment(dateString).unix())
+    // setEndDate(moment(dateString).unix())
+    setFilter({ ...filter, end: moment(dateString).unix() })
+
 
   }
 
@@ -75,10 +88,20 @@ const VendorSearch = () => {
   }
 
   const onChangeSearch = (e) => {
-    setKey(e.target.value)
+    setFilter({ ...filter, key: e.target.value })
+
   }
 
   const getVendor = async () => {
+
+    let params = '';
+    for (const key in filter) {
+      if (filter[key]){
+        params += `&${key}=${filter[key]}`
+
+      }
+    }
+
     const config = {
       headers: {
         "Accept": "application/json",
@@ -87,14 +110,24 @@ const VendorSearch = () => {
       }
     }
     try {
-      const res = await axios.get(`${API_URL}/bander/search?start=${startDate}&end=${endDate}&key=${key}`, config)
-      if (res.status == 200){
-        console.log(res.data.data.result)
-        setVendors(res.data.data.result)
+      const res = await axios.get(`${API_URL}/bander/search?lastIndex=${lastIndex}${params}`, config)
+      if (res.status == 200) {
+
+        if (lastIndex > 0) {
+          setVendors(vendors.concat(res.data.data.result))
+
+        } else {
+          setVendors(res.data.data.result)
+
+        }
       }
     } catch (error) {
       console.log(error.response.data)
     }
+  }
+
+  const loadMore = async () => {
+    setLastIndex(lastIndex + 100)
   }
 
   return (
@@ -110,7 +143,7 @@ const VendorSearch = () => {
               <LineOutlined style={{ width: '40px', height: '8px', color: '#6A7187' }} />
               <DatePicker onChange={onChangeEndDate} />
 
-              <Button className="btn-light-blue  border-radius-6" style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
+              {/* <Button className="btn-light-blue  border-radius-6" style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button> */}
             </Space>
           </div>
           <div className="input-product-search" style={{ display: 'flex' }}>
@@ -128,11 +161,21 @@ const VendorSearch = () => {
       <Row className="card-border">
         <Col span={24}>
           <Table
+            rowKey={record => record.id}
             columns={columns}
             dataSource={vendors}
             scroll={{ x: 1300 }}
             rowSelection={{ ...rowSelection, checkStrictly }}
+            pagination={false}
           />
+        </Col>
+        <Col span={24} style={{ textAlign: 'center', marginTop: '2rem' }}>
+          {
+            vendors.length ?
+              <Button onClick={loadMore} className="btn-light-blue border-radius-6" style={{ backgroundColor: '#71c4d5', border: 'none', marginLeft: '10px' }} type="primary">LOAD MORE</Button>
+              : ''
+          }
+
         </Col>
       </Row>
     </div>
