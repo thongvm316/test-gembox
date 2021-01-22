@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
-import { default as genRGBColor } from 'generate-color'
 import { API_URL } from '../../constants/appConstants'
 
 import { DatePicker, Button, Row, Col, Select, Card, Spin } from 'antd'
