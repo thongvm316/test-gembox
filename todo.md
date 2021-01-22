@@ -34,3 +34,5 @@ Research - Lodash // Code with less err in solution of EasyFrontEnd
 1. Map fake data to chart: page 2 - page 3
 2. UI when render data
 3. Solution for redux
+
+What data for pie chart.
