@@ -1,15 +1,99 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './ProductDetail.scss'
 import { Row, Col, Button, Space, Divider } from 'antd'
 import Highcharts from "highcharts/highstock";
 import PieChart from "highcharts-react-official";
-
+import axios from 'axios'
 import HighchartsReact from 'highcharts-react-official';
 import Card2 from '../../images/Card_2.png';
 import Card3 from '../../images/Card_3.png';
+import { API_URL } from '../../constants/appConstants';
 
 
 const ProductDetail = (props) => {
+    console.log(props.location.state.product)
+
+    const [product, setProduct] = useState(props.location.state.product)
+    const [categoryRanking, setCategoryRanking] = useState()
+    const [saleRanking, setSaleRanking] = useState()
+    const [shareRanking, setShareKing] = useState()
+
+
+    useEffect(() => {
+        getCategoryRanking();
+        getSaleRanking();
+        getShareRanking();
+    }, [])
+
+    const getCategoryRanking = async () => {
+
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+                'X-Auth-Token': localStorage.getItem('token-user')
+            }
+        }
+        try {
+            const res = await axios.get(`${API_URL}/product/detail/categoryrank?id=${product.id}`,
+                config)
+
+            if (res.status == 200) {
+                setCategoryRanking(res.data.data.result.category_rank)
+            }
+        } catch (error) {
+            console.log(error.response.data)
+
+        }
+    }
+
+    const getSaleRanking = async () => {
+
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+                'X-Auth-Token': localStorage.getItem('token-user')
+            }
+        }
+        try {
+            const res = await axios.get(`${API_URL}/product/detail/salerank?id=${product.id}`,
+                config)
+
+            if (res.status == 200) {
+                setSaleRanking(res.data.data.result.total_rank)
+
+            }
+        } catch (error) {
+            console.log(error.response.data)
+
+        }
+    }
+
+    const getShareRanking = async () => {
+
+        const config = {
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+                'X-Auth-Token': localStorage.getItem('token-user')
+            }
+        }
+        try {
+            const res = await axios.get(`${API_URL}/product/detail/share?id=${product.id}`,
+                config)
+
+            if (res.status == 200) {
+                setShareKing(res.data.data.result.share)
+
+            }
+        } catch (error) {
+            console.log(error.response.data)
+
+        }
+    }
+
+
     const options = {
         chart: {
             height: 200,
@@ -172,6 +256,12 @@ const ProductDetail = (props) => {
     }
 
 
+    const goToStore = () => {
+        var win = window.open(product.url, '_blank');
+        win.focus();
+    }
+
+
     return (
         <>
             <Row className="card-border main-header" style={{ padding: '60px', marginBottom: '120px' }}>
@@ -182,32 +272,32 @@ const ProductDetail = (props) => {
                         </div>
                         <div className="text">
                             <div>
-                                <h4>유아 인형</h4>
-                                <h2>카카오 라이언 봉재 인형</h2>
+                                <h4>{product.category_tag}</h4>
+                                <h2>{product.name}</h2>
                                 <Space size="large">
-                                    <h4>11번가</h4>
-                                    <h4>IMVELY</h4>
+                                    <h4>{product.market_name}</h4>
+                                    <h4>{product.bander_name}</h4>
                                 </Space>
                                 <br />
-                                <Button className="btn-light-orange">판매 사이트 가기</Button>
+                                <Button onClick={goToStore} className="btn-light-orange">판매 사이트 가기</Button>
 
                             </div>
                             <div className="price">
                                 <Space>
                                     <div>총판매액</div>
-                                    <h2>₩ 750,000,000</h2>
+                                    <h2>₩{product.seller_price * product.sold}</h2>
                                 </Space>
                                 <Space>
                                     <div>가격</div>
-                                    <h2>₩ 15,000</h2>
+                                    <h2>₩{product.seller_price}</h2>
                                 </Space>
                                 <Space>
                                     <div>리뷰</div>
-                                    <h2>23,454</h2>
+                                    <h2>₩{product.review}</h2>
                                 </Space>
                                 <Space>
                                     <div>판매수</div>
-                                    <h2>50,000</h2>
+                                    <h2>₩{product.sold}</h2>
                                 </Space>
                             </div>
                         </div>
@@ -218,7 +308,7 @@ const ProductDetail = (props) => {
                     <div className="card-item-border card-item">
                         <div className="card-item-text">
                             <h2 style={{ color: '#2A4EAA' }}>유아 인형 카테고리 순위</h2>
-                            <h2 style={{ color: '#6E798C' }}>24위</h2>
+                            <h2 style={{ color: '#6E798C' }}>{categoryRanking}위</h2>
                         </div>
                         <div className="card-item-icon">
                             <img src={Card2} />
@@ -227,7 +317,7 @@ const ProductDetail = (props) => {
                     <div className="card-item-border card-item">
                         <div className="card-item-text">
                             <h2 style={{ color: '#2A4EAA' }}>종합 판매순위</h2>
-                            <h2 style={{ color: '#6E798C' }}>56위</h2>
+                            <h2 style={{ color: '#6E798C' }}>{saleRanking}위</h2>
                         </div>
                         <div className="card-item-icon">
                             <img src={Card3} />
