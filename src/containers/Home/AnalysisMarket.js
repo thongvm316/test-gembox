@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import moment from 'moment'
+import NumberFormat from 'react-number-format'
 import { API_URL } from '../../constants/appConstants'
 
 import { DatePicker, Button, Row, Col, Select, Card, Spin } from 'antd'
@@ -27,39 +27,43 @@ const AnalysisMarket = (props) => {
   const data1 = data.slice(0, 10)
   const data2 = data.slice(10, 20)
 
-  const ListItem = (props) => {
-    const value = props.value
-    // console.log(value)
-    return (
-      <>
-        <ul
-          className="ul-list"
-          style={{
-            fontWeight: '400',
-            fontSize: '16px',
-            color: '#495057',
-            display: 'flex',
-            listStyle: 'none',
-            justifyContent: 'space-between',
-          }}
-        >
-          <li style={{ fontWeight: 700, fontSize: '16px', color: '#495057' }}>
-            {value.category_tag}
-          </li>
-          <li style={{ fontWeight: 400, fontSize: '12px', color: '#74788D' }}>
-            ₩ {value.total}
-          </li>
-        </ul>
-      </>
-    )
-  }
-
   const RenderData = (props) => {
     const data = props.data
-    const listitems = data.map((product, i) => (
-      <ListItem key={i} value={product} />
-    ))
-    return <>{listitems}</>
+    return (
+      <>
+        {data.map((product, i) => (
+          <React.Fragment key={i}>
+            <ul
+              className="ul-list"
+              style={{
+                fontWeight: '400',
+                fontSize: '16px',
+                color: '#495057',
+                display: 'flex',
+                listStyle: 'none',
+                justifyContent: 'space-between',
+              }}
+            >
+              <li
+                style={{ fontWeight: 700, fontSize: '16px', color: '#495057' }}
+              >
+                {product.category_tag}
+              </li>
+              <li
+                style={{ fontWeight: 400, fontSize: '12px', color: '#74788D' }}
+              >
+                <NumberFormat
+                  value={product.total}
+                  displayType={'text'}
+                  thousandSeparator={true}
+                  prefix={'₩'}
+                />
+              </li>
+            </ul>
+          </React.Fragment>
+        ))}
+      </>
+    )
   }
 
   // DatePicker
@@ -287,8 +291,8 @@ const AnalysisMarket = (props) => {
             <Col xs={24} sm={2} md={2} lg={2} xl={2}>
               <Button
                 style={{
-                  background: '#71c4d5',
-                  borderColor: '#71c4d5',
+                  background: '#42abbc',
+                  borderColor: '#42abbc',
                   fontWeight: 'bold',
                 }}
                 type="primary"

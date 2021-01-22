@@ -1,18 +1,121 @@
 import React, { useState, useEffect } from 'react'
+import NumberFormat from 'react-number-format'
 import moment from 'moment'
 import axios from 'axios'
 
-import { DatePicker, Button, Row, Col, Card, Divider, Image } from 'antd'
+import { DatePicker, Button, Row, Col, Card, Divider, Spin } from 'antd'
 
 import Footer from '../../components/Footer'
 import GroupButton from './GroupButton/GroupButton'
 import { API_URL } from '../../constants/appConstants'
-import Spiner from '../../images/spiner.gif'
 import './home.scss'
 
 const Home = (props) => {
   // Spin
   const [loading, setLoading] = useState(false)
+
+  // const fakeData = [
+  //   {
+  //     bander_name: '좋은책어린이',
+  //     market_name: '인터파크',
+  //     revenue: '441112734765',
+  //   },
+  //   {
+  //     bander_name: '이영준',
+  //     market_name: '인터파크',
+  //     revenue: '422381749142',
+  //   },
+  //   {
+  //     bander_name: '송진우',
+  //     market_name: '인터파크',
+  //     revenue: '267923800272',
+  //   },
+  //   {
+  //     bander_name: '이영림',
+  //     market_name: '인터파크',
+  //     revenue: '196965738600',
+  //   },
+  //   {
+  //     bander_name: '삼성출판사',
+  //     market_name: '인터파크',
+  //     revenue: '78402303080',
+  //   },
+  //   {
+  //     bander_name: 'coupang',
+  //     market_name: '쿠팡',
+  //     revenue: '36163983230',
+  //   },
+  //   {
+  //     bander_name: '최우수판매자',
+  //     market_name: '옥션',
+  //     revenue: '33559781230',
+  //   },
+  //   {
+  //     bander_name: '브랜드 카탈로그',
+  //     market_name: '스마트스토어',
+  //     revenue: '28405122440',
+  //   },
+  //   {
+  //     bander_name: '★젤리스푼★',
+  //     market_name: 'G마켓',
+  //     revenue: '26969310410',
+  //   },
+  //   {
+  //     bander_name: '(주)오보소',
+  //     market_name: 'G마켓',
+  //     revenue: '23587712620',
+  //   },
+  //   {
+  //     bander_name: '이소을',
+  //     market_name: '인터파크',
+  //     revenue: '17998160850',
+  //   },
+  //   {
+  //     bander_name: '매일분유',
+  //     market_name: 'G마켓',
+  //     revenue: '17092919880',
+  //   },
+  //   {
+  //     bander_name: '시공주니어',
+  //     market_name: '인터파크',
+  //     revenue: '16795426460',
+  //   },
+  //   {
+  //     bander_name: '한독몰',
+  //     market_name: '스마트스토어',
+  //     revenue: '16436992000',
+  //   },
+  //   {
+  //     bander_name: '매일유업공식판매업체',
+  //     market_name: 'G마켓',
+  //     revenue: '16163833020',
+  //   },
+  //   {
+  //     bander_name: '깨끗한나라_공식SHOP',
+  //     market_name: 'G마켓',
+  //     revenue: '14943221410',
+  //   },
+  //   {
+  //     bander_name: '베이비하우스365',
+  //     market_name: '옥션',
+  //     revenue: '13999957680',
+  //   },
+  //   {
+  //     bander_name: '분유나라_',
+  //     market_name: 'G마켓',
+  //     revenue: '13050088870',
+  //   },
+  //   {
+  //     bander_name: 'CoCo BeBe',
+  //     market_name: 'G마켓',
+  //     revenue: '12970623930',
+  //   },
+  //   {
+  //     bander_name: '매일분유번동유통',
+  //     market_name: '옥션',
+  //     revenue: '11846032830',
+  //   },
+  // ]
 
   // Handle Data
   const [dataTopBander, setDataTopBander] = useState([])
@@ -40,13 +143,12 @@ const Home = (props) => {
     return db
   })
 
-  const ListItem = (props) => {
-    const value = props.value
-    // console.log(value);
+  const RenderData = (props) => {
+    const data = props.data
     return (
       <>
-        <ul className="ul-list">
-          <li style={{ display: 'flex', alignItems: 'center' }}>
+        {data.map((db, i) => (
+          <React.Fragment key={i}>
             <ul
               style={{
                 listStyle: 'none',
@@ -56,64 +158,70 @@ const Home = (props) => {
             >
               <li
                 style={{
-                  paddingRight: '40px',
+                  flexBasis: '10%',
                   fontWeight: '700',
                   fontSize: '20px',
                   color: '#495057',
                 }}
               >
-                <strong>{value.id}</strong>
+                {db.id}
               </li>
 
-              <li>
-                <ul style={{ listStyle: 'none' }}>
-                  <li>
-                    <small
-                      style={{
-                        fontWeight: '400',
-                        fontSize: '12px',
-                        color: '#74788D',
-                      }}
-                    >
-                      {value.market_name}
-                    </small>
+              <li style={{ flexBasis: '60%' }}>
+                <ul
+                  style={{
+                    listStyle: 'none',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <li
+                    style={{
+                      fontWeight: '400',
+                      fontSize: '12px',
+                      color: '#74788D',
+                    }}
+                  >
+                    {db.market_name}
                   </li>
-                  <li>
-                    <strong
-                      style={{
-                        fontWeight: '700',
-                        fontSize: '14px',
-                        color: '#495057',
-                      }}
-                    >
-                      {value.bander_name ? value.bander_name : value.name}
-                    </strong>
+                  <li
+                    style={{
+                      fontWeight: '700',
+                      fontSize: '14px',
+                      color: '#495057',
+                    }}
+                  >
+                    {db.bander_name ? db.bander_name : db.name}
                   </li>
                 </ul>
               </li>
-            </ul>
-          </li>
 
-          <li>
-            <strong
-              style={{ fontWeight: '700p', fontSize: '14px', color: '#495057' }}
-            >
-              {value.revenue ? `₩ ${value.revenue}` : value.sold}
-            </strong>
-          </li>
-        </ul>
-        <Divider className="edit-margin" />
+              <li
+                style={{
+                  flexBasis: '30%',
+                  textAlign: 'end',
+                  fontWeight: '700',
+                  fontSize: '14px',
+                  color: '#495057',
+                }}
+              >
+                {db.revenue ? (
+                  <NumberFormat
+                    value={db.revenue}
+                    displayType={'text'}
+                    thousandSeparator={true}
+                    prefix={'₩'}
+                  />
+                ) : (
+                  db.sold
+                )}
+              </li>
+            </ul>
+            <Divider className="edit-margin" />
+          </React.Fragment>
+        ))}
       </>
     )
-  }
-
-  const RenderData = (props) => {
-    const data = props.data
-    // console.log(data)
-    const listitems = data.map((product, i) => (
-      <ListItem key={i} value={product} />
-    ))
-    return <>{listitems}</>
   }
 
   // Date Picker
@@ -147,23 +255,40 @@ const Home = (props) => {
   }
 
   const getData = async () => {
-    try {
-      setLoading(true)
-      // const { data } = await axios.get(
-      //   `${API_URL}/home/revenue?start=${day[0]}&end=${day[1]}`,
-      //   config,
-      // )
-      const { data } = await axios.get(
-        `${API_URL}/home/revenue?start=123456789&end=2134567890`,
-        config,
-      )
-      console.log(data)
-      setDataTopBander(data.data.result.top_20_revenue)
-      setDataTopProduct(data.data.result.top_20_selling)
-      setLoading(false)
-    } catch (error) {
-      console.log(error.response)
-    }
+    setLoading(true)
+
+    await Promise.all([
+      axios
+        .get(
+          `${API_URL}/home/revenue/toprevenue?start=1234567890&end=2345678901`,
+          config,
+        )
+        // .get(
+        //   `${API_URL}/home/revenue/toprevenue?start=${day[0]}&end=${day[1]}`,
+        //   config,
+        // )
+        .then((value) => {
+          console.log(value)
+          setDataTopBander(value.data.data.result)
+        })
+        .catch((error) => console.log(error.response)),
+
+      axios
+        .get(
+          `${API_URL}/home/revenue/topsellitem?start=1234567890&end=2345678901`,
+          config,
+        )
+        // .get(
+        //   `${API_URL}/home/revenue/topsellitem?start=${day[0]}&end=${day[1]}`,
+        //   config,
+        // )
+        .then((value) => {
+          console.log(value)
+          setDataTopProduct(value.data.data.result)
+        })
+        .catch((error) => console.log(error.response)),
+    ])
+    setLoading(false)
   }
 
   // Get data of current month
@@ -181,7 +306,7 @@ const Home = (props) => {
   //       `${API_URL}/home/revenue?start=123456789&end=2134567890`,
   //       config,
   //     )
-  //     // const { data } = await axios.get(`${API_URL}/home/revenue?start=${allDateOfCurrentMonth[0]}&end=${allDateOfCurrentMonth[1]}`, config);
+  // const { data } = await axios.get(`${API_URL}/home/revenue?start=${allDateOfCurrentMonth[0]}&end=${allDateOfCurrentMonth[1]}`, config);
   //     console.log(data)
   //     setDataTopBander(data.data.result.top_20_revenue)
   //     setDataTopProduct(data.data.result.top_20_selling)
@@ -216,8 +341,8 @@ const Home = (props) => {
           />
           <Button
             style={{
-              background: '#71c4d5',
-              borderColor: '#71c4d5',
+              background: '#42abbc',
+              borderColor: '#42abbc',
               fontWeight: 'bold',
             }}
             type="primary"
@@ -229,7 +354,7 @@ const Home = (props) => {
       </Row>
 
       {loading ? (
-        <Image src={Spiner} width={100} />
+        <Spin size="large" />
       ) : (
         <Row className="site-card-wrapper" gutter={32}>
           <Col

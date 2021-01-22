@@ -31,12 +31,12 @@ Research - Lodash // Code with less err in solution of EasyFrontEnd
 
 Home Page
 
-1. Map data to chart - And Category
-2. Fix UI after render data
-3. Cheack Home Page - Admin - SignUp - Login
+2. Fix UI after render data --- Done
+3. Format number
+4. Call with new API in Home One ---- Done
+5. Spiner like https://www.youtube.com/watch?v=zY5jOP5v-FY
 
 My Page:
 
 1. Load More
-
-All: Solution Redux
+   All: Solution Redux
