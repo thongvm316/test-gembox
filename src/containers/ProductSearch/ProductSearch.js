@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, DatePicker, Row, Col, Input, Space, Table, Modal, Select } from 'antd';
 import Filter from './Filter'
 import Chart from './Chart'
@@ -14,43 +14,46 @@ const { Option } = Select;
 const ProductSearch = (props) => {
 
   const [productList, setProductList] = useState([]);
-
+  const [loading, setLoading] = useState(false)
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+  const [lastIndex, setLastIndex] = useState(0);
 
-  const [params, setParams] = useState(
-    {
-      searchBy: '카테고리'
-    })
+  const [filters, setFilters] = useState()
+
+  const [params, setParams] = useState()
 
   const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    getProducts()
+  }, [filters, lastIndex])
+
   const showModal = () => {
     setVisible(true)
   };
   const handleOk = (values) => {
-
-    let paramsClone = _.cloneDeep(params);
-    paramsClone = {
-      ...paramsClone,
-      category: values.category,
-      markets: values.markets,
-      price: values.price,
-      reviews: values.reviews,
-      searchs: values.searchs,
-    }
-    setParams(paramsClone)
+    setLastIndex(0)
+    setFilters(values)
     setVisible(false)
-
-    getProducts(paramsClone)
   };
 
-  const getProducts = async (paramsData) => {
-    console.log(paramsData)
+  const getProducts = async () => {
+    console.log(lastIndex)
+    console.log(filters)
+    setLoading(true)
+    let params = '';
 
-    let marketParams = '';
-    _.each(paramsData.markets, (market, index) => {
-      marketParams += `&market[]=${market}`
-    })
+    if (filters && filters.markets && filters.markets.length) {
+      _.each(filters.markets, (market, index) => {
+        params += `&market[]=${market}`
+      })
+    }
+
+
+    for (const key in filters) {
+      params += `&${key}=${filters[key]}`
+    }
 
     const config = {
       headers: {
@@ -61,26 +64,25 @@ const ProductSearch = (props) => {
     }
     try {
       const res = await axios.get(`${API_URL}/product/search?
-        start=${startDate}
-        &end=${endDate}
-        &minPrice=${paramsData.price[0]}
-        &maxPrice=${paramsData.price[1]}
-        &category=${paramsData.category}
-        ${marketParams}
-        &minReview=${paramsData.reviews[0]}
-        &maxReview=${paramsData.reviews[1]}
-        &minSale=${paramsData.searchs[0]}
-        &maxSale=${paramsData.searchs[1]}
-        &searchBy=${paramsData.searchBy}
-        &key=${paramsData.key}
-        &lastIndex=100`,
+        lastIndex=${lastIndex}
+        ${params}`,
         config)
 
-      if (res.status == 200){
-        setProductList(res.data.data.result)
+      if (res.status == 200) {
+
+        if (lastIndex > 0) {
+          setProductList(productList.concat(res.data.data.result))
+
+        } else {
+          setProductList(res.data.data.result)
+
+        }
       }
+      setLoading(false)
     } catch (error) {
       console.log(error.response.data)
+      setLoading(false)
+
     }
 
   }
@@ -112,6 +114,11 @@ const ProductSearch = (props) => {
   // Of Table
   const [countSelected, setCountSelected] = useState(0)
   const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+
+    },
     {
       title: '상품명',
       dataIndex: 'name',
@@ -227,29 +234,33 @@ const ProductSearch = (props) => {
 
   }
 
+
+  const loadMore = async () => {
+    setLastIndex(lastIndex + 100)
+  }
+
   return (
     <div className="product-search">
       <Row className="card-border" style={{ marginBottom: '5rem' }}>
         <Col span={24} className="wraper-actions">
           <div>
             <Button className="main-btn-style border-radius-6" onClick={showModal}>필터</Button>
-            {/* <Button onClick={showModalTwo}>선택된 항목 그래프 비교</Button> */}
           </div>
-          <div className="filter-date">
+          {/* <div className="filter-date">
             <Space>
               <DatePicker onChange={onChangeStartDate} />
               <LineOutlined style={{ width: '40px', height: '8px', color: '#6A7187' }} />
               <DatePicker onChange={onChangeEndDate} />
 
-              {/* <Button className="btn-light-blue  border-radius-6" onClick={getDateFilter} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button> */}
+              <Button className="btn-light-blue  border-radius-6" onClick={onSearch} style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
             </Space>
-          </div>
+          </div> */}
           <div className="input-product-search" style={{ display: 'flex' }}>
-            <Input style={{ marginRight: '5px' }} placeholder="Search" onChange={onChangeSearch} />
+            {/* <Input style={{ marginRight: '5px' }} placeholder="Search" onChange={onChangeSearch} />
             <Select defaultValue="0" className="select-after">
               <Option value="0">밴더명</Option>
               <Option value="1">제품명</Option>
-            </Select>
+            </Select> */}
             <Button className="btn-light-blue border-radius-6" onClick={getExcelFile} style={{ backgroundColor: '#71c4d5', border: 'none', marginLeft: '10px' }} type="primary">EXCEL</Button>
           </div>
         </Col>
@@ -258,6 +269,8 @@ const ProductSearch = (props) => {
       <Row className='res-small-device card-border'>
         <Col span={24}>
           <Table
+            loading={loading}
+            rowKey={record => record.id}
             columns={columns}
             dataSource={productList}
             scroll={{ x: 1300 }}
@@ -273,6 +286,14 @@ const ProductSearch = (props) => {
               }
             }}
           />
+        </Col>
+        <Col span={24} style={{ textAlign: 'center', marginTop: '2rem' }}>
+          {
+            productList.length ?
+              <Button onClick={loadMore} className="btn-light-blue border-radius-6" style={{ backgroundColor: '#71c4d5', border: 'none', marginLeft: '10px' }} type="primary">LOAD MORE</Button>
+              : ''
+          }
+
         </Col>
       </Row>
 
