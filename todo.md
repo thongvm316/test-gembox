@@ -31,12 +31,11 @@ Research - Lodash // Code with less err in solution of EasyFrontEnd
 
 Home Page
 
-2. Fix UI after render data --- Done
-3. Format number
-4. Call with new API in Home One ---- Done
 5. Spiner like https://www.youtube.com/watch?v=zY5jOP5v-FY
+6. Problem with category select in 320px device
 
 My Page:
 
 1. Load More
    All: Solution Redux
+   Call API like PH
