@@ -268,7 +268,7 @@ const ProductDetail = (props) => {
                 <Col span={24}>
                     <div className="info">
                         <div className="avatar">
-
+                            <img src={product.image} style={{width: '100%'}}/>
                         </div>
                         <div className="text">
                             <div>

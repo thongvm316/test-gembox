@@ -29,24 +29,24 @@ const VendorSearch = () => {
 
   const columns = [
     {
-      title: '마켓명',
+      title: '벤더명',
       dataIndex: 'bander_name',
     },
     {
-      title: '벤더명',
-      dataIndex: '벤더명',
+      title: '총 판매 상품 수',
+      dataIndex: 'product_count',
     },
     {
-      title: '카테고리',
-      dataIndex: '카테고리',
+      title: '총 판매 매출',
+      dataIndex: 'revenue',
     },
     {
-      title: '상품명',
-      dataIndex: '상품명',
+      title: '리뷰',
+      dataIndex: 'total_review',
     },
     {
-      title: '가격',
-      dataIndex: '가격',
+      title: '판매수',
+      dataIndex: 'sale_count',
     },
   ];
 

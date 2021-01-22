@@ -122,10 +122,6 @@ const ProductSearch = (props) => {
   const [countSelected, setCountSelected] = useState(0)
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-    },
-    {
       title: '상품명',
       // dataIndex: 'name',
       render: renderName,
