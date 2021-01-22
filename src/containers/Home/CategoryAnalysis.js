@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import NumberFormat from 'react-number-format'
 import { API_URL } from '../../constants/appConstants'
 
 import GroupButton from './GroupButton/GroupButton'
@@ -85,19 +86,28 @@ const CategoryAnalysis = (props) => {
         {data.map((product, i) => (
           <React.Fragment key={i}>
             <ul
-              className="ul-list"
-              style={{ fontWeight: '400', fontSize: '16px', color: '#495057' }}
+              style={{
+                display: 'flex',
+                listStyle: 'none',
+                fontWeight: '400',
+                fontSize: '16px',
+                color: '#495057',
+              }}
             >
-              <ul
-                className="list-in"
-                style={{ display: 'flex', alignItems: 'center' }}
-              >
-                <li style={{ marginRight: '24px', fontWeight: 'bold' }}>
-                  {product.id}
-                </li>
-                <li>{product.name}</li>
-              </ul>
-              <li>₩ {product.seller_price}</li>
+              <li style={{ flexBasis: '10%', fontWeight: 'bold' }}>
+                {product.id}
+              </li>
+
+              <li style={{ flexBasis: '60%' }}>{product.name}</li>
+
+              <li style={{ flexBasis: '30%', textAlign: 'end' }}>
+                <NumberFormat
+                  value={product.seller_price}
+                  displayType={'text'}
+                  thousandSeparator={true}
+                  prefix={'₩'}
+                />
+              </li>
             </ul>
           </React.Fragment>
         ))}
@@ -106,7 +116,6 @@ const CategoryAnalysis = (props) => {
   }
 
   /* Chart */
-
   const renameKeys = (obj, newKeys) => {
     const keyValues = Object.keys(obj).map((key) => {
       const newKey = newKeys[key] || key
@@ -225,9 +234,6 @@ const CategoryAnalysis = (props) => {
   const getData = async () => {
     setLoading(true)
     console.log('Waiting for data.....')
-    // console.log(
-    //   `${API_URL}/home/category/totalsales?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
-    // )
     await Promise.all([
       axios
         // .get(
@@ -428,8 +434,8 @@ const CategoryAnalysis = (props) => {
             <Col xs={24} sm={2} md={2} lg={2} xl={2}>
               <Button
                 style={{
-                  background: '#71c4d5',
-                  borderColor: '#71c4d5',
+                  background: '#42abbc',
+                  borderColor: '#42abbc',
                   fontWeight: 'bold',
                 }}
                 type="primary"

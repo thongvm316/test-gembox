@@ -31,17 +31,6 @@
           font-weight: 700;
           font-family: 'Open Sans', sans-serif;
         }
-        .ul-list {
-          li:first-child {
-            font-size: 20px;
-          }
-          list-style: none;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 0;
-          font-family: 'Open Sans', sans-serif !important;
-        }
       }
     }
     .ant-card-head-title {
@@ -62,11 +51,11 @@
     display: none;
   }
 
-  .ant-image {
+  .ant-spin {
     margin-left: 50%;
+    margin-top: 2rem;
     transform: translateX(-50%);
   }
-
 }
 
 @media (max-width: 576px) {
