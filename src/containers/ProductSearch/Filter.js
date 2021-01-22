@@ -1,21 +1,20 @@
 import React, { useState } from 'react'
-import { Checkbox, Row, Col, Slider, Button, Input, Select } from 'antd'
+import { Checkbox, Row, Col, Slider, Button, Input, Select, Space, DatePicker } from 'antd'
+import { LineOutlined } from '@ant-design/icons';
 
 import './Filter.scss'
 import CategoryList from '../CategoryList/CategoryList';
+import moment from 'moment'
 const { Option } = Select;
 
 
 const Filter = (props) => {
 
     const [price, setPrice] = useState([50000, 7500000])
-
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
     const [filter, setFilter] = useState(
         {
-            category: '11번가',
-            price: [50000, 7500000],
-            reviews: [],
-            searchs: []
         });
 
 
@@ -24,11 +23,12 @@ const Filter = (props) => {
     }
 
     function onChangeSlider(value) {
-        setFilter({ ...filter, price: value })
+        // setFilter({ ...filter, price: value })
+        setFilter({ ...filter, minPrice: value[0], maxPrice: value[1] })
+
     }
 
     const handleChangeCategory = (value) => {
-        console.log(value)
         setFilter({ ...filter, category: value })
     }
 
@@ -37,30 +37,94 @@ const Filter = (props) => {
     }
 
     const minReviews = (e) => {
-        const review = filter.reviews;
-        review[0] = e.target.value
-        setFilter({...filter, reviews: review})
+        // const review = filter.reviews;
+        // review[0] = e.target.value
+        // setFilter({ ...filter, reviews: review })
+
+        setFilter({ ...filter, minReview: e.target.value })
     }
 
     const maxReviews = (e) => {
-        const review = filter.reviews;
-        review[1] = e.target.value
-        setFilter({...filter, reviews: review})
+        // const review = filter.reviews;
+        // review[1] = e.target.value
+        // setFilter({ ...filter, reviews: review })
+
+        setFilter({ ...filter, maxReview: e.target.value })
+
     }
 
-    const minSearchs = (e) => {
-        const search = filter.searchs;
-        search[0] = e.target.value
-        setFilter({...filter, searchs: search})
+    const setMinSale = (e) => {
+        // const search = filter.searchs;
+        // search[0] = e.target.value
+        // setFilter({ ...filter, searchs: search })
+
+        setFilter({ ...filter, minSale: e.target.value })
+
     }
 
-    const maxSearchs = (e) => {
-        const search = filter.searchs;
-        search[1] = e.target.value
-        setFilter({...filter, searchs: search})
+    const setMaxSale = (e) => {
+        // const search = filter.searchs;
+        // search[1] = e.target.value
+        // setFilter({ ...filter, searchs: search })
+
+        setFilter({ ...filter, maxSale: e.target.value })
     }
+
+    const onChangeSearch = (e) => {
+        setFilter({ ...filter, key: e.target.value })
+    }
+
+    const onChangeStartDate = (date, dateString) => {
+        setFilter({ ...filter, start: moment(dateString).unix() })
+
+    }
+
+    const onChangeEndDate = (date, dateString) => {
+        setFilter({ ...filter, end: moment(dateString).unix() })
+
+    }
+
+    const handleChangeSearchBy = (value) => {
+        setFilter({ ...filter, searchBy: value })
+
+    }
+
     return (
         <div className='modal'>
+
+            <Row style={{ marginBottom: '2rem' }}>
+                <Col span={4}><h4>시작일, 종료일, 검색</h4></Col>
+                <Col span={16}>
+                    <DatePicker onChange={onChangeStartDate} />
+                    <LineOutlined style={{ width: '40px', height: '8px', color: '#6A7187' }} />
+                    <DatePicker onChange={onChangeEndDate} />
+                </Col>
+                <Col span={4}>
+                    <Select onChange={handleChangeSearchBy} defaultValue="0" className="select-after">
+                        <Option value="0">밴더명</Option>
+                        <Option value="1">제품명</Option>
+                    </Select>
+                </Col>
+            </Row>
+{/* 
+            <Row style={{ marginBottom: '2rem' }}>
+                <Col span={4}><h4>Search Key</h4></Col>
+                <Col span={20}>
+                    <Input style={{ marginRight: '5px' }} placeholder="Search" onChange={onChangeSearch} />
+
+                </Col>
+            </Row> */}
+
+            {/* <Row style={{ marginBottom: '2rem' }}>
+                <Col span={4}><h4>Search By</h4></Col>
+                <Col span={20}>
+                    <Select onChange={handleChangeSearchBy} defaultValue="0" className="select-after">
+                        <Option value="0">밴더명</Option>
+                        <Option value="1">제품명</Option>
+                    </Select>
+                </Col>
+            </Row> */}
+
             <Row className='market'>
                 <Col span={4}><h4>마켓</h4></Col>
                 <Col span={20}>
@@ -114,7 +178,7 @@ const Filter = (props) => {
                                 min={0}
                                 max={10000000}
                                 range
-                                defaultValue={[filter.price[0], filter.price[1]]}
+                                defaultValue={[filter.minPrice, filter.maxPrice]}
                                 onChange={onChangeSlider}
                                 onAfterChange={onChangeSlider}
                             />
@@ -124,12 +188,12 @@ const Filter = (props) => {
                         </Col>
 
                         <Col span={4}>
-                            <div style={{ color: '#42ABBC' }}>₩ {filter.price[0]}</div>
+                            <div style={{ color: '#42ABBC' }}>₩ {filter.minPrice}</div>
                         </Col>
                         <Col span={16}>
                         </Col>
                         <Col span={4}>
-                            <div style={{ color: '#42ABBC' }}>₩ {filter.price[1]}</div>
+                            <div style={{ color: '#42ABBC' }}>₩ {filter.maxPrice}</div>
                         </Col>
                     </Row>
                 </Col>
@@ -173,7 +237,7 @@ const Filter = (props) => {
                 <Col span={20}>
                     <Row>
                         <Input.Group compact>
-                            <Input onChange={minSearchs} style={{ width: 150, textAlign: 'center' }} suffix='최소' />
+                            <Input onChange={setMinSale} style={{ width: 150, textAlign: 'center' }} suffix='최소' />
                             <Input
                                 className="site-input-split"
                                 style={{
@@ -189,7 +253,7 @@ const Filter = (props) => {
                                 disabled
                             />
                             <Input
-                                onChange={maxSearchs}
+                                onChange={setMaxSale}
                                 className="site-input-right"
                                 style={{
                                     width: 150,

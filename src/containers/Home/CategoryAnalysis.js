@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import NumberFormat from 'react-number-format'
 import { API_URL } from '../../constants/appConstants'
 
 import GroupButton from './GroupButton/GroupButton'
@@ -85,19 +86,28 @@ const CategoryAnalysis = (props) => {
         {data.map((product, i) => (
           <React.Fragment key={i}>
             <ul
-              className="ul-list"
-              style={{ fontWeight: '400', fontSize: '16px', color: '#495057' }}
+              style={{
+                display: 'flex',
+                listStyle: 'none',
+                fontWeight: '400',
+                fontSize: '16px',
+                color: '#495057',
+              }}
             >
-              <ul
-                className="list-in"
-                style={{ display: 'flex', alignItems: 'center' }}
-              >
-                <li style={{ marginRight: '24px', fontWeight: 'bold' }}>
-                  {product.id}
-                </li>
-                <li>{product.name}</li>
-              </ul>
-              <li>₩ {product.seller_price}</li>
+              <li style={{ flexBasis: '10%', fontWeight: 'bold' }}>
+                {product.id}
+              </li>
+
+              <li style={{ flexBasis: '60%' }}>{product.name}</li>
+
+              <li style={{ flexBasis: '30%', textAlign: 'end' }}>
+                <NumberFormat
+                  value={product.seller_price}
+                  displayType={'text'}
+                  thousandSeparator={true}
+                  prefix={'₩'}
+                />
+              </li>
             </ul>
           </React.Fragment>
         ))}
@@ -106,7 +116,6 @@ const CategoryAnalysis = (props) => {
   }
 
   /* Chart */
-
   const renameKeys = (obj, newKeys) => {
     const keyValues = Object.keys(obj).map((key) => {
       const newKey = newKeys[key] || key
@@ -218,32 +227,40 @@ const CategoryAnalysis = (props) => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      'X-Auth-Token': `${localStorage.getItem('token-user')}`,
     },
   }
 
   const getData = async () => {
     setLoading(true)
     console.log('Waiting for data.....')
-    console.log(
-      `${API_URL}/home/category/totalsales?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
-    )
     await Promise.all([
       axios
+        // .get(
+        //   `${API_URL}/home/category/totalsales?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/totalsales?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/totalsales?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
+          console.log(value)
           setTotalSale(value.data.data.result)
         })
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/topcoupang?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/topcoupang?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/topcoupang?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             topcoupang: value.data.data.result,
@@ -252,11 +269,16 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/topauction?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/topauction?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/topauction?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             topauction: value.data.data.result,
@@ -265,11 +287,16 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/topsmartstore?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/topsmartstore?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/topsmartstore?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             topsmartstore: value.data.data.result,
@@ -278,11 +305,16 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/topwemake?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/topwemake?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/topwemake?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             topwemake: value.data.data.result,
@@ -291,11 +323,16 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/toptmon?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/toptmon?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/toptmon?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             toptmon: value.data.data.result,
@@ -304,11 +341,16 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/topinterpark?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/topinterpark?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/topinterpark?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             topinterpark: value.data.data.result,
@@ -317,11 +359,16 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/top11str?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/top11str?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/top11str?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             top11str: value.data.data.result,
@@ -330,11 +377,16 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/topgmarket?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/topgmarket?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/topgmarket?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             topgmarket: value.data.data.result,
@@ -361,7 +413,7 @@ const CategoryAnalysis = (props) => {
       >
         <Col xs={17} sm={20} md={21} lg={21} xl={21} className="date-picker">
           <Row gutter={[4, 4]}>
-            <Col xs={24} sm={3} md={3} lg={2} xl={1}>
+            <Col xs={24} sm={3} md={3} lg={2} xl={2}>
               <h1
                 style={{
                   paddingTop: '3px',
@@ -382,8 +434,8 @@ const CategoryAnalysis = (props) => {
             <Col xs={24} sm={2} md={2} lg={2} xl={2}>
               <Button
                 style={{
-                  background: '#71c4d5',
-                  borderColor: '#71c4d5',
+                  background: '#42abbc',
+                  borderColor: '#42abbc',
                   fontWeight: 'bold',
                 }}
                 type="primary"

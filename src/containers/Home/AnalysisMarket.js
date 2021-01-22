@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import moment from 'moment'
+import NumberFormat from 'react-number-format'
 import { API_URL } from '../../constants/appConstants'
 
 import { DatePicker, Button, Row, Col, Select, Card, Spin } from 'antd'
@@ -27,39 +27,43 @@ const AnalysisMarket = (props) => {
   const data1 = data.slice(0, 10)
   const data2 = data.slice(10, 20)
 
-  const ListItem = (props) => {
-    const value = props.value
-    // console.log(value)
-    return (
-      <>
-        <ul
-          className="ul-list"
-          style={{
-            fontWeight: '400',
-            fontSize: '16px',
-            color: '#495057',
-            display: 'flex',
-            listStyle: 'none',
-            justifyContent: 'space-between',
-          }}
-        >
-          <li style={{ fontWeight: 700, fontSize: '16px', color: '#495057' }}>
-            {value.category_tag}
-          </li>
-          <li style={{ fontWeight: 400, fontSize: '12px', color: '#74788D' }}>
-            ₩ {value.total}
-          </li>
-        </ul>
-      </>
-    )
-  }
-
   const RenderData = (props) => {
     const data = props.data
-    const listitems = data.map((product, i) => (
-      <ListItem key={i} value={product} />
-    ))
-    return <>{listitems}</>
+    return (
+      <>
+        {data.map((product, i) => (
+          <React.Fragment key={i}>
+            <ul
+              className="ul-list"
+              style={{
+                fontWeight: '400',
+                fontSize: '16px',
+                color: '#495057',
+                display: 'flex',
+                listStyle: 'none',
+                justifyContent: 'space-between',
+              }}
+            >
+              <li
+                style={{ fontWeight: 700, fontSize: '16px', color: '#495057' }}
+              >
+                {product.category_tag}
+              </li>
+              <li
+                style={{ fontWeight: 400, fontSize: '12px', color: '#74788D' }}
+              >
+                <NumberFormat
+                  value={product.total}
+                  displayType={'text'}
+                  thousandSeparator={true}
+                  prefix={'₩'}
+                />
+              </li>
+            </ul>
+          </React.Fragment>
+        ))}
+      </>
+    )
   }
 
   // DatePicker
@@ -76,7 +80,30 @@ const AnalysisMarket = (props) => {
     setDatePicker(storeDay)
   }
 
-  // Option of chart
+  /* Option of chart */
+  const renameKeys = (obj, newKeys) => {
+    const keyValues = Object.keys(obj).map((key) => {
+      const newKey = newKeys[key] || key
+      return { [newKey]: obj[key] }
+    })
+    return Object.assign({}, ...keyValues)
+  }
+
+  // Chart 1
+  const colorsChart1 = data.map((color) => {
+    let listColor = '#'.concat(
+      Math.floor(Math.random() * 16777215).toString(16),
+    )
+    return listColor
+  })
+
+  const dataOfChartOne = data.map((data) => {
+    const newKeys = { category_tag: 'name', total: 'y' }
+    const renamedObj = renameKeys(data, newKeys)
+    const parseToNum = parseInt(renamedObj.y)
+    return { name: renamedObj.name, y: parseToNum }
+  })
+
   const options = {
     chart: {
       height: 331,
@@ -86,22 +113,13 @@ const AnalysisMarket = (props) => {
     plotOptions: {
       pie: {
         allowPointSelect: true,
-        colors: [
-          '#ffc26f',
-          '#d185d8',
-          '#8784d7',
-          '#fe7c69',
-          '#caeefb',
-          '#9bdbaf',
-          '#fff1b6',
-          '#febeb3',
-        ],
+        colors: colorsChart1,
       },
     },
     tooltip: {
       enabled: true,
       formatter: function () {
-        return '<b>' + this.y + '%</b>'
+        return '<b>₩ ' + this.y + '</b>'
       },
     },
     credits: {
@@ -120,12 +138,13 @@ const AnalysisMarket = (props) => {
         dataLabels: {
           enabled: false,
         },
-        showInLegend: false,
-        data: [],
+        showInLegend: true,
+        data: dataOfChartOne,
       },
     ],
   }
 
+  // Chart 2
   const getTextCategories = data.map((data) => {
     return data.category_tag
   })
@@ -133,16 +152,8 @@ const AnalysisMarket = (props) => {
     categories: getTextCategories,
   }
 
-  const renameKeys = (obj, newKeys) => {
-    const keyValues = Object.keys(obj).map((key) => {
-      const newKey = newKeys[key] || key
-      return { [newKey]: obj[key] }
-    })
-    return Object.assign({}, ...keyValues)
-  }
-
   const dataOfTotalLineAndColumnChart = data.map((data) => {
-    const newKeys = { market_name: 'name', total: 'y' }
+    const newKeys = { category_tag: 'name', total: 'y' }
     const renamedObj = parseInt(renameKeys(data, newKeys).y)
     const color = '#'.concat(Math.floor(Math.random() * 16777215).toString(16))
     return { y: renamedObj, color }
@@ -222,6 +233,7 @@ const AnalysisMarket = (props) => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        'X-Auth-Token': `${localStorage.getItem('token-user')}`,
       },
     }
 
@@ -257,8 +269,9 @@ const AnalysisMarket = (props) => {
         align="middle"
       >
         <Col xs={17} sm={20} md={21} lg={21} xl={21} className="date-picker">
+          ``
           <Row gutter={[4, 4]}>
-            <Col xs={24} sm={3} md={3} lg={2} xl={1}>
+            <Col xs={24} sm={3} md={3} lg={2} xl={2}>
               <h1
                 style={{
                   paddingTop: '3px',
@@ -279,8 +292,8 @@ const AnalysisMarket = (props) => {
             <Col xs={24} sm={2} md={2} lg={2} xl={2}>
               <Button
                 style={{
-                  background: '#71c4d5',
-                  borderColor: '#71c4d5',
+                  background: '#42abbc',
+                  borderColor: '#42abbc',
                   fontWeight: 'bold',
                 }}
                 type="primary"

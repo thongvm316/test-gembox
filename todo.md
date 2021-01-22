@@ -21,18 +21,13 @@ Fix:
 ---
 
 At evening
-
-2. Hover icon in sider - Problem with Sider when click
-3. Style DatePicker Home Page - Chang month to Kr language in P2, P3
-4. Lazy load and add lastindex - Redux
-
 Fix Method Call API like Easy FrontEnd -- https://www.youtube.com/watch?v=LXz_7WQpob4
 Research - Lodash // Code with less err in solution of EasyFrontEnd
 
 ---
 
-1. Map fake data to chart: page 2 - page 3
-2. UI when render data
-3. Solution for redux
-
-What data for pie chart.
+5. Spiner like https://www.youtube.com/watch?v=zY5jOP5v-FY
+   My Page:
+1. Load More
+   All: Solution Redux
+   Call API like PH

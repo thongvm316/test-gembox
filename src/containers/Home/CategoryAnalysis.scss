@@ -133,20 +133,26 @@
 }
 
 // Media query
-@media (max-width: 479px) {
-  .category-analysis {
-    .style-small-device {
-      margin-top: 0.5rem;
-    }
-  }
-}
+// @media (max-width: 479px) {
+//   .category-analysis {
+//     .style-small-device {
+//       margin-top: 0.5rem;
+//     }
+//   }
+// }
 
-@media (min-width: 1140px) {
-  .aggregate-month {
-    .select-category-analysis {
-      .ant-select {
-        width: 124px;
-      }
-    }
+// @media (min-width: 1140px) {
+//   .aggregate-month {
+//     .select-category-analysis {
+//       .ant-select {
+//         width: 124px;
+//       }
+//     }
+//   }
+// }
+
+@media (max-width: 360px) {
+  .category-analysis .select-category-analysis span {
+    padding: .5rem;
   }
 }

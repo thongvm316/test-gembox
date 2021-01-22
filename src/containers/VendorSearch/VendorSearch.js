@@ -1,100 +1,126 @@
-import React, { useState } from 'react'
-import { Button, DatePicker, Space, Input, Row, Col, Table, Select } from 'antd';
-import { LineOutlined } from '@ant-design/icons';
+import React, { useState, useEffect } from 'react'
+import { Button, DatePicker, Space, Input, Row, Col, Table, Select } from 'antd'
+import { LineOutlined } from '@ant-design/icons'
 import { API_URL } from '../../constants/appConstants'
 import axios from 'axios'
-import './VendorSearch.scss';
+import './VendorSearch.scss'
 import moment from 'moment'
 
 const { Option } = Select
 
 const VendorSearch = () => {
+  const [vendors, setVendors] = useState([])
+  const [startDate, setStartDate] = useState()
+  const [endDate, setEndDate] = useState()
+  const [key, setKey] = useState()
 
-  const [vendors, setVendors] = useState([]);
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-  const [key, setKey] = useState();
-
+  const [filter, setFilter] = useState()
+  const [lastIndex, setLastIndex] = useState(0)
 
   // Table
   const [countSelected, setCountSelected] = useState(0)
+
+  useEffect(() => {
+    getVendor()
+  }, [lastIndex])
+
   const columns = [
     {
-      title: '마켓명',
+      title: '벤더명',
       dataIndex: 'bander_name',
     },
     {
-      title: '벤더명',
-      dataIndex: '벤더명',
+      title: '총 판매 상품 수',
+      dataIndex: 'product_count',
     },
     {
-      title: '카테고리',
-      dataIndex: '카테고리',
+      title: '총 판매 매출',
+      dataIndex: 'revenue',
     },
     {
-      title: '상품명',
-      dataIndex: '상품명',
+      title: '리뷰',
+      dataIndex: 'total_review',
     },
     {
-      title: '가격',
-      dataIndex: '가격',
+      title: '판매수',
+      dataIndex: 'sale_count',
     },
-  ];
+  ]
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        'selectedRows: ',
+        selectedRows,
+      )
       setCountSelected(selectedRows.length)
-
     },
     onSelect: (record, selected, selectedRows) => {
-      console.log(record, selected, selectedRows);
+      console.log(record, selected, selectedRows)
     },
     onSelectAll: (selected, selectedRows, changeRows) => {
-      console.log(selected, selectedRows, changeRows);
+      console.log(selected, selectedRows, changeRows)
       setCountSelected(selectedRows.length)
     },
-  };
-  const [checkStrictly, setCheckStrictly] = useState(false);
+  }
+  const [checkStrictly, setCheckStrictly] = useState(false)
 
   // DatePicker
-  const { RangePicker } = DatePicker;
+  const { RangePicker } = DatePicker
 
   const onChangeStartDate = (date, dateString) => {
-    setStartDate(moment(dateString).unix())
-
+    // setStartDate(moment(dateString).unix())
+    setFilter({ ...filter, start: moment(dateString).unix() })
   }
 
   const onChangeEndDate = (date, dateString) => {
-    setEndDate(moment(dateString).unix())
-
+    // setEndDate(moment(dateString).unix())
+    setFilter({ ...filter, end: moment(dateString).unix() })
   }
 
   function onOk(value) {
-    console.log('onOk: ', value);
+    console.log('onOk: ', value)
   }
 
   const onChangeSearch = (e) => {
-    setKey(e.target.value)
+    setFilter({ ...filter, key: e.target.value })
   }
 
   const getVendor = async () => {
-    const config = {
-      headers: {
-        "Accept": "application/json",
-        'Content-Type': 'application/json',
-        'X-Auth-Token': localStorage.getItem('token-user')
+    let params = ''
+    for (const key in filter) {
+      if (filter[key]) {
+        params += `&${key}=${filter[key]}`
       }
     }
+
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-Auth-Token': localStorage.getItem('token-user'),
+      },
+    }
     try {
-      const res = await axios.get(`${API_URL}/bander/search?start=${startDate}&end=${endDate}&key=${key}`, config)
-      if (res.status == 200){
-        console.log(res.data.data.result)
-        setVendors(res.data.data.result)
+      const res = await axios.get(
+        `${API_URL}/bander/search?lastIndex=${lastIndex}${params}`,
+        config,
+      )
+      if (res.status == 200) {
+        if (lastIndex > 0) {
+          setVendors(vendors.concat(res.data.data.result))
+        } else {
+          setVendors(res.data.data.result)
+        }
       }
     } catch (error) {
       console.log(error.response.data)
     }
+  }
+
+  const loadMore = async () => {
+    setLastIndex(lastIndex + 100)
   }
 
   return (
@@ -102,25 +128,46 @@ const VendorSearch = () => {
       <Row className="card-border" style={{ marginBottom: '5rem' }}>
         <Col span={24} className="wraper-actions">
           <div>
-            <Button className="main-btn-style border-radius-6" onClick={getVendor}>필터</Button>
+            <Button
+              className="main-btn-style border-radius-6"
+              onClick={getVendor}
+            >
+              필터
+            </Button>
           </div>
           <div className="filter-date">
             <Space>
               <DatePicker onChange={onChangeStartDate} />
-              <LineOutlined style={{ width: '40px', height: '8px', color: '#6A7187' }} />
+              <LineOutlined
+                style={{ width: '40px', height: '8px', color: '#6A7187' }}
+              />
               <DatePicker onChange={onChangeEndDate} />
 
-              <Button className="btn-light-blue  border-radius-6" style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button>
+              {/* <Button className="btn-light-blue  border-radius-6" style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button> */}
             </Space>
           </div>
           <div className="input-product-search" style={{ display: 'flex' }}>
-            <Input onChange={onChangeSearch} style={{ marginRight: '5px' }} placeholder="Search" />
+            <Input
+              onChange={onChangeSearch}
+              style={{ marginRight: '5px' }}
+              placeholder="Search"
+            />
             <Select defaultValue="카테고리" className="select-after">
               <Option value="카테고리">카테고리</Option>
               <Option value="밴더명">밴더명</Option>
               <Option value="제품명">제품명</Option>
             </Select>
-            <Button className="btn-light-blue border-radius-6" style={{ backgroundColor: '#71c4d5', border: 'none', marginLeft: '10px' }} type="primary">EXCEL</Button>
+            <Button
+              className="btn-light-blue border-radius-6"
+              style={{
+                backgroundColor: '#71c4d5',
+                border: 'none',
+                marginLeft: '10px',
+              }}
+              type="primary"
+            >
+              EXCEL
+            </Button>
           </div>
         </Col>
       </Row>
@@ -128,11 +175,31 @@ const VendorSearch = () => {
       <Row className="card-border">
         <Col span={24}>
           <Table
+            rowKey={(record) => record.id}
             columns={columns}
             dataSource={vendors}
             scroll={{ x: 1300 }}
             rowSelection={{ ...rowSelection, checkStrictly }}
+            pagination={false}
           />
+        </Col>
+        <Col span={24} style={{ textAlign: 'center', marginTop: '2rem' }}>
+          {vendors.length ? (
+            <Button
+              onClick={loadMore}
+              className="btn-light-blue border-radius-6"
+              style={{
+                backgroundColor: '#71c4d5',
+                border: 'none',
+                marginLeft: '10px',
+              }}
+              type="primary"
+            >
+              LOAD MORE
+            </Button>
+          ) : (
+            ''
+          )}
         </Col>
       </Row>
     </div>

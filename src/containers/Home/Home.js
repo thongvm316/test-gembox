@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import NumberFormat from 'react-number-format'
 import moment from 'moment'
 import axios from 'axios'
+import axiosClient from '../../api/axiosClient'
 
-import { DatePicker, Button, Row, Col, Card, Divider, Spin, Image } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
+import { DatePicker, Button, Row, Col, Card, Divider, Spin } from 'antd'
 
 import Footer from '../../components/Footer'
 import GroupButton from './GroupButton/GroupButton'
 import { API_URL } from '../../constants/appConstants'
-import Spiner from '../../images/spiner.gif'
 import './home.scss'
 
 const Home = (props) => {
@@ -41,13 +41,12 @@ const Home = (props) => {
     return db
   })
 
-  const ListItem = (props) => {
-    const value = props.value
-    // console.log(value);
+  const RenderData = (props) => {
+    const data = props.data
     return (
       <>
-        <ul className="ul-list">
-          <li style={{ display: 'flex', alignItems: 'center' }}>
+        {data.map((db, i) => (
+          <React.Fragment key={i}>
             <ul
               style={{
                 listStyle: 'none',
@@ -57,64 +56,70 @@ const Home = (props) => {
             >
               <li
                 style={{
-                  paddingRight: '40px',
+                  flexBasis: '10%',
                   fontWeight: '700',
                   fontSize: '20px',
                   color: '#495057',
                 }}
               >
-                <strong>{value.id}</strong>
+                {db.id}
               </li>
 
-              <li>
-                <ul style={{ listStyle: 'none' }}>
-                  <li>
-                    <small
-                      style={{
-                        fontWeight: '400',
-                        fontSize: '12px',
-                        color: '#74788D',
-                      }}
-                    >
-                      {value.market_name}
-                    </small>
+              <li style={{ flexBasis: '60%' }}>
+                <ul
+                  style={{
+                    listStyle: 'none',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <li
+                    style={{
+                      fontWeight: '400',
+                      fontSize: '12px',
+                      color: '#74788D',
+                    }}
+                  >
+                    {db.market_name}
                   </li>
-                  <li>
-                    <strong
-                      style={{
-                        fontWeight: '700',
-                        fontSize: '14px',
-                        color: '#495057',
-                      }}
-                    >
-                      {value.bander_name ? value.bander_name : value.name}
-                    </strong>
+                  <li
+                    style={{
+                      fontWeight: '700',
+                      fontSize: '14px',
+                      color: '#495057',
+                    }}
+                  >
+                    {db.bander_name ? db.bander_name : db.name}
                   </li>
                 </ul>
               </li>
-            </ul>
-          </li>
 
-          <li>
-            <strong
-              style={{ fontWeight: '700p', fontSize: '14px', color: '#495057' }}
-            >
-              {value.revenue ? `₩ ${value.revenue}` : value.sold}
-            </strong>
-          </li>
-        </ul>
-        <Divider className="edit-margin" />
+              <li
+                style={{
+                  flexBasis: '30%',
+                  textAlign: 'end',
+                  fontWeight: '700',
+                  fontSize: '14px',
+                  color: '#495057',
+                }}
+              >
+                {db.revenue ? (
+                  <NumberFormat
+                    value={db.revenue}
+                    displayType={'text'}
+                    thousandSeparator={true}
+                    prefix={'₩'}
+                  />
+                ) : (
+                  db.sold
+                )}
+              </li>
+            </ul>
+            <Divider className="edit-margin" />
+          </React.Fragment>
+        ))}
       </>
     )
-  }
-
-  const RenderData = (props) => {
-    const data = props.data
-    // console.log(data)
-    const listitems = data.map((product, i) => (
-      <ListItem key={i} value={product} />
-    ))
-    return <>{listitems}</>
   }
 
   // Date Picker
@@ -148,48 +153,68 @@ const Home = (props) => {
   }
 
   const getData = async () => {
-    try {
-      setLoading(true)
-      const { data } = await axios.get(
-        `${API_URL}/home/revenue?start=${day[0]}&end=${day[1]}`,
-        config,
-      )
-      // const { data } = await axios.get(
-      //   `${API_URL}/home/revenue?start=123456789&end=2134567890`,
-      //   config,
-      // )
-      setDataTopBander(data.data.result.top_20_revenue)
-      setDataTopProduct(data.data.result.top_20_selling)
-      setLoading(false)
-    } catch (error) {
-      console.log(error.response)
-    }
+    setLoading(true)
+
+    await Promise.all([
+      // axios
+      //   .get(
+      //     `${API_URL}/home/revenue/toprevenue?start=1234567890&end=2345678901`,
+      //     config,
+      //   )
+      //   // .get(
+      //   //   `${API_URL}/home/revenue/toprevenue?start=${day[0]}&end=${day[1]}`,
+      //   //   config,
+      //   // )
+      //   .then((value) => {
+      //     console.log(value)
+      //     setDataTopBander(value.data.data.result)
+      //   })
+      //   .catch((error) => console.log(error.response)),;
+      axiosClient.get(`/home/revenue/toprevenue?start=1234567890&end=2345678901`)
+
+
+      axios
+        .get(
+          `${API_URL}/home/revenue/topsellitem?start=1234567890&end=2345678901`,
+          config,
+        )
+        // .get(
+        //   `${API_URL}/home/revenue/topsellitem?start=${day[0]}&end=${day[1]}`,
+        //   config,
+        // )
+        .then((value) => {
+          console.log(value)
+          setDataTopProduct(value.data.data.result)
+        })
+        .catch((error) => console.log(error.response)),
+    ])
+    setLoading(false)
   }
 
   // Get data of current month
-  useEffect(async () => {
-    setLoading(true)
-    let startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
-    let endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
-    let allDateOfCurrentMonth = [
-      toTimestamp(startOfMonth),
-      toTimestamp(endOfMonth),
-    ]
+  // useEffect(async () => {
+  //   setLoading(true)
+  //   let startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
+  //   let endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
+  //   let allDateOfCurrentMonth = [
+  //     toTimestamp(startOfMonth),
+  //     toTimestamp(endOfMonth),
+  //   ]
 
-    try {
-      const { data } = await axios.get(
-        `${API_URL}/home/revenue?start=123456789&end=2134567890`,
-        config,
-      )
-      // const { data } = await axios.get(`${API_URL}/home/revenue?start=${allDateOfCurrentMonth[0]}&end=${allDateOfCurrentMonth[1]}`, config);
-      console.log(data)
-      setDataTopBander(data.data.result.top_20_revenue)
-      setDataTopProduct(data.data.result.top_20_selling)
-      setLoading(false)
-    } catch (error) {
-      console.log(error.response)
-    }
-  }, [])
+  //   try {
+  //     const { data } = await axios.get(
+  //       `${API_URL}/home/revenue?start=123456789&end=2134567890`,
+  //       config,
+  //     )
+  // const { data } = await axios.get(`${API_URL}/home/revenue?start=${allDateOfCurrentMonth[0]}&end=${allDateOfCurrentMonth[1]}`, config);
+  //     console.log(data)
+  //     setDataTopBander(data.data.result.top_20_revenue)
+  //     setDataTopProduct(data.data.result.top_20_selling)
+  //     setLoading(false)
+  //   } catch (error) {
+  //     console.log(error.response)
+  //   }
+  // }, [])
 
   return (
     <div className="home-page">
@@ -216,8 +241,8 @@ const Home = (props) => {
           />
           <Button
             style={{
-              background: '#71c4d5',
-              borderColor: '#71c4d5',
+              background: '#42abbc',
+              borderColor: '#42abbc',
               fontWeight: 'bold',
             }}
             type="primary"
@@ -229,7 +254,7 @@ const Home = (props) => {
       </Row>
 
       {loading ? (
-        <Image src={Spiner} width={100} />
+        <Spin size="large" />
       ) : (
         <Row className="site-card-wrapper" gutter={32}>
           <Col
