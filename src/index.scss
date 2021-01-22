@@ -179,134 +179,134 @@ code {
 }
 
 // Custom Style DatePicker
-.ant-picker-dropdown-range {
-  .ant-picker-date-range-wrapper {
-    min-width: 474px !important;
-    .ant-picker-panels {
-      div.ant-picker-panel:first-child {
-        margin-right: 2rem;
-      }
-      div.ant-picker-panel:first-child,
-      div.ant-picker-panel:last-child {
-        width: 474px;
-        .ant-picker-header {
-          height: 60px;
-          align-items: center;
-          border-bottom: none;
-          .ant-picker-header-view {
-            position: relative;
-            &::after {
-              content: '2주단위로 선택 가능합니다';
-              position: absolute;
-              top: 0;
-              width: fit-content;
-              left: 315px;
+// .ant-picker-dropdown-range {
+//   .ant-picker-date-range-wrapper {
+//     min-width: 474px !important;
+//     .ant-picker-panels {
+//       div.ant-picker-panel:first-child {
+//         margin-right: 2rem;
+//       }
+//       div.ant-picker-panel:first-child,
+//       div.ant-picker-panel:last-child {
+//         width: 474px;
+//         .ant-picker-header {
+//           height: 60px;
+//           align-items: center;
+//           border-bottom: none;
+//           .ant-picker-header-view {
+//             position: relative;
+//             &::after {
+//               content: '2주단위로 선택 가능합니다';
+//               position: absolute;
+//               top: 0;
+//               width: fit-content;
+//               left: 315px;
 
-              font-weight: 500;
-              font-size: 12px;
-              color: #495057;
-            }
-          }
+//               font-weight: 500;
+//               font-size: 12px;
+//               color: #495057;
+//             }
+//           }
 
-          .ant-picker-header-super-prev-btn,
-          .ant-picker-header-prev-btn,
-          .ant-picker-header-next-btn,
-          .ant-picker-header-super-next-btn {
-            display: none;
-          }
+//           .ant-picker-header-super-prev-btn,
+//           .ant-picker-header-prev-btn,
+//           .ant-picker-header-next-btn,
+//           .ant-picker-header-super-next-btn {
+//             display: none;
+//           }
 
-          .ant-picker-year-btn {
-            position: absolute;
-            left: 0;
+//           .ant-picker-year-btn {
+//             position: absolute;
+//             left: 0;
 
-            border: 1px solid #a6b0cf;
-            padding-left: 10px;
-            padding-right: 10px;
-            border-radius: 48px;
+//             border: 1px solid #a6b0cf;
+//             padding-left: 10px;
+//             padding-right: 10px;
+//             border-radius: 48px;
 
-            color: #a6b0cf;
-            &::after {
-              content: '년';
-              padding-left: 46px;
-            }
-          }
+//             color: #a6b0cf;
+//             &::after {
+//               content: '년';
+//               padding-left: 46px;
+//             }
+//           }
 
-          .ant-picker-month-btn {
-            position: relative;
-            left: 100px;
+//           .ant-picker-month-btn {
+//             position: relative;
+//             left: 100px;
 
-            border: 1px solid #ddfdff;
-            background-color: #ddfdff;
-            color: #42abbc;
+//             border: 1px solid #ddfdff;
+//             background-color: #ddfdff;
+//             color: #42abbc;
 
-            font-weight: bold;
-            padding-left: 57px;
-            padding-right: 57px;
-            border-radius: 48px;
-          }
-        }
+//             font-weight: bold;
+//             padding-left: 57px;
+//             padding-right: 57px;
+//             border-radius: 48px;
+//           }
+//         }
 
-        .ant-picker-body {
-          padding: 0;
-          .ant-picker-content {
-            width: 474px;
-            thead {
-              background-color: #f8f9fa;
-              tr th {
-                font-weight: 700;
-                font-size: 12px;
-                color: #4a5056;
-              }
-            }
-            .ant-picker-cell {
-              color: #a6b0cf;
-              font-weight: 500;
-              font-size: 14px;
-            }
-            .ant-picker-cell-in-view {
-              color: #74788d;
-              font-weight: 500;
-              font-size: 14px;
-            }
-            // .ant-picker-cell-in-view.ant-picker-cell-range-start
-            //   .ant-picker-cell-inner {
-            //   background-color: #3f537d;
-            //   border-radius: 50%;
-            // }
+//         .ant-picker-body {
+//           padding: 0;
+//           .ant-picker-content {
+//             width: 474px;
+//             thead {
+//               background-color: #f8f9fa;
+//               tr th {
+//                 font-weight: 700;
+//                 font-size: 12px;
+//                 color: #4a5056;
+//               }
+//             }
+//             .ant-picker-cell {
+//               color: #a6b0cf;
+//               font-weight: 500;
+//               font-size: 14px;
+//             }
+//             .ant-picker-cell-in-view {
+//               color: #74788d;
+//               font-weight: 500;
+//               font-size: 14px;
+//             }
+//             .ant-picker-cell-in-view.ant-picker-cell-range-start
+//               .ant-picker-cell-inner {
+//               background-color: #3f537d;
+//               border-radius: 50%;
+//             }
 
-            // .ant-picker-cell-in-view.ant-picker-cell-range-hover:not(.ant-picker-cell-in-range):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end)::after,
-            // .ant-picker-cell-in-view.ant-picker-cell-range-hover-end:not(.ant-picker-cell-in-range):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end)::after, .ant-picker-cell-in-view.ant-picker-cell-range-hover-start.ant-picker-cell-range-start-single::after {
-            //   border-top: none;
-            //   border-bottom: none;
-            //   background-color: #DDFDFF;
-            // }
-            // tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover:last-child::after, tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::after, .ant-picker-cell-in-view.ant-picker-cell-range-hover-edge-end:not(.ant-picker-cell-range-hover-edge-end-near-range)::after, .ant-picker-cell-in-view.ant-picker-cell-range-hover-end::after {
-            //   border-right: none;
-            //   background-color: #DDFDFF;
+//             .ant-picker-cell-in-view.ant-picker-cell-range-hover:not(.ant-picker-cell-in-range):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end)::after,
+//             .ant-picker-cell-in-view.ant-picker-cell-range-hover-end:not(.ant-picker-cell-in-range):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end)::after, .ant-picker-cell-in-view.ant-picker-cell-range-hover-start.ant-picker-cell-range-start-single::after {
+//               border-top: none;
+//               border-bottom: none;
+//               background-color: #DDFDFF;
+//             }
+//             tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover:last-child::after, tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::after, .ant-picker-cell-in-view.ant-picker-cell-range-hover-edge-end:not(.ant-picker-cell-range-hover-edge-end-near-range)::after, .ant-picker-cell-in-view.ant-picker-cell-range-hover-end::after {
+//               border-right: none;
+//               background-color: #DDFDFF;
 
-            // }
-            // tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover:first-child::after, tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-end:first-child::after, .ant-picker-cell-in-view.ant-picker-cell-range-hover-edge-start:not(.ant-picker-cell-range-hover-edge-start-near-range)::after, .ant-picker-cell-in-view.ant-picker-cell-range-hover-start::after {
-            //   border-left:  none;
-            //   background-color: #DDFDFF;
+//             }
+//             tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover:first-child::after, tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-end:first-child::after, .ant-picker-cell-in-view.ant-picker-cell-range-hover-edge-start:not(.ant-picker-cell-range-hover-edge-start-near-range)::after, .ant-picker-cell-in-view.ant-picker-cell-range-hover-start::after {
+//               border-left:  none;
+//               background-color: #DDFDFF;
 
-            // }
-            // .ant-picker-cell-range-hover::after, .ant-picker-cell-range-hover-end::after {
-            //   left: 0px !important;
-            //   right: 0 !important;
-            // }
-            // .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner, .ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner, .ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
-            //   background-color: #3f537d;
-            //   border-radius: 50%;
-            // }
-            // .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
-            //   border: none;
-            // }
-          }
-        }
-      }
-    }
-  }
-}
+//             }
+//             .ant-picker-cell-range-hover::after, .ant-picker-cell-range-hover-end::after {
+//               left: 0px !important;
+//               right: 0 !important;
+//             }
+//             .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner, .ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner, .ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
+//               background-color: #3f537d;
+//               border-radius: 50%;
+//             }
+//             .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
+//               border: none;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
 
 //Produc Search
 .border-radius-6 {
