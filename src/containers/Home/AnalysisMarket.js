@@ -10,9 +10,12 @@ import GroupButton from './GroupButton/GroupButton'
 
 import Highcharts from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
+import * as hcnd from 'highcharts/modules/no-data-to-display'
 
 import './AnalysisMarket.scss'
 const { Option } = Select
+
+hcnd(Highcharts)
 
 const AnalysisMarket = (props) => {
   const [selectMarket, setSelectMarket] = useState('11번가')
@@ -68,10 +71,9 @@ const AnalysisMarket = (props) => {
   }
 
   function onChange(date, dateString) {
-    console.log(date, dateString)
+    // console.log(date, dateString)
     let storeDay = [toTimestamp(dateString[0]), toTimestamp(dateString[1])]
     setDatePicker(storeDay)
-    console.log(storeDay)
   }
 
   // Option of chart
@@ -119,68 +121,43 @@ const AnalysisMarket = (props) => {
           enabled: false,
         },
         showInLegend: false,
-        data: [
-          {
-            name: 'Chrome',
-            y: 15,
-          },
-          {
-            name: 'Internet Explorer',
-            y: 15,
-          },
-          {
-            name: 'Firefox',
-            y: 15,
-          },
-          {
-            name: 'Edge',
-            y: 15,
-          },
-          {
-            name: 'Safari',
-            y: 10,
-          },
-          {
-            name: 'Other',
-            y: 10,
-          },
-          {
-            name: 'VBN',
-            y: 10,
-          },
-          {
-            name: 'HJK',
-            y: 10,
-          },
-        ],
+        data: [],
       },
     ],
   }
+
+  const getTextCategories = data.map((data) => {
+    return data.category_tag
+  })
+  const categories = {
+    categories: getTextCategories,
+  }
+
+  const renameKeys = (obj, newKeys) => {
+    const keyValues = Object.keys(obj).map((key) => {
+      const newKey = newKeys[key] || key
+      return { [newKey]: obj[key] }
+    })
+    return Object.assign({}, ...keyValues)
+  }
+
+  const dataOfTotalLineAndColumnChart = data.map((data) => {
+    const newKeys = { market_name: 'name', total: 'y' }
+    const renamedObj = parseInt(renameKeys(data, newKeys).y)
+    const color = '#'.concat(Math.floor(Math.random() * 16777215).toString(16))
+    return { y: renamedObj, color }
+  })
+
+  const dataOfTotalSoldLineAndColumnChart = data.map((data) => {
+    return parseInt(data.total_sold)
+  })
 
   const optionsLineAndColumnChart = {
     title: '',
     chart: {
       zoomType: 'xy',
     },
-    xAxis: [
-      {
-        categories: [
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-        ],
-        crosshair: true,
-      },
-    ],
+    xAxis: [categories],
     yAxis: [
       {
         labels: false,
@@ -214,36 +191,15 @@ const AnalysisMarket = (props) => {
         name: '',
         type: 'column',
         yAxis: 1,
-        data: [
-          { y: 10, color: '#FFF1B6' },
-          { y: 20, color: '#9BDBAF' },
-          { y: 30, color: '#CAEEFB' },
-          { y: 40, color: '#FFC26F' },
-          { y: 30, color: '#D185D8' },
-          { y: 20, color: '#8784D7' },
-          { y: 10, color: '#FE7C69' },
-          { y: 20, color: '##FEBEB3' },
-          { y: 49.9, color: '#9BDBAF' },
-        ],
+        data: dataOfTotalLineAndColumnChart,
         tooltip: {
           valueSuffix: ' ₩',
         },
-        colors: [
-          '#2f7ed8',
-          '#0d233a',
-          '#8bbc21',
-          '#910000',
-          '#1aadce',
-          '#492970',
-          '#f28f43',
-          '#77a1e5',
-          '#c42525',
-        ],
       },
       {
         name: '',
         type: 'spline',
-        data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3],
+        data: dataOfTotalSoldLineAndColumnChart,
         tooltip: {
           valueSuffix: '',
         },
@@ -271,14 +227,14 @@ const AnalysisMarket = (props) => {
 
     try {
       setLoading(true)
-      const { data } = await axios.get(
-        `${API_URL}/home/market?start=${datePicker[0]}&end=${datePicker[1]}&key=${selectMarket}`,
-        config,
-      )
       // const { data } = await axios.get(
-      //   `${API_URL}/home/market?start=1234567890&end=2345678901&key=${selectMarket}`,
+      //   `${API_URL}/home/market?start=${datePicker[0]}&end=${datePicker[1]}&key=${selectMarket}`,
       //   config,
       // )
+      const { data } = await axios.get(
+        `${API_URL}/home/market?start=1234567890&end=2345678901&key=${selectMarket}`,
+        config,
+      )
       const {
         data: { result },
       } = data

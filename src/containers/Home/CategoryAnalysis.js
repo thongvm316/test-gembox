@@ -4,7 +4,7 @@ import { API_URL } from '../../constants/appConstants'
 
 import GroupButton from './GroupButton/GroupButton'
 import Footer from '../../components/Footer'
-import { DatePicker, Button, Row, Col, Card, Spin, Dropdown, Menu } from 'antd'
+import { DatePicker, Button, Row, Col, Card, Spin } from 'antd'
 import { MinusOutlined, LoadingOutlined } from '@ant-design/icons'
 
 import Highcharts from 'highcharts/highstock'
@@ -106,40 +106,6 @@ const CategoryAnalysis = (props) => {
   }
 
   /* Chart */
-  const fakeDataChart = [
-    {
-      name: '11번가',
-      y: 20,
-    },
-    {
-      name: 'G마켓',
-      y: 30,
-    },
-    {
-      name: '쿠팡',
-      y: 40,
-    },
-    {
-      name: '인터파크',
-      y: 60,
-    },
-    {
-      name: '옥션',
-      y: 120,
-    },
-    {
-      name: '스마트스토어',
-      y: 150,
-    },
-    {
-      name: '티몬',
-      y: 180,
-    },
-    {
-      name: '위메프',
-      y: 200,
-    },
-  ]
 
   const renameKeys = (obj, newKeys) => {
     const keyValues = Object.keys(obj).map((key) => {
@@ -155,16 +121,6 @@ const CategoryAnalysis = (props) => {
     const convetToNumber = parseInt(renamedObj.y)
     return { ...renamedObj, y: convetToNumber }
   })
-
-  const conditionalRendering = () => {
-    if (totalSale.length === 0) {
-      return fakeDataChart
-    } else {
-      return dataChartRename
-    }
-  }
-
-  const dataRenderChart = conditionalRendering()
 
   const options = {
     chart: {
@@ -211,7 +167,7 @@ const CategoryAnalysis = (props) => {
           enabled: false,
         },
         showInLegend: true,
-        data: dataRenderChart,
+        data: dataChartRename,
       },
     ],
   }
