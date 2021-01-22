@@ -218,19 +218,24 @@ const CategoryAnalysis = (props) => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      'X-Auth-Token': `${localStorage.getItem('token-user')}`,
     },
   }
 
   const getData = async () => {
     setLoading(true)
     console.log('Waiting for data.....')
-    console.log(
-      `${API_URL}/home/category/totalsales?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
-    )
+    // console.log(
+    //   `${API_URL}/home/category/totalsales?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+    // )
     await Promise.all([
       axios
+        // .get(
+        //   `${API_URL}/home/category/totalsales?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/totalsales?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/totalsales?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
@@ -240,8 +245,12 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/topcoupang?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/topcoupang?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/topcoupang?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
@@ -254,8 +263,12 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/topauction?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/topauction?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/topauction?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
@@ -268,8 +281,12 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/topsmartstore?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/topsmartstore?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/topsmartstore?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
@@ -282,8 +299,12 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/topwemake?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/topwemake?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/topwemake?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
@@ -296,8 +317,12 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/toptmon?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/toptmon?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/toptmon?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
@@ -310,8 +335,12 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/topinterpark?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/topinterpark?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/topinterpark?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
@@ -324,8 +353,12 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/top11str?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/top11str?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/top11str?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {
@@ -338,8 +371,12 @@ const CategoryAnalysis = (props) => {
         .catch((error) => console.log(error.response)),
 
       axios
+        // .get(
+        //   `${API_URL}/home/category/topgmarket?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+        //   config,
+        // )
         .get(
-          `${API_URL}/home/category/topgmarket?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
+          `${API_URL}/home/category/topgmarket?start=1234567890&end=2134567890&key=${category}`,
           config,
         )
         .then((value) => {

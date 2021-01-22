@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 import axios from 'axios'
 
-import { DatePicker, Button, Row, Col, Card, Divider, Spin, Image } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
+import { DatePicker, Button, Row, Col, Card, Divider, Image } from 'antd'
 
 import Footer from '../../components/Footer'
 import GroupButton from './GroupButton/GroupButton'
@@ -150,14 +149,15 @@ const Home = (props) => {
   const getData = async () => {
     try {
       setLoading(true)
-      const { data } = await axios.get(
-        `${API_URL}/home/revenue?start=${day[0]}&end=${day[1]}`,
-        config,
-      )
       // const { data } = await axios.get(
-      //   `${API_URL}/home/revenue?start=123456789&end=2134567890`,
+      //   `${API_URL}/home/revenue?start=${day[0]}&end=${day[1]}`,
       //   config,
       // )
+      const { data } = await axios.get(
+        `${API_URL}/home/revenue?start=123456789&end=2134567890`,
+        config,
+      )
+      console.log(data)
       setDataTopBander(data.data.result.top_20_revenue)
       setDataTopProduct(data.data.result.top_20_selling)
       setLoading(false)
@@ -167,29 +167,29 @@ const Home = (props) => {
   }
 
   // Get data of current month
-  useEffect(async () => {
-    setLoading(true)
-    let startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
-    let endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
-    let allDateOfCurrentMonth = [
-      toTimestamp(startOfMonth),
-      toTimestamp(endOfMonth),
-    ]
+  // useEffect(async () => {
+  //   setLoading(true)
+  //   let startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
+  //   let endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
+  //   let allDateOfCurrentMonth = [
+  //     toTimestamp(startOfMonth),
+  //     toTimestamp(endOfMonth),
+  //   ]
 
-    try {
-      const { data } = await axios.get(
-        `${API_URL}/home/revenue?start=123456789&end=2134567890`,
-        config,
-      )
-      // const { data } = await axios.get(`${API_URL}/home/revenue?start=${allDateOfCurrentMonth[0]}&end=${allDateOfCurrentMonth[1]}`, config);
-      console.log(data)
-      setDataTopBander(data.data.result.top_20_revenue)
-      setDataTopProduct(data.data.result.top_20_selling)
-      setLoading(false)
-    } catch (error) {
-      console.log(error.response)
-    }
-  }, [])
+  //   try {
+  //     const { data } = await axios.get(
+  //       `${API_URL}/home/revenue?start=123456789&end=2134567890`,
+  //       config,
+  //     )
+  //     // const { data } = await axios.get(`${API_URL}/home/revenue?start=${allDateOfCurrentMonth[0]}&end=${allDateOfCurrentMonth[1]}`, config);
+  //     console.log(data)
+  //     setDataTopBander(data.data.result.top_20_revenue)
+  //     setDataTopProduct(data.data.result.top_20_selling)
+  //     setLoading(false)
+  //   } catch (error) {
+  //     console.log(error.response)
+  //   }
+  // }, [])
 
   return (
     <div className="home-page">
