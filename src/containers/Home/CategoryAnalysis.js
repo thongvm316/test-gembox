@@ -278,6 +278,7 @@ const CategoryAnalysis = (props) => {
           config,
         )
         .then((value) => {
+          console.log(value)
           setTotalSale(value.data.data.result)
         })
         .catch((error) => console.log(error.response)),
@@ -288,6 +289,7 @@ const CategoryAnalysis = (props) => {
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             topcoupang: value.data.data.result,
@@ -301,6 +303,7 @@ const CategoryAnalysis = (props) => {
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             topauction: value.data.data.result,
@@ -314,6 +317,7 @@ const CategoryAnalysis = (props) => {
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             topsmartstore: value.data.data.result,
@@ -327,6 +331,7 @@ const CategoryAnalysis = (props) => {
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             topwemake: value.data.data.result,
@@ -340,6 +345,7 @@ const CategoryAnalysis = (props) => {
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             toptmon: value.data.data.result,
@@ -353,6 +359,7 @@ const CategoryAnalysis = (props) => {
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             topinterpark: value.data.data.result,
@@ -366,6 +373,7 @@ const CategoryAnalysis = (props) => {
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             top11str: value.data.data.result,
@@ -379,6 +387,7 @@ const CategoryAnalysis = (props) => {
           config,
         )
         .then((value) => {
+          console.log(value)
           setTopProduct((prevState) => ({
             ...prevState,
             topgmarket: value.data.data.result,
