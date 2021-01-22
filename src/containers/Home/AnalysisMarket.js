@@ -10,9 +10,12 @@ import GroupButton from './GroupButton/GroupButton'
 
 import Highcharts from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
+import * as hcnd from 'highcharts/modules/no-data-to-display'
 
 import './AnalysisMarket.scss'
 const { Option } = Select
+
+hcnd(Highcharts)
 
 const AnalysisMarket = (props) => {
   const [selectMarket, setSelectMarket] = useState('11번가')
@@ -20,108 +23,6 @@ const AnalysisMarket = (props) => {
 
   // Handle data
   const [data, setData] = useState([])
-  const fakeData = [
-    {
-      category_tag: '물티슈',
-      total_sold: '1308508',
-      total: '19409557830',
-    },
-    {
-      category_tag: '분유/어린이식품',
-      total_sold: '380618',
-      total: '8632872960',
-    },
-    {
-      category_tag: '유기농/친환경 전문관',
-      total_sold: '243950',
-      total: '6493994750',
-    },
-    {
-      category_tag: '콘솔/휴대용게임기',
-      total_sold: '52549',
-      total: '6182040760',
-    },
-    {
-      category_tag: '기저귀',
-      total_sold: '145579',
-      total: '5914114400',
-    },
-    {
-      category_tag: '수유용품',
-      total_sold: '306460',
-      total: '4201522770',
-    },
-    {
-      category_tag: '위생/건강/세제',
-      total_sold: '381026',
-      total: '3879137140',
-    },
-    {
-      category_tag: '욕실용품/스킨케어',
-      total_sold: '285463',
-      total: '3291188090',
-    },
-    {
-      category_tag: '승용완구',
-      total_sold: '31681',
-      total: '2071030080',
-    },
-    {
-      category_tag: '놀이매트/안전용품',
-      total_sold: '74285',
-      total: '2041339090',
-    },
-    {
-      category_tag: '보드게임',
-      total_sold: '109870',
-      total: '1912832930',
-    },
-    {
-      category_tag: '블록놀이',
-      total_sold: '34242',
-      total: '1843860460',
-    },
-    {
-      category_tag: '신생아/영아완구',
-      total_sold: '76279',
-      total: '1587438760',
-    },
-    {
-      category_tag: '학습완구/교구',
-      total_sold: '97738',
-      total: '1434251220',
-    },
-    {
-      category_tag: '캐릭터별완구',
-      total_sold: '80197',
-      total: '1382433030',
-    },
-    {
-      category_tag: '완구/교구',
-      total_sold: '57865',
-      total: '1194131660',
-    },
-    {
-      category_tag: '스포츠/야외완구',
-      total_sold: '35568',
-      total: '1188197420',
-    },
-    {
-      category_tag: '유아동도서',
-      total_sold: '63518',
-      total: '1182313670',
-    },
-    {
-      category_tag: '유아/어린이',
-      total_sold: '63518',
-      total: '1182313670',
-    },
-    {
-      category_tag: '유아가구/인테리어',
-      total_sold: '27758',
-      total: '1150779340',
-    },
-  ]
 
   const data1 = data.slice(0, 10)
   const data2 = data.slice(10, 20)
@@ -162,9 +63,6 @@ const AnalysisMarket = (props) => {
   }
 
   // DatePicker
-  const [dates, setDates] = useState([])
-  // const [hackValue, setHackValue] = useState();
-  const [value, setValue] = useState()
   const [datePicker, setDatePicker] = useState([])
 
   const toTimestamp = (strDate) => {
@@ -173,33 +71,10 @@ const AnalysisMarket = (props) => {
   }
 
   function onChange(date, dateString) {
-    console.log(date, dateString)
+    // console.log(date, dateString)
     let storeDay = [toTimestamp(dateString[0]), toTimestamp(dateString[1])]
     setDatePicker(storeDay)
-    console.log(storeDay)
   }
-
-  // if (value !== undefined) {
-  //     dayPicker.unshift(toTimestamp(moment.utc(value[1]._d).format('YYYY-MM-DD')))
-  //     dayPicker.unshift(toTimestamp(moment.utc(value[0]._d).format('YYYY-MM-DD')))
-  // }
-  // const disabledDate = (current) => {
-  //     if (!dates || dates.length === 0) {
-  //         return false;
-  //     }
-  //     const tooLate = dates[0] && current.diff(dates[0], "days") > 13;
-  //     const tooEarly = dates[1] && dates[1].diff(current, "days") > 13;
-  //     return tooEarly || tooLate;
-  // };
-
-  // const onOpenChange = (open) => {
-  //     if (open) {
-  //         setHackValue([]);
-  //         setDates([]);
-  //     } else {
-  //         setHackValue(undefined);
-  //     }
-  // };
 
   // Option of chart
   const options = {
@@ -246,68 +121,43 @@ const AnalysisMarket = (props) => {
           enabled: false,
         },
         showInLegend: false,
-        data: [
-          {
-            name: 'Chrome',
-            y: 15,
-          },
-          {
-            name: 'Internet Explorer',
-            y: 15,
-          },
-          {
-            name: 'Firefox',
-            y: 15,
-          },
-          {
-            name: 'Edge',
-            y: 15,
-          },
-          {
-            name: 'Safari',
-            y: 10,
-          },
-          {
-            name: 'Other',
-            y: 10,
-          },
-          {
-            name: 'VBN',
-            y: 10,
-          },
-          {
-            name: 'HJK',
-            y: 10,
-          },
-        ],
+        data: [],
       },
     ],
   }
+
+  const getTextCategories = data.map((data) => {
+    return data.category_tag
+  })
+  const categories = {
+    categories: getTextCategories,
+  }
+
+  const renameKeys = (obj, newKeys) => {
+    const keyValues = Object.keys(obj).map((key) => {
+      const newKey = newKeys[key] || key
+      return { [newKey]: obj[key] }
+    })
+    return Object.assign({}, ...keyValues)
+  }
+
+  const dataOfTotalLineAndColumnChart = data.map((data) => {
+    const newKeys = { market_name: 'name', total: 'y' }
+    const renamedObj = parseInt(renameKeys(data, newKeys).y)
+    const color = '#'.concat(Math.floor(Math.random() * 16777215).toString(16))
+    return { y: renamedObj, color }
+  })
+
+  const dataOfTotalSoldLineAndColumnChart = data.map((data) => {
+    return parseInt(data.total_sold)
+  })
 
   const optionsLineAndColumnChart = {
     title: '',
     chart: {
       zoomType: 'xy',
     },
-    xAxis: [
-      {
-        categories: [
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-          'category',
-        ],
-        crosshair: true,
-      },
-    ],
+    xAxis: [categories],
     yAxis: [
       {
         labels: false,
@@ -341,36 +191,15 @@ const AnalysisMarket = (props) => {
         name: '',
         type: 'column',
         yAxis: 1,
-        data: [
-          { y: 10, color: '#FFF1B6' },
-          { y: 20, color: '#9BDBAF' },
-          { y: 30, color: '#CAEEFB' },
-          { y: 40, color: '#FFC26F' },
-          { y: 30, color: '#D185D8' },
-          { y: 20, color: '#8784D7' },
-          { y: 10, color: '#FE7C69' },
-          { y: 20, color: '##FEBEB3' },
-          { y: 49.9, color: '#9BDBAF' },
-        ],
+        data: dataOfTotalLineAndColumnChart,
         tooltip: {
           valueSuffix: ' ₩',
         },
-        colors: [
-          '#2f7ed8',
-          '#0d233a',
-          '#8bbc21',
-          '#910000',
-          '#1aadce',
-          '#492970',
-          '#f28f43',
-          '#77a1e5',
-          '#c42525',
-        ],
       },
       {
         name: '',
         type: 'spline',
-        data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3],
+        data: dataOfTotalSoldLineAndColumnChart,
         tooltip: {
           valueSuffix: '',
         },
@@ -398,7 +227,10 @@ const AnalysisMarket = (props) => {
 
     try {
       setLoading(true)
-      // const { data } = await axios.get(`${API_URL}/home/market?start=${datePicker[0]}&end=${datePicker[1]}&key=${selectMarket}`, config)
+      // const { data } = await axios.get(
+      //   `${API_URL}/home/market?start=${datePicker[0]}&end=${datePicker[1]}&key=${selectMarket}`,
+      //   config,
+      // )
       const { data } = await axios.get(
         `${API_URL}/home/market?start=1234567890&end=2345678901&key=${selectMarket}`,
         config,
@@ -440,12 +272,6 @@ const AnalysisMarket = (props) => {
             </Col>
             <Col xs={24} sm={10} md={10} lg={10} xl={6}>
               <DatePicker.RangePicker
-                // value={hackValue || value}
-                // disabledDate={disabledDate}
-                // onCalendarChange={val => setDates(val)}
-                // onChange={val => setValue(val)}
-                // onOpenChange={onOpenChange}
-                // bordered={false}
                 onChange={onChange}
                 separator={<MinusOutlined />}
               />
@@ -475,15 +301,7 @@ const AnalysisMarket = (props) => {
           </Row>
         </Col>
 
-        <Col
-          xs={7}
-          sm={4}
-          md={3}
-          lg={3}
-          xl={3}
-          style={{ textAlign: 'end' }}
-          className="select-category-analysis"
-        >
+        <Col xs={7} sm={4} md={3} lg={3} xl={3} style={{ textAlign: 'end' }}>
           <Select onChange={handleChangeSelectMarket} defaultValue="11번가">
             <Option value="11번가">11번가</Option>
             <Option value="G마켓">G마켓</Option>

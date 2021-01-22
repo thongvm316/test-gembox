@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
 
 html,
 body {
@@ -10,7 +10,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
@@ -20,7 +20,7 @@ code {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Noto Sans KR", sans-serif !important;
+  font-family: 'Noto Sans KR', sans-serif !important;
 }
 
 .container {
@@ -186,7 +186,8 @@ code {
       div.ant-picker-panel:first-child {
         margin-right: 2rem;
       }
-      div.ant-picker-panel:first-child, div.ant-picker-panel:last-child {
+      div.ant-picker-panel:first-child,
+      div.ant-picker-panel:last-child {
         width: 474px;
         .ant-picker-header {
           height: 60px;
@@ -195,7 +196,7 @@ code {
           .ant-picker-header-view {
             position: relative;
             &::after {
-              content: "2주단위로 선택 가능합니다";
+              content: '2주단위로 선택 가능합니다';
               position: absolute;
               top: 0;
               width: fit-content;
@@ -210,7 +211,7 @@ code {
           .ant-picker-header-super-prev-btn,
           .ant-picker-header-prev-btn,
           .ant-picker-header-next-btn,
-          .ant-picker-header-super-next-btn{
+          .ant-picker-header-super-next-btn {
             display: none;
           }
 
@@ -225,7 +226,7 @@ code {
 
             color: #a6b0cf;
             &::after {
-              content: "년";
+              content: '년';
               padding-left: 46px;
             }
           }
@@ -307,21 +308,20 @@ code {
   }
 }
 
-
 //Produc Search
-.border-radius-6{
+.border-radius-6 {
   border-radius: 6px !important;
 }
 
-.input-product-search .ant-input{
+.input-product-search .ant-input {
   border-top-left-radius: 6px !important;
   border-bottom-left-radius: 6px !important;
   border-right: none !important;
-  margin: 0!important;
+  margin: 0 !important;
 }
 
-.input-product-search .ant-select-selector{
+.input-product-search .ant-select-selector {
   border-top-right-radius: 6px !important;
   border-bottom-right-radius: 6px !important;
-  background-color: #EFF2F7 !important;
+  background-color: #eff2f7 !important;
 }

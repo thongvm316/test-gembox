@@ -17,92 +17,30 @@ Fix:
 "eject": "react-scripts eject",
 "heroku-postbuild": "npm run build"
 }
----
-At evening
-2. Hover icon in sider - Problem with Sider when click
-3. Style DatePicker Home Page - Chang month to Kr language in P2, P3
-4. Map fake data to chart: page 2 - page 3
-7. Lazy load and add lastindex - Redux
 
+---
+
+At evening
+
+3. Style DatePicker Home Page - Chang month to Kr language in P2, P3
+4. Lazy load and add lastindex - Redux
 
 Fix Method Call API like Easy FrontEnd -- https://www.youtube.com/watch?v=LXz_7WQpob4
 Research - Lodash // Code with less err in solution of EasyFrontEnd
-----
-tommorow:
-1. Continue Setting - Peding change password
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+---
+
+<<<<<<< HEAD
+1. Style DatePicker Home Page
+2. Redux
+
+tonight:
+
+1. Continues Map fake data to chart: page 2 - page 3
+2. Fix UI after render data: Home - Category
+3. Check Home Pgae
+=======
+1. Map fake data to chart: page 2 - page 3
+2. UI when render data
+3. Solution for redux
+>>>>>>> 62df8b2bac6c93aa5553ebaea9f9b3773735b92a

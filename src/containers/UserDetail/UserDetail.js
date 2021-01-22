@@ -12,6 +12,7 @@ import {
   Divider,
   Image,
   message,
+  Alert,
 } from 'antd'
 import { EditOutlined, LeftOutlined } from '@ant-design/icons'
 import Spiner from '../../images/spiner.gif'
@@ -25,19 +26,6 @@ const UserDetail = (props) => {
   }
   const handleCancel = () => {
     setIsModalVisible(false)
-  }
-
-  const [isModalVisibleTwo, setIsModalVisibleTwo] = useState(false)
-  const showModal = () => {
-    setIsModalVisibleTwo(true)
-  }
-
-  const handleOk = () => {
-    setIsModalVisibleTwo(false)
-  }
-
-  const handleCancelTwo = () => {
-    setIsModalVisibleTwo(false)
   }
 
   /* Add more URL */
@@ -150,6 +138,7 @@ const UserDetail = (props) => {
         })
         .catch((error) => console.log(error.response)),
     ])
+    message.success(<Alert message="Success" type="success" />)
   }
 
   return (
@@ -375,17 +364,6 @@ const UserDetail = (props) => {
                   </Button>
                 </div>
               </div>
-            </Modal>
-
-            <Modal
-              title="Basic Modal"
-              visible={isModalVisibleTwo}
-              //   onOk={handleOkTwo}
-              onCancel={handleCancelTwo}
-            >
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
             </Modal>
           </div>
         </>

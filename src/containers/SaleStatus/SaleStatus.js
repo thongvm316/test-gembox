@@ -102,6 +102,7 @@ const SaleStatus = () => {
         `${API_URL}/myproduct/search?start=1234567890&end=2134567890&lastIndex=${lastIndex}&key=${valueOfSearchInput}`,
         config,
       )
+      console.log(data)
       setDataSearch(data.data.result.product)
       setLoading(false)
     } catch (error) {
@@ -110,51 +111,66 @@ const SaleStatus = () => {
   }
 
   useEffect(async () => {
+    console.log('Waiting....')
     await Promise.all([
       axios
         .get(`${API_URL}/myproduct/productcount`, config)
         .then((value) => {
-          setData((prevState) => ({
-            ...prevState,
-            totalProductCount: value.data.data.result,
-          }))
+          console.log(value)
+          if (value.data.data.result) {
+            setData((prevState) => ({
+              ...prevState,
+              totalProductCount: value.data.data.result,
+            }))
+          }
         })
         .catch((error) => console.log(error.response)),
 
       axios
         .get(`${API_URL}/myproduct/reviewinfo`, config)
         .then((value) => {
-          setData((prevState) => ({
-            ...prevState,
-            totalReviewCount: value.data.data.result,
-          }))
+          console.log(value)
+          if (value.data.data.result) {
+            setData((prevState) => ({
+              ...prevState,
+              totalReviewCount: value.data.data.result,
+            }))
+          }
         })
         .catch((error) => console.log(error.response)),
 
       axios
         .get(`${API_URL}/myproduct/saleinfo`, config)
         .then((value) => {
-          setData((prevState) => ({
-            ...prevState,
-            saleCountRank: value.data.data.result,
-          }))
+          console.log(value)
+          if (value.data.data.result) {
+            setData((prevState) => ({
+              ...prevState,
+              saleCountRank: value.data.data.result,
+            }))
+          }
         })
         .catch((error) => console.log(error.response)),
 
       axios
         .get(`${API_URL}/myproduct/revenueinfo`, config)
         .then((value) => {
-          setData((prevState) => ({
-            ...prevState,
-            saleRank: value.data.data.result,
-          }))
+          console.log(value)
+          if (value.data.data.result) {
+            setData((prevState) => ({
+              ...prevState,
+              saleRank: value.data.data.result,
+            }))
+          }
         })
         .catch((error) => console.log(error.response)),
 
       axios
         .get(`${API_URL}/myproduct/listmarket`, config)
         .then((value) => {
-          setListMarket(value.data.data.result)
+          if (value.data.data.result) {
+            setListMarket(value.data.data.result)
+          }
         })
         .catch((error) => console.log(error.response)),
     ])
