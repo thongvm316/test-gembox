@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import homeApi from '../../api/HomeAPI'
 import NumberFormat from 'react-number-format'
-import { API_URL } from '../../constants/appConstants'
 
 import GroupButton from './GroupButton/GroupButton'
 import Footer from '../../components/Footer'
@@ -223,176 +222,135 @@ const CategoryAnalysis = (props) => {
   const [category, setCategory] = useState('완구')
 
   /* Get data */
-  const config = {
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'X-Auth-Token': `${localStorage.getItem('token-user')}`,
-    },
-  }
-
   const getData = async () => {
     setLoading(true)
     console.log('Waiting for data.....')
+    const params = {
+      start: datePicker[0],
+      end: datePicker[1],
+      key: category,
+    }
+
+    // const params = {
+    //   start: 1234567890,
+    //   end: 2134567890,
+    //   key: category,
+    // }
+
     await Promise.all([
-      axios
-        // .get(
-        //   `${API_URL}/home/category/totalsales?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
-        //   config,
-        // )
-        .get(
-          `${API_URL}/home/category/totalsales?start=1234567890&end=2134567890&key=${category}`,
-          config,
-        )
+      homeApi
+        .getTotalSell(params)
         .then((value) => {
           console.log(value)
-          setTotalSale(value.data.data.result)
+          if (value && value.data && value.data.result) {
+            setTotalSale(value.data.result)
+          }
         })
-        .catch((error) => console.log(error.response)),
+        .catch((err) => console.log(err.response)),
 
-      axios
-        // .get(
-        //   `${API_URL}/home/category/topcoupang?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
-        //   config,
-        // )
-        .get(
-          `${API_URL}/home/category/topcoupang?start=1234567890&end=2134567890&key=${category}`,
-          config,
-        )
+      homeApi
+        .getTopCoupang(params)
         .then((value) => {
           console.log(value)
-          setTopProduct((prevState) => ({
-            ...prevState,
-            topcoupang: value.data.data.result,
-          }))
+          if (value && value.data && value.data.result) {
+            setTopProduct((prevState) => ({
+              ...prevState,
+              topcoupang: value.data.result,
+            }))
+          }
         })
-        .catch((error) => console.log(error.response)),
+        .catch((err) => console.log(err.response)),
 
-      axios
-        // .get(
-        //   `${API_URL}/home/category/topauction?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
-        //   config,
-        // )
-        .get(
-          `${API_URL}/home/category/topauction?start=1234567890&end=2134567890&key=${category}`,
-          config,
-        )
+      homeApi
+        .getTopauction(params)
         .then((value) => {
           console.log(value)
-          setTopProduct((prevState) => ({
-            ...prevState,
-            topauction: value.data.data.result,
-          }))
+          if (value && value.data && value.data.result) {
+            setTopProduct((prevState) => ({
+              ...prevState,
+              topauction: value.data.result,
+            }))
+          }
         })
-        .catch((error) => console.log(error.response)),
+        .catch((err) => console.log(err.response)),
 
-      axios
-        // .get(
-        //   `${API_URL}/home/category/topsmartstore?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
-        //   config,
-        // )
-        .get(
-          `${API_URL}/home/category/topsmartstore?start=1234567890&end=2134567890&key=${category}`,
-          config,
-        )
+      homeApi
+        .getTopSmartstore(params)
         .then((value) => {
           console.log(value)
-          setTopProduct((prevState) => ({
-            ...prevState,
-            topsmartstore: value.data.data.result,
-          }))
+          if (value && value.data && value.data.result) {
+            setTopProduct((prevState) => ({
+              ...prevState,
+              topsmartstore: value.data.result,
+            }))
+          }
         })
-        .catch((error) => console.log(error.response)),
+        .catch((err) => console.log(err.response)),
 
-      axios
-        // .get(
-        //   `${API_URL}/home/category/topwemake?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
-        //   config,
-        // )
-        .get(
-          `${API_URL}/home/category/topwemake?start=1234567890&end=2134567890&key=${category}`,
-          config,
-        )
+      homeApi
+        .getTopWemake(params)
         .then((value) => {
           console.log(value)
-          setTopProduct((prevState) => ({
-            ...prevState,
-            topwemake: value.data.data.result,
-          }))
+          if (value && value.data && value.data.result) {
+            setTopProduct((prevState) => ({
+              ...prevState,
+              topwemake: value.data.result,
+            }))
+          }
         })
-        .catch((error) => console.log(error.response)),
+        .catch((err) => console.log(err.response)),
 
-      axios
-        // .get(
-        //   `${API_URL}/home/category/toptmon?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
-        //   config,
-        // )
-        .get(
-          `${API_URL}/home/category/toptmon?start=1234567890&end=2134567890&key=${category}`,
-          config,
-        )
+      homeApi
+        .getTopTmon(params)
         .then((value) => {
           console.log(value)
-          setTopProduct((prevState) => ({
-            ...prevState,
-            toptmon: value.data.data.result,
-          }))
+          if (value && value.data && value.data.result) {
+            setTopProduct((prevState) => ({
+              ...prevState,
+              toptmon: value.data.result,
+            }))
+          }
         })
-        .catch((error) => console.log(error.response)),
+        .catch((err) => console.log(err.response)),
 
-      axios
-        // .get(
-        //   `${API_URL}/home/category/topinterpark?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
-        //   config,
-        // )
-        .get(
-          `${API_URL}/home/category/topinterpark?start=1234567890&end=2134567890&key=${category}`,
-          config,
-        )
+      homeApi
+        .getTopInterpark(params)
         .then((value) => {
           console.log(value)
-          setTopProduct((prevState) => ({
-            ...prevState,
-            topinterpark: value.data.data.result,
-          }))
+          if (value && value.data && value.data.result) {
+            setTopProduct((prevState) => ({
+              ...prevState,
+              topinterpark: value.data.result,
+            }))
+          }
         })
-        .catch((error) => console.log(error.response)),
+        .catch((err) => console.log(err.response)),
 
-      axios
-        // .get(
-        //   `${API_URL}/home/category/top11str?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
-        //   config,
-        // )
-        .get(
-          `${API_URL}/home/category/top11str?start=1234567890&end=2134567890&key=${category}`,
-          config,
-        )
+      homeApi
+        .getTop11str(params)
         .then((value) => {
           console.log(value)
-          setTopProduct((prevState) => ({
-            ...prevState,
-            top11str: value.data.data.result,
-          }))
+          if (value && value.data && value.data.result) {
+            setTopProduct((prevState) => ({
+              ...prevState,
+              top11str: value.data.result,
+            }))
+          }
         })
-        .catch((error) => console.log(error.response)),
+        .catch((err) => console.log(err.response)),
 
-      axios
-        // .get(
-        //   `${API_URL}/home/category/topgmarket?start=${datePicker[0]}&end=${datePicker[1]}&key=${category}`,
-        //   config,
-        // )
-        .get(
-          `${API_URL}/home/category/topgmarket?start=1234567890&end=2134567890&key=${category}`,
-          config,
-        )
+      homeApi
+        .getTopGmarket(params)
         .then((value) => {
           console.log(value)
-          setTopProduct((prevState) => ({
-            ...prevState,
-            topgmarket: value.data.data.result,
-          }))
+          if (value && value.data && value.data.result) {
+            setTopProduct((prevState) => ({
+              ...prevState,
+              topgmarket: value.data.result,
+            }))
+          }
         })
-        .catch((error) => console.log(error.response)),
+        .catch((err) => console.log(err.response)),
     ])
     setLoading(false)
   }
@@ -520,9 +478,17 @@ const CategoryAnalysis = (props) => {
                     color: '#495057',
                   }}
                 >
-                  {totalSale.map((total) => {
+                  {totalSale.map((total, i) => {
                     if (total.market_name === market.market) {
-                      return total.total
+                      return (
+                        <NumberFormat
+                          key={i}
+                          value={total.total}
+                          displayType={'text'}
+                          thousandSeparator={true}
+                          prefix={'₩'}
+                        />
+                      )
                     }
                   })}
                 </p>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import homeApi from '../../api/HomeAPI'
 import NumberFormat from 'react-number-format'
-import { API_URL } from '../../constants/appConstants'
 
 import { DatePicker, Button, Row, Col, Select, Card, Spin } from 'antd'
 import { MinusOutlined, LoadingOutlined } from '@ant-design/icons'
@@ -229,31 +228,26 @@ const AnalysisMarket = (props) => {
 
   // Get Data
   const getData = async () => {
-    const config = {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-Auth-Token': `${localStorage.getItem('token-user')}`,
-      },
+    // const params = {
+    //   start: 1234567890,
+    //   end: 2345678901,
+    //   key: selectMarket,
+    // }
+    const params = {
+      start: datePicker[0],
+      end: datePicker[1],
+      key: selectMarket,
     }
-
     try {
       setLoading(true)
-      // const { data } = await axios.get(
-      //   `${API_URL}/home/market?start=${datePicker[0]}&end=${datePicker[1]}&key=${selectMarket}`,
-      //   config,
-      // )
-      const { data } = await axios.get(
-        `${API_URL}/home/market?start=1234567890&end=2345678901&key=${selectMarket}`,
-        config,
-      )
-      const {
-        data: { result },
-      } = data
-      console.log(result)
-      setData(result.total_sale)
+      const value = await homeApi.getAnalysisMarket(params)
+      console.log(value)
+      if (value && value.data.result && value.data.result.total_sale) {
+        setData(value.data.result.total_sale)
+      }
       setLoading(false)
     } catch (error) {
+      setLoading(false)
       console.log(error.response)
     }
   }
@@ -269,7 +263,6 @@ const AnalysisMarket = (props) => {
         align="middle"
       >
         <Col xs={17} sm={20} md={21} lg={21} xl={21} className="date-picker">
-          ``
           <Row gutter={[4, 4]}>
             <Col xs={24} sm={3} md={3} lg={2} xl={2}>
               <h1

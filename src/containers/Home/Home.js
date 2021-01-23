@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import NumberFormat from 'react-number-format'
 import moment from 'moment'
-import axios from 'axios'
-import axiosClient from '../../api/axiosClient'
+import homeApi from '../../api/HomeAPI'
 
 import { DatePicker, Button, Row, Col, Card, Divider, Spin } from 'antd'
 
 import Footer from '../../components/Footer'
 import GroupButton from './GroupButton/GroupButton'
-import { API_URL } from '../../constants/appConstants'
+
 import './home.scss'
 
 const Home = (props) => {
@@ -144,56 +143,46 @@ const Home = (props) => {
   }
 
   /* Get Data */
-  const config = {
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'X-Auth-Token': `${localStorage.getItem('token-user')}`,
-    },
-  }
-
-  const getData = async () => {
+  const callApiHome = async (params) => {
     setLoading(true)
-
     await Promise.all([
-      // axios
-      //   .get(
-      //     `${API_URL}/home/revenue/toprevenue?start=1234567890&end=2345678901`,
-      //     config,
-      //   )
-      //   // .get(
-      //   //   `${API_URL}/home/revenue/toprevenue?start=${day[0]}&end=${day[1]}`,
-      //   //   config,
-      //   // )
-      //   .then((value) => {
-      //     console.log(value)
-      //     setDataTopBander(value.data.data.result)
-      //   })
-      //   .catch((error) => console.log(error.response)),;
-      axiosClient.get(`/home/revenue/toprevenue?start=1234567890&end=2345678901`)
-
-
-      axios
-        .get(
-          `${API_URL}/home/revenue/topsellitem?start=1234567890&end=2345678901`,
-          config,
-        )
-        // .get(
-        //   `${API_URL}/home/revenue/topsellitem?start=${day[0]}&end=${day[1]}`,
-        //   config,
-        // )
+      homeApi
+        .getTopRevenue(params)
         .then((value) => {
           console.log(value)
-          setDataTopProduct(value.data.data.result)
+          if (value && value.data && value.data.result) {
+            setDataTopBander(value.data.result)
+          }
         })
-        .catch((error) => console.log(error.response)),
+        .catch((err) => console.log(err.response)),
+      homeApi
+        .getTopSell(params)
+        .then((value) => {
+          console.log(value)
+          if (value && value.data && value.data.result) {
+            setDataTopProduct(value.data.result)
+          }
+        })
+        .catch((err) => console.log(err.response)),
     ])
     setLoading(false)
   }
 
+  const getData = () => {
+    const params = {
+      start: 1234567890,
+      end: 2345678901,
+    }
+
+    // const params = {
+    //   start: day[0],
+    //   end: day[1],
+    // }
+    callApiHome(params)
+  }
+
   // Get data of current month
   // useEffect(async () => {
-  //   setLoading(true)
   //   let startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
   //   let endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
   //   let allDateOfCurrentMonth = [
@@ -201,19 +190,12 @@ const Home = (props) => {
   //     toTimestamp(endOfMonth),
   //   ]
 
-  //   try {
-  //     const { data } = await axios.get(
-  //       `${API_URL}/home/revenue?start=123456789&end=2134567890`,
-  //       config,
-  //     )
-  // const { data } = await axios.get(`${API_URL}/home/revenue?start=${allDateOfCurrentMonth[0]}&end=${allDateOfCurrentMonth[1]}`, config);
-  //     console.log(data)
-  //     setDataTopBander(data.data.result.top_20_revenue)
-  //     setDataTopProduct(data.data.result.top_20_selling)
-  //     setLoading(false)
-  //   } catch (error) {
-  //     console.log(error.response)
+  //   const params = {
+  //     start: allDateOfCurrentMonth[0],
+  //     end: allDateOfCurrentMonth[1],
   //   }
+  //   console.log(params)
+  //   callApiHome(params)
   // }, [])
 
   return (

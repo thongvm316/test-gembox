@@ -9,14 +9,15 @@ const axiosClient = axios.create({
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
+    'X-Auth-Token': `${localStorage.getItem('token-user')}`,
   },
   paramsSerializer: (params) => queryString.stringify(params),
 })
 
-axiosClient.interceptors.request.use(async (config) => {
+axiosClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('token-user')
   if (token) {
-    config.headers[X - Auth - Token] = `${token}`
+    config.headers.Authorization = `Bearer ${token}`
   }
 
   return config

@@ -67,7 +67,7 @@ const SaleStatus = () => {
   }
 
   /* Get Data */
-  // Note: Lazy load and add lastindex - Redux
+
   const [valueOfSearchInput, setValueOfSearchInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [dataSearch, setDataSearch] = useState([])

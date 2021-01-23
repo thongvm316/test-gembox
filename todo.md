@@ -20,14 +20,14 @@ Fix:
 
 ---
 
-At evening
-Fix Method Call API like Easy FrontEnd -- https://www.youtube.com/watch?v=LXz_7WQpob4
-Research - Lodash // Code with less err in solution of EasyFrontEnd
+## Research - Lodash // Code with less err in solution of EasyFrontEnd
 
----
+1. Home Page
+   a. Solution Call API ---- Done
+   b. Check SignUp - Admin - Login - Setting ---- Done
 
-5. Spiner like https://www.youtube.com/watch?v=zY5jOP5v-FY
-   My Page:
-1. Load More
-   All: Solution Redux
-   Call API like PH
+2. My Sale
+   a. Solution to call API
+   b. Load more
+
+3. Expire token
