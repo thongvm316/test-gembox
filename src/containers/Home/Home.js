@@ -55,7 +55,7 @@ const Home = (props) => {
             >
               <li
                 style={{
-                  flexBasis: '10%',
+                  flexBasis: '15%',
                   fontWeight: '700',
                   fontSize: '20px',
                   color: '#495057',
@@ -64,7 +64,7 @@ const Home = (props) => {
                 {db.id}
               </li>
 
-              <li style={{ flexBasis: '60%' }}>
+              <li style={{ flexBasis: '55%' }}>
                 <ul
                   style={{
                     listStyle: 'none',
@@ -194,7 +194,7 @@ const Home = (props) => {
   //     start: allDateOfCurrentMonth[0],
   //     end: allDateOfCurrentMonth[1],
   //   }
-  //   console.log(params)
+  //   // console.log(params)
   //   callApiHome(params)
   // }, [])
 

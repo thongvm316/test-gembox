@@ -22,12 +22,72 @@ Fix:
 
 ## Research - Lodash // Code with less err in solution of EasyFrontEnd
 
-1. Home Page
-   a. Solution Call API ---- Done
-   b. Check SignUp - Admin - Login - Setting ---- Done
-
 2. My Sale
    a. Solution to call API
    b. Load more
+   c. LastIndex - Detail
 
-3. Expire token
+3. Expire token --- Done
+
+await Promise.all([
+axios
+.get(`${API_URL}/myproduct/productcount`, config)
+.then((value) => {
+console.log(value)
+if (value.data.data.result) {
+setData((prevState) => ({
+...prevState,
+totalProductCount: value.data.data.result,
+}))
+}
+})
+.catch((error) => console.log(error.response)),
+
+      axios
+        .get(`${API_URL}/myproduct/reviewinfo`, config)
+        .then((value) => {
+          console.log(value)
+          if (value.data.data.result) {
+            setData((prevState) => ({
+              ...prevState,
+              totalReviewCount: value.data.data.result,
+            }))
+          }
+        })
+        .catch((error) => console.log(error.response)),
+
+      axios
+        .get(`${API_URL}/myproduct/saleinfo`, config)
+        .then((value) => {
+          console.log(value)
+          if (value.data.data.result) {
+            setData((prevState) => ({
+              ...prevState,
+              saleCountRank: value.data.data.result,
+            }))
+          }
+        })
+        .catch((error) => console.log(error.response)),
+
+      axios
+        .get(`${API_URL}/myproduct/revenueinfo`, config)
+        .then((value) => {
+          console.log(value)
+          if (value.data.data.result) {
+            setData((prevState) => ({
+              ...prevState,
+              saleRank: value.data.data.result,
+            }))
+          }
+        })
+        .catch((error) => console.log(error.response)),
+
+      axios
+        .get(`${API_URL}/myproduct/listmarket`, config)
+        .then((value) => {
+          if (value.data.data.result) {
+            setListMarket(value.data.data.result)
+          }
+        })
+        .catch((error) => console.log(error.response)),
+    ])

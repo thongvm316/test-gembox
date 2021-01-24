@@ -4,6 +4,7 @@ import { MinusOutlined, LoadingOutlined } from '@ant-design/icons'
 
 import fileDownload from 'js-file-download'
 import axios from 'axios'
+import saleStatusAPI from '../../api/SaleStatusAPI'
 import { API_URL } from '../../constants/appConstants'
 
 import SaleStatus1 from '../../images/SaleStatus1.png'
@@ -21,6 +22,7 @@ import Market7 from '../../images/market7.png'
 import Market8 from '../../images/market8.png'
 import Footer from '../../components/Footer'
 import './SaleStatus.scss'
+import saleStatusApi from '../../api/SaleStatusAPI'
 
 const SaleStatus = () => {
   // Table
@@ -67,7 +69,6 @@ const SaleStatus = () => {
   }
 
   /* Get Data */
-
   const [valueOfSearchInput, setValueOfSearchInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [dataSearch, setDataSearch] = useState([])
@@ -78,101 +79,108 @@ const SaleStatus = () => {
     saleCountRank: [],
     saleRank: [],
   })
-  //   console.log(data)
+  console.log(data)
 
   const getValueOfInputSearch = (e) => {
     setValueOfSearchInput(e.target.value)
   }
 
-  const lastIndex = 0
+  const lastIndex = 100
+  const getDataSearch = () => {
+    // const params = {
+    //   start: datePicker[0],
+    //   end: datePicker[1],
+    //   key: valueOfSearchInput,
+    //   lastIndex: lastIndex,
+    // }
 
-  const config = {
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'X-Auth-Token': `${localStorage.getItem('token-user')}`,
-    },
-  }
-
-  const getDataSearch = async () => {
-    try {
-      setLoading(true)
-      // const { data } = await axios.get(`${API_URL}/myproduct/search?start=${datePicker[0]}&end=${datePicker[1]}&lastIndex=${lastIndex}&key=${valueOfSearchInput}`, config)
-      const { data } = await axios.get(
-        `${API_URL}/myproduct/search?start=1234567890&end=2134567890&lastIndex=${lastIndex}&key=${valueOfSearchInput}`,
-        config,
-      )
-      console.log(data)
-      setDataSearch(data.data.result.product)
-      setLoading(false)
-    } catch (error) {
-      console.log(error.response)
+    const params = {
+      start: 1234567890,
+      end: 2134567890,
+      key:
+        '브랜드명 남양 아이엠마더상품명  남양 아이엠마더1단계800g3캔.정품.낼도착',
+      lastIndex: lastIndex,
     }
+
+    saleStatusApi
+      .getDataSearch(params)
+      .then((value) => {
+        console.log(value.data.result)
+        if (
+          value &&
+          value.data &&
+          value.data.result &&
+          value.data.result.product
+        ) {
+          setDataSearch(value.data.result.product)
+        }
+      })
+      .catch((err) => console.log(err.response))
   }
 
   useEffect(async () => {
     console.log('Waiting....')
     await Promise.all([
-      axios
-        .get(`${API_URL}/myproduct/productcount`, config)
+      saleStatusAPI
+        .getProductCount()
         .then((value) => {
           console.log(value)
-          if (value.data.data.result) {
+          if (value && value.data && value.data.result) {
             setData((prevState) => ({
               ...prevState,
-              totalProductCount: value.data.data.result,
+              totalProductCount: value.data.result,
             }))
           }
         })
         .catch((error) => console.log(error.response)),
 
-      axios
-        .get(`${API_URL}/myproduct/reviewinfo`, config)
+      saleStatusAPI
+        .getReviewInfo()
         .then((value) => {
           console.log(value)
-          if (value.data.data.result) {
+          if (value && value.data && value.data.result) {
             setData((prevState) => ({
               ...prevState,
-              totalReviewCount: value.data.data.result,
+              totalReviewCount: value.data.result,
             }))
           }
         })
         .catch((error) => console.log(error.response)),
 
-      axios
-        .get(`${API_URL}/myproduct/saleinfo`, config)
-        .then((value) => {
-          console.log(value)
-          if (value.data.data.result) {
-            setData((prevState) => ({
-              ...prevState,
-              saleCountRank: value.data.data.result,
-            }))
-          }
-        })
-        .catch((error) => console.log(error.response)),
+      // saleStatusAPI
+      //   .get(`${API_URL}/myproduct/saleinfo`, config)
+      //   .then((value) => {
+      //     console.log(value)
+      //     if (value.data.data.result) {
+      //       setData((prevState) => ({
+      //         ...prevState,
+      //         saleCountRank: value.data.data.result,
+      //       }))
+      //     }
+      //   })
+      //   .catch((error) => console.log(error.response)),
 
-      axios
-        .get(`${API_URL}/myproduct/revenueinfo`, config)
-        .then((value) => {
-          console.log(value)
-          if (value.data.data.result) {
-            setData((prevState) => ({
-              ...prevState,
-              saleRank: value.data.data.result,
-            }))
-          }
-        })
-        .catch((error) => console.log(error.response)),
+      // saleStatusAPI
+      //   .get(`${API_URL}/myproduct/revenueinfo`, config)
+      //   .then((value) => {
+      //     console.log(value)
+      //     if (value.data.data.result) {
+      //       setData((prevState) => ({
+      //         ...prevState,
+      //         saleRank: value.data.data.result,
+      //       }))
+      //     }
+      //   })
+      //   .catch((error) => console.log(error.response)),
 
-      axios
-        .get(`${API_URL}/myproduct/listmarket`, config)
-        .then((value) => {
-          if (value.data.data.result) {
-            setListMarket(value.data.data.result)
-          }
-        })
-        .catch((error) => console.log(error.response)),
+      // saleStatusAPI
+      //   .get(`${API_URL}/myproduct/listmarket`, config)
+      //   .then((value) => {
+      //     if (value.data.data.result) {
+      //       setListMarket(value.data.data.result)
+      //     }
+      //   })
+      //   .catch((error) => console.log(error.response)),
     ])
   }, [])
 
@@ -213,26 +221,26 @@ const SaleStatus = () => {
 
   /* Get Excel */
   const getExcelFile = async () => {
-    try {
-      // const { data } = await axios.get(
-      //     `${API_URL}/myproduct/export?key=${"abc"}&lastIndex=${100}&start=${datePicker[0]
-      //     }&end=${datePicker[1]}`,
-      //     {
-      //         responseType: "blob"
-      //     },
-      //     config
-      // );
-      const { data } = await axios.get(
-        `${API_URL}/myproduct/export?start=1234567890&end=2134567890&key=${valueOfSearchInput}&lastIndex=${10000000}`, // user Id of last product
-        {
-          responseType: 'blob',
-        },
-        config,
-      )
-      fileDownload(data, 'data.xls')
-    } catch (error) {
-      console.log(error.response)
-    }
+    // try {
+    //   // const { data } = await axios.get(
+    //   //     `${API_URL}/myproduct/export?key=${"abc"}&lastIndex=${100}&start=${datePicker[0]
+    //   //     }&end=${datePicker[1]}`,
+    //   //     {
+    //   //         responseType: "blob"
+    //   //     },
+    //   //     config
+    //   // );
+    //   const { data } = await axios.get(
+    //     `${API_URL}/myproduct/export?start=1234567890&end=2134567890&key=${valueOfSearchInput}&lastIndex=${10000000}`, // user Id of last product
+    //     {
+    //       responseType: 'blob',
+    //     },
+    //     config,
+    //   )
+    //   fileDownload(data, 'data.xls')
+    // } catch (error) {
+    //   console.log(error.response)
+    // }
   }
 
   return (
@@ -250,7 +258,7 @@ const SaleStatus = () => {
             <h2
               style={{ color: '#6E798C', fontSize: '36px', fontWeight: '700' }}
             >
-              {data.totalProductCount ? data.totalProductCount : ''}개
+              {data.totalProductCount}개
             </h2>
           </div>
           <div className="card-item-icon">
@@ -274,10 +282,7 @@ const SaleStatus = () => {
                 marginBottom: '0',
               }}
             >
-              {data.totalReviewCount.review_rank
-                ? data.totalReviewCount.review_rank
-                : ''}
-              위
+              {data.totalReviewCount.review_rank}위
             </h2>
             <p
               style={{ fontSize: '16px', fontWeight: '500', color: '#495057' }}
