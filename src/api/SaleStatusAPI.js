@@ -30,6 +30,11 @@ const saleStatusApi = {
     const url = '/myproduct/listmarket'
     return axiosClient.get(url, { params })
   },
+
+  getExcelFile: (params) => {
+    const url = '/myproduct/export'
+    return axiosClient.get(url, { params })
+  },
 }
 
 export default saleStatusApi

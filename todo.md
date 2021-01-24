@@ -23,71 +23,29 @@ Fix:
 ## Research - Lodash // Code with less err in solution of EasyFrontEnd
 
 2. My Sale
-   a. Solution to call API
+   a. Solution to call API ---- Done
    b. Load more
    c. LastIndex - Detail
+   d. API excel file
 
 3. Expire token --- Done
 
-await Promise.all([
-axios
-.get(`${API_URL}/myproduct/productcount`, config)
-.then((value) => {
-console.log(value)
-if (value.data.data.result) {
-setData((prevState) => ({
-...prevState,
-totalProductCount: value.data.data.result,
-}))
-}
-})
-.catch((error) => console.log(error.response)),
-
-      axios
-        .get(`${API_URL}/myproduct/reviewinfo`, config)
-        .then((value) => {
-          console.log(value)
-          if (value.data.data.result) {
-            setData((prevState) => ({
-              ...prevState,
-              totalReviewCount: value.data.data.result,
-            }))
-          }
-        })
-        .catch((error) => console.log(error.response)),
-
-      axios
-        .get(`${API_URL}/myproduct/saleinfo`, config)
-        .then((value) => {
-          console.log(value)
-          if (value.data.data.result) {
-            setData((prevState) => ({
-              ...prevState,
-              saleCountRank: value.data.data.result,
-            }))
-          }
-        })
-        .catch((error) => console.log(error.response)),
-
-      axios
-        .get(`${API_URL}/myproduct/revenueinfo`, config)
-        .then((value) => {
-          console.log(value)
-          if (value.data.data.result) {
-            setData((prevState) => ({
-              ...prevState,
-              saleRank: value.data.data.result,
-            }))
-          }
-        })
-        .catch((error) => console.log(error.response)),
-
-      axios
-        .get(`${API_URL}/myproduct/listmarket`, config)
-        .then((value) => {
-          if (value.data.data.result) {
-            setListMarket(value.data.data.result)
-          }
-        })
-        .catch((error) => console.log(error.response)),
-    ])
+// try {
+// // const { data } = await axios.get(
+// // `${API_URL}/myproduct/export?key=${"abc"}&lastIndex=${100}&start=${datePicker[0] // // }&end=${datePicker[1]}`,
+// // {
+// // responseType: "blob"
+// // },
+// // config
+// // );
+// const { data } = await axios.get(
+// `${API_URL}/myproduct/export?start=1234567890&end=2134567890&key=${valueOfSearchInput}&lastIndex=${10000000}`, // user Id of last product
+// {
+// responseType: 'blob',
+// },
+// config,
+// )
+// fileDownload(data, 'data.xls')
+// } catch (error) {
+// console.log(error.response)
+// }

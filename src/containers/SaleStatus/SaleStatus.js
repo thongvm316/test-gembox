@@ -4,6 +4,7 @@ import { MinusOutlined, LoadingOutlined } from '@ant-design/icons'
 
 import fileDownload from 'js-file-download'
 import axios from 'axios'
+import NumberFormat from 'react-number-format'
 import saleStatusAPI from '../../api/SaleStatusAPI'
 import { API_URL } from '../../constants/appConstants'
 
@@ -79,7 +80,8 @@ const SaleStatus = () => {
     saleCountRank: [],
     saleRank: [],
   })
-  console.log(data)
+  // console.log(data, listMarket)
+  console.log(loading)
 
   const getValueOfInputSearch = (e) => {
     setValueOfSearchInput(e.target.value)
@@ -101,6 +103,7 @@ const SaleStatus = () => {
         '브랜드명 남양 아이엠마더상품명  남양 아이엠마더1단계800g3캔.정품.낼도착',
       lastIndex: lastIndex,
     }
+    setLoading(true)
 
     saleStatusApi
       .getDataSearch(params)
@@ -113,6 +116,7 @@ const SaleStatus = () => {
           value.data.result.product
         ) {
           setDataSearch(value.data.result.product)
+          setLoading(false)
         }
       })
       .catch((err) => console.log(err.response))
@@ -147,40 +151,41 @@ const SaleStatus = () => {
         })
         .catch((error) => console.log(error.response)),
 
-      // saleStatusAPI
-      //   .get(`${API_URL}/myproduct/saleinfo`, config)
-      //   .then((value) => {
-      //     console.log(value)
-      //     if (value.data.data.result) {
-      //       setData((prevState) => ({
-      //         ...prevState,
-      //         saleCountRank: value.data.data.result,
-      //       }))
-      //     }
-      //   })
-      //   .catch((error) => console.log(error.response)),
+      saleStatusAPI
+        .getSaleInfo()
+        .then((value) => {
+          console.log(value)
+          if (value && value.data && value.data.result) {
+            setData((prevState) => ({
+              ...prevState,
+              saleCountRank: value.data.result,
+            }))
+          }
+        })
+        .catch((error) => console.log(error.response)),
 
-      // saleStatusAPI
-      //   .get(`${API_URL}/myproduct/revenueinfo`, config)
-      //   .then((value) => {
-      //     console.log(value)
-      //     if (value.data.data.result) {
-      //       setData((prevState) => ({
-      //         ...prevState,
-      //         saleRank: value.data.data.result,
-      //       }))
-      //     }
-      //   })
-      //   .catch((error) => console.log(error.response)),
+      saleStatusAPI
+        .getRevenueInfo()
+        .then((value) => {
+          console.log(value)
+          if (value && value.data && value.data.result) {
+            setData((prevState) => ({
+              ...prevState,
+              saleRank: value.data.result,
+            }))
+          }
+        })
+        .catch((error) => console.log(error.response)),
 
-      // saleStatusAPI
-      //   .get(`${API_URL}/myproduct/listmarket`, config)
-      //   .then((value) => {
-      //     if (value.data.data.result) {
-      //       setListMarket(value.data.data.result)
-      //     }
-      //   })
-      //   .catch((error) => console.log(error.response)),
+      saleStatusAPI
+        .getListMarket()
+        .then((value) => {
+          console.log(value)
+          if (value && value.data && value.data.result) {
+            setListMarket(value.data.result)
+          }
+        })
+        .catch((error) => console.log(error.response)),
     ])
   }, [])
 
@@ -221,26 +226,27 @@ const SaleStatus = () => {
 
   /* Get Excel */
   const getExcelFile = async () => {
-    // try {
-    //   // const { data } = await axios.get(
-    //   //     `${API_URL}/myproduct/export?key=${"abc"}&lastIndex=${100}&start=${datePicker[0]
-    //   //     }&end=${datePicker[1]}`,
-    //   //     {
-    //   //         responseType: "blob"
-    //   //     },
-    //   //     config
-    //   // );
-    //   const { data } = await axios.get(
-    //     `${API_URL}/myproduct/export?start=1234567890&end=2134567890&key=${valueOfSearchInput}&lastIndex=${10000000}`, // user Id of last product
-    //     {
-    //       responseType: 'blob',
-    //     },
-    //     config,
-    //   )
-    //   fileDownload(data, 'data.xls')
-    // } catch (error) {
-    //   console.log(error.response)
+    // const params = {
+    //   start: datePicker[0],
+    //   end: datePicker[1],
+    //   key: valueOfSearchInput,
+    //   lastIndex: lastIndex,
     // }
+
+    const params = {
+      start: 1234567890,
+      end: 2134567890,
+      key:
+        '브랜드명 남양 아이엠마더상품명  남양 아이엠마더1단계800g3캔.정품.낼도착',
+      lastIndex: lastIndex,
+    }
+    saleStatusApi
+      .getExcelFile(params)
+      .then((value) => {
+        console.log('Success')
+        fileDownload(value, 'data.xls')
+      })
+      .catch((err) => console.log(err.response))
   }
 
   return (
@@ -287,10 +293,7 @@ const SaleStatus = () => {
             <p
               style={{ fontSize: '16px', fontWeight: '500', color: '#495057' }}
             >
-              {data.totalReviewCount.total_review
-                ? data.totalReviewCount.total_review
-                : ''}
-              건
+              {data.totalReviewCount.total_review}건
             </p>
           </div>
           <div className="card-item-icon">
@@ -311,8 +314,7 @@ const SaleStatus = () => {
             <h2
               style={{ color: '#6E798C', fontSize: '36px', fontWeight: '700' }}
             >
-              {data.saleCountRank.sale_rank ? data.saleCountRank.sale_rank : ''}
-              위
+              {data.saleCountRank.sale_rank}위
             </h2>
           </div>
           <div className="card-item-icon">
@@ -338,12 +340,17 @@ const SaleStatus = () => {
                 marginBottom: '0',
               }}
             >
-              {data.saleRank.revenue_rank ? data.saleRank.revenue_rank : ''}위
+              {data.saleRank.revenue_rank}위
             </h2>
             <p
               style={{ fontSize: '16px', fontWeight: '500', color: '#495057' }}
             >
-              ₩ {data.saleRank.revenue ? data.saleRank.revenue : ''}
+              <NumberFormat
+                value={data.saleRank.revenue}
+                displayType={'text'}
+                thousandSeparator={true}
+                prefix={'₩ '}
+              />
             </p>
           </div>
           <div className="card-item-icon">
