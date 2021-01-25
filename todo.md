@@ -25,10 +25,11 @@ Fix:
 2. My Sale
    a. Solution to call API ---- Done
    b. Load more
-   c. LastIndex - Detail
    d. API excel file
+   e. Problem when go to salestatus --> redirect to home
+   f. LastIndex
 
-3. Expire token --- Done
+Check All
 
 // try {
 // // const { data } = await axios.get(

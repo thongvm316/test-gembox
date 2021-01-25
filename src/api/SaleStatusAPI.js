@@ -32,8 +32,11 @@ const saleStatusApi = {
   },
 
   getExcelFile: (params) => {
-    const url = '/myproduct/export'
-    return axiosClient.get(url, { params })
+    const { key, start, end, lastIndex } = params
+    const url = `/myproduct/export?key=${key}&lastIndex=${lastIndex}&start=${start}&end=${end}`
+    return axiosClient.get(url, {
+      responseType: 'blob',
+    })
   },
 }
 

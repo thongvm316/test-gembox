@@ -3,10 +3,8 @@ import { Row, Col, Button, Input, DatePicker, Space, Table, Spin } from 'antd'
 import { MinusOutlined, LoadingOutlined } from '@ant-design/icons'
 
 import fileDownload from 'js-file-download'
-import axios from 'axios'
 import NumberFormat from 'react-number-format'
 import saleStatusAPI from '../../api/SaleStatusAPI'
-import { API_URL } from '../../constants/appConstants'
 
 import SaleStatus1 from '../../images/SaleStatus1.png'
 import SaleStatus2 from '../../images/SaleStatus2.png'
@@ -80,8 +78,6 @@ const SaleStatus = () => {
     saleCountRank: [],
     saleRank: [],
   })
-  // console.log(data, listMarket)
-  console.log(loading)
 
   const getValueOfInputSearch = (e) => {
     setValueOfSearchInput(e.target.value)
@@ -226,20 +222,21 @@ const SaleStatus = () => {
 
   /* Get Excel */
   const getExcelFile = async () => {
+    const params = {
+      start: datePicker[0],
+      end: datePicker[1],
+      key: valueOfSearchInput,
+      lastIndex: lastIndex,
+    }
+
     // const params = {
-    //   start: datePicker[0],
-    //   end: datePicker[1],
-    //   key: valueOfSearchInput,
+    //   start: 1234567890,
+    //   end: 2134567890,
+    //   key:
+    //     '브랜드명 남양 아이엠마더상품명  남양 아이엠마더1단계800g3캔.정품.낼도착',
     //   lastIndex: lastIndex,
     // }
 
-    const params = {
-      start: 1234567890,
-      end: 2134567890,
-      key:
-        '브랜드명 남양 아이엠마더상품명  남양 아이엠마더1단계800g3캔.정품.낼도착',
-      lastIndex: lastIndex,
-    }
     saleStatusApi
       .getExcelFile(params)
       .then((value) => {
