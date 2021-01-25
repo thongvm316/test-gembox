@@ -5,6 +5,7 @@ import { API_URL } from '../../constants/appConstants'
 import axios from 'axios'
 import './VendorSearch.scss'
 import moment from 'moment'
+import fileDownload from 'js-file-download'
 
 const { Option } = Select
 
@@ -13,6 +14,7 @@ const VendorSearch = () => {
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
   const [key, setKey] = useState()
+  const [loading, setLoading] = useState(false)
 
   const [filter, setFilter] = useState()
   const [lastIndex, setLastIndex] = useState(0)
@@ -88,6 +90,7 @@ const VendorSearch = () => {
   }
 
   const getVendor = async () => {
+    setLoading(true);
     let params = ''
     for (const key in filter) {
       if (filter[key]) {
@@ -117,10 +120,43 @@ const VendorSearch = () => {
     } catch (error) {
       console.log(error.response.data)
     }
+    setLoading(false);
+
   }
 
   const loadMore = async () => {
     setLastIndex(lastIndex + 100)
+  }
+
+  const getExcelFile = async () => {
+    let params = ''
+    for (const key in filter) {
+      if (filter[key]) {
+        params += `&${key}=${filter[key]}`
+      }
+    }
+
+    const lengthData = vendors.length
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-Auth-Token': localStorage.getItem('token-user'),
+
+      },
+    }
+    try {
+      const { data } = await axios.get(
+        `${API_URL}/product/export?last=${lengthData}${params}`,
+        {
+          responseType: 'blob',
+        },
+        config,
+      )
+      fileDownload(data, 'data.xls')
+    } catch (error) {
+      console.log(error.response.data)
+    }
   }
 
   return (
@@ -146,18 +182,21 @@ const VendorSearch = () => {
               {/* <Button className="btn-light-blue  border-radius-6" style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button> */}
             </Space>
           </div>
-          <div className="input-product-search" style={{ display: 'flex' }}>
+          <div style={{ display: 'flex' }}>
             <Input
+              className="border-radius-6"
               onChange={onChangeSearch}
               style={{ marginRight: '5px' }}
               placeholder="Search"
             />
-            <Select defaultValue="카테고리" className="select-after">
+            {/* <Select defaultValue="카테고리" className="select-after">
               <Option value="카테고리">카테고리</Option>
               <Option value="밴더명">밴더명</Option>
               <Option value="제품명">제품명</Option>
-            </Select>
+            </Select> */}
             <Button
+              disabled={loading}
+              onClick={getExcelFile}
               className="btn-light-blue border-radius-6"
               style={{
                 backgroundColor: '#71c4d5',
@@ -175,11 +214,12 @@ const VendorSearch = () => {
       <Row className="card-border">
         <Col span={24}>
           <Table
+            rowKey={(record, index) => index}
+            loading={loading}
             rowKey={(record) => record.id}
             columns={columns}
             dataSource={vendors}
             scroll={{ x: 1300 }}
-            rowSelection={{ ...rowSelection, checkStrictly }}
             pagination={false}
           />
         </Col>
@@ -198,8 +238,8 @@ const VendorSearch = () => {
               LOAD MORE
             </Button>
           ) : (
-            ''
-          )}
+              ''
+            )}
         </Col>
       </Row>
     </div>

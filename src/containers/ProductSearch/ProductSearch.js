@@ -123,12 +123,11 @@ const ProductSearch = (props) => {
   const columns = [
     {
       title: '상품명',
-      // dataIndex: 'name',
       render: renderName,
     },
     {
       title: '벤더명',
-      dataIndex: 'market_name',
+      dataIndex: 'bander_name',
     },
     {
       title: '카테고리',
@@ -136,11 +135,15 @@ const ProductSearch = (props) => {
     },
     {
       title: '마켓명',
-      dataIndex: 'bander_name',
+      dataIndex: 'market_name',
     },
     {
       title: '가격',
       dataIndex: 'seller_price',
+    },
+    {
+      title: '리뷰',
+      dataIndex: 'review',
     },
     {
       title: '판매수',
@@ -279,6 +282,7 @@ const ProductSearch = (props) => {
               <Option value="1">제품명</Option>
             </Select> */}
             <Button
+              disabled={loading}
               className="btn-light-blue border-radius-6"
               onClick={getExcelFile}
               style={{
