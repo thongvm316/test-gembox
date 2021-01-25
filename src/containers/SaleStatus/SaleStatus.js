@@ -222,20 +222,20 @@ const SaleStatus = () => {
 
   /* Get Excel */
   const getExcelFile = async () => {
+    // const params = {
+    //   // start: datePicker[0],
+    //   // end: datePicker[1],
+    //   // key: valueOfSearchInput,
+    //   // lastIndex: lastIndex,
+    // }
+
     const params = {
-      start: datePicker[0],
-      end: datePicker[1],
-      key: valueOfSearchInput,
+      start: 1234567890,
+      end: 2134567890,
+      key:
+        '브랜드명 남양 아이엠마더상품명  남양 아이엠마더1단계800g3캔.정품.낼도착',
       lastIndex: lastIndex,
     }
-
-    // const params = {
-    //   start: 1234567890,
-    //   end: 2134567890,
-    //   key:
-    //     '브랜드명 남양 아이엠마더상품명  남양 아이엠마더1단계800g3캔.정품.낼도착',
-    //   lastIndex: lastIndex,
-    // }
 
     saleStatusApi
       .getExcelFile(params)
