@@ -71,7 +71,9 @@ const SaleStatus = () => {
   const [valueOfSearchInput, setValueOfSearchInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [dataSearch, setDataSearch] = useState([])
+  console.log(dataSearch.pop())
   const [listMarket, setListMarket] = useState([])
+  const [lastIndex, setLastIndex] = useState(0)
   const [data, setData] = useState({
     totalProductCount: [],
     totalReviewCount: [],
@@ -81,22 +83,26 @@ const SaleStatus = () => {
 
   const getValueOfInputSearch = (e) => {
     setValueOfSearchInput(e.target.value)
+    setLastIndex(0)
   }
 
-  const lastIndex = 100
-  const getDataSearch = () => {
+  const loadMore = () => {
+    setLastIndex(lastIndex + 100)
+  }
+
+  /* Get data */
+  const getData = () => {
     // const params = {
-    //   start: datePicker[0],
-    //   end: datePicker[1],
-    //   key: valueOfSearchInput,
+    //   start: 1234567890,
+    //   end: 2134567890,
+    //   key: '',
     //   lastIndex: lastIndex,
     // }
 
     const params = {
-      start: 1234567890,
-      end: 2134567890,
-      key:
-        '브랜드명 남양 아이엠마더상품명  남양 아이엠마더1단계800g3캔.정품.낼도착',
+      start: datePicker[0],
+      end: datePicker[1],
+      key: valueOfSearchInput,
       lastIndex: lastIndex,
     }
     setLoading(true)
@@ -104,86 +110,99 @@ const SaleStatus = () => {
     saleStatusApi
       .getDataSearch(params)
       .then((value) => {
-        console.log(value.data.result)
         if (
           value &&
           value.data &&
           value.data.result &&
           value.data.result.product
         ) {
-          setDataSearch(value.data.result.product)
-          setLoading(false)
+          if (lastIndex > 0) {
+            setDataSearch(dataSearch.concat(value.data.result.product))
+          } else {
+            setDataSearch(value.data.result.product)
+          }
         }
+        setLoading(false)
       })
-      .catch((err) => console.log(err.response))
+      .catch((err) => {
+        setLoading(false)
+        console.log(err.response)
+      })
   }
 
-  useEffect(async () => {
-    console.log('Waiting....')
-    await Promise.all([
-      saleStatusAPI
-        .getProductCount()
-        .then((value) => {
-          console.log(value)
-          if (value && value.data && value.data.result) {
-            setData((prevState) => ({
-              ...prevState,
-              totalProductCount: value.data.result,
-            }))
-          }
-        })
-        .catch((error) => console.log(error.response)),
+  useEffect(() => {
+    if (datePicker.length === 0) {
+      return
+    }
+    getData()
+  }, [lastIndex])
 
-      saleStatusAPI
-        .getReviewInfo()
-        .then((value) => {
-          console.log(value)
-          if (value && value.data && value.data.result) {
-            setData((prevState) => ({
-              ...prevState,
-              totalReviewCount: value.data.result,
-            }))
-          }
-        })
-        .catch((error) => console.log(error.response)),
+  // useEffect(async () => {
+  //   console.log('Waiting....')
+  //   await Promise.all([
+  //     saleStatusAPI
+  //       .getProductCount()
+  //       .then((value) => {
+  //         console.log(value)
+  //         if (value && value.data && value.data.result) {
+  //           setData((prevState) => ({
+  //             ...prevState,
+  //             totalProductCount: value.data.result,
+  //           }))
+  //         }
+  //       })
+  //       .catch((error) => console.log(error.response)),
 
-      saleStatusAPI
-        .getSaleInfo()
-        .then((value) => {
-          console.log(value)
-          if (value && value.data && value.data.result) {
-            setData((prevState) => ({
-              ...prevState,
-              saleCountRank: value.data.result,
-            }))
-          }
-        })
-        .catch((error) => console.log(error.response)),
+  //     saleStatusAPI
+  //       .getReviewInfo()
+  //       .then((value) => {
+  //         console.log(value)
+  //         if (value && value.data && value.data.result) {
+  //           setData((prevState) => ({
+  //             ...prevState,
+  //             totalReviewCount: value.data.result,
+  //           }))
+  //         }
+  //       })
+  //       .catch((error) => console.log(error.response)),
 
-      saleStatusAPI
-        .getRevenueInfo()
-        .then((value) => {
-          console.log(value)
-          if (value && value.data && value.data.result) {
-            setData((prevState) => ({
-              ...prevState,
-              saleRank: value.data.result,
-            }))
-          }
-        })
-        .catch((error) => console.log(error.response)),
+  //     saleStatusAPI
+  //       .getSaleInfo()
+  //       .then((value) => {
+  //         console.log(value)
+  //         if (value && value.data && value.data.result) {
+  //           setData((prevState) => ({
+  //             ...prevState,
+  //             saleCountRank: value.data.result,
+  //           }))
+  //         }
+  //       })
+  //       .catch((error) => console.log(error.response)),
 
-      saleStatusAPI
-        .getListMarket()
-        .then((value) => {
-          console.log(value)
-          if (value && value.data && value.data.result) {
-            setListMarket(value.data.result)
-          }
-        })
-        .catch((error) => console.log(error.response)),
-    ])
-  }, [])
+  //     saleStatusAPI
+  //       .getRevenueInfo()
+  //       .then((value) => {
+  //         console.log(value)
+  //         if (value && value.data && value.data.result) {
+  //           setData((prevState) => ({
+  //             ...prevState,
+  //             saleRank: value.data.result,
+  //           }))
+  //         }
+  //       })
+  //       .catch((error) => console.log(error.response)),
+
+  //     saleStatusAPI
+  //       .getListMarket()
+  //       .then((value) => {
+  //         console.log(value)
+  //         if (value && value.data && value.data.result) {
+  //           setListMarket(value.data.result)
+  //         }
+  //       })
+  //       .catch((error) => console.log(error.response)),
+  //   ])
+  // }, [])
 
   /*  For render market of user set */
   const newListMarket = listMarket.map((market) => {
@@ -222,20 +241,20 @@ const SaleStatus = () => {
 
   /* Get Excel */
   const getExcelFile = async () => {
-    // const params = {
-    //   // start: datePicker[0],
-    //   // end: datePicker[1],
-    //   // key: valueOfSearchInput,
-    //   // lastIndex: lastIndex,
-    // }
-
+    let lastIdOfItem = dataSearch.pop()
     const params = {
-      start: 1234567890,
-      end: 2134567890,
-      key:
-        '브랜드명 남양 아이엠마더상품명  남양 아이엠마더1단계800g3캔.정품.낼도착',
-      lastIndex: lastIndex,
+      start: datePicker[0],
+      end: datePicker[1],
+      key: valueOfSearchInput,
+      lastIndex: lastIdOfItem.id,
     }
+
+    // const params = {
+    //   start: 1234567890,
+    //   end: 2134567890,
+    //   key: '상품명 일동후디스 산양분유400g3단계1캔.낼도착',
+    //   lastIndex: lastIndex,
+    // }
 
     saleStatusApi
       .getExcelFile(params)
@@ -372,17 +391,10 @@ const SaleStatus = () => {
             />
             <Button
               style={{ backgroundColor: '#71c4d5', border: 'none' }}
-              onClick={getDataSearch}
+              onClick={getData}
               type="primary"
             >
-              {loading ? (
-                <Spin
-                  indicator={<LoadingOutlined style={{ color: '#fff' }} />}
-                />
-              ) : (
-                ''
-              )}
-              <span style={loading ? { marginLeft: '5px' } : {}}>적용하기</span>
+              적용하기
             </Button>
           </Space>
           <Space>
@@ -432,13 +444,33 @@ const SaleStatus = () => {
 
       <Row>
         <Col span={24}>
-          <Table
+          {/* <Table
+            loading={loading}
             columns={columns}
             dataSource={dataSearch}
             pagination={false}
             scroll={{ x: 1300 }}
             rowKey={(obj) => obj.id}
-          />
+          /> */}
+        </Col>
+
+        <Col span={24} style={{ textAlign: 'center', marginTop: '2rem' }}>
+          {dataSearch.length ? (
+            <Button
+              onClick={loadMore}
+              className="btn-light-blue border-radius-6"
+              style={{
+                backgroundColor: '#71c4d5',
+                border: 'none',
+                marginLeft: '10px',
+              }}
+              type="primary"
+            >
+              LOAD MORE
+            </Button>
+          ) : (
+            ''
+          )}
         </Col>
       </Row>
       <Footer />

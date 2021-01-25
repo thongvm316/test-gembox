@@ -23,30 +23,7 @@ Fix:
 ## Research - Lodash // Code with less err in solution of EasyFrontEnd
 
 2. My Sale
-   a. Solution to call API ---- Done
    b. Load more
-   d. API excel file
-   e. Problem when go to salestatus --> redirect to home
    f. LastIndex
 
-Check All
-
-// try {
-// // const { data } = await axios.get(
-// // `${API_URL}/myproduct/export?key=${"abc"}&lastIndex=${100}&start=${datePicker[0] // // }&end=${datePicker[1]}`,
-// // {
-// // responseType: "blob"
-// // },
-// // config
-// // );
-// const { data } = await axios.get(
-// `${API_URL}/myproduct/export?start=1234567890&end=2134567890&key=${valueOfSearchInput}&lastIndex=${10000000}`, // user Id of last product
-// {
-// responseType: 'blob',
-// },
-// config,
-// )
-// fileDownload(data, 'data.xls')
-// } catch (error) {
-// console.log(error.response)
-// }
+1. Get data - use efect with one Fn like PH
