@@ -7,19 +7,18 @@ const axiosClient = axios.create({
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    // 'X-Auth-Token': `${localStorage.getItem('token-user')}`,
-    'X-Auth-Token': `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0FkbWluIjowLCJzdWIiOjYyLCJleHAiOjE2MTEyMTY1NjF9.uzZfg0hGeoaCph3oHT0zNV_CkMr8npK1bw9ELsVpVEg`,
+    'X-Auth-Token': `${localStorage.getItem('token-user')}`,
   },
   paramsSerializer: (params) => queryString.stringify(params),
 })
 
-// axiosClient.interceptors.request.use((config) => {
-//   const token = localStorage.getItem('token-user')
-//   if (token) {
-//     axios.defaults.headers.common['X-Auth-Token'] = token
-//   }
-//   return config
-// })
+axiosClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token-user')
+  if (token) {
+    axios.defaults.headers.common['X-Auth-Token'] = token
+  }
+  return config
+})
 
 axiosClient.interceptors.response.use(
   (response) => {
@@ -31,21 +30,22 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     // Handle errors
-    console.log(error.response)
-    if (!error.response) {
-      return new Promise((resolve, reject) => {
-        reject(error)
-      })
-    }
-    // Token has expired 40101
-    if (error.response.status === 401) {
-      // localStorage.clear()
-      // window.location = '/'
-    } else {
-      return new Promise((resolve, reject) => {
-        reject(error)
-      })
-    }
+    throw error
+    // console.log(error.response)
+    // if (!error.response) {
+    //   return new Promise((resolve, reject) => {
+    //     reject(error)
+    //   })
+    // }
+    // // Token has expired 40101
+    // if (error.response.data.data.message === 'Token has expired') {
+    //   localStorage.clear()
+    //   window.location = '/'
+    // } else {
+    //   return new Promise((resolve, reject) => {
+    //     reject(error)
+    //   })
+    // }
   },
 )
 
