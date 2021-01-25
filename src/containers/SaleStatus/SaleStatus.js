@@ -3,6 +3,7 @@ import { Row, Col, Button, Input, DatePicker, Space, Table, Spin } from 'antd'
 import { MinusOutlined, LoadingOutlined } from '@ant-design/icons'
 
 import fileDownload from 'js-file-download'
+import * as _ from 'lodash'
 import NumberFormat from 'react-number-format'
 import saleStatusAPI from '../../api/SaleStatusAPI'
 
@@ -71,7 +72,7 @@ const SaleStatus = () => {
   const [valueOfSearchInput, setValueOfSearchInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [dataSearch, setDataSearch] = useState([])
-  console.log(dataSearch.pop())
+  console.log(dataSearch)
   const [listMarket, setListMarket] = useState([])
   const [lastIndex, setLastIndex] = useState(0)
   const [data, setData] = useState({
@@ -98,7 +99,6 @@ const SaleStatus = () => {
     //   key: '',
     //   lastIndex: lastIndex,
     // }
-
     const params = {
       start: datePicker[0],
       end: datePicker[1],
@@ -119,6 +119,8 @@ const SaleStatus = () => {
           if (lastIndex > 0) {
             setDataSearch(dataSearch.concat(value.data.result.product))
           } else {
+            console.log('test')
+            console.log(value.data.result.product)
             setDataSearch(value.data.result.product)
           }
         }
@@ -240,13 +242,14 @@ const SaleStatus = () => {
   })
 
   /* Get Excel */
+  const lastItemOfDataSearch = _.last(dataSearch) ? _.last(dataSearch).id : ''
   const getExcelFile = async () => {
-    let lastIdOfItem = dataSearch.pop()
+    // let lastIdOfItem = dataSearch.pop()
     const params = {
       start: datePicker[0],
       end: datePicker[1],
       key: valueOfSearchInput,
-      lastIndex: lastIdOfItem.id,
+      lastIndex: lastItemOfDataSearch,
     }
 
     // const params = {
@@ -404,6 +407,7 @@ const SaleStatus = () => {
               placeholder="Search"
             />
             <Button
+              disabled={loading}
               style={{ backgroundColor: '#71c4d5', border: 'none' }}
               type="primary"
               onClick={getExcelFile}
@@ -444,14 +448,14 @@ const SaleStatus = () => {
 
       <Row>
         <Col span={24}>
-          {/* <Table
+          <Table
             loading={loading}
             columns={columns}
             dataSource={dataSearch}
             pagination={false}
             scroll={{ x: 1300 }}
             rowKey={(obj) => obj.id}
-          /> */}
+          />
         </Col>
 
         <Col span={24} style={{ textAlign: 'center', marginTop: '2rem' }}>

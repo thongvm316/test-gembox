@@ -22,8 +22,9 @@ Fix:
 
 ## Research - Lodash // Code with less err in solution of EasyFrontEnd
 
-2. My Sale
-   b. Load more
-   f. LastIndex
-
-1. Get data - use efect with one Fn like PH
+1. Get data - use efect with one Fn like PH in Home Page
+2. API Excel - Get data equal with data in UI ---- Done
+3. Load more
+   a. Hide btn if data < 99
+   b. When search --> Show that data // Check when load more
+   c. Check excel with data of search
