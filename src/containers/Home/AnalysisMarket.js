@@ -262,7 +262,7 @@ const AnalysisMarket = (props) => {
         justify="space-between"
         align="middle"
       >
-        <Col xs={17} sm={20} md={21} lg={21} xl={21} className="date-picker">
+        <Col xs={14} sm={20} md={20} lg={21} xl={22} className="date-picker">
           <Row gutter={[4, 4]}>
             <Col xs={24} sm={3} md={3} lg={2} xl={2}>
               <h1
@@ -276,7 +276,7 @@ const AnalysisMarket = (props) => {
                 집계 월
               </h1>
             </Col>
-            <Col xs={24} sm={10} md={10} lg={10} xl={6}>
+            <Col xs={24} sm={10} md={10} lg={10} xl={4}>
               <DatePicker.RangePicker
                 onChange={onChange}
                 separator={<MinusOutlined />}
@@ -289,6 +289,7 @@ const AnalysisMarket = (props) => {
                   borderColor: '#42abbc',
                   fontWeight: 'bold',
                 }}
+                disabled={loading}
                 type="primary"
                 onClick={getData}
               >
@@ -307,7 +308,7 @@ const AnalysisMarket = (props) => {
           </Row>
         </Col>
 
-        <Col xs={7} sm={4} md={3} lg={3} xl={3} style={{ textAlign: 'end' }}>
+        <Col xs={10} sm={4} md={4} lg={3} xl={2} style={{ textAlign: 'end' }}>
           <Select onChange={handleChangeSelectMarket} defaultValue="11번가">
             <Option value="11번가">11번가</Option>
             <Option value="G마켓">G마켓</Option>

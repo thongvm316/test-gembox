@@ -203,7 +203,6 @@ const CategoryAnalysis = (props) => {
     // console.log(date, dateString);
     let storeDay = [toTimestamp(dateString[0]), toTimestamp(dateString[1])]
     setDatePicker(storeDay)
-    console.log(storeDay)
   }
 
   /* For render total sale component */
@@ -369,7 +368,7 @@ const CategoryAnalysis = (props) => {
         justify="space-between"
         align="middle"
       >
-        <Col xs={17} sm={20} md={21} lg={21} xl={21} className="date-picker">
+        <Col xs={17} sm={21} md={21} lg={21} xl={22} className="date-picker">
           <Row gutter={[4, 4]}>
             <Col xs={24} sm={3} md={3} lg={2} xl={2}>
               <h1
@@ -383,7 +382,7 @@ const CategoryAnalysis = (props) => {
                 집계 월
               </h1>
             </Col>
-            <Col xs={24} sm={10} md={10} lg={10} xl={6}>
+            <Col xs={24} sm={10} md={10} lg={8} xl={4}>
               <DatePicker.RangePicker
                 onChange={onChange}
                 separator={<MinusOutlined />}
@@ -396,6 +395,7 @@ const CategoryAnalysis = (props) => {
                   borderColor: '#42abbc',
                   fontWeight: 'bold',
                 }}
+                disabled={loading}
                 type="primary"
                 onClick={getData}
               >
@@ -416,12 +416,12 @@ const CategoryAnalysis = (props) => {
 
         <Col
           xs={7}
-          sm={4}
+          sm={3}
           md={3}
           lg={3}
-          xl={3}
-          style={{ textAlign: 'end' }}
-          className="select-category-analysis"
+          xl={2}
+          style={{ textAlign: 'center' }}
+          className="category-analysis"
         >
           <CategoryList
             category={category}

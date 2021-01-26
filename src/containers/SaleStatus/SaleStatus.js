@@ -394,6 +394,7 @@ const SaleStatus = () => {
               style={{ backgroundColor: '#71c4d5', border: 'none' }}
               onClick={getData}
               type="primary"
+              disabled={loading}
             >
               적용하기
             </Button>

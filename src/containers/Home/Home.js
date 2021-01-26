@@ -7,7 +7,6 @@ import { DatePicker, Button, Row, Col, Card, Divider, Spin } from 'antd'
 
 import Footer from '../../components/Footer'
 import GroupButton from './GroupButton/GroupButton'
-
 import './home.scss'
 
 const Home = (props) => {
@@ -169,34 +168,33 @@ const Home = (props) => {
   }
 
   const getData = () => {
-    const params = {
-      start: 1234567890,
-      end: 2345678901,
-    }
-
     // const params = {
-    //   start: day[0],
-    //   end: day[1],
+    //   start: 1234567890,
+    //   end: 2345678901,
     // }
+
+    const params = {
+      start: day[0],
+      end: day[1],
+    }
     callApiHome(params)
   }
 
   // Get data of current month
-  // useEffect(async () => {
-  //   let startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
-  //   let endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
-  //   let allDateOfCurrentMonth = [
-  //     toTimestamp(startOfMonth),
-  //     toTimestamp(endOfMonth),
-  //   ]
+  useEffect(async () => {
+    let startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
+    let endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
+    let allDateOfCurrentMonth = [
+      toTimestamp(startOfMonth),
+      toTimestamp(endOfMonth),
+    ]
 
-  //   const params = {
-  //     start: allDateOfCurrentMonth[0],
-  //     end: allDateOfCurrentMonth[1],
-  //   }
-  //   // console.log(params)
-  //   callApiHome(params)
-  // }, [])
+    const params = {
+      start: allDateOfCurrentMonth[0],
+      end: allDateOfCurrentMonth[1],
+    }
+    callApiHome(params)
+  }, [])
 
   return (
     <div className="home-page">
@@ -227,6 +225,7 @@ const Home = (props) => {
               borderColor: '#42abbc',
               fontWeight: 'bold',
             }}
+            disabled={loading}
             type="primary"
             onClick={getData}
           >

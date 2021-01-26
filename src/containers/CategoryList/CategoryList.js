@@ -1,6 +1,5 @@
 import React from 'react'
-import { DatePicker, Button, Row, Col, Card, Spin, Dropdown, Menu } from 'antd'
-import { MinusOutlined, LoadingOutlined } from '@ant-design/icons'
+import { Dropdown, Menu } from 'antd'
 
 const CategoryList = (props) => {
   const selectCategory = (e) => {
