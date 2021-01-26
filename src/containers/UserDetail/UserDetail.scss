@@ -43,6 +43,16 @@
       background-color: #3f537d;
     }
   }
+  .ant-spin {
+    margin-left: 50%;
+    margin-top: 2rem;
+    transform: translateX(-50%);
+  }
+
+  .ant-btn[disabled], .ant-btn[disabled]:hover {
+    color: #fff !important;
+    background-color: #5c72a3 !important;
+  }
 }
 
 .actions-change-password {
@@ -56,6 +66,7 @@
     color: #3f537d;
     border-color: #3f537d;
   }
+
   .ant-btn:hover,
   .ant-btn:focus {
     color: #fff !important;
@@ -74,8 +85,7 @@
 }
 
 .position-spiner {
-  .ant-image {
-    margin-left: 50%;
-    transform: translateX(-50%);
-  }
+  margin-left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }

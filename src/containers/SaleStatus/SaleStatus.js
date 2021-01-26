@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Row, Col, Button, Input, DatePicker, Space, Table, Spin } from 'antd'
-import { MinusOutlined, LoadingOutlined } from '@ant-design/icons'
+import { MinusOutlined } from '@ant-design/icons'
 
 import fileDownload from 'js-file-download'
 import * as _ from 'lodash'
@@ -243,6 +243,7 @@ const SaleStatus = () => {
   /* Get Excel */
   const lastItemOfDataSearch = _.last(dataSearch) ? _.last(dataSearch).id : ''
   const getExcelFile = async () => {
+    setLoading(true)
     const params = {
       start: datePicker[0],
       end: datePicker[1],
@@ -262,8 +263,12 @@ const SaleStatus = () => {
       .then((value) => {
         console.log('Success')
         fileDownload(value, 'data.xls')
+        setLoading(false)
       })
-      .catch((err) => console.log(err.response))
+      .catch((err) => {
+        setLoading(false)
+        console.log(err.response)
+      })
   }
 
   return (
@@ -453,7 +458,7 @@ const SaleStatus = () => {
             dataSource={dataSearch}
             pagination={false}
             scroll={{ x: 1300 }}
-            rowKey={(obj) => obj.id}
+            rowKey="id"
           />
         </Col>
 

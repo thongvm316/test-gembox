@@ -13,9 +13,9 @@ import {
   Image,
   message,
   Alert,
+  Spin,
 } from 'antd'
 import { EditOutlined, LeftOutlined } from '@ant-design/icons'
-import Spiner from '../../images/spiner.gif'
 import './UserDetail.scss'
 
 const UserDetail = (props) => {
@@ -71,6 +71,7 @@ const UserDetail = (props) => {
   const [data, setData] = useState('')
   const [dataUrlMarket, setDataUrlMarket] = useState([])
   const [loading, setLoading] = useState(false)
+  const [disableBtn, setDisableBtn] = useState(false)
   const config = {
     headers: {
       Accept: 'application/json',
@@ -83,10 +84,13 @@ const UserDetail = (props) => {
     try {
       setLoading(true)
       const { data } = await axios.get(`${API_URL}/user/profile`, config)
-      setData(data.data.result)
-      setDataUrlMarket(data.data.result.url_market)
+      if (data && data.data.result) {
+        setData(data.data.result)
+        setDataUrlMarket(data.data.result.url_market)
+      }
       setLoading(false)
     } catch (error) {
+      setLoading(false)
       console.log(error.response)
     }
   }, [])
@@ -123,6 +127,7 @@ const UserDetail = (props) => {
   }
 
   const changeUserProfileAndPassword = async () => {
+    setDisableBtn(true)
     await Promise.all([
       axios
         .put(`${API_URL}/user/changepassword`, bodyPassword, config)
@@ -139,13 +144,14 @@ const UserDetail = (props) => {
         .catch((error) => console.log(error.response)),
     ])
     message.success(<Alert message="Success" type="success" />)
+    setDisableBtn(false)
   }
 
   return (
     <>
       {loading ? (
         <div className="position-spiner">
-          <Image src={Spiner} width={100} />
+          <Spin size="large" />
         </div>
       ) : (
         <>
@@ -306,6 +312,7 @@ const UserDetail = (props) => {
                 <div className="user-info" style={{ marginTop: 20 }}>
                   <div className="actions">
                     <Button
+                      disabled={disableBtn}
                       onClick={changeUserProfileAndPassword}
                       size="large"
                       type=""
