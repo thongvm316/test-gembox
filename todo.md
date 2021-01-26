@@ -25,6 +25,6 @@ Fix:
 1. Get data - use efect with one Fn like PH in Home Page
 2. API Excel - Get data equal with data in UI ---- Done
 3. Load more
-   a. Hide btn if data < 99
-   b. When search --> Show that data // Check when load more
-   c. Check excel with data of search
+   a. Hide btn if data < 99 ---- Done
+   b. When search --> Show that data // Check when load more --- Done
+   c. Check excel with data of search --- Done

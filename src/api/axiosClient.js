@@ -7,18 +7,17 @@ const axiosClient = axios.create({
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    'X-Auth-Token': `${localStorage.getItem('token-user')}`,
-    // 'X-Auth-Token': `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0FkbWluIjowLCJzdWIiOjYyLCJleHAiOjE2MTEyMTY1NjF9.uzZfg0hGeoaCph3oHT0zNV_CkMr8npK1bw9ELsVpVEg`,
   },
   paramsSerializer: (params) => queryString.stringify(params),
 })
 
-axiosClient.interceptors.request.use((config) => {
+axiosClient.interceptors.request.use((request) => {
   const token = localStorage.getItem('token-user')
   if (token) {
-    axios.defaults.headers.common['X-Auth-Token'] = token
+    request.headers['X-Auth-Token'] = token
   }
-  return config
+
+  return request
 })
 
 axiosClient.interceptors.response.use(

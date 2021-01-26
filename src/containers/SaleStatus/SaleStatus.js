@@ -84,7 +84,7 @@ const SaleStatus = () => {
 
   const getValueOfInputSearch = (e) => {
     setValueOfSearchInput(e.target.value)
-    setLastIndex(0)
+    setDataSearch([])
   }
 
   const loadMore = () => {
@@ -244,7 +244,6 @@ const SaleStatus = () => {
   /* Get Excel */
   const lastItemOfDataSearch = _.last(dataSearch) ? _.last(dataSearch).id : ''
   const getExcelFile = async () => {
-    // let lastIdOfItem = dataSearch.pop()
     const params = {
       start: datePicker[0],
       end: datePicker[1],
@@ -459,8 +458,9 @@ const SaleStatus = () => {
         </Col>
 
         <Col span={24} style={{ textAlign: 'center', marginTop: '2rem' }}>
-          {dataSearch.length ? (
+          {dataSearch.length && dataSearch.length >= 100 ? (
             <Button
+              disabled={loading}
               onClick={loadMore}
               className="btn-light-blue border-radius-6"
               style={{
