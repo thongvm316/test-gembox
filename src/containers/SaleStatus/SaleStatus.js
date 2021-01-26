@@ -119,7 +119,6 @@ const SaleStatus = () => {
           if (lastIndex > 0) {
             setDataSearch(dataSearch.concat(value.data.result.product))
           } else {
-            console.log('test')
             console.log(value.data.result.product)
             setDataSearch(value.data.result.product)
           }
@@ -139,72 +138,72 @@ const SaleStatus = () => {
     getData()
   }, [lastIndex])
 
-  // useEffect(async () => {
-  //   console.log('Waiting....')
-  //   await Promise.all([
-  //     saleStatusAPI
-  //       .getProductCount()
-  //       .then((value) => {
-  //         console.log(value)
-  //         if (value && value.data && value.data.result) {
-  //           setData((prevState) => ({
-  //             ...prevState,
-  //             totalProductCount: value.data.result,
-  //           }))
-  //         }
-  //       })
-  //       .catch((error) => console.log(error.response)),
+  useEffect(async () => {
+    console.log('Waiting....')
+    await Promise.all([
+      saleStatusAPI
+        .getProductCount()
+        .then((value) => {
+          console.log(value)
+          if (value && value.data && value.data.result) {
+            setData((prevState) => ({
+              ...prevState,
+              totalProductCount: value.data.result,
+            }))
+          }
+        })
+        .catch((error) => console.log(error.response)),
 
-  //     saleStatusAPI
-  //       .getReviewInfo()
-  //       .then((value) => {
-  //         console.log(value)
-  //         if (value && value.data && value.data.result) {
-  //           setData((prevState) => ({
-  //             ...prevState,
-  //             totalReviewCount: value.data.result,
-  //           }))
-  //         }
-  //       })
-  //       .catch((error) => console.log(error.response)),
+      saleStatusAPI
+        .getReviewInfo()
+        .then((value) => {
+          console.log(value)
+          if (value && value.data && value.data.result) {
+            setData((prevState) => ({
+              ...prevState,
+              totalReviewCount: value.data.result,
+            }))
+          }
+        })
+        .catch((error) => console.log(error.response)),
 
-  //     saleStatusAPI
-  //       .getSaleInfo()
-  //       .then((value) => {
-  //         console.log(value)
-  //         if (value && value.data && value.data.result) {
-  //           setData((prevState) => ({
-  //             ...prevState,
-  //             saleCountRank: value.data.result,
-  //           }))
-  //         }
-  //       })
-  //       .catch((error) => console.log(error.response)),
+      saleStatusAPI
+        .getSaleInfo()
+        .then((value) => {
+          console.log(value)
+          if (value && value.data && value.data.result) {
+            setData((prevState) => ({
+              ...prevState,
+              saleCountRank: value.data.result,
+            }))
+          }
+        })
+        .catch((error) => console.log(error.response)),
 
-  //     saleStatusAPI
-  //       .getRevenueInfo()
-  //       .then((value) => {
-  //         console.log(value)
-  //         if (value && value.data && value.data.result) {
-  //           setData((prevState) => ({
-  //             ...prevState,
-  //             saleRank: value.data.result,
-  //           }))
-  //         }
-  //       })
-  //       .catch((error) => console.log(error.response)),
+      saleStatusAPI
+        .getRevenueInfo()
+        .then((value) => {
+          console.log(value)
+          if (value && value.data && value.data.result) {
+            setData((prevState) => ({
+              ...prevState,
+              saleRank: value.data.result,
+            }))
+          }
+        })
+        .catch((error) => console.log(error.response)),
 
-  //     saleStatusAPI
-  //       .getListMarket()
-  //       .then((value) => {
-  //         console.log(value)
-  //         if (value && value.data && value.data.result) {
-  //           setListMarket(value.data.result)
-  //         }
-  //       })
-  //       .catch((error) => console.log(error.response)),
-  //   ])
-  // }, [])
+      saleStatusAPI
+        .getListMarket()
+        .then((value) => {
+          console.log(value)
+          if (value && value.data && value.data.result) {
+            setListMarket(value.data.result)
+          }
+        })
+        .catch((error) => console.log(error.response)),
+    ])
+  }, [])
 
   /*  For render market of user set */
   const newListMarket = listMarket.map((market) => {
