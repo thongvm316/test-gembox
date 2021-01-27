@@ -57,7 +57,9 @@ const ProductDetail = (props) => {
         setProductDetailShare(res.data.data.result.share)
       }
     } catch (error) {
-      console.log(error.response.data)
+      if (!error.response.data.success) {
+        props.history.push('/')
+      }
     }
     setSpinningOfShare(false)
 
@@ -84,7 +86,9 @@ const ProductDetail = (props) => {
         setProductTrendGraph(res.data.data.result)
       }
     } catch (error) {
-      console.log(error.response.data)
+      if (!error.response.data.success) {
+        props.history.push('/')
+      }
     }
     setSpinning(false)
 
@@ -108,7 +112,9 @@ const ProductDetail = (props) => {
         setCategoryRanking(res.data.data.result.category_rank)
       }
     } catch (error) {
-      console.log(error.response.data)
+      if (!error.response.data.success) {
+        props.history.push('/')
+      }
     }
   }
 
@@ -130,7 +136,9 @@ const ProductDetail = (props) => {
         setSaleRanking(res.data.data.result.total_rank)
       }
     } catch (error) {
-      console.log(error.response.data)
+      if (!error.response.data.success) {
+        props.history.push('/')
+      }
     }
   }
 
@@ -152,7 +160,9 @@ const ProductDetail = (props) => {
         setShareKing(res.data.data.result.share)
       }
     } catch (error) {
-      console.log(error.response.data)
+      if (!error.response.data.success) {
+        props.history.push('/')
+      }
     }
   }
 

@@ -103,7 +103,9 @@ const MarketSaleStatusChart = (props) => {
                 setData(res.data.data.result)
             }
         } catch (error) {
-            console.log(error.response.data)
+            if (!error.response.data.success){
+                props.history.push('/')
+            }
         }
         setSpinning(false)
 
