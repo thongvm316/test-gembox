@@ -73,7 +73,6 @@ const SaleStatus = () => {
   const [loading, setLoading] = useState(false)
   const [isData, SetIsData] = useState(true)
   const [dataSearch, setDataSearch] = useState([])
-  console.log(dataSearch)
   const [listMarket, setListMarket] = useState([])
   const [lastIndex, setLastIndex] = useState(0)
   const [data, setData] = useState({
@@ -86,6 +85,7 @@ const SaleStatus = () => {
   const getValueOfInputSearch = (e) => {
     setValueOfSearchInput(e.target.value)
     setDataSearch([])
+    SetIsData(true)
   }
 
   const loadMore = () => {
