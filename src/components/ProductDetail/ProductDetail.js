@@ -1,27 +1,63 @@
 import React, { useState, useEffect } from 'react'
 import './ProductDetail.scss'
-import { Row, Col, Button, Space, Divider } from 'antd'
+import { Row, Col, Button, Space, Divider, Spin } from 'antd'
 import Highcharts from 'highcharts/highstock'
 import PieChart from 'highcharts-react-official'
 import axios from 'axios'
 import HighchartsReact from 'highcharts-react-official'
 import Card2 from '../../images/Card_2.png'
 import Card3 from '../../images/Card_3.png'
-import { API_URL } from '../../constants/appConstants'
+import { API_URL } from '../../constants/appConstants';
+import { market_list } from '../../constants/appConstants';
+
+import * as _ from 'lodash';
+import moment from 'moment'
+import MarketSaleStatusChart from '../MarketSaleStatusChart/MarketSaleStatusChart'
 
 const ProductDetail = (props) => {
-  console.log(props.location.state.product)
-
   const [product, setProduct] = useState(props.location.state.product)
   const [categoryRanking, setCategoryRanking] = useState()
   const [saleRanking, setSaleRanking] = useState()
   const [shareRanking, setShareKing] = useState()
 
+  const [productTrendGraph, setProductTrendGraph] = useState([])
+
+  const [spinning, setSpinning] = useState(false)
+
+
   useEffect(() => {
     getCategoryRanking()
     getSaleRanking()
     getShareRanking()
+    getProductTrendGraph()
   }, [])
+
+  const getProductTrendGraph = async () => {
+    setSpinning(true)
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-Auth-Token': localStorage.getItem('token-user'),
+      },
+    }
+
+    try {
+      const res = await axios.get(
+        `${API_URL}/product/detail/saletrend?id=${product.id}`,
+        config,
+      )
+
+      console.log(res)
+      if (res.status == 200) {
+        setProductTrendGraph(res.data.data.result)
+      }
+    } catch (error) {
+      console.log(error.response.data)
+    }
+    setSpinning(false)
+
+  }
 
   const getCategoryRanking = async () => {
     const config = {
@@ -95,6 +131,9 @@ const ProductDetail = (props) => {
       type: 'pie',
       renderTo: 'container',
     },
+    credits: {
+      enabled: false
+  },
     tooltip: {
       enabled: true,
       formatter: function () {
@@ -135,6 +174,9 @@ const ProductDetail = (props) => {
     chart: {
       type: 'spline',
     },
+    credits: {
+      enabled: false
+    },
     title: {
       text: '판매 추이 그래프',
       align: 'left',
@@ -148,32 +190,14 @@ const ProductDetail = (props) => {
     },
     series: [
       {
-        data: [1, 5, 3, 5, 4, 7, 5, 3, 6, 4, 9, 12],
-        name: 'Product 1',
+        data: productTrendGraph.map(product => { return parseInt(product.revenue) }),
+        name: 'Product',
         color: '#FF21B4',
+
       },
     ],
-    plotOptions: {
-      series: {
-        pointStart: 1,
-        marker: {
-          enabled: false,
-        },
-      },
-    },
     xAxis: {
-      allowDecimals: false,
-      accessibility: {
-        rangeDescription: 'Range: 1 to 12',
-      },
-      labels: {
-        formatter: function () {
-          return this.value + '월'
-        },
-        style: {
-          color: '#aeaeb0',
-        },
-      },
+      categories: productTrendGraph.map(product => { return moment(product.created).format('YYYY-MM-DD hh:mm') }),
     },
     yAxis: {
       title: {
@@ -181,7 +205,7 @@ const ProductDetail = (props) => {
       },
       labels: {
         formatter: function () {
-          return this.value + 'M'
+          return this.value
         },
         style: {
           color: '#aeaeb0',
@@ -195,90 +219,6 @@ const ProductDetail = (props) => {
       layout: 'horizontal',
       align: 'center',
     },
-  }
-
-  const optionsLineAndColumnChart = {
-    title: '',
-    chart: {
-      zoomType: 'xy',
-    },
-    xAxis: false,
-    yAxis: [
-      {
-        labels: false,
-        title: false,
-        gridLineColor: 'transparent',
-      },
-      {
-        // Secondary yAxis
-        title: false,
-        labels: false,
-        opposite: true,
-        gridLineColor: 'transparent',
-      },
-    ],
-    tooltip: {
-      shared: true,
-    },
-    legend: {
-      layout: 'vertical',
-      align: 'left',
-      x: 120,
-      verticalAlign: 'top',
-      y: 100,
-      floating: true,
-      backgroundColor:
-        Highcharts.defaultOptions.legend.backgroundColor || // theme
-        'rgba(255,255,255,0.25)',
-    },
-    series: [
-      {
-        name: '',
-        type: 'column',
-        yAxis: 1,
-        data: [
-          49.9,
-          71.5,
-          106.4,
-          129.2,
-          144.0,
-          176.0,
-          135.6,
-          148.5,
-          216.4,
-          194.1,
-          95.6,
-          54.4,
-        ],
-        tooltip: {
-          valueSuffix: ' mm',
-        },
-      },
-      {
-        name: '',
-        type: 'spline',
-        data: [
-          7.0,
-          6.9,
-          9.5,
-          14.5,
-          18.2,
-          21.5,
-          25.2,
-          26.5,
-          23.3,
-          18.3,
-          13.9,
-          9.6,
-        ],
-        tooltip: {
-          valueSuffix: '°C',
-        },
-        marker: {
-          enabled: false,
-        },
-      },
-    ],
   }
 
   const goToStore = () => {
@@ -387,89 +327,29 @@ const ProductDetail = (props) => {
             </Row> */}
       <Row style={{ marginBottom: '20px' }} className="card-border">
         <Col span={24}>
+          <Spin tip="Loading..." spinning={spinning}>
           <HighchartsReact
             highcharts={Highcharts}
             options={optionsLineChart}
             {...props}
           />
+          </Spin>
         </Col>
       </Row>
 
       <Row gutter={16} className="card-border">
-        <Col span={6}>
-          <div className="card-item-border">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={optionsLineAndColumnChart}
-              {...props}
-            />
-          </div>
-        </Col>
-        <Col span={6}>
-          <div className="card-item-border">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={optionsLineAndColumnChart}
-              {...props}
-            />
-          </div>
-        </Col>
-        <Col span={6}>
-          <div className="card-item-border">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={optionsLineAndColumnChart}
-              {...props}
-            />
-          </div>
-        </Col>
-        <Col span={6}>
-          <div className="card-item-border">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={optionsLineAndColumnChart}
-              {...props}
-            />
-          </div>
-        </Col>
-      </Row>
-      <Row gutter={16} className="card-border">
-        <Col span={6}>
-          <div className="card-item-border">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={optionsLineAndColumnChart}
-              {...props}
-            />
-          </div>
-        </Col>
-        <Col span={6}>
-          <div className="card-item-border">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={optionsLineAndColumnChart}
-              {...props}
-            />
-          </div>
-        </Col>
-        <Col span={6}>
-          <div className="card-item-border">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={optionsLineAndColumnChart}
-              {...props}
-            />
-          </div>
-        </Col>
-        <Col span={6}>
-          <div className="card-item-border">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={optionsLineAndColumnChart}
-              {...props}
-            />
-          </div>
-        </Col>
+        {
+          market_list.map(market => {
+            return (
+              <Col span={6} style={{ marginBottom: '10px' }}>
+                <div className="card-item-border">
+                  <MarketSaleStatusChart market={market} productName={product.name} />
+                </div>
+              </Col>
+            )
+          })
+        }
+
       </Row>
     </>
   )
