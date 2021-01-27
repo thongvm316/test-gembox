@@ -132,14 +132,14 @@ const UserDetail = (props) => {
       axios
         .put(`${API_URL}/user/changepassword`, bodyPassword, config)
         .then((value) => {
-          console.log(value)
+          console.log('Success')
         })
         .catch((error) => console.log(error.response)),
 
       axios
         .put(`${API_URL}/user/profile`, bodyOfProfile, config)
         .then((value) => {
-          console.log(value)
+          console.log('Success')
         })
         .catch((error) => console.log(error.response)),
     ])

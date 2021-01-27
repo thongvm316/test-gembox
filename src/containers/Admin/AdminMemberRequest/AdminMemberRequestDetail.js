@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Row, Col, Button, Space, List } from 'antd'
 import { useLocation } from 'react-router-dom'
+
 import axios from 'axios'
 import { API_URL } from '../../../constants/appConstants'
+import adminApi from '../../../api/AdminAPI'
 import fileDownload from 'js-file-download'
+
 import './AdminMemberRequestDetail.scss'
 
 const AdminMemberRequestDetail = (props) => {
   const location = useLocation()
+  const [loading, setLoading] = useState(false)
   const { memberRequestDetail } = location.state
-  // console.log(memberRequestDetail)
 
   // Config for call API
   const config = {
@@ -56,19 +59,18 @@ const AdminMemberRequestDetail = (props) => {
   }
 
   const dowloadPdfFile = async () => {
-    try {
-      const { data } = await axios.get(
-        `${API_URL}/admin/exportlicense?user_id=${memberRequestDetail.id}`,
-        {
-          responseType: 'blob',
-        },
-        config,
-      )
-      console.log(data)
-      fileDownload(data, 'license.pdf')
-    } catch (error) {
-      console.log(error.response)
-    }
+    setLoading(true)
+    adminApi
+      .dowloadPdfFile(memberRequestDetail.id)
+      .then((value) => {
+        console.log('success')
+        fileDownload(value, 'license.pdf')
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.log(error.response)
+        setLoading(false)
+      })
   }
 
   const resetPassword = async () => {
@@ -76,14 +78,16 @@ const AdminMemberRequestDetail = (props) => {
       user_id: memberRequestDetail.id,
     }
     try {
+      setLoading(true)
       const { data } = await axios.put(
         `${API_URL}/admin/resetpassword`,
         body,
         config,
       )
-      console.log(data)
+      setLoading(false)
     } catch (error) {
       console.log(error.response)
+      setLoading(false)
     }
   }
 
@@ -125,7 +129,7 @@ const AdminMemberRequestDetail = (props) => {
               <p>
                 <strong>패스워드</strong>
               </p>
-              <Button onClick={resetPassword} type="default">
+              <Button disabled={loading} onClick={resetPassword} type="default">
                 Reset Password
               </Button>
             </Col>
@@ -173,7 +177,9 @@ const AdminMemberRequestDetail = (props) => {
               ></embed>
             </Col>
             <Col span={24} style={{ textAlign: 'center' }}>
-              <Button onClick={dowloadPdfFile}>사업자 등록증 다운로드</Button>
+              <Button disabled={loading} onClick={dowloadPdfFile}>
+                사업자 등록증 다운로드
+              </Button>
             </Col>
           </Row>
         </Col>

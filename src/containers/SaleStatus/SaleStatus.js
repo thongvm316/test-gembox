@@ -71,6 +71,7 @@ const SaleStatus = () => {
   /* Get Data */
   const [valueOfSearchInput, setValueOfSearchInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [isData, SetIsData] = useState(true)
   const [dataSearch, setDataSearch] = useState([])
   console.log(dataSearch)
   const [listMarket, setListMarket] = useState([])
@@ -118,11 +119,13 @@ const SaleStatus = () => {
         ) {
           if (lastIndex > 0) {
             setDataSearch(dataSearch.concat(value.data.result.product))
+            SetIsData(false)
           } else {
-            console.log(value.data.result.product)
+            SetIsData(false)
             setDataSearch(value.data.result.product)
           }
         }
+
         setLoading(false)
       })
       .catch((err) => {
@@ -144,7 +147,6 @@ const SaleStatus = () => {
       saleStatusAPI
         .getProductCount()
         .then((value) => {
-          console.log(value)
           if (value && value.data && value.data.result) {
             setData((prevState) => ({
               ...prevState,
@@ -157,7 +159,6 @@ const SaleStatus = () => {
       saleStatusAPI
         .getReviewInfo()
         .then((value) => {
-          console.log(value)
           if (value && value.data && value.data.result) {
             setData((prevState) => ({
               ...prevState,
@@ -170,7 +171,6 @@ const SaleStatus = () => {
       saleStatusAPI
         .getSaleInfo()
         .then((value) => {
-          console.log(value)
           if (value && value.data && value.data.result) {
             setData((prevState) => ({
               ...prevState,
@@ -183,7 +183,6 @@ const SaleStatus = () => {
       saleStatusAPI
         .getRevenueInfo()
         .then((value) => {
-          console.log(value)
           if (value && value.data && value.data.result) {
             setData((prevState) => ({
               ...prevState,
@@ -243,7 +242,6 @@ const SaleStatus = () => {
   /* Get Excel */
   const lastItemOfDataSearch = _.last(dataSearch) ? _.last(dataSearch).id : ''
   const getExcelFile = async () => {
-    setLoading(true)
     const params = {
       start: datePicker[0],
       end: datePicker[1],
@@ -263,12 +261,31 @@ const SaleStatus = () => {
       .then((value) => {
         console.log('Success')
         fileDownload(value, 'data.xls')
-        setLoading(false)
       })
       .catch((err) => {
-        setLoading(false)
         console.log(err.response)
       })
+  }
+
+  /* Make Random Id */
+  const guidGenerator = () => {
+    var S4 = function () {
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
+    }
+    return (
+      S4() +
+      S4() +
+      '-' +
+      S4() +
+      '-' +
+      S4() +
+      '-' +
+      S4() +
+      '-' +
+      S4() +
+      S4() +
+      S4()
+    )
   }
 
   return (
@@ -411,7 +428,7 @@ const SaleStatus = () => {
               placeholder="Search"
             />
             <Button
-              disabled={loading}
+              disabled={isData}
               style={{ backgroundColor: '#71c4d5', border: 'none' }}
               type="primary"
               onClick={getExcelFile}
@@ -458,7 +475,7 @@ const SaleStatus = () => {
             dataSource={dataSearch}
             pagination={false}
             scroll={{ x: 1300 }}
-            rowKey="id"
+            rowKey={() => guidGenerator()}
           />
         </Col>
 
