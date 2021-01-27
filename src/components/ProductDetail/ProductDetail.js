@@ -15,6 +15,7 @@ import moment from 'moment'
 import MarketSaleStatusChart from '../MarketSaleStatusChart/MarketSaleStatusChart'
 
 const ProductDetail = (props) => {
+  console.log(props)
   const [product, setProduct] = useState(props.location.state.product)
   const [categoryRanking, setCategoryRanking] = useState()
   const [saleRanking, setSaleRanking] = useState()
@@ -23,6 +24,10 @@ const ProductDetail = (props) => {
   const [productTrendGraph, setProductTrendGraph] = useState([])
 
   const [spinning, setSpinning] = useState(false)
+  const [spinningOfShare, setSpinningOfShare] = useState(false)
+
+
+  const [productDetailShare, setProductDetailShare] = useState()
 
 
   useEffect(() => {
@@ -30,7 +35,33 @@ const ProductDetail = (props) => {
     getSaleRanking()
     getShareRanking()
     getProductTrendGraph()
+    getProductDetailShare()
   }, [])
+
+  const getProductDetailShare = async () => {
+    setSpinningOfShare(true)
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-Auth-Token': localStorage.getItem('token-user'),
+      },
+    }
+
+    try {
+      const res = await axios.get(
+        `${API_URL}/product/detail/share?id=${product.id}`,
+        config,
+      )
+      if (res.status == 200) {
+        setProductDetailShare(res.data.data.result.share)
+      }
+    } catch (error) {
+      console.log(error.response.data)
+    }
+    setSpinningOfShare(false)
+
+  }
 
   const getProductTrendGraph = async () => {
     setSpinning(true)
@@ -133,7 +164,7 @@ const ProductDetail = (props) => {
     },
     credits: {
       enabled: false
-  },
+    },
     tooltip: {
       enabled: true,
       formatter: function () {
@@ -157,8 +188,8 @@ const ProductDetail = (props) => {
             color: '#ff7b7b',
           },
           {
-            y: 50,
-            name: '카카오 라이언 봉제 인형',
+            y: parseFloat(productDetailShare),
+            name: product.name,
             color: '#b2ffe3',
           },
         ],
@@ -167,6 +198,10 @@ const ProductDetail = (props) => {
     legend: {
       align: 'left',
       verticalAlign: 'middle',
+      floating: false,
+      itemWidth: 80,
+      floating: false,
+      layout: 'vertical'
     },
   }
 
@@ -215,10 +250,7 @@ const ProductDetail = (props) => {
     tooltip: {
       enable: true,
     },
-    legend: {
-      layout: 'horizontal',
-      align: 'center',
-    },
+    legend: false,
   }
 
   const goToStore = () => {
@@ -293,7 +325,9 @@ const ProductDetail = (props) => {
           </div>
           <div className="card-item-border card-chart">
             <div className="card-item-chart">
-              <PieChart highcharts={Highcharts} options={options} />
+              <Spin tip="Loading..." spinning={spinningOfShare}>
+                <PieChart highcharts={Highcharts} options={options} />
+              </Spin>
             </div>
           </div>
         </div>
@@ -328,11 +362,11 @@ const ProductDetail = (props) => {
       <Row style={{ marginBottom: '20px' }} className="card-border">
         <Col span={24}>
           <Spin tip="Loading..." spinning={spinning}>
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={optionsLineChart}
-            {...props}
-          />
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={optionsLineChart}
+              {...props}
+            />
           </Spin>
         </Col>
       </Row>
