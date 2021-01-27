@@ -48,6 +48,21 @@ const MarketSaleStatusChart = (props) => {
             enabled: false
         },
         legend: false,
+        plotOptions: {
+            column: {
+                states: {
+                    hover: {
+                        color: '#FFC26F'                                                           
+                    }
+                }
+            },
+            series: {
+                marker: {
+                    enabled: false
+                },
+                lineWidth: 6
+            }
+        },
         series: [
             {
                 name: '',
@@ -57,6 +72,7 @@ const MarketSaleStatusChart = (props) => {
                 tooltip: {
                     valueSuffix: ' 매출액',
                 },
+                color: '#ECE9F1',
             },
             {
                 name: '',
