@@ -117,7 +117,7 @@ const SignUp = (props) => {
     values.url_market = url
     values.name = values.nameAndCompany.split('/')[0].trim()
     values.company = values.nameAndCompany.split('/')[1].trim()
-    // console.log('Success:', values);
+    console.log('Success:', values)
 
     const config = {
       headers: {

@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Row, Col, Button, Space, List } from 'antd'
 import { useLocation } from 'react-router-dom'
+
 import { API_URL } from '../../../constants/appConstants'
 import axios from 'axios'
 import fileDownload from 'js-file-download'
+import adminApi from '../../../api/AdminAPI'
+
 import './MemberDetail.scss'
 
 const MemberDetail = (props) => {
+  const [loading, setLoading] = useState(false)
   const location = useLocation()
   const { memberDetail } = location.state
 
@@ -30,21 +34,21 @@ const MemberDetail = (props) => {
   }
 
   const dowloadPdfFile = async () => {
-    try {
-      const { data } = await axios.get(
-        `${API_URL}/admin/exportlicense?user_id=${memberDetail.id}`,
-        {
-          responseType: 'blob',
-        },
-        config,
-      )
-      fileDownload(data, 'license.pdf')
-    } catch (error) {
-      console.log(error.response)
-    }
+    setLoading(true)
+    adminApi
+      .dowloadPdfFile(memberDetail.id)
+      .then((value) => {
+        fileDownload(value, 'license.pdf')
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.log(error.response)
+        setLoading(false)
+      })
   }
 
   const resetPassword = async () => {
+    setLoading(true)
     const body = {
       user_id: memberDetail.id,
     }
@@ -55,7 +59,9 @@ const MemberDetail = (props) => {
         config,
       )
       console.log(data)
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       console.log(error.response)
     }
   }
@@ -126,7 +132,7 @@ const MemberDetail = (props) => {
               <p>
                 <strong>패스워드</strong>
               </p>
-              <Button onClick={resetPassword} type="default">
+              <Button disabled={loading} onClick={resetPassword} type="default">
                 Reset Password
               </Button>
             </Col>
@@ -218,7 +224,9 @@ const MemberDetail = (props) => {
               ></embed>
             </Col>
             <Col span={24} style={{ textAlign: 'center' }}>
-              <Button onClick={dowloadPdfFile}>사업자 등록증 다운로드</Button>
+              <Button disabled={loading} onClick={dowloadPdfFile}>
+                사업자 등록증 다운로드
+              </Button>
             </Col>
           </Row>
         </Col>

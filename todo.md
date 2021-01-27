@@ -19,5 +19,3 @@ Fix:
 }
 
 ---
-
-## Research - Lodash // Code with less err in solution of EasyFrontEnd
