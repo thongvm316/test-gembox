@@ -13,9 +13,7 @@ const Filter = (props) => {
     const [price, setPrice] = useState([50000, 7500000])
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
-    const [filter, setFilter] = useState(
-        {
-        });
+    const [filter, setFilter] = useState({searchBy: '0'});
 
 
     function onChangeMarket(value) {
