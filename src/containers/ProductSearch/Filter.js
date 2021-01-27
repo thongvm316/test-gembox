@@ -115,8 +115,8 @@ const Filter = (props) => {
                 </Col>
                 <Col span={5}>
                     <Select onChange={handleChangeSearchBy} defaultValue="0" className="select-after">
-                        <Option value="0">밴더명</Option>
-                        <Option value="1">제품명</Option>
+                        <Option value="0">카테고리</Option>
+                        <Option value="1">밴더명</Option>
                     </Select>
                 </Col>
             </Row>
@@ -131,33 +131,33 @@ const Filter = (props) => {
                 </Col>
             </Row> */}
 
-            <Row className='market'>
+            <Row>
                 <Col span={4}><h4>마켓</h4></Col>
                 <Col span={20}>
                     <Checkbox.Group onChange={onChangeMarket}>
                         <Row>
-                            <Col md={6}>
+                            <Col span={6}>
                                 <Checkbox value="11번가">11번가</Checkbox>
                             </Col>
-                            <Col md={6}>
+                            <Col span={6}>
                                 <Checkbox value="G마켓">G마켓</Checkbox>
                             </Col>
-                            <Col md={6}>
+                            <Col span={6}>
                                 <Checkbox value="쿠팡">쿠팡</Checkbox>
                             </Col>
-                            <Col md={6}>
+                            <Col span={6}>
                                 <Checkbox value="위메프">위메프</Checkbox>
                             </Col>
-                            <Col md={6}>
+                            <Col span={6}>
                                 <Checkbox value="티몬">티몬</Checkbox>
                             </Col>
-                            <Col md={6}>
+                            <Col span={6}>
                                 <Checkbox value="인터파크">인터파크</Checkbox>
                             </Col>
-                            <Col md={6}>
+                            <Col span={6}>
                                 <Checkbox value="스마트스토어">스마트스토어</Checkbox>
                             </Col>
-                            <Col md={6}>
+                            <Col span={6}>
                                 <Checkbox value="전제 선택">전제 선택</Checkbox>
                             </Col>
                         </Row>
