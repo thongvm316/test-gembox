@@ -242,7 +242,7 @@ const ProductDetail = (props) => {
       },
     ],
     xAxis: {
-      categories: productTrendGraph.map(product => { return moment(product.created).format('YYYY-MM-DD hh:mm') }),
+      categories: productTrendGraph.map(product => { return product.created }),
     },
     yAxis: {
       title: {
