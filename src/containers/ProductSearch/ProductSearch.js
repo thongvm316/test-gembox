@@ -77,7 +77,10 @@ const ProductSearch = (props) => {
       }
       setLoading(false)
     } catch (error) {
-      console.log(error.response.data)
+      if (!error.response.data.success) {
+        props.history.push('/')
+      }
+
       setLoading(false)
     }
   }
@@ -195,14 +198,15 @@ const ProductSearch = (props) => {
 
     try {
       const { data } = await axios.get(
-        `${API_URL}/product?keyword=kid&start_date=${valueDate[0]}&end_date=${
-          valueDate[1]
+        `${API_URL}/product?keyword=kid&start_date=${valueDate[0]}&end_date=${valueDate[1]
         }&last_id=${100}`,
         config,
       )
       // console.log(data)
     } catch (error) {
-      console.log(error.response.data)
+      if (!error.response.data.success) {
+        props.history.push('/')
+      }
     }
   }
 
@@ -216,8 +220,7 @@ const ProductSearch = (props) => {
     }
     try {
       const { data } = await axios.get(
-        `${API_URL}/product/export?first=${productList[0].id}&last=${
-          productList[lengthData - 1].id
+        `${API_URL}/product/export?first=${productList[0].id}&last=${productList[lengthData - 1].id
         }`,
         {
           responseType: 'blob',
@@ -226,7 +229,9 @@ const ProductSearch = (props) => {
       )
       fileDownload(data, 'data.xls')
     } catch (error) {
-      console.log(error.response.data)
+      if (!error.response.data.success) {
+        props.history.push('/')
+      }
     }
   }
 
@@ -340,8 +345,8 @@ const ProductSearch = (props) => {
               LOAD MORE
             </Button>
           ) : (
-            ''
-          )}
+              ''
+            )}
         </Col>
       </Row>
 

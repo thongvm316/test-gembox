@@ -9,7 +9,7 @@ import fileDownload from 'js-file-download'
 
 const { Option } = Select
 
-const VendorSearch = () => {
+const VendorSearch = (props) => {
   const [vendors, setVendors] = useState([])
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
@@ -118,7 +118,9 @@ const VendorSearch = () => {
         }
       }
     } catch (error) {
-      console.log(error.response.data)
+      if (!error.response.data.success) {
+        props.history.push('/')
+      }
     }
     setLoading(false);
 
@@ -155,7 +157,9 @@ const VendorSearch = () => {
       )
       fileDownload(data, 'data.xls')
     } catch (error) {
-      console.log(error.response.data)
+      if (!error.response.data.success) {
+        props.history.push('/')
+      }
     }
   }
 
