@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Button, Input, DatePicker, Space, Table, Spin } from 'antd'
+import { Row, Col, Button, Input, DatePicker, Space, Table } from 'antd'
 import { MinusOutlined } from '@ant-design/icons'
 
 import fileDownload from 'js-file-download'
@@ -73,8 +73,8 @@ const SaleStatus = () => {
   const [loading, setLoading] = useState(false)
   const [isData, SetIsData] = useState(true)
   const [dataSearch, setDataSearch] = useState([])
+  console.log(dataSearch)
   const [listMarket, setListMarket] = useState([])
-  const [lastIndex, setLastIndex] = useState(0)
   const [data, setData] = useState({
     totalProductCount: [],
     totalReviewCount: [],
@@ -88,11 +88,13 @@ const SaleStatus = () => {
     SetIsData(true)
   }
 
+  /* Get data */
+  const lastItemOfDataSearch = _.last(dataSearch) ? _.last(dataSearch).id : 0
+  const [lastIndex, setLastIndex] = useState(lastItemOfDataSearch)
   const loadMore = () => {
-    setLastIndex(lastIndex + 100)
+    setLastIndex(lastItemOfDataSearch)
   }
 
-  /* Get data */
   const getData = () => {
     // const params = {
     //   start: 1234567890,
@@ -240,7 +242,6 @@ const SaleStatus = () => {
   })
 
   /* Get Excel */
-  const lastItemOfDataSearch = _.last(dataSearch) ? _.last(dataSearch).id : ''
   const getExcelFile = async () => {
     const params = {
       start: datePicker[0],
