@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Row, Col, Space, Input, Table, Radio } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
-import { API_URL } from '../../../constants/appConstants'
-import axios from 'axios'
+
+import adminApi from '../../../api/AdminAPI'
 import './AdminMember.scss'
 
 const AdminMember = (props) => {
@@ -39,25 +39,16 @@ const AdminMember = (props) => {
 
   // Get Data
   useEffect(async () => {
-    const config = {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-Auth-Token': `${localStorage.getItem('token')}`,
-      },
-    }
-    try {
-      const res = await axios.get(`${API_URL}/members`, config)
-      const { data } = res
-      console.log(data)
-      const {
-        data: { result },
-      } = data
-      const { member } = result
-      setData(member)
-    } catch (error) {
-      console.log(error.response)
-    }
+    adminApi
+      .getMember()
+      .then((value) => {
+        if (value && value.data && value.data.result) {
+          setData(value.data.result.member)
+        }
+      })
+      .catch((error) => {
+        console.log(error.response)
+      })
   }, [])
 
   return (

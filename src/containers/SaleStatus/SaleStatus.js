@@ -71,7 +71,6 @@ const SaleStatus = () => {
   /* Get Data */
   const [valueOfSearchInput, setValueOfSearchInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [isData, SetIsData] = useState(true)
   const [dataSearch, setDataSearch] = useState([])
   console.log(dataSearch)
   const [listMarket, setListMarket] = useState([])
@@ -85,7 +84,6 @@ const SaleStatus = () => {
   const getValueOfInputSearch = (e) => {
     setValueOfSearchInput(e.target.value)
     setDataSearch([])
-    SetIsData(true)
   }
 
   /* Get data */
@@ -121,9 +119,7 @@ const SaleStatus = () => {
         ) {
           if (lastIndex > 0) {
             setDataSearch(dataSearch.concat(value.data.result.product))
-            SetIsData(false)
           } else {
-            SetIsData(false)
             setDataSearch(value.data.result.product)
           }
         }
@@ -429,7 +425,7 @@ const SaleStatus = () => {
               placeholder="Search"
             />
             <Button
-              disabled={isData}
+              disabled={loading}
               style={{ backgroundColor: '#71c4d5', border: 'none' }}
               type="primary"
               onClick={getExcelFile}

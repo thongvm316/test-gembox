@@ -7,6 +7,11 @@ const adminApi = {
       responseType: 'blob',
     })
   },
+
+  getMember: () => {
+    const url = `/members`
+    return axiosAdmin.get(url)
+  },
 }
 
 export default adminApi
