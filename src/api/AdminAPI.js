@@ -22,6 +22,16 @@ const adminApi = {
     const url = `/admin/info`
     return axiosAdmin.get(url)
   },
+
+  adminChangePassword: (body) => {
+    const url = `/admin/changepassword`
+    return axiosAdmin.put(url, body)
+  },
+
+  verifyPhoneNumber: (body) => {
+    const url = '/admin/verify'
+    return axiosAdmin.post(url, body)
+  },
 }
 
 export default adminApi

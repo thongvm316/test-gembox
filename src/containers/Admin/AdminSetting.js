@@ -6,7 +6,7 @@ import { EditOutlined } from '@ant-design/icons'
 import adminApi from '../../api/AdminAPI'
 import './AdminSetting.scss'
 
-const AdminSetting = () => {
+const AdminSetting = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [userInfo, setUserInfo] = useState('')
   const [loading, setLoading] = useState(false)
@@ -17,9 +17,7 @@ const AdminSetting = () => {
     new_password: '',
     confirm_new_password: '',
   })
-
   const { current_password, new_password, confirm_new_password } = password
-
   const bodyPassword = {
     current_password,
     new_password,
@@ -34,11 +32,31 @@ const AdminSetting = () => {
   }
 
   const handleExitBtn = () => {
-    // if (new_password !== confirm_new_password) {
-    //   message.error('The two passwords that you entered do not match!')
-    //   return
-    // }
     setIsModalVisible(false)
+  }
+
+  const onCancel = () => {
+    setIsModalVisible(false)
+  }
+
+  const changePassword = () => {
+    if (new_password !== confirm_new_password) {
+      message.error('The two passwords that you entered do not match!')
+      return
+    }
+    setLoading(true)
+    adminApi
+      .adminChangePassword(bodyPassword)
+      .then((value) => {
+        console.log('success')
+        setLoading(false)
+        handleExitBtn()
+      })
+      .catch((error) => {
+        setLoading(false)
+        handleExitBtn()
+        console.log(error.response)
+      })
   }
 
   /* Get data */
@@ -47,7 +65,6 @@ const AdminSetting = () => {
     adminApi
       .getAdminInfo()
       .then((value) => {
-        console.log(value)
         if (value && value.data && value.data.result) {
           setUserInfo(value.data.result)
         }
@@ -94,7 +111,7 @@ const AdminSetting = () => {
               style={{ textAlign: 'center' }}
             >
               <Button
-                onClick={showModal}
+                onClick={() => props.history.push('/admin-login')}
                 type="primary"
                 block
                 shape="round"
@@ -105,31 +122,11 @@ const AdminSetting = () => {
             </Col>
           </Row>
 
-          {/* <Modal
-            visible={isModalVisible}
-            onOk={handleOk}
-            onCancel={() => setIsModalVisible(false)}
-            okButtonProps={{ style: { display: 'none' } }}
-            cancelButtonProps={{ style: { display: 'none' } }}
-          >
-            <div className="modal-admin-setting">
-              <Row gutter={24} justify="center">
-                <Col span={20} style={{ textAlign: 'center' }}>
-                  <h1>암호를 재설정</h1>
-                  <p>Would you like to reset this user’s password?</p>
-                </Col>
-                <Col span={12} style={{ textAlign: 'center' }}>
-                  <Button shape="round" type="default">
-                    확인
-                  </Button>
-                </Col>
-              </Row>
-            </div>
-          </Modal> */}
           <Modal
             title="Change Password"
             visible={isModalVisible}
             footer={false}
+            onCancel={onCancel}
           >
             <div style={{ padding: '0 80px' }}>
               <div style={{ marginBottom: 20 }}>
@@ -159,7 +156,7 @@ const AdminSetting = () => {
               <div className="actions-change-password">
                 <Button
                   size="large"
-                  //   onClick={handleCancel}
+                  onClick={changePassword}
                   className="btn-save"
                 >
                   확인
