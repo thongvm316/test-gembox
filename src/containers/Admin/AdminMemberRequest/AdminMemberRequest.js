@@ -7,6 +7,7 @@ import './AdminMemberRequest.scss'
 
 const AdminMemberRequest = (props) => {
   const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   // For Table
   const columns = [
@@ -42,30 +43,23 @@ const AdminMemberRequest = (props) => {
     },
   ]
 
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        'selectedRows: ',
-        selectedRows,
-      )
-    },
-  }
-
   // Props
   const { history } = props
 
   // Get Data
   useEffect(async () => {
+    setLoading(true)
     adminApi
       .getMember()
       .then((value) => {
         if (value && value.data && value.data.result) {
           setData(value.data.result.member_request)
         }
+        setLoading(false)
       })
       .catch((error) => {
         console.log(error.response)
+        setLoading(false)
       })
   }, [])
 
@@ -104,10 +98,8 @@ const AdminMemberRequest = (props) => {
       <Row className="render-data" style={{ marginTop: '2rem' }}>
         <Col span={24}>
           <Table
-            rowSelection={{
-              ...rowSelection,
-            }}
             scroll={{ x: 1300 }}
+            loading={loading}
             columns={columns}
             rowKey={(record) => record.id}
             dataSource={data}

@@ -22,6 +22,12 @@
         background-color: #3F537D;
         border-color: #3F537D;
     }
+
+    .ant-spin {
+        margin-left: 50%;
+        margin-top: 2rem;
+        transform: translateX(-50%);
+      }
 }
 
 .modal-admin-setting {

@@ -176,6 +176,7 @@ const UserDetail = (props) => {
                   </div>
                   <Divider />
                 </div>
+
                 <div className="user-info">
                   <div className="user-item">
                     <div>회사명</div>
@@ -183,6 +184,7 @@ const UserDetail = (props) => {
                   </div>
                   <Divider />
                 </div>
+
                 <div className="user-info">
                   <div className="user-item">
                     <div>이메일</div>
@@ -190,6 +192,7 @@ const UserDetail = (props) => {
                   </div>
                   <Divider />
                 </div>
+
                 <div className="user-info">
                   <div style={{ marginBottom: 10 }}>등록 마켓</div>
                   <div>
@@ -340,6 +343,7 @@ const UserDetail = (props) => {
                     placeholder="Your Password"
                   />
                 </div>
+
                 <div>
                   <Input.Password
                     name="new_password"
@@ -354,6 +358,7 @@ const UserDetail = (props) => {
                     placeholder="Confirm Your New Password"
                   />
                 </div>
+
                 <div className="actions-change-password">
                   <Button
                     size="large"
