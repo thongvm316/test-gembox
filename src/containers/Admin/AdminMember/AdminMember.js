@@ -9,6 +9,18 @@ const AdminMember = (props) => {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
 
+  /* Filter */
+  const [isFiltering, setFiltering] = useState(false)
+  const [filtered, setFiltered] = useState(null)
+  const filterResults = (input) => {
+    let results = data.filter((item) => {
+      const name = item.name.toLowerCase()
+      const term = input.toLowerCase()
+      return name.indexOf(term) !== -1
+    })
+    setFiltered(results)
+  }
+
   // For Table
   const columns = [
     {
@@ -72,6 +84,10 @@ const AdminMember = (props) => {
         </Col>
         <Col className="style-input">
           <Input
+            onChange={(e) => {
+              setFiltering(e.target.value.length > 0)
+              filterResults(e.target.value)
+            }}
             placeholder="Search by name"
             prefix={<SearchOutlined className="site-form-item-icon" />}
           />
@@ -84,7 +100,7 @@ const AdminMember = (props) => {
             scroll={{ x: 1300 }}
             rowKey={(record) => record.id}
             columns={columns}
-            dataSource={data}
+            dataSource={isFiltering ? filtered : data}
             onRow={(record, rowIndex) => {
               return {
                 onClick: (event) => {

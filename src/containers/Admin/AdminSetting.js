@@ -111,7 +111,10 @@ const AdminSetting = (props) => {
               style={{ textAlign: 'center' }}
             >
               <Button
-                onClick={() => props.history.push('/admin-login')}
+                onClick={() => {
+                  localStorage.clear()
+                  props.history.push('/admin-login')
+                }}
                 type="primary"
                 block
                 shape="round"

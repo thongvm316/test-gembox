@@ -21,6 +21,9 @@ import { EyeOutlined } from '@ant-design/icons'
 const FormItem = Form.Item
 
 const Login = (props) => {
+  if (localStorage.getItem('token-user')) {
+    props.history.push('/home')
+  }
   const { history } = props
   const location = useLocation()
   const [findPassword, setFindPassword] = useState(false) // Modal forget password

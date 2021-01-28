@@ -239,6 +239,7 @@ const SaleStatus = () => {
 
   /* Get Excel */
   const getExcelFile = async () => {
+    setLoading(true)
     const params = {
       start: datePicker[0],
       end: datePicker[1],
@@ -258,9 +259,11 @@ const SaleStatus = () => {
       .then((value) => {
         console.log('Success')
         fileDownload(value, 'data.xls')
+        setLoading(false)
       })
       .catch((err) => {
         console.log(err.response)
+        setLoading(false)
       })
   }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Form, Input, Button, Row, Col } from 'antd'
 import Footer from '../../components/Footer'
@@ -7,18 +7,50 @@ import adminApi from '../../api/AdminAPI'
 import './AdminFindAccount.scss'
 
 const AdminFindAccount = () => {
+  const [bodySubmit, setBodySubmit] = useState({
+    phone: '',
+    verify_code: '',
+  })
+  const [loading, setLoading] = useState(false)
+  const onChange = (e) => {
+    setBodySubmit({ ...bodySubmit, [e.target.name]: e.target.value })
+  }
+  const { phone, verify_code } = bodySubmit
+
+  const verify = () => {
+    setLoading(true)
+    adminApi
+      .verifyPhoneNumber({ phone })
+      .then((value) => {
+        console.log('success')
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.log(error.response)
+        setLoading(false)
+      })
+  }
+
+  const findAccount = () => {
+    setLoading(true)
+    adminApi
+      .findAccount(bodySubmit)
+      .then((value) => {
+        console.log('success')
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.log(error.response)
+        setLoading(false)
+      })
+  }
+
   const onFinish = async (values) => {
-    console.log('Success:', values)
+    findAccount()
   }
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
-  }
-
-  const verify = () => {}
-
-  const findAccount = () => {
-    // adminApi.findAccount()
   }
 
   return (
@@ -59,13 +91,20 @@ const AdminFindAccount = () => {
                   },
                 ]}
               >
-                <Input placeholder="핸드폰 번호 입력" type="text" />
+                <Input
+                  onChange={onChange}
+                  name="phone"
+                  placeholder="핸드폰 번호 입력"
+                  type="text"
+                />
               </Form.Item>
-              <Button>인증번호 전송</Button>
+              <Button disabled={loading} onClick={verify}>
+                인증번호 전송
+              </Button>
             </div>
 
             <Form.Item
-              name="verifiedPhone"
+              name="verify_code"
               rules={[
                 {
                   required: true,
@@ -73,7 +112,12 @@ const AdminFindAccount = () => {
                 },
               ]}
             >
-              <Input placeholder="인증번호 입력" type="text" />
+              <Input
+                onChange={onChange}
+                name="verify_code"
+                placeholder="인증번호 입력"
+                type="text"
+              />
             </Form.Item>
 
             <Form.Item style={{ marginTop: '3rem' }}>
@@ -81,6 +125,7 @@ const AdminFindAccount = () => {
                 style={{ width: '7rem' }}
                 className="btn-login"
                 htmlType="submit"
+                disabled={loading}
               >
                 확인
               </Button>

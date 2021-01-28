@@ -13,11 +13,6 @@ const adminApi = {
     return axiosAdmin.get(url)
   },
 
-  findAccount: (body) => {
-    const url = `/admin/findaccount`
-    return axiosAdmin.put(url, body)
-  },
-
   getAdminInfo: () => {
     const url = `/admin/info`
     return axiosAdmin.get(url)
@@ -31,6 +26,11 @@ const adminApi = {
   verifyPhoneNumber: (body) => {
     const url = '/admin/verify'
     return axiosAdmin.post(url, body)
+  },
+
+  findAccount: (body) => {
+    const url = `/admin/findaccount`
+    return axiosAdmin.put(url, body)
   },
 }
 
