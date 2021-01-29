@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom'
 import MainLayout from '../components/MainLayout'
 
 const PrivateRoute = (props) => {
-  const { dataToken } = props
+  const { dataToken, showSiderBar } = props
   const {
     component: Component, // component = Dashboard comp
     ...rest
@@ -15,7 +15,7 @@ const PrivateRoute = (props) => {
       render={(props) => {
         if (dataToken === 'token') {
           return localStorage.getItem('token') !== null ? (
-            <MainLayout>
+            <MainLayout showSiderBar={showSiderBar}>
               <Component {...props} />
             </MainLayout>
           ) : (
@@ -23,7 +23,7 @@ const PrivateRoute = (props) => {
           )
         } else if (dataToken === 'token-user') {
           return localStorage.getItem('token-user') !== null ? (
-            <MainLayout>
+            <MainLayout showSiderBar={showSiderBar}>
               <Component {...props} />
             </MainLayout>
           ) : (

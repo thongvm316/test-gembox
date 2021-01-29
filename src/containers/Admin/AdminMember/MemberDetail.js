@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Row, Col, Button, Space, List } from 'antd'
+import { Row, Col, Button, Space, List, Input } from 'antd'
 import { useLocation } from 'react-router-dom'
 
 import { API_URL } from '../../../constants/appConstants'
@@ -193,7 +193,8 @@ const MemberDetail = (props) => {
                 <strong>사업자 등록번호</strong>
               </p>
               <p className="border-solid">
-                <strong>miss data</strong>
+                <Input style={{ backgroundColor: 'transparent', marginBottom: '3px' }}/> <br/>
+                <Button style={{ width: '100%' }}>확인</Button>
               </p>
             </Col>
             <Col

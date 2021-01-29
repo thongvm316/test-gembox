@@ -7,7 +7,6 @@ import {
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import Logout from '../images/logout.png'
-import MyProfile from '../images/profile.png'
 import Setting from '../images/Setting.png'
 import './MainLayout.scss'
 
@@ -15,31 +14,12 @@ import Sidebar from './Sidebar'
 const { Header, Content } = Layout
 
 const MainLayout = (props) => {
+  const { showSiderBar } = props
   const [collapsed, setCollapsed] = useState(true)
 
   const renderUserInfor = () => {
     return (
       <Menu selectedKeys={[]}>
-        {localStorage.getItem('token-user') ? (
-          ''
-        ) : (
-          <>
-            <Menu.Item key="user">
-              <img src={MyProfile} />{' '}
-              <span
-                onClick={gotoAdminSetting}
-                style={{
-                  marginLeft: '13px',
-                  color: '#248D9E',
-                  fontWeight: 'bold',
-                }}
-              >
-                My Profile
-              </span>
-            </Menu.Item>
-            <Menu.Divider />
-          </>
-        )}
         <Menu.Item key="logout">
           <img src={Logout} />{' '}
           <span
@@ -58,18 +38,8 @@ const MainLayout = (props) => {
     props.children.props.history.push('/')
   }
 
-  const gotoAdminSetting = () => {
-    props.children.props.history.push('/admin-setting')
-  }
-
   const toggle = () => {
     setCollapsed(!collapsed)
-  }
-
-  const goDetail = () => {
-    props.children.props.history.push({
-      pathname: '/user-detail',
-    })
   }
 
   return (
@@ -81,9 +51,17 @@ const MainLayout = (props) => {
           className="main-header"
         >
           {collapsed ? (
-            <MenuUnfoldOutlined className="trigger" onClick={() => toggle()} />
+            <MenuUnfoldOutlined
+              style={showSiderBar ? {} : { visibility: 'hidden' }}
+              className="trigger"
+              onClick={() => toggle()}
+            />
           ) : (
-            <MenuFoldOutlined className="trigger" onClick={() => toggle()} />
+            <MenuFoldOutlined
+              style={showSiderBar ? {} : { visibility: 'hidden' }}
+              className="trigger"
+              onClick={() => toggle()}
+            />
           )}
           <div style={{ display: 'flex' }}>
             <Dropdown overlay={renderUserInfor()}>
@@ -104,9 +82,15 @@ const MainLayout = (props) => {
               </a>
             </Dropdown>
             <div style={{ marginLeft: '10px' }}>
-              <Link to="/user-detail">
-                <img style={{ marginBottom: '9px' }} src={Setting} />
-              </Link>
+              {localStorage.getItem('token') ? (
+                <Link to="/admin-setting">
+                  <img style={{ marginBottom: '9px' }} src={Setting} />
+                </Link>
+              ) : (
+                <Link to="/user-detail">
+                  <img style={{ marginBottom: '9px' }} src={Setting} />
+                </Link>
+              )}
             </div>
           </div>
         </Header>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Row, Col, Button, Space, List } from 'antd'
+import { Row, Col, Button, Space, List, Input } from 'antd'
 import { useLocation } from 'react-router-dom'
 
 import axios from 'axios'
@@ -155,7 +155,21 @@ const AdminMemberRequestDetail = (props) => {
                 <strong>사업자 등록번호</strong>
               </p>
               <p className="border-solid">
-                {memberRequestDetail.company_number} <strong>입력</strong>
+                {memberRequestDetail.company_number ? (
+                  memberRequestDetail.company_number
+                ) : (
+                  <>
+                    {' '}
+                    <Input
+                      style={{
+                        backgroundColor: 'transparent',
+                        marginBottom: '3px',
+                      }}
+                    />{' '}
+                    <br />
+                    <Button style={{ width: '100%' }}>확인</Button>
+                  </>
+                )}
               </p>
             </Col>
             <Col span={24} className="style-positon">

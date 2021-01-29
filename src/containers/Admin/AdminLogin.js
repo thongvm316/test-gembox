@@ -6,26 +6,11 @@ import axios from 'axios'
 import Footer from '../../components/Footer'
 import './AdminLogin.scss'
 
-// const layout = {
-//   labelCol: {
-//     span: 8,
-//   },
-//   wrapperCol: {
-//     span: 16,
-//   },
-// }
-
-// const tailLayout = {
-//   wrapperCol: {
-//     offset: 8,
-//     span: 16,
-//   },
-// }
-
 const FormItem = Form.Item
 
 const AdminLogin = (props) => {
   const { history } = props
+  const [loading, setLoading] = useState(false)
   const location = useLocation()
   const [findPassword, setFindPassword] = useState(false)
 
@@ -36,19 +21,8 @@ const AdminLogin = (props) => {
     }
   }, [location])
 
-  const showAlertWhenLoginFailed = () => {
-    message.error({
-      content: (
-        <Alert description="Incorrect username or password." type="error" />
-      ),
-      style: {
-        marginTop: '10vh',
-      },
-    })
-  }
-
   const onFinish = async (values) => {
-    console.log('Success:', values)
+    setLoading(true)
     const { email, password } = values
     const body = {
       email,
@@ -67,6 +41,7 @@ const AdminLogin = (props) => {
       console.log(data)
       localStorage.clear()
       localStorage.setItem('token', data.data.result.token)
+      setLoading(false)
       history.push('/admin-member')
     } catch (error) {
       console.log(error.response)
@@ -78,6 +53,7 @@ const AdminLogin = (props) => {
           marginTop: '10vh',
         },
       })
+      setLoading(false)
     }
   }
 
@@ -146,7 +122,11 @@ const AdminLogin = (props) => {
             </FormItem>
 
             <FormItem>
-              <Button className="btn-login" htmlType="submit">
+              <Button
+                disabled={loading}
+                className="btn-login"
+                htmlType="submit"
+              >
                 로그인
               </Button>
             </FormItem>

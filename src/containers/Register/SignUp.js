@@ -101,12 +101,7 @@ const SignUp = (props) => {
       console.log(data)
     } catch (error) {
       console.log(error.response)
-      message.error({
-        content: <Alert description="Email Existed" type="error" />,
-        style: {
-          marginTop: '10vh',
-        },
-      })
+      message.error('Email Existed')
     }
   }
 

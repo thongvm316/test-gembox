@@ -17,30 +17,17 @@ import axios from 'axios'
 import Footer from '../components/Footer'
 import './Login.scss'
 import { EyeOutlined } from '@ant-design/icons'
-import setAuthToken from '../utils/setAuthToken'
-
-const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-}
-
-const tailLayout = {
-  wrapperCol: {
-    offset: 8,
-    span: 16,
-  },
-}
 
 const FormItem = Form.Item
 
 const Login = (props) => {
+  if (localStorage.getItem('token-user')) {
+    props.history.push('/home')
+  }
   const { history } = props
   const location = useLocation()
   const [findPassword, setFindPassword] = useState(false) // Modal forget password
+  const [loading, setLoading] = useState(false)
 
   const handleOkModalFindPassword = () => {
     setFindPassword(true)
@@ -54,7 +41,7 @@ const Login = (props) => {
   }, [location]) // Use When user click 비밀번호 찾기 in Singup
 
   const onFinish = async (values) => {
-    console.log('Success:', values)
+    setLoading(true)
     const { email, password } = values
     const body = {
       email,
@@ -72,7 +59,7 @@ const Login = (props) => {
       const { data } = await axios.post(`${API_URL}/logins`, body, config)
       localStorage.clear()
       localStorage.setItem('token-user', data.data.result.token)
-      setAuthToken(localStorage.getItem('token-user'))
+      setLoading(false)
       history.push('/home')
     } catch (error) {
       console.log(error.response)
@@ -84,9 +71,8 @@ const Login = (props) => {
           marginTop: '10vh',
         },
       })
+      setLoading(false)
     }
-
-    // showModalLoginFailed(); // Process logic when call API
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -184,6 +170,7 @@ const Login = (props) => {
                         shape="round"
                         className="btn-login"
                         htmlType="submit"
+                        disabled={loading}
                       >
                         로그인
                       </Button>

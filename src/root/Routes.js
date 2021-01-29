@@ -46,30 +46,35 @@ const Routes = () => {
       />
       <PrivateRoute
         exact
+        showSiderBar={false}
         path="/admin-member"
         dataToken={'token'}
         component={AdminMember}
       />
       <PrivateRoute
         exact
+        showSiderBar={false}
         path="/member-detail"
         dataToken={'token'}
         component={MemberDetail}
       />
       <PrivateRoute
         exact
+        showSiderBar={false}
         path="/member-request"
         dataToken={'token'}
         component={AdminMemberRequest}
       />
       <PrivateRoute
         exact
+        showSiderBar={false}
         path="/member-request-detail"
         dataToken={'token'}
         component={AdminMemberRequestDetail}
       />
       <PrivateRoute
         exact
+        showSiderBar={false}
         path="/admin-setting"
         dataToken={'token'}
         component={AdminSetting}
@@ -86,18 +91,21 @@ const Routes = () => {
 
       {/* Home Page */}
       <PrivateRoute
+        showSiderBar={true}
         exact
         path="/home"
         dataToken={'token-user'}
         component={Home}
       />
       <PrivateRoute
+        showSiderBar={true}
         exact
         path="/category-analysis"
         dataToken={'token-user'}
         component={CategoryAnalysis}
       />
       <PrivateRoute
+        showSiderBar={true}
         exact
         path="/analysis-market"
         dataToken={'token-user'}
@@ -105,18 +113,21 @@ const Routes = () => {
       />
 
       <PrivateRoute
+        showSiderBar={true}
         dataToken={'token-user'}
         exact
         path="/product-search"
         component={ProductSearch}
       />
       <PrivateRoute
+        showSiderBar={true}
         dataToken={'token-user'}
         exact
         path="/vendor-search"
         component={VendorSearch}
       />
       <PrivateRoute
+        showSiderBar={true}
         dataToken={'token-user'}
         exact
         path="/product-detail"
@@ -124,12 +135,14 @@ const Routes = () => {
       />
 
       <PrivateRoute
+        showSiderBar={true}
         dataToken={'token-user'}
         exact
         path="/sale-status"
         component={SaleStatus}
       />
       <PrivateRoute
+        showSiderBar={true}
         dataToken={'token-user'}
         exact
         path="/user-detail"
