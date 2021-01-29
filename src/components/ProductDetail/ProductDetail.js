@@ -387,7 +387,7 @@ const ProductDetail = (props) => {
             return (
               <Col span={6} style={{ marginBottom: '10px' }}>
                 <div className="card-item-border">
-                  <MarketSaleStatusChart market={market} productName={product.name} />
+                  <MarketSaleStatusChart market={market} productId={product.id} />
                 </div>
               </Col>
             )

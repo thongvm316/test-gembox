@@ -96,7 +96,7 @@ const MarketSaleStatusChart = (props) => {
         }
         try {
             const res = await axios.get(
-                `${API_URL}/product/detail/marketsalestatus?market=${props.market}&productName=${props.productName}`,
+                `${API_URL}/product/detail/marketsalestatus?market=${props.market}&productId=${props.productId}`,
                 config,
             )
             if (res.status == 200) {
