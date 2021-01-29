@@ -237,7 +237,7 @@ const ProductSearch = (props) => {
 
 
     saleStatusApi
-    .getExcelFile(params)
+    .getExcelFileProduct(params)
     .then((value) => {
       console.log('Success')
       fileDownload(value, 'data.xls')

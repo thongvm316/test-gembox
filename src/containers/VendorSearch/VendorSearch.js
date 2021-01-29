@@ -149,7 +149,7 @@ const VendorSearch = (props) => {
     }
 
     saleStatusApi
-    .getExcelFile(params)
+    .getExcelFileBander(params)
     .then((value) => {
       console.log('Success')
       fileDownload(value, 'data.xls')
