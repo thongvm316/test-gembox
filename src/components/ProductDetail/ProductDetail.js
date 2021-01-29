@@ -323,7 +323,6 @@ const ProductDetail = (props) => {
                       value={product.review}
                       displayType={'text'}
                       thousandSeparator={true}
-                      prefix={'₩'}
                     />
                   </h2>
                 </Space>
@@ -334,7 +333,6 @@ const ProductDetail = (props) => {
                       value={product.sold}
                       displayType={'text'}
                       thousandSeparator={true}
-                      prefix={'₩'}
                     />
                   </h2>
                 </Space>
