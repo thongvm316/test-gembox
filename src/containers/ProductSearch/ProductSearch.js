@@ -246,7 +246,7 @@ const ProductSearch = (props) => {
     console.log(config)
     try {
       const { data } = await axios.get(
-        `${API_URL}/product/export?lastIndex=${lastIndex}${params}`,
+        `${API_URL}/product/export?lastIndex=${productList[lengthData - 1].id}${params}`,
         config,
       )
       fileDownload(data, 'data.xls')
