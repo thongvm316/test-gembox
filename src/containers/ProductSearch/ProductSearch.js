@@ -77,6 +77,7 @@ const ProductSearch = (props) => {
       }
       setLoading(false)
     } catch (error) {
+      console.log(error.response.data)
       if (error.response.data.data.code == 40101) {
         props.history.push('/')
       }
