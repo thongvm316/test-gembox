@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './SignUp.scss'
 import {
   Row,
   Col,
@@ -16,6 +15,10 @@ import { API_URL } from '../../constants/appConstants'
 import Footer from '../../components/Footer'
 import axios from 'axios'
 
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
+import './SignUp.scss'
+
 const FormItem = Form.Item
 
 const SignUp = (props) => {
@@ -26,6 +29,7 @@ const SignUp = (props) => {
   const [loading, setLoading] = useState(false)
   const [validatePassword, setValidatePassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [valueOfCountryPhone, setvalueOfCountryPhone] = useState()
 
   // For Add more URL
   const [url, seturl] = useState([])
@@ -319,7 +323,27 @@ const SignUp = (props) => {
                     message: 'Please input your 핸드폰 번호 입력',
                   },
                 ]}
+                style={{ display: 'flex' }}
               >
+                {/* <div style={{ display: 'flex', border: '1px solid #A6B0CF' }}>
+                  <PhoneInput
+                    placeholder="핸드폰 번호 입력*"
+                    // defaultCountry="VN"
+                    value={phone}
+                    onChange={onChange}
+                    id="inputID"
+                    name="phone"
+                    style={{ flex: 1 }}
+                  />
+                  <Button
+                    onClick={verifySmsCode}
+                    className="send-sms"
+                    type="text"
+                  >
+                    {resendSms ? resendSms : '인증번호 전송'}
+                  </Button>
+                </div> */}
+
                 <Input
                   placeholder="핸드폰 번호 입력*"
                   suffix={

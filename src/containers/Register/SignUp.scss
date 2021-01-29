@@ -7,6 +7,24 @@
     .ant-input-affix-wrapper {
         border-color: #A6B0CF !important;
     }
+
+    /* Phone Input */
+    .PhoneInputInput:focus {
+        outline: none;
+    }
+
+    #inputID::placeholder {
+        color: #bfbfbf;
+    }
+
+    #inputID {
+        border: none
+    }
+
+    .PhoneInputCountry {
+        display: none;
+    }
+
     .ant-form-item{
         margin-bottom: 2px !important;
     }
