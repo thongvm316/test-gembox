@@ -103,7 +103,7 @@ const MarketSaleStatusChart = (props) => {
                 setData(res.data.data.result)
             }
         } catch (error) {
-            if (!error.response.data.success){
+            if (error.response.data.data.code == 40101){
                 props.history.push('/')
             }
         }

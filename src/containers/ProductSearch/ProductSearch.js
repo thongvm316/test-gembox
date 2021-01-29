@@ -77,7 +77,7 @@ const ProductSearch = (props) => {
       }
       setLoading(false)
     } catch (error) {
-      if (!error.response.data.success) {
+      if (error.response.data.data.code == 40101) {
         props.history.push('/')
       }
 
@@ -204,7 +204,7 @@ const ProductSearch = (props) => {
       )
       // console.log(data)
     } catch (error) {
-      if (!error.response.data.success) {
+      if (error.response.data.data.code == 40101) {
         props.history.push('/')
       }
     }
@@ -229,7 +229,7 @@ const ProductSearch = (props) => {
       )
       fileDownload(data, 'data.xls')
     } catch (error) {
-      if (!error.response.data.success) {
+      if (error.response.data.data.code == 40101) {
         props.history.push('/')
       }
     }

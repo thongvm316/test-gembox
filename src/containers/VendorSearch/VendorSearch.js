@@ -118,7 +118,7 @@ const VendorSearch = (props) => {
         }
       }
     } catch (error) {
-      if (!error.response.data.success) {
+      if (error.response.data.data.code == 40101) {
         props.history.push('/')
       }
     }
@@ -157,7 +157,7 @@ const VendorSearch = (props) => {
       )
       fileDownload(data, 'data.xls')
     } catch (error) {
-      if (!error.response.data.success) {
+      if (error.response.data.data.code == 40101) {
         props.history.push('/')
       }
     }
