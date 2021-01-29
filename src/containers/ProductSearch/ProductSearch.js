@@ -295,6 +295,7 @@ const ProductSearch = (props) => {
   }
 
   const loadMore = async () => {
+    const lengthData = productList.length;
     setLastIndex(productList[lengthData - 1].id)
   }
 
