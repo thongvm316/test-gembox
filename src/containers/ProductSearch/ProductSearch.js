@@ -10,6 +10,7 @@ import { LineOutlined } from '@ant-design/icons'
 import * as _ from 'lodash'
 import moment from 'moment';
 import NumberFormat from 'react-number-format'
+import saleStatusApi from '../../api/SaleStatusAPI'
 
 const { Option } = Select
 
@@ -54,7 +55,6 @@ const ProductSearch = (props) => {
         params += `&${key}=${filters[key]}`
       }
     }
-    console.log(params)
     const config = {
       headers: {
         Accept: 'application/json',
@@ -219,9 +219,9 @@ const ProductSearch = (props) => {
   }
 
   const getExcelFile = async () => {
-    const lengthData = productList.length
+    const lengthData = productList.length;
 
-    let params = ''
+    let params = `lastIndex=${productList[lengthData - 1].id}`
 
     if (filters && filters.markets && filters.markets.length) {
       _.each(filters.markets, (market, index) => {
@@ -235,28 +235,43 @@ const ProductSearch = (props) => {
       }
     }
 
-    const config = {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-Auth-Token': localStorage.getItem('token-user'),
 
-      },
-    }
-    console.log(config)
-    try {
-      const { data } = await axios.get(
-        `${API_URL}/product/export?lastIndex=${productList[lengthData - 1].id}${params}`,
-        config,
-      )
-      fileDownload(data, 'data.xls')
-    } catch (error) {
-      if (error.response.statusText == "Unauthorized") {
-        localStorage.clear()
+    saleStatusApi
+    .getExcelFile(params)
+    .then((value) => {
+      console.log('Success')
+      fileDownload(value, 'data.xls')
+      setLoading(false)
+    })
+    .catch((err) => {
+      console.log(err.response)
+      setLoading(false)
+    })
 
-        props.history.push('/')
-      }
-    }
+    // const config = {
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'X-Auth-Token': localStorage.getItem('token-user'),
+
+    //   },
+    // }
+    // console.log(config)
+
+
+    // try {
+    //   const { data } = await axios.get(
+    //     `${API_URL}/product/export?lastIndex=${productList[lengthData - 1].id}${params}`,
+    //     config,
+    //   )
+    //   fileDownload(data, 'data.xls')
+    // } catch (error) {
+    //   if (error.response.statusText == "Unauthorized") {
+    //     localStorage.clear()
+
+    //     props.history.push('/')
+    //   }
+    // }
   }
 
   const selectAfter = (

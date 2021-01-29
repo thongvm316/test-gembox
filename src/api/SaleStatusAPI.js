@@ -38,6 +38,13 @@ const saleStatusApi = {
       responseType: 'blob',
     })
   },
+
+  getExcelFile: (params) => {
+    const url = `/product/export?${params}`
+    return axiosClient.get(url, {
+      responseType: 'blob',
+    })
+  },
 }
 
 export default saleStatusApi

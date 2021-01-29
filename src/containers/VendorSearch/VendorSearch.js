@@ -7,6 +7,7 @@ import './VendorSearch.scss'
 import moment from 'moment'
 import fileDownload from 'js-file-download'
 import NumberFormat from 'react-number-format'
+import saleStatusApi from '../../api/SaleStatusAPI'
 
 const { Option } = Select
 
@@ -138,35 +139,49 @@ const VendorSearch = (props) => {
   }
 
   const getExcelFile = async () => {
-    let params = ''
+    const lengthData = vendors.length
+    let params = `lastIndex=${lengthData}`
+
     for (const key in filter) {
       if (filter[key]) {
         params += `&${key}=${filter[key]}`
       }
     }
 
-    const lengthData = vendors.length
-    const config = {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-Auth-Token': localStorage.getItem('token-user'),
+    saleStatusApi
+    .getExcelFile(params)
+    .then((value) => {
+      console.log('Success')
+      fileDownload(value, 'data.xls')
+      setLoading(false)
+    })
+    .catch((err) => {
+      console.log(err.response)
+      setLoading(false)
+    })
 
-      },
-    }
-    try {
-      const { data } = await axios.get(
-        `${API_URL}/product/export?lastIndex=${lengthData}${params}`,
-        config,
-      )
-      fileDownload(data, 'data.xls')
-    } catch (error) {
-      if (error.response.statusText == "Unauthorized") {
-        localStorage.clear()
+    // const lengthData = vendors.length
+    // const config = {
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'X-Auth-Token': localStorage.getItem('token-user'),
 
-        props.history.push('/')
-      }
-    }
+    //   },
+    // }
+    // try {
+    //   const { data } = await axios.get(
+    //     `${API_URL}/product/export?lastIndex=${lengthData}${params}`,
+    //     config,
+    //   )
+    //   fileDownload(data, 'data.xls')
+    // } catch (error) {
+    //   if (error.response.statusText == "Unauthorized") {
+    //     localStorage.clear()
+
+    //     props.history.push('/')
+    //   }
+    // }
   }
 
   return (
