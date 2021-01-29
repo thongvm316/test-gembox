@@ -23,9 +23,9 @@ const MarketSaleStatusChart = (props) => {
             zoomType: 'xy',
         },
         xAxis: [{
-            categories: data.map(pro => {return pro.bander_name}),
+            categories: data.map(pro => { return pro.bander_name }),
             crosshair: true,
-            visible : false
+            visible: false
         }],
         yAxis: [
             {
@@ -52,7 +52,7 @@ const MarketSaleStatusChart = (props) => {
             column: {
                 states: {
                     hover: {
-                        color: '#FFC26F'                                                           
+                        color: '#FFC26F'
                     }
                 }
             },
@@ -103,7 +103,9 @@ const MarketSaleStatusChart = (props) => {
                 setData(res.data.data.result)
             }
         } catch (error) {
-            if (error.response.data.data.code == 40101){
+            if (error.response.statusText == "Unauthorized") {
+                localStorage.clear()
+
                 props.history.push('/')
             }
         }

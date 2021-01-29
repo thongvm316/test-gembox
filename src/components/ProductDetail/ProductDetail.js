@@ -58,7 +58,9 @@ const ProductDetail = (props) => {
         setProductDetailShare(res.data.data.result.share)
       }
     } catch (error) {
-      if (error.response.data.data.code == 40101) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
     }
@@ -87,7 +89,9 @@ const ProductDetail = (props) => {
         setProductTrendGraph(res.data.data.result)
       }
     } catch (error) {
-      if (error.response.data.data.code == 40101) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
     }
@@ -113,7 +117,9 @@ const ProductDetail = (props) => {
         setCategoryRanking(res.data.data.result.category_rank)
       }
     } catch (error) {
-      if (error.response.data.data.code == 40101) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
     }
@@ -137,7 +143,9 @@ const ProductDetail = (props) => {
         setSaleRanking(res.data.data.result.total_rank)
       }
     } catch (error) {
-      if (error.response.data.data.code == 40101) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
     }
@@ -161,7 +169,9 @@ const ProductDetail = (props) => {
         setShareKing(res.data.data.result.share)
       }
     } catch (error) {
-      if (error.response.data.data.code == 40101) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
     }

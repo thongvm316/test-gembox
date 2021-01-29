@@ -8,7 +8,9 @@ import axios from 'axios'
 import fileDownload from 'js-file-download'
 import { LineOutlined } from '@ant-design/icons'
 import * as _ from 'lodash'
-import moment from 'moment'
+import moment from 'moment';
+import NumberFormat from 'react-number-format'
+
 const { Option } = Select
 
 const ProductSearch = (props) => {
@@ -52,7 +54,7 @@ const ProductSearch = (props) => {
         params += `&${key}=${filters[key]}`
       }
     }
-
+    console.log(params)
     const config = {
       headers: {
         Accept: 'application/json',
@@ -77,8 +79,9 @@ const ProductSearch = (props) => {
       }
       setLoading(false)
     } catch (error) {
-      console.log(error.response.data)
-      if (error.response.data.data.code == 40101) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
 
@@ -143,15 +146,17 @@ const ProductSearch = (props) => {
     },
     {
       title: '가격',
-      dataIndex: 'seller_price',
+      render: record => <NumberFormat value={record.seller_price} displayType={'text'} thousandSeparator={true} />
     },
     {
       title: '리뷰',
-      dataIndex: 'review',
+      render: record => <NumberFormat value={record.review} displayType={'text'} thousandSeparator={true} />
+
     },
     {
       title: '판매수',
-      dataIndex: 'sold',
+      render: record => <NumberFormat value={record.sold} displayType={'text'} thousandSeparator={true} />
+
     },
   ]
 
@@ -205,7 +210,9 @@ const ProductSearch = (props) => {
       )
       // console.log(data)
     } catch (error) {
-      if (error.response.data.data.code == 40101) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
     }
@@ -213,24 +220,40 @@ const ProductSearch = (props) => {
 
   const getExcelFile = async () => {
     const lengthData = productList.length
+
+    let params = ''
+
+    if (filters && filters.markets && filters.markets.length) {
+      _.each(filters.markets, (market, index) => {
+        params += `&market[]=${market}`
+      })
+    }
+
+    for (const key in filters) {
+      if (filters[key]) {
+        params += `&${key}=${filters[key]}`
+      }
+    }
+
     const config = {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        'X-Auth-Token': localStorage.getItem('token-user'),
+
       },
     }
+    console.log(config)
     try {
       const { data } = await axios.get(
-        `${API_URL}/product/export?first=${productList[0].id}&last=${productList[lengthData - 1].id
-        }`,
-        {
-          responseType: 'blob',
-        },
+        `${API_URL}/product/export?lastIndex=${lastIndex}${params}`,
         config,
       )
       fileDownload(data, 'data.xls')
     } catch (error) {
-      if (error.response.data.data.code == 40101) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
     }
