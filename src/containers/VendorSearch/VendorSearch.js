@@ -135,7 +135,7 @@ const VendorSearch = (props) => {
   }
 
   const loadMore = async () => {
-    setLastIndex(lastIndex + 100)
+    setLastIndex(vendors.length)
   }
 
   const getExcelFile = async () => {
