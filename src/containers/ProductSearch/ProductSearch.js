@@ -8,7 +8,10 @@ import axios from 'axios'
 import fileDownload from 'js-file-download'
 import { LineOutlined } from '@ant-design/icons'
 import * as _ from 'lodash'
-import moment from 'moment'
+import moment from 'moment';
+import NumberFormat from 'react-number-format'
+import saleStatusApi from '../../api/SaleStatusAPI'
+
 const { Option } = Select
 
 const ProductSearch = (props) => {
@@ -52,7 +55,6 @@ const ProductSearch = (props) => {
         params += `&${key}=${filters[key]}`
       }
     }
-
     const config = {
       headers: {
         Accept: 'application/json',
@@ -77,7 +79,9 @@ const ProductSearch = (props) => {
       }
       setLoading(false)
     } catch (error) {
-      if (!error.response.data.success) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
 
@@ -142,15 +146,17 @@ const ProductSearch = (props) => {
     },
     {
       title: '가격',
-      dataIndex: 'seller_price',
+      render: record => <NumberFormat value={record.seller_price} displayType={'text'} thousandSeparator={true} />
     },
     {
       title: '리뷰',
-      dataIndex: 'review',
+      render: record => <NumberFormat value={record.review} displayType={'text'} thousandSeparator={true} />
+
     },
     {
       title: '판매수',
-      dataIndex: 'sold',
+      render: record => <NumberFormat value={record.sold} displayType={'text'} thousandSeparator={true} />
+
     },
   ]
 
@@ -204,35 +210,68 @@ const ProductSearch = (props) => {
       )
       // console.log(data)
     } catch (error) {
-      if (!error.response.data.success) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
     }
   }
 
   const getExcelFile = async () => {
-    const lengthData = productList.length
-    const config = {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
+    const lengthData = productList.length;
+
+    let params = `lastIndex=${productList[lengthData - 1].id}`
+
+    if (filters && filters.markets && filters.markets.length) {
+      _.each(filters.markets, (market, index) => {
+        params += `&market[]=${market}`
+      })
     }
-    try {
-      const { data } = await axios.get(
-        `${API_URL}/product/export?first=${productList[0].id}&last=${productList[lengthData - 1].id
-        }`,
-        {
-          responseType: 'blob',
-        },
-        config,
-      )
-      fileDownload(data, 'data.xls')
-    } catch (error) {
-      if (!error.response.data.success) {
-        props.history.push('/')
+
+    for (const key in filters) {
+      if (filters[key]) {
+        params += `&${key}=${filters[key]}`
       }
     }
+
+
+    saleStatusApi
+    .getExcelFileProduct(params)
+    .then((value) => {
+      console.log('Success')
+      fileDownload(value, 'data.xls')
+      setLoading(false)
+    })
+    .catch((err) => {
+      console.log(err.response)
+      setLoading(false)
+    })
+
+    // const config = {
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'X-Auth-Token': localStorage.getItem('token-user'),
+
+    //   },
+    // }
+    // console.log(config)
+
+
+    // try {
+    //   const { data } = await axios.get(
+    //     `${API_URL}/product/export?lastIndex=${productList[lengthData - 1].id}${params}`,
+    //     config,
+    //   )
+    //   fileDownload(data, 'data.xls')
+    // } catch (error) {
+    //   if (error.response.statusText == "Unauthorized") {
+    //     localStorage.clear()
+
+    //     props.history.push('/')
+    //   }
+    // }
   }
 
   const selectAfter = (
@@ -256,7 +295,8 @@ const ProductSearch = (props) => {
   }
 
   const loadMore = async () => {
-    setLastIndex(lastIndex + 100)
+    const lengthData = productList.length;
+    setLastIndex(productList[lengthData - 1].id)
   }
 
   return (

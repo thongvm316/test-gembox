@@ -9,6 +9,7 @@ import Card2 from '../../images/Card_2.png'
 import Card3 from '../../images/Card_3.png'
 import { API_URL } from '../../constants/appConstants';
 import { market_list } from '../../constants/appConstants';
+import NumberFormat from 'react-number-format'
 
 import * as _ from 'lodash';
 import moment from 'moment'
@@ -57,7 +58,9 @@ const ProductDetail = (props) => {
         setProductDetailShare(res.data.data.result.share)
       }
     } catch (error) {
-      if (!error.response.data.success) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
     }
@@ -86,7 +89,9 @@ const ProductDetail = (props) => {
         setProductTrendGraph(res.data.data.result)
       }
     } catch (error) {
-      if (!error.response.data.success) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
     }
@@ -112,7 +117,9 @@ const ProductDetail = (props) => {
         setCategoryRanking(res.data.data.result.category_rank)
       }
     } catch (error) {
-      if (!error.response.data.success) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
     }
@@ -136,7 +143,9 @@ const ProductDetail = (props) => {
         setSaleRanking(res.data.data.result.total_rank)
       }
     } catch (error) {
-      if (!error.response.data.success) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
     }
@@ -160,7 +169,9 @@ const ProductDetail = (props) => {
         setShareKing(res.data.data.result.share)
       }
     } catch (error) {
-      if (!error.response.data.success) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
     }
@@ -295,19 +306,45 @@ const ProductDetail = (props) => {
               <div className="price">
                 <Space>
                   <div>총판매액</div>
-                  <h2>₩{product.seller_price * product.sold}</h2>
+                  <h2>
+                    <NumberFormat
+                      value={product.seller_price * product.sold}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      prefix={'₩'}
+                    />
+                  </h2>
                 </Space>
                 <Space>
                   <div>가격</div>
-                  <h2>₩{product.seller_price}</h2>
+                  <h2>
+                    <NumberFormat
+                      value={product.seller_price}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      prefix={'₩'}
+                    />
+                  </h2>
                 </Space>
                 <Space>
                   <div>리뷰</div>
-                  <h2>₩{product.review}</h2>
+                  <h2>
+                    <NumberFormat
+                      value={product.review}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                    />
+                  </h2>
                 </Space>
                 <Space>
                   <div>판매수</div>
-                  <h2>₩{product.sold}</h2>
+                  <h2>
+                    <NumberFormat
+                      value={product.sold}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                    />
+                  </h2>
                 </Space>
               </div>
             </div>
@@ -387,7 +424,7 @@ const ProductDetail = (props) => {
             return (
               <Col span={6} style={{ marginBottom: '10px' }}>
                 <div className="card-item-border">
-                  <MarketSaleStatusChart market={market} productName={product.name} />
+                  <MarketSaleStatusChart market={market} productId={product.id} />
                 </div>
               </Col>
             )

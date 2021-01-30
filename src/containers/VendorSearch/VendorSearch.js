@@ -6,6 +6,8 @@ import axios from 'axios'
 import './VendorSearch.scss'
 import moment from 'moment'
 import fileDownload from 'js-file-download'
+import NumberFormat from 'react-number-format'
+import saleStatusApi from '../../api/SaleStatusAPI'
 
 const { Option } = Select
 
@@ -33,19 +35,23 @@ const VendorSearch = (props) => {
     },
     {
       title: '총 판매 상품 수',
-      dataIndex: 'product_count',
+      render: record => <NumberFormat value={record.product_count} displayType={'text'} thousandSeparator={true}/>
+
     },
     {
       title: '총 판매 매출',
-      dataIndex: 'revenue',
+      render: record => <NumberFormat value={record.revenue} displayType={'text'} thousandSeparator={true}/>
+
     },
     {
       title: '리뷰',
-      dataIndex: 'total_review',
+      render: record => <NumberFormat value={record.total_review} displayType={'text'} thousandSeparator={true}/>
+
     },
     {
       title: '판매수',
-      dataIndex: 'sale_count',
+      render: record => <NumberFormat value={record.sale_count} displayType={'text'} thousandSeparator={true}/>
+
     },
   ]
 
@@ -118,7 +124,9 @@ const VendorSearch = (props) => {
         }
       }
     } catch (error) {
-      if (!error.response.data.success) {
+      if (error.response.statusText == "Unauthorized") {
+        localStorage.clear()
+
         props.history.push('/')
       }
     }
@@ -127,40 +135,53 @@ const VendorSearch = (props) => {
   }
 
   const loadMore = async () => {
-    setLastIndex(lastIndex + 100)
+    setLastIndex(vendors.length)
   }
 
   const getExcelFile = async () => {
-    let params = ''
+    const lengthData = vendors.length
+    let params = `lastIndex=${lengthData}`
+
     for (const key in filter) {
       if (filter[key]) {
         params += `&${key}=${filter[key]}`
       }
     }
 
-    const lengthData = vendors.length
-    const config = {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-Auth-Token': localStorage.getItem('token-user'),
+    saleStatusApi
+    .getExcelFileBander(params)
+    .then((value) => {
+      console.log('Success')
+      fileDownload(value, 'data.xls')
+      setLoading(false)
+    })
+    .catch((err) => {
+      console.log(err.response)
+      setLoading(false)
+    })
 
-      },
-    }
-    try {
-      const { data } = await axios.get(
-        `${API_URL}/product/export?last=${lengthData}${params}`,
-        {
-          responseType: 'blob',
-        },
-        config,
-      )
-      fileDownload(data, 'data.xls')
-    } catch (error) {
-      if (!error.response.data.success) {
-        props.history.push('/')
-      }
-    }
+    // const lengthData = vendors.length
+    // const config = {
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'X-Auth-Token': localStorage.getItem('token-user'),
+
+    //   },
+    // }
+    // try {
+    //   const { data } = await axios.get(
+    //     `${API_URL}/product/export?lastIndex=${lengthData}${params}`,
+    //     config,
+    //   )
+    //   fileDownload(data, 'data.xls')
+    // } catch (error) {
+    //   if (error.response.statusText == "Unauthorized") {
+    //     localStorage.clear()
+
+    //     props.history.push('/')
+    //   }
+    // }
   }
 
   return (
