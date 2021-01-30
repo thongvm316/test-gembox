@@ -29,7 +29,13 @@ const SignUp = (props) => {
   const [loading, setLoading] = useState(false)
   const [validatePassword, setValidatePassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [valueOfCountryPhone, setvalueOfCountryPhone] = useState()
+  const [bodyphone, setBodyPhone] = useState({
+    email: '',
+    password: '',
+    nameAndCompany: '',
+    phone: '',
+  })
+  const [valueOfPhoneInput, setValueOfPhoneInput] = useState()
 
   // For Add more URL
   const [url, seturl] = useState([])
@@ -47,18 +53,11 @@ const SignUp = (props) => {
   }
 
   // For Verify Phone
-  const [bodyphone, setBodyPhone] = useState({
-    email: '',
-    password: '',
-    nameAndCompany: '',
-    phone: '',
-  })
-
-  const { nameAndCompany, email, password, phone } = bodyphone
   const onChange = (e) => {
     setBodyPhone({ ...bodyphone, [e.target.name]: e.target.value })
     setEmailVerify({ email: e.target.value })
   }
+  const { nameAndCompany, email, password } = bodyphone
 
   const verifySmsCode = async () => {
     setVerifiedPhone(true)
@@ -76,7 +75,7 @@ const SignUp = (props) => {
       email,
       password,
       name,
-      phone,
+      phone: valueOfPhoneInput,
     }
 
     try {
@@ -221,8 +220,8 @@ const SignUp = (props) => {
             xs={24}
             sm={24}
             md={16}
-            lg={8}
-            xl={5}
+            lg={9}
+            xl={7}
           >
             <div>
               <h1>회원가입</h1>
@@ -254,6 +253,17 @@ const SignUp = (props) => {
                     required: true,
                     message: 'Please input your 비밀번호 8자리!',
                   },
+                  ({ getFieldValue }) => ({
+                    validator(rule, value) {
+                      if (value.length >= 8) {
+                        return Promise.resolve()
+                      } else {
+                        return Promise.reject(
+                          'Password must contain at least 8 characters',
+                        )
+                      }
+                    },
+                  }),
                 ]}
               >
                 <Input.Password
@@ -325,12 +335,20 @@ const SignUp = (props) => {
                 ]}
                 style={{ display: 'flex' }}
               >
-                {/* <div style={{ display: 'flex', border: '1px solid #A6B0CF' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    border: '1px solid #A6B0CF',
+                    padding: '0 .7rem',
+                  }}
+                >
                   <PhoneInput
                     placeholder="핸드폰 번호 입력*"
                     // defaultCountry="VN"
-                    value={phone}
-                    onChange={onChange}
+                    displayInitialValueAsLocalNumber
+                    international
+                    value={valueOfPhoneInput}
+                    onChange={setValueOfPhoneInput}
                     id="inputID"
                     name="phone"
                     style={{ flex: 1 }}
@@ -339,12 +357,13 @@ const SignUp = (props) => {
                     onClick={verifySmsCode}
                     className="send-sms"
                     type="text"
+                    style={{ flex: 1 }}
                   >
                     {resendSms ? resendSms : '인증번호 전송'}
                   </Button>
-                </div> */}
+                </div>
 
-                <Input
+                {/* <Input
                   placeholder="핸드폰 번호 입력*"
                   suffix={
                     <Button
@@ -355,16 +374,11 @@ const SignUp = (props) => {
                       {resendSms ? resendSms : '인증번호 전송'}
                     </Button>
                   }
-                  type="tel"
+                  type="text"
                   name="phone"
                   value={phone}
                   onChange={onChange}
-                  // onChange={e => {
-                  //     if (!Number(e.target.value)) {
-                  //         message.error('Your phone must be a number');
-                  //     }
-                  // }}
-                />
+                /> */}
               </FormItem>
               {verifiedPhone ? (
                 <FormItem
