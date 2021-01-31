@@ -50,6 +50,9 @@
             color: #42ABBC;
             font-weight: bold;
         }
+        &:hover {
+            background: transparent;
+        }
     }
 
     .agreement {
@@ -81,5 +84,25 @@
 @media (max-width: 767px) {
     .submit{
         width: auto;
+    }
+}
+
+@media(max-width: 370px) {
+    .signup {
+        .PhoneInput {
+            width: 110px !important;
+        }
+        .send-sms {
+            font-size: 10px !important;
+            text-align: center !important;
+        }
+    }
+}
+
+@media(min-width: 1200px) {
+    .signup {
+        .send-sms {
+            text-align: end !important;
+        }
     }
 }

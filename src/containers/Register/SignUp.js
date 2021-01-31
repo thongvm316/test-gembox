@@ -357,7 +357,11 @@ const SignUp = (props) => {
                     onClick={verifySmsCode}
                     className="send-sms"
                     type="text"
-                    style={{ flex: 1 }}
+                    style={{
+                      flex: 1,
+                      paddingLeft: 0,
+                      paddingRight: 0,
+                    }}
                   >
                     {resendSms ? resendSms : '인증번호 전송'}
                   </Button>
