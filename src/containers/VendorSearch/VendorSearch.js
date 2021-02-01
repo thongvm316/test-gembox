@@ -35,23 +35,43 @@ const VendorSearch = (props) => {
     },
     {
       title: '총 판매 상품 수',
-      render: record => <NumberFormat value={record.product_count} displayType={'text'} thousandSeparator={true}/>
-
+      render: (record) => (
+        <NumberFormat
+          value={record.product_count}
+          displayType={'text'}
+          thousandSeparator={true}
+        />
+      ),
     },
     {
       title: '총 판매 매출',
-      render: record => <NumberFormat value={record.revenue} displayType={'text'} thousandSeparator={true}/>
-
+      render: (record) => (
+        <NumberFormat
+          value={record.revenue}
+          displayType={'text'}
+          thousandSeparator={true}
+        />
+      ),
     },
     {
       title: '리뷰',
-      render: record => <NumberFormat value={record.total_review} displayType={'text'} thousandSeparator={true}/>
-
+      render: (record) => (
+        <NumberFormat
+          value={record.total_review}
+          displayType={'text'}
+          thousandSeparator={true}
+        />
+      ),
     },
     {
       title: '판매수',
-      render: record => <NumberFormat value={record.sale_count} displayType={'text'} thousandSeparator={true}/>
-
+      render: (record) => (
+        <NumberFormat
+          value={record.sale_count}
+          displayType={'text'}
+          thousandSeparator={true}
+        />
+      ),
     },
   ]
 
@@ -78,6 +98,7 @@ const VendorSearch = (props) => {
   const { RangePicker } = DatePicker
 
   const onChangeStartDate = (date, dateString) => {
+    console.log(dateString)
     // setStartDate(moment(dateString).unix())
     setFilter({ ...filter, start: moment(dateString).unix() })
   }
@@ -96,7 +117,7 @@ const VendorSearch = (props) => {
   }
 
   const getVendor = async () => {
-    setLoading(true);
+    setLoading(true)
     let params = ''
     for (const key in filter) {
       if (filter[key]) {
@@ -124,14 +145,13 @@ const VendorSearch = (props) => {
         }
       }
     } catch (error) {
-      if (error.response.statusText == "Unauthorized") {
+      if (error.response.statusText == 'Unauthorized') {
         localStorage.clear()
 
         props.history.push('/')
       }
     }
-    setLoading(false);
-
+    setLoading(false)
   }
 
   const loadMore = async () => {
@@ -149,16 +169,16 @@ const VendorSearch = (props) => {
     }
 
     saleStatusApi
-    .getExcelFileBander(params)
-    .then((value) => {
-      console.log('Success')
-      fileDownload(value, 'data.xls')
-      setLoading(false)
-    })
-    .catch((err) => {
-      console.log(err.response)
-      setLoading(false)
-    })
+      .getExcelFileBander(params)
+      .then((value) => {
+        console.log('Success')
+        fileDownload(value, 'data.xls')
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.log(err.response)
+        setLoading(false)
+      })
 
     // const lengthData = vendors.length
     // const config = {
@@ -263,8 +283,8 @@ const VendorSearch = (props) => {
               LOAD MORE
             </Button>
           ) : (
-              ''
-            )}
+            ''
+          )}
         </Col>
       </Row>
     </div>

@@ -89,6 +89,7 @@ const AnalysisMarket = (props) => {
   }
 
   // Chart 1
+  const titleOfChartOne = `${selectMarket} 카테고리별 분석`
   const colorsChart1 = data.map((color) => {
     let listColor = '#'.concat(
       Math.floor(Math.random() * 16777215).toString(16),
@@ -116,16 +117,19 @@ const AnalysisMarket = (props) => {
       },
     },
     tooltip: {
-      enabled: true,
-      formatter: function () {
-        return '<b>₩ ' + this.y + '</b>'
-      },
+      shared: true,
+      useHTML: true,
+      headerFormat: '<small>{point.key}</small><table>',
+      pointFormat:
+        '<tr><td</td>' +
+        '<td style="text-align: right"><b>{point.y} ₩ </b></td></tr>',
+      footerFormat: '</table>',
     },
     credits: {
       enabled: false,
     },
     title: {
-      text: '11번가 카테고리별 분석',
+      text: titleOfChartOne,
       align: 'left',
       style: {
         color: '#495057',

@@ -75,7 +75,8 @@ const SignUp = (props) => {
       email,
       password,
       name,
-      phone: valueOfPhoneInput,
+      // phone: valueOfPhoneInput,
+      phone,
     }
 
     try {
@@ -221,7 +222,7 @@ const SignUp = (props) => {
             sm={24}
             md={16}
             lg={9}
-            xl={7}
+            xl={6}
           >
             <div>
               <h1>회원가입</h1>
@@ -335,7 +336,7 @@ const SignUp = (props) => {
                 ]}
                 style={{ display: 'flex' }}
               >
-                <div
+                {/* <div
                   style={{
                     display: 'flex',
                     border: '1px solid #A6B0CF',
@@ -365,9 +366,9 @@ const SignUp = (props) => {
                   >
                     {resendSms ? resendSms : '인증번호 전송'}
                   </Button>
-                </div>
+                </div> */}
 
-                {/* <Input
+                <Input
                   placeholder="핸드폰 번호 입력*"
                   suffix={
                     <Button
@@ -382,7 +383,7 @@ const SignUp = (props) => {
                   name="phone"
                   value={phone}
                   onChange={onChange}
-                /> */}
+                />
               </FormItem>
               {verifiedPhone ? (
                 <FormItem
