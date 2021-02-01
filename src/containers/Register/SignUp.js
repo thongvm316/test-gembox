@@ -14,8 +14,6 @@ import {
 import { API_URL } from '../../constants/appConstants'
 import Footer from '../../components/Footer'
 import axios from 'axios'
-
-import 'react-phone-number-input/style.css'
 import './SignUp.scss'
 
 const FormItem = Form.Item
@@ -34,7 +32,7 @@ const SignUp = (props) => {
     nameAndCompany: '',
     phone: '',
   })
-  const [valueOfPhoneInput, setValueOfPhoneInput] = useState()
+  // const [valueOfPhoneInput, setValueOfPhoneInput] = useState()
 
   // For Add more URL
   const [url, seturl] = useState([])
