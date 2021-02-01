@@ -3,14 +3,22 @@ import NumberFormat from 'react-number-format'
 import moment from 'moment'
 import homeApi from '../../api/HomeAPI'
 
-import { DatePicker, Button, Row, Col, Card, Divider, Spin } from 'antd'
+import {
+  DatePicker,
+  Button,
+  Row,
+  Col,
+  Card,
+  Divider,
+  Spin,
+  Popover,
+} from 'antd'
 
 import Footer from '../../components/Footer'
 import GroupButton from './GroupButton/GroupButton'
 import './home.scss'
 
 const Home = (props) => {
-  // Spin
   const [loading, setLoading] = useState(false)
 
   // Handle Data
@@ -80,15 +88,11 @@ const Home = (props) => {
                   >
                     {db.market_name}
                   </li>
-                  <li
-                    style={{
-                      fontWeight: '700',
-                      fontSize: '14px',
-                      color: '#495057',
-                    }}
-                  >
-                    {db.bander_name ? db.bander_name : db.name}
-                  </li>
+                  <Popover content={db.bander_name ? db.bander_name : db.name}>
+                    <li className="style-text-home">
+                      {db.bander_name ? db.bander_name : db.name}
+                    </li>
+                  </Popover>
                 </ul>
               </li>
 
@@ -130,7 +134,7 @@ const Home = (props) => {
     return datum / 1000
   }
 
-  function onChange(date, dateString) {
+  const onChange = (date, dateString) => {
     const startDay = dateString.concat('-01')
     const allDayInMonth = moment(dateString, 'YYYY-MM').daysInMonth()
     const endDay = dateString.concat(`-${allDayInMonth}`)

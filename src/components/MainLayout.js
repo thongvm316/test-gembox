@@ -20,8 +20,8 @@ const { Header, Content } = Layout
 const MainLayout = (props) => {
   const { showSiderBar } = props
   const [collapsed, setCollapsed] = useState(true)
-  const [data, setData] = useState('')
-  // console.log(data)
+  const [userName, setUserName] = useState('')
+  const [adminName, setAdminName] = useState('')
 
   const renderUserInfor = () => {
     return (
@@ -64,7 +64,7 @@ const MainLayout = (props) => {
       try {
         const { data } = await axios.get(`${API_URL}/user/profile`, config)
         if (data && data.data.result) {
-          localStorage.setItem('userName', data.data.result.name)
+          setUserName(data.data.result.name)
         }
       } catch (error) {
         console.log(error.response)
@@ -72,12 +72,11 @@ const MainLayout = (props) => {
     }
 
     const getAdminInfo = () => {
-      console.log('admin')
       adminApi
         .getAdminInfo()
         .then((value) => {
           if (value && value.data && value.data.result) {
-            localStorage.setItem('adminName', value.data.result.name) // Use state
+            setAdminName(value.data.result.name)
           }
         })
         .catch((error) => {
@@ -131,10 +130,7 @@ const MainLayout = (props) => {
                     fontSize: '13px',
                   }}
                 >
-                  {/* {
-                    tokenUser
-                    ? {localStorage.getItem('')}
-                  } 님 안녕하세요 */}
+                  <strong>{userName ? userName : adminName}</strong> 님 안녕하세요
                 </span>
                 <span style={{ paddingLeft: '11px' }}>
                   <DownOutlined />

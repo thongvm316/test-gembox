@@ -56,8 +56,20 @@
     margin-top: 2rem;
     transform: translateX(-50%);
   }
+
+  .style-text-home {
+    font-weight: 700;
+    font-size: 14px;
+    color: #495057;
+
+    overflow:hidden; 
+    white-space:nowrap; 
+    text-overflow:ellipsis; 
+    width:100px;
+  }
 }
 
+/* Media */
 @media (max-width: 576px) {
   .home-page {
     h1 {

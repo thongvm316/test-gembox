@@ -9,7 +9,6 @@ import {
   message,
   Checkbox,
   Image,
-  Alert,
 } from 'antd'
 import { API_URL } from '../../constants/appConstants'
 import Footer from '../../components/Footer'
@@ -158,7 +157,10 @@ const SignUp = (props) => {
     } catch (error) {
       setLoading(false)
       console.log(error.response)
-      if (error.response.status === 400 && error.response.data.data.message === "Verify Code Invalid") {
+      if (
+        error.response.status === 400 &&
+        error.response.data.data.message === 'Verify Code Invalid'
+      ) {
         message.error('SMS code is invalid or expired!')
       }
     }
@@ -402,33 +404,33 @@ const SignUp = (props) => {
               >
                 <Row gutter={24} justify="center">
                   <Col span={18} style={{ textAlign: 'center' }}>
-                    {  
-                      showNameOfFileUpload
-                      ? <p>{showNameOfFileUpload}</p>
-                      : <>
-                      <Image src="/img/Upload.png" />
-                    <p
-                      style={{
-                        fontWeight: '400',
-                        fontSize: '10px',
-                        color: '#14141A',
-                        marginTop: '16px',
-                        marginBottom: '0',
-                      }}
-                    >
-                      사업자 등록증 pdf 또는 이미지 첨부
-                    </p>
-                    <p
-                      style={{
-                        fontWeight: '400',
-                        fontSize: '10px',
-                        color: '#14141A',
-                      }}
-                    >
-                      or
-                    </p>
+                    {showNameOfFileUpload ? (
+                      <p>{showNameOfFileUpload}</p>
+                    ) : (
+                      <>
+                        <Image src="/img/Upload.png" />
+                        <p
+                          style={{
+                            fontWeight: '400',
+                            fontSize: '10px',
+                            color: '#14141A',
+                            marginTop: '16px',
+                            marginBottom: '0',
+                          }}
+                        >
+                          사업자 등록증 pdf 또는 이미지 첨부
+                        </p>
+                        <p
+                          style={{
+                            fontWeight: '400',
+                            fontSize: '10px',
+                            color: '#14141A',
+                          }}
+                        >
+                          or
+                        </p>
                       </>
-                    }
+                    )}
                     <label className="custom-file-upload">
                       <Input
                         style={{ display: 'none' }}

@@ -6,6 +6,7 @@ import GroupButton from './GroupButton/GroupButton'
 import Footer from '../../components/Footer'
 import { DatePicker, Button, Row, Col, Card, Spin } from 'antd'
 import { MinusOutlined, LoadingOutlined } from '@ant-design/icons'
+import moment from 'moment'
 
 import Highcharts from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
@@ -132,7 +133,7 @@ const CategoryAnalysis = (props) => {
 
   const options = {
     chart: {
-      height: 300,
+      height: 600,
       type: 'pie',
       renderTo: 'container',
     },
@@ -199,7 +200,7 @@ const CategoryAnalysis = (props) => {
     return datum / 1000
   }
 
-  function onChange(date, dateString) {
+  const onChange = (date, dateString) => {
     // console.log(date, dateString);
     let storeDay = [toTimestamp(dateString[0]), toTimestamp(dateString[1])]
     setDatePicker(storeDay)
@@ -358,6 +359,22 @@ const CategoryAnalysis = (props) => {
     setCategory(value)
   }
 
+  /* Current month and get data */
+  // useEffect(async () => {
+  //   let startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
+  //   let endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
+  //   let allDateOfCurrentMonth = [
+  //     toTimestamp(startOfMonth),
+  //     toTimestamp(endOfMonth),
+  //   ]
+
+  //   const params = {
+  //     start: allDateOfCurrentMonth[0],
+  //     end: allDateOfCurrentMonth[1],
+  //   }
+  //   callApiHome(params)
+  // }, [])
+
   return (
     <div className="category-analysis">
       <GroupButton redirect={props.history.push} clickable="b" />
@@ -382,7 +399,7 @@ const CategoryAnalysis = (props) => {
                 집계 월
               </h1>
             </Col>
-            <Col xs={24} sm={10} md={10} lg={8} xl={4}>
+            <Col xs={24} sm={10} md={10} lg={8} xl={5}>
               <DatePicker.RangePicker
                 onChange={onChange}
                 separator={<MinusOutlined />}
@@ -434,6 +451,7 @@ const CategoryAnalysis = (props) => {
         gutter={24}
         className="chart card-border"
         style={{ marginTop: '24px', marginBottom: '24px' }}
+        justify="center"
       >
         <Col span={24}>
           <HighchartsReact
