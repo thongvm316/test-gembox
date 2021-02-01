@@ -16,7 +16,6 @@ import Footer from '../../components/Footer'
 import axios from 'axios'
 
 import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
 import './SignUp.scss'
 
 const FormItem = Form.Item
