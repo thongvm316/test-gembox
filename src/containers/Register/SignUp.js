@@ -57,7 +57,7 @@ const SignUp = (props) => {
     setBodyPhone({ ...bodyphone, [e.target.name]: e.target.value })
     setEmailVerify({ email: e.target.value })
   }
-  const { nameAndCompany, email, password } = bodyphone
+  const { nameAndCompany, email, password, phone } = bodyphone
 
   const verifySmsCode = async () => {
     setVerifiedPhone(true)

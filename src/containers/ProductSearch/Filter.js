@@ -115,6 +115,7 @@ const Filter = (props) => {
                     <Select onChange={handleChangeSearchBy} defaultValue="0" className="select-after">
                         <Option value="0">카테고리</Option>
                         <Option value="1">밴더명</Option>
+                        <Option value="2">제품명</Option>
                     </Select>
                 </Col>
             </Row>
