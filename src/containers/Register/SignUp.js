@@ -26,6 +26,7 @@ const SignUp = (props) => {
   const [loading, setLoading] = useState(false)
   const [validatePassword, setValidatePassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [showNameOfFileUpload, setShowNameOfFileUpload] = useState('')
   const [bodyphone, setBodyPhone] = useState({
     email: '',
     password: '',
@@ -72,7 +73,6 @@ const SignUp = (props) => {
       email,
       password,
       name,
-      // phone: valueOfPhoneInput,
       phone,
     }
 
@@ -158,6 +158,9 @@ const SignUp = (props) => {
     } catch (error) {
       setLoading(false)
       console.log(error.response)
+      if (error.response.status === 400 && error.response.data.data.message === "Verify Code Invalid") {
+        message.error('SMS code is invalid or expired!')
+      }
     }
   }
 
@@ -333,38 +336,6 @@ const SignUp = (props) => {
                 ]}
                 style={{ display: 'flex' }}
               >
-                {/* <div
-                  style={{
-                    display: 'flex',
-                    border: '1px solid #A6B0CF',
-                    padding: '0 .7rem',
-                  }}
-                >
-                  <PhoneInput
-                    placeholder="핸드폰 번호 입력*"
-                    // defaultCountry="VN"
-                    displayInitialValueAsLocalNumber
-                    international
-                    value={valueOfPhoneInput}
-                    onChange={setValueOfPhoneInput}
-                    id="inputID"
-                    name="phone"
-                    style={{ flex: 1 }}
-                  />
-                  <Button
-                    onClick={verifySmsCode}
-                    className="send-sms"
-                    type="text"
-                    style={{
-                      flex: 1,
-                      paddingLeft: 0,
-                      paddingRight: 0,
-                    }}
-                  >
-                    {resendSms ? resendSms : '인증번호 전송'}
-                  </Button>
-                </div> */}
-
                 <Input
                   placeholder="핸드폰 번호 입력*"
                   suffix={
@@ -431,7 +402,11 @@ const SignUp = (props) => {
               >
                 <Row gutter={24} justify="center">
                   <Col span={18} style={{ textAlign: 'center' }}>
-                    <Image src="/img/Upload.png" />
+                    {  
+                      showNameOfFileUpload
+                      ? <p>{showNameOfFileUpload}</p>
+                      : <>
+                      <Image src="/img/Upload.png" />
                     <p
                       style={{
                         fontWeight: '400',
@@ -452,14 +427,20 @@ const SignUp = (props) => {
                     >
                       or
                     </p>
+                      </>
+                    }
                     <label className="custom-file-upload">
                       <Input
                         style={{ display: 'none' }}
                         id="file-upload"
                         type="file"
                         accept=".pdf"
+                        name="selectedFile"
                         onChange={(e) => {
                           uploadPdfFile(e)
+                          if (e.target.files && e.target.files[0].name) {
+                            setShowNameOfFileUpload(e.target.files[0].name)
+                          }
                         }}
                       />
                       Browse

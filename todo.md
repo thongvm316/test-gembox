@@ -19,3 +19,33 @@ Fix:
 }
 
 ---
+
+{/_ <div
+style={{
+                    display: 'flex',
+                    border: '1px solid #A6B0CF',
+                    padding: '0 .7rem',
+                  }} >
+<PhoneInput
+placeholder="핸드폰 번호 입력_"
+// defaultCountry="VN"
+displayInitialValueAsLocalNumber
+international
+value={valueOfPhoneInput}
+onChange={setValueOfPhoneInput}
+id="inputID"
+name="phone"
+style={{ flex: 1 }}
+/>
+<Button
+onClick={verifySmsCode}
+className="send-sms"
+type="text"
+style={{
+                      flex: 1,
+                      paddingLeft: 0,
+                      paddingRight: 0,
+                    }} >
+{resendSms ? resendSms : '인증번호 전송'}
+</Button>
+</div> \*/}

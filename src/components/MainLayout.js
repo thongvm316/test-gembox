@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Layout, Dropdown, Menu } from 'antd'
 import {
   MenuUnfoldOutlined,
@@ -10,12 +10,18 @@ import Logout from '../images/logout.png'
 import Setting from '../images/Setting.png'
 import './MainLayout.scss'
 
+import axios from 'axios'
+import { API_URL } from '../constants/appConstants'
+import adminApi from '../api/AdminAPI'
+
 import Sidebar from './Sidebar'
 const { Header, Content } = Layout
 
 const MainLayout = (props) => {
   const { showSiderBar } = props
   const [collapsed, setCollapsed] = useState(true)
+  const [data, setData] = useState('')
+  // console.log(data)
 
   const renderUserInfor = () => {
     return (
@@ -42,15 +48,61 @@ const MainLayout = (props) => {
     setCollapsed(!collapsed)
   }
 
+  /* Get User - Admin Info */
+  const tokenUser = localStorage.getItem('token-user')
+  const tokenAdmin = localStorage.getItem('token')
+  useEffect(() => {
+    const getUserInfo = async () => {
+      console.log('user')
+      const config = {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-Auth-Token': `${localStorage.getItem('token-user')}`,
+        },
+      }
+      try {
+        const { data } = await axios.get(`${API_URL}/user/profile`, config)
+        if (data && data.data.result) {
+          localStorage.setItem('userName', data.data.result.name)
+        }
+      } catch (error) {
+        console.log(error.response)
+      }
+    }
+
+    const getAdminInfo = () => {
+      console.log('admin')
+      adminApi
+        .getAdminInfo()
+        .then((value) => {
+          if (value && value.data && value.data.result) {
+            localStorage.setItem('adminName', value.data.result.name) // Use state
+          }
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+    }
+
+    if (tokenUser) {
+      getUserInfo()
+    }
+
+    if (tokenAdmin) {
+      getAdminInfo()
+    }
+  }, [tokenUser, tokenAdmin])
+
   return (
     <Layout className="admin-layout">
-      <Sidebar collapsed={collapsed} />
+      {showSiderBar ? <Sidebar collapsed={collapsed} /> : <></>}
       <Layout style={{ background: '#fff' }}>
         <Header
           style={{ background: '#fff', padding: 0 }}
           className="main-header"
         >
-          {collapsed ? (
+          {/* {collapsed ? (
             <MenuUnfoldOutlined
               style={showSiderBar ? {} : { visibility: 'hidden' }}
               className="trigger"
@@ -62,7 +114,12 @@ const MainLayout = (props) => {
               className="trigger"
               onClick={() => toggle()}
             />
-          )}
+          )} */}
+          <MenuUnfoldOutlined
+            style={{ visibility: 'hidden' }}
+            className="trigger"
+            onClick={() => toggle()}
+          />
           <div style={{ display: 'flex' }}>
             <Dropdown overlay={renderUserInfor()}>
               <a style={{ color: '#42ABBC' }}>
@@ -74,7 +131,10 @@ const MainLayout = (props) => {
                     fontSize: '13px',
                   }}
                 >
-                  님 안녕하세요
+                  {/* {
+                    tokenUser
+                    ? {localStorage.getItem('')}
+                  } 님 안녕하세요 */}
                 </span>
                 <span style={{ paddingLeft: '11px' }}>
                   <DownOutlined />
