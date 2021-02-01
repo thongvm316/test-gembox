@@ -139,24 +139,35 @@ const ProductSearch = (props) => {
     {
       title: '카테고리',
       dataIndex: 'category_tag',
+      sorter: (a, b) => a.category_tag.length - b.category_tag.length,
     },
     {
       title: '마켓명',
       dataIndex: 'market_name',
+      sorter: (a, b) => a.market_name.length - b.market_name.length,
+
     },
     {
       title: '가격',
-      render: record => <NumberFormat value={record.seller_price} displayType={'text'} thousandSeparator={true} />
+      render: record => <NumberFormat value={record.seller_price} displayType={'text'} thousandSeparator={true} />,
+      sorter: {
+        compare: (a, b) => a.seller_price - b.seller_price,
+      },
+
     },
     {
       title: '리뷰',
-      render: record => <NumberFormat value={record.review} displayType={'text'} thousandSeparator={true} />
-
+      render: record => <NumberFormat value={record.review} displayType={'text'} thousandSeparator={true} />,
+      sorter: {
+        compare: (a, b) => a.review - b.review,
+      },
     },
     {
       title: '판매수',
-      render: record => <NumberFormat value={record.sold} displayType={'text'} thousandSeparator={true} />
-
+      render: record => <NumberFormat value={record.sold} displayType={'text'} thousandSeparator={true} />,
+      sorter: {
+        compare: (a, b) => a.sold - b.sold,
+      },
     },
   ]
 
@@ -301,7 +312,7 @@ const ProductSearch = (props) => {
 
   return (
     <div className="product-search">
-      <Row className="card-border" style={{ marginBottom: '5rem' }}>
+      <Row className="card-border" style={{ marginBottom: '2rem' }}>
         <Col span={24} className="wraper-actions">
           <div>
             <Button

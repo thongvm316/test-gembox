@@ -372,6 +372,8 @@ const ProductDetail = (props) => {
           </div>
           <div className="card-item-border card-chart">
             <div className="card-item-chart">
+              <h2 className="test">점유율</h2>
+
               <Spin tip="Loading..." spinning={spinningOfShare}>
                 <PieChart highcharts={Highcharts} options={options} />
               </Spin>

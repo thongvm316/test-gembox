@@ -96,4 +96,13 @@
 
 .card-item-chart{
     transform: translateY(-40px);
+    position: relative;
+
+    .test{
+        position: absolute;
+        left: 0;
+        top: 40px;
+        z-index: 999;
+        color: #2A4EAA
+    }
 }

@@ -5,6 +5,8 @@ import { LineOutlined } from '@ant-design/icons';
 import './Filter.scss'
 import CategoryList from '../CategoryList/CategoryList';
 import moment from 'moment'
+import NumberFormat from 'react-number-format'
+
 const { Option } = Select;
 
 
@@ -13,7 +15,7 @@ const Filter = (props) => {
     const [price, setPrice] = useState([50000, 7500000])
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
-    const [filter, setFilter] = useState({searchBy: '0'});
+    const [filter, setFilter] = useState({ searchBy: '0' });
 
 
     function onChangeMarket(value) {
@@ -180,8 +182,9 @@ const Filter = (props) => {
                         </Col>
                         <Col span={19}>
                             <Slider
+                                step={10000000}
                                 min={0}
-                                max={10000000}
+                                max={100000000}
                                 range
                                 defaultValue={[filter.minPrice, filter.maxPrice]}
                                 onChange={onChangeSlider}
@@ -189,16 +192,21 @@ const Filter = (props) => {
                             />
                         </Col>
                         <Col span={4}>
-                            <div>₩ 10,000,000</div>
+                            <div>₩ 100,000,000</div>
                         </Col>
 
                         <Col span={4}>
-                            <div style={{ color: '#42ABBC' }}>₩ {filter.minPrice}</div>
+                            <div style={{ color: '#42ABBC' }}>
+                                <NumberFormat value={filter.minPrice} displayType={'text'} prefix={'₩'} thousandSeparator={true} />
+                            </div>
                         </Col>
                         <Col span={16}>
                         </Col>
                         <Col span={4}>
-                            <div style={{ color: '#42ABBC' }}>₩ {filter.maxPrice}</div>
+                            <div style={{ color: '#42ABBC' }}>
+                                <NumberFormat value={filter.maxPrice} displayType={'text'} prefix={'₩'} thousandSeparator={true} />
+
+                            </div>
                         </Col>
                     </Row>
                 </Col>
