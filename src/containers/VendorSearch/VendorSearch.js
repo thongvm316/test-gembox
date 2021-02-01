@@ -207,25 +207,28 @@ const VendorSearch = (props) => {
   return (
     <div className="vendor-search">
       <Row className="card-border" style={{ marginBottom: '5rem' }}>
-        <Col span={24} className="wraper-actions">
-          <div>
-            <Button
-              className="main-btn-style border-radius-6"
-              onClick={getVendor}
-            >
-              필터
-            </Button>
-          </div>
-          <div className="filter-date">
-            <Space>
-              <DatePicker onChange={onChangeStartDate} />
-              <LineOutlined
-                style={{ width: '40px', height: '8px', color: '#6A7187' }}
-              />
-              <DatePicker onChange={onChangeEndDate} />
+        <Col span={24} className="wraper-actions-vender">
+          <div style={{display: 'flex', marginRight: '50px'}}>
+            <div className="filter-date" style={{marginRight: '10px'}}>
+              <Space>
+                <DatePicker onChange={onChangeStartDate} />
+                <LineOutlined
+                  style={{ width: '40px', height: '8px', color: '#6A7187' }}
+                />
+                <DatePicker onChange={onChangeEndDate} />
 
-              {/* <Button className="btn-light-blue  border-radius-6" style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button> */}
-            </Space>
+                {/* <Button className="btn-light-blue  border-radius-6" style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button> */}
+              </Space>
+            </div>
+            <div>
+              <Button
+                style={{backgroundColor: '#42ABBC', color: 'white', border: 'none'}}
+                className="border-radius-6"
+                onClick={getVendor}
+              >
+                적용하기
+            </Button>
+            </div>
           </div>
           <div style={{ display: 'flex' }}>
             <Input
@@ -283,8 +286,8 @@ const VendorSearch = (props) => {
               LOAD MORE
             </Button>
           ) : (
-            ''
-          )}
+              ''
+            )}
         </Col>
       </Row>
     </div>
