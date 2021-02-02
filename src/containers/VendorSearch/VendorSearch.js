@@ -9,9 +9,16 @@ import fileDownload from 'js-file-download'
 import NumberFormat from 'react-number-format'
 import saleStatusApi from '../../api/SaleStatusAPI'
 
-const { Option } = Select
+const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 const VendorSearch = (props) => {
+
+  const [hackValue, setHackValue] = useState();
+  const [value, setValue] = useState();
+  const [dates, setDates] = useState([]);
+
+
   const [vendors, setVendors] = useState([])
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
@@ -28,10 +35,17 @@ const VendorSearch = (props) => {
     getVendor()
   }, [lastIndex])
 
+  const goToStore = (record) => {
+    var win = window.open(record.bander_url, '_blank')
+    win.focus()
+  }
+
+
+
   const columns = [
     {
       title: '벤더명',
-      dataIndex: 'bander_name',
+      render: record => <a onClick={() => goToStore(record)}>{record.bander_name}</a>
     },
     {
       title: '총 판매 상품 수',
@@ -204,25 +218,55 @@ const VendorSearch = (props) => {
     // }
   }
 
+
+
+  const onOpenChange = open => {
+    if (open) {
+      setHackValue([]);
+      setDates([]);
+    } else {
+      setHackValue(undefined);
+    }
+  };
+
+  const disabledDate = current => {
+    if (!dates || dates.length === 0) {
+      return false;
+    }
+
+    const daysInMonth = parseInt(moment(dates[0], "YYYY-MM").daysInMonth())
+    const day = parseInt(moment(dates[0]).format('DD'))
+
+    const tooLate = dates[0] && current.diff(dates[0], 'days') > (daysInMonth - day);
+
+    return tooLate;
+  };
+
+  const onChangeRangePicker = (val) => {
+    setValue(val)
+    setFilter({ ...filter,start: moment(val[0]).unix() , end: moment(val[1]).unix() })
+
+  }
+
   return (
     <div className="vendor-search">
       <Row className="card-border" style={{ marginBottom: '5rem' }}>
         <Col span={24} className="wraper-actions-vender">
-          <div style={{display: 'flex', marginRight: '50px'}}>
-            <div className="filter-date" style={{marginRight: '10px'}}>
+          <div style={{ display: 'flex', marginRight: '50px' }}>
+            <div className="filter-date" style={{ marginRight: '10px' }}>
               <Space>
-                <DatePicker onChange={onChangeStartDate} />
-                <LineOutlined
-                  style={{ width: '40px', height: '8px', color: '#6A7187' }}
+                <RangePicker
+                  value={hackValue || value}
+                  disabledDate={disabledDate}
+                  onCalendarChange={val => setDates(val)}
+                  onChange={val => onChangeRangePicker(val)}
+                  onOpenChange={onOpenChange}
                 />
-                <DatePicker onChange={onChangeEndDate} />
-
-                {/* <Button className="btn-light-blue  border-radius-6" style={{ backgroundColor: '#71c4d5', border: 'none' }} type="primary">적용하기</Button> */}
               </Space>
             </div>
             <div>
               <Button
-                style={{backgroundColor: '#42ABBC', color: 'white', border: 'none'}}
+                style={{ backgroundColor: '#42ABBC', color: 'white', border: 'none' }}
                 className="border-radius-6"
                 onClick={getVendor}
               >
