@@ -106,7 +106,7 @@ const AnalysisMarket = (props) => {
 
   const options = {
     chart: {
-      height: 700,
+      height: 600,
       type: 'pie',
       renderTo: 'container',
     },

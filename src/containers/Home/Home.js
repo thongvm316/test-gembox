@@ -90,7 +90,17 @@ const Home = (props) => {
                   </li>
                   <Popover content={db.bander_name ? db.bander_name : db.name}>
                     <li className="style-text-home">
-                      {db.bander_name ? db.bander_name : db.name}
+                      <a
+                        target="_blank"
+                        style={{
+                          fontWeight: 700,
+                          fontSize: '14px',
+                          color: '#495057',
+                        }}
+                        href={db.bander_name ? db.bander_url : db.url}
+                      >
+                        {db.bander_name ? db.bander_name : db.name}
+                      </a>
                     </li>
                   </Popover>
                 </ul>

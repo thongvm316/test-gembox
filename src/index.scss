@@ -325,3 +325,13 @@ code {
   border-bottom-right-radius: 6px !important;
   background-color: #eff2f7 !important;
 }
+
+
+.style-text-home {
+  overflow:hidden; 
+  white-space:nowrap; 
+  text-overflow:ellipsis; 
+  width:100px;
+}
+
+
