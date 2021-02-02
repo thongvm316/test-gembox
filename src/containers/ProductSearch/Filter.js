@@ -7,10 +7,16 @@ import CategoryList from '../CategoryList/CategoryList';
 import moment from 'moment'
 import NumberFormat from 'react-number-format'
 
+
+const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 
 const Filter = (props) => {
+
+    const [hackValue, setHackValue] = useState();
+    const [value, setValue] = useState();
+    const [dates, setDates] = useState([]);
 
     const [price, setPrice] = useState([50000, 7500000])
     const [startDate, setStartDate] = useState();
@@ -89,22 +95,48 @@ const Filter = (props) => {
 
     }
 
+    const onOpenChange = open => {
+        if (open) {
+            setHackValue([]);
+            setDates([]);
+        } else {
+            setHackValue(undefined);
+        }
+    };
+
+    const disabledDate = current => {
+        if (!dates || dates.length === 0) {
+            return false;
+        }
+
+        const daysInMonth = parseInt(moment(dates[0], "YYYY-MM").daysInMonth())
+        const day = parseInt(moment(dates[0]).format('DD'))
+
+        const tooLate = dates[0] && current.diff(dates[0], 'days') > (daysInMonth - day);
+
+        return tooLate;
+    };
+
+    const onChangeRangePicker = (val) => {
+        setValue(val)
+        setFilter({ ...filter, start: moment(val[0]).unix(), end: moment(val[1]).unix() })
+
+    }
+
     return (
         <div className='modal'>
 
             <Row style={{ marginBottom: '2rem' }}>
                 <Col span={4}><h4>시작일, 종료일</h4></Col>
                 <Col span={16}>
-                    <DatePicker onChange={onChangeStartDate} />
-                    <LineOutlined style={{ width: '40px', height: '8px', color: '#6A7187' }} />
-                    <DatePicker onChange={onChangeEndDate} />
+                    <RangePicker
+                        value={hackValue || value}
+                        disabledDate={disabledDate}
+                        onCalendarChange={val => setDates(val)}
+                        onChange={val => onChangeRangePicker(val)}
+                        onOpenChange={onOpenChange}
+                    />
                 </Col>
-                {/* <Col span={4}>
-                    <Select onChange={handleChangeSearchBy} defaultValue="0" className="select-after">
-                        <Option value="0">밴더명</Option>
-                        <Option value="1">제품명</Option>
-                    </Select>
-                </Col> */}
             </Row>
 
             <Row style={{ marginBottom: '2rem' }}>
