@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Row, Col, Button, Space, List, Input } from 'antd'
+import { Row, Col, Button, Space, List, Input, message } from 'antd'
 import { useLocation } from 'react-router-dom'
 
 import axios from 'axios'
@@ -12,8 +12,9 @@ import './AdminMemberRequestDetail.scss'
 const AdminMemberRequestDetail = (props) => {
   const location = useLocation()
   const [loading, setLoading] = useState(false)
+  const [numberOfRegister, setNumberOfRegister] = useState('')
+  const [isNumberRegister, setIsNumberRegister] = useState(false)
   const { memberRequestDetail } = location.state
-
   // Config for call API
   const config = {
     headers: {
@@ -24,6 +25,10 @@ const AdminMemberRequestDetail = (props) => {
   }
 
   const approve = async () => {
+    if (!isNumberRegister) {
+      message.warning('You must enter a company registration number')
+      return
+    }
     const body = {
       action: 'approve',
     }
@@ -89,6 +94,25 @@ const AdminMemberRequestDetail = (props) => {
       console.log(error.response)
       setLoading(false)
     }
+  }
+
+  const addNumberRegisterCompany = () => {
+    setLoading(true)
+    const body = {
+      user_id: memberRequestDetail.id,
+      company_number: numberOfRegister,
+    }
+    adminApi
+      .registerCompanyNumber(body)
+      .then(() => {
+        console.log('success')
+        setLoading(false)
+        setIsNumberRegister(true)
+      })
+      .catch((error) => {
+        console.log(error.response)
+        setLoading(false)
+      })
   }
 
   return (
@@ -165,9 +189,18 @@ const AdminMemberRequestDetail = (props) => {
                         backgroundColor: 'transparent',
                         marginBottom: '3px',
                       }}
+                      onChange={(e) => {
+                        setNumberOfRegister(e.target.value)
+                      }}
                     />{' '}
                     <br />
-                    <Button style={{ width: '100%' }}>확인</Button>
+                    <Button
+                      disabled={loading}
+                      onClick={addNumberRegisterCompany}
+                      style={{ width: '100%' }}
+                    >
+                      확인
+                    </Button>
                   </>
                 )}
               </p>
