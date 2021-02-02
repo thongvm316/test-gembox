@@ -8,7 +8,7 @@ import axios from 'axios'
 import fileDownload from 'js-file-download'
 import { LineOutlined } from '@ant-design/icons'
 import * as _ from 'lodash'
-import moment from 'moment';
+import moment from 'moment'
 import NumberFormat from 'react-number-format'
 import saleStatusApi from '../../api/SaleStatusAPI'
 
@@ -79,7 +79,7 @@ const ProductSearch = (props) => {
       }
       setLoading(false)
     } catch (error) {
-      if (error.response.statusText == "Unauthorized") {
+      if (error.response.statusText == 'Unauthorized') {
         localStorage.clear()
 
         props.history.push('/')
@@ -145,26 +145,42 @@ const ProductSearch = (props) => {
       title: '마켓명',
       dataIndex: 'market_name',
       sorter: (a, b) => a.market_name.length - b.market_name.length,
-
     },
     {
       title: '가격',
-      render: record => <NumberFormat value={record.seller_price} displayType={'text'} thousandSeparator={true} />,
+      render: (record) => (
+        <NumberFormat
+          value={record.seller_price}
+          displayType={'text'}
+          thousandSeparator={true}
+        />
+      ),
       sorter: {
         compare: (a, b) => a.seller_price - b.seller_price,
       },
-
     },
     {
       title: '리뷰',
-      render: record => <NumberFormat value={record.review} displayType={'text'} thousandSeparator={true} />,
+      render: (record) => (
+        <NumberFormat
+          value={record.review}
+          displayType={'text'}
+          thousandSeparator={true}
+        />
+      ),
       sorter: {
         compare: (a, b) => a.review - b.review,
       },
     },
     {
       title: '판매수',
-      render: record => <NumberFormat value={record.sold} displayType={'text'} thousandSeparator={true} />,
+      render: (record) => (
+        <NumberFormat
+          value={record.sold}
+          displayType={'text'}
+          thousandSeparator={true}
+        />
+      ),
       sorter: {
         compare: (a, b) => a.sold - b.sold,
       },
@@ -215,13 +231,14 @@ const ProductSearch = (props) => {
 
     try {
       const { data } = await axios.get(
-        `${API_URL}/product?keyword=kid&start_date=${valueDate[0]}&end_date=${valueDate[1]
+        `${API_URL}/product?keyword=kid&start_date=${valueDate[0]}&end_date=${
+          valueDate[1]
         }&last_id=${100}`,
         config,
       )
       // console.log(data)
     } catch (error) {
-      if (error.response.statusText == "Unauthorized") {
+      if (error.response.statusText == 'Unauthorized') {
         localStorage.clear()
 
         props.history.push('/')
@@ -230,7 +247,7 @@ const ProductSearch = (props) => {
   }
 
   const getExcelFile = async () => {
-    const lengthData = productList.length;
+    const lengthData = productList.length
 
     let params = `lastIndex=${productList[lengthData - 1].id}`
 
@@ -246,18 +263,17 @@ const ProductSearch = (props) => {
       }
     }
 
-
     saleStatusApi
-    .getExcelFileProduct(params)
-    .then((value) => {
-      console.log('Success')
-      fileDownload(value, 'data.xls')
-      setLoading(false)
-    })
-    .catch((err) => {
-      console.log(err.response)
-      setLoading(false)
-    })
+      .getExcelFileProduct(params)
+      .then((value) => {
+        console.log('Success')
+        fileDownload(value, 'data.xls')
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.log(err.response)
+        setLoading(false)
+      })
 
     // const config = {
     //   headers: {
@@ -268,7 +284,6 @@ const ProductSearch = (props) => {
     //   },
     // }
     // console.log(config)
-
 
     // try {
     //   const { data } = await axios.get(
@@ -306,7 +321,7 @@ const ProductSearch = (props) => {
   }
 
   const loadMore = async () => {
-    const lengthData = productList.length;
+    const lengthData = productList.length
     setLastIndex(productList[lengthData - 1].id)
   }
 
@@ -396,8 +411,8 @@ const ProductSearch = (props) => {
               LOAD MORE
             </Button>
           ) : (
-              ''
-            )}
+            ''
+          )}
         </Col>
       </Row>
 
