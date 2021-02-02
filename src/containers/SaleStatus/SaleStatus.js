@@ -50,10 +50,12 @@ const SaleStatus = () => {
     {
       title: '카테고리',
       dataIndex: 'category_tag',
+      sorter: (a, b) => a.category_tag.length - b.category_tag.length,
     },
     {
       title: '마켓명',
       dataIndex: 'market_name',
+      sorter: (a, b) => a.market_name.length - b.market_name.length,
     },
     {
       title: '가격',
@@ -66,14 +68,23 @@ const SaleStatus = () => {
           prefix={'₩'}
         />
       ),
+      sorter: {
+        compare: (a, b) => a.seller_price - b.seller_price,
+      },
     },
     {
       title: '리뷰',
       dataIndex: 'review',
+      sorter: {
+        compare: (a, b) => a.review - b.review,
+      },
     },
     {
       title: '판매수',
       dataIndex: 'sold',
+      sorter: {
+        compare: (a, b) => a.sold - b.sold,
+      },
     },
   ]
 
@@ -220,36 +231,37 @@ const SaleStatus = () => {
 
   /*  For render market of user set */
   const newListMarket = listMarket.map((market) => {
-    if (market === '11번가') {
-      return { market, img: Market1 }
+    const { market_name, market_url } = market
+    if (market_name === '11번가') {
+      return { market_name, market_url, img: Market1 }
     }
 
-    if (market === 'G마켓') {
-      return { market, img: Market2 }
+    if (market_name === 'G마켓') {
+      return { market_name, market_url, img: Market2 }
     }
 
-    if (market === '쿠팡') {
-      return { market, img: Market3 }
+    if (market_name === '쿠팡') {
+      return { market_name, market_url, img: Market3 }
     }
 
-    if (market === '인터파크') {
-      return { market, img: Market4 }
+    if (market_name === '인터파크') {
+      return { market_name, market_url, img: Market4 }
     }
 
-    if (market === '옥션') {
-      return { market, img: Market5 }
+    if (market_name === '옥션') {
+      return { market_name, market_url, img: Market5 }
     }
 
-    if (market === '스마트스토어') {
-      return { market, img: Market6 }
+    if (market_name === '스마트스토어') {
+      return { market_name, market_url, img: Market6 }
     }
 
-    if (market === '티몬') {
-      return { market, img: Market7 }
+    if (market_name === '티몬') {
+      return { market_name, market_url, img: Market7 }
     }
 
-    if (market === '위메프') {
-      return { market, img: Market8 }
+    if (market_name === '위메프') {
+      return { market_name, market_url, img: Market8 }
     }
   })
 
@@ -257,11 +269,12 @@ const SaleStatus = () => {
   const getExcelFile = async () => {
     setLoading(true)
     const params = {
-      start: datePicker[0],
-      end: datePicker[1],
+      start: datePicker[0] ? datePicker[0] : allDateOfCurrentMonth[0],
+      end: datePicker[1] ? datePicker[1] : allDateOfCurrentMonth[1],
       key: valueOfSearchInput,
       lastIndex: lastItemOfDataSearch,
     }
+    console.log(params)
 
     saleStatusApi
       .getExcelFile(params)
@@ -279,12 +292,11 @@ const SaleStatus = () => {
   /* Get data of current month */
   const startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
   const endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
+  const allDateOfCurrentMonth = [
+    toTimestamp(startOfMonth),
+    toTimestamp(endOfMonth),
+  ]
   useEffect(() => {
-    let allDateOfCurrentMonth = [
-      toTimestamp(startOfMonth),
-      toTimestamp(endOfMonth),
-    ]
-
     const params = {
       start: allDateOfCurrentMonth[0],
       end: allDateOfCurrentMonth[1],
@@ -507,20 +519,19 @@ const SaleStatus = () => {
             style={{ textAlign: 'center' }}
             className="total-sale"
           >
-            <div>
-              <img src={market.img ? market.img : ''} />
-              <span style={{ marginLeft: '.5rem' }}>
-                {market.market ? market.market : ''}
+            <a href={market.market_url} target="_blank">
+              <img src={market.img} />
+              <span
+                style={{
+                  fontWeight: '400',
+                  fontSize: '16px',
+                  color: '#495057',
+                  marginLeft: '.5rem',
+                }}
+              >
+                {market.market_name}
               </span>
-            </div>
-            <p
-              style={{
-                paddingTop: '1rem',
-                fontWeight: '400',
-                fontSize: '16px',
-                color: '#495057',
-              }}
-            ></p>
+            </a>
           </Col>
         ))}
       </Row>
