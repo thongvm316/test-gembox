@@ -233,14 +233,9 @@ const AnalysisMarket = (props) => {
 
   // Get Data
   const getData = async () => {
-    // const params = {
-    //   start: 1234567890,
-    //   end: 2345678901,
-    //   key: selectMarket,
-    // }
     const params = {
-      start: datePicker[0],
-      end: datePicker[1],
+      start: datePicker[0] ? datePicker[0] : allDateOfCurrentMonth[0],
+      end: datePicker[1] ? datePicker[1] : allDateOfCurrentMonth[1],
       key: selectMarket,
     }
     try {
@@ -260,12 +255,11 @@ const AnalysisMarket = (props) => {
   /* Current month and get data */
   const startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
   const endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
+  let allDateOfCurrentMonth = [
+    toTimestamp(startOfMonth),
+    toTimestamp(endOfMonth),
+  ]
   useEffect(async () => {
-    let allDateOfCurrentMonth = [
-      toTimestamp(startOfMonth),
-      toTimestamp(endOfMonth),
-    ]
-
     const params = {
       start: allDateOfCurrentMonth[0],
       end: allDateOfCurrentMonth[1],
