@@ -30,7 +30,11 @@ const SaleStatus = () => {
     {
       title: '상품명',
       dataIndex: 'name',
-      render: (text) => <p style={{ fontWeight: '500' }}>{text}</p>,
+      render: (text) => (
+        <a target="_blank" style={{ fontWeight: '500' }}>
+          {text}
+        </a>
+      ),
     },
     {
       title: '카테고리',
@@ -72,7 +76,6 @@ const SaleStatus = () => {
   const [valueOfSearchInput, setValueOfSearchInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [dataSearch, setDataSearch] = useState([])
-  console.log(dataSearch)
   const [listMarket, setListMarket] = useState([])
   const [data, setData] = useState({
     totalProductCount: [],
@@ -94,12 +97,6 @@ const SaleStatus = () => {
   }
 
   const getData = () => {
-    // const params = {
-    //   start: 1234567890,
-    //   end: 2134567890,
-    //   key: '',
-    //   lastIndex: lastIndex,
-    // }
     const params = {
       start: datePicker[0],
       end: datePicker[1],
@@ -247,13 +244,6 @@ const SaleStatus = () => {
       lastIndex: lastItemOfDataSearch,
     }
 
-    // const params = {
-    //   start: 1234567890,
-    //   end: 2134567890,
-    //   key: '상품명 일동후디스 산양분유400g3단계1캔.낼도착',
-    //   lastIndex: lastIndex,
-    // }
-
     saleStatusApi
       .getExcelFile(params)
       .then((value) => {
@@ -303,11 +293,11 @@ const SaleStatus = () => {
             <h2
               style={{ color: '#6E798C', fontSize: '36px', fontWeight: '700' }}
             >
-              {data.totalProductCount}개
+              {data.totalProductCount ? data.totalProductCount : ''}개
             </h2>
           </div>
           <div className="card-item-icon">
-            <img src={SaleStatus1} />
+            <img src={SaleStatus1 ? SaleStatus1 : ''} />
           </div>
         </Col>
         <Col
@@ -327,16 +317,22 @@ const SaleStatus = () => {
                 marginBottom: '0',
               }}
             >
-              {data.totalReviewCount.review_rank}위
+              {data.totalReviewCount.review_rank
+                ? data.totalReviewCount.review_rank
+                : ''}
+              위
             </h2>
             <p
               style={{ fontSize: '16px', fontWeight: '500', color: '#495057' }}
             >
-              {data.totalReviewCount.total_review}건
+              {data.totalReviewCount.total_review
+                ? data.totalReviewCount.total_review
+                : ''}
+              건
             </p>
           </div>
           <div className="card-item-icon">
-            <img src={SaleStatus2} />
+            <img src={SaleStatus2 ? SaleStatus2 : ''} />
           </div>
         </Col>
         <Col
@@ -353,11 +349,12 @@ const SaleStatus = () => {
             <h2
               style={{ color: '#6E798C', fontSize: '36px', fontWeight: '700' }}
             >
-              {data.saleCountRank.sale_rank}위
+              {data.saleCountRank.sale_rank ? data.saleCountRank.sale_rank : ''}
+              위
             </h2>
           </div>
           <div className="card-item-icon">
-            <img src={SaleStatus3} />
+            <img src={SaleStatus3 ? SaleStatus3 : ''} />
           </div>
         </Col>
         <Col
@@ -379,13 +376,13 @@ const SaleStatus = () => {
                 marginBottom: '0',
               }}
             >
-              {data.saleRank.revenue_rank}위
+              {data.saleRank.revenue_rank ? data.saleRank.revenue_rank : ''}위
             </h2>
             <p
               style={{ fontSize: '16px', fontWeight: '500', color: '#495057' }}
             >
               <NumberFormat
-                value={data.saleRank.revenue}
+                value={data.saleRank.revenue ? data.saleRank.revenue : ''}
                 displayType={'text'}
                 thousandSeparator={true}
                 prefix={'₩ '}
@@ -393,7 +390,7 @@ const SaleStatus = () => {
             </p>
           </div>
           <div className="card-item-icon">
-            <img src={SaleStatus4} />
+            <img src={SaleStatus4 ? SaleStatus4 : ''} />
           </div>
         </Col>
       </Row>
@@ -452,8 +449,10 @@ const SaleStatus = () => {
             className="total-sale"
           >
             <div>
-              <img src={market.img} />
-              <span style={{ marginLeft: '.5rem' }}>{market.market}</span>
+              <img src={market.img ? market.img : ''} />
+              <span style={{ marginLeft: '.5rem' }}>
+                {market.market ? market.market : ''}
+              </span>
             </div>
             <p
               style={{

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import moment from 'moment'
 import homeApi from '../../api/HomeAPI'
 import NumberFormat from 'react-number-format'
 
@@ -256,6 +257,30 @@ const AnalysisMarket = (props) => {
     }
   }
 
+  /* Current month and get data */
+  const startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
+  const endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
+  useEffect(async () => {
+    let allDateOfCurrentMonth = [
+      toTimestamp(startOfMonth),
+      toTimestamp(endOfMonth),
+    ]
+
+    const params = {
+      start: allDateOfCurrentMonth[0],
+      end: allDateOfCurrentMonth[1],
+      key: selectMarket,
+    }
+    try {
+      const value = await homeApi.getAnalysisMarket(params)
+      if (value && value.data.result && value.data.result.total_sale) {
+        setData(value.data.result.total_sale)
+      }
+    } catch (error) {
+      console.log(error.response)
+    }
+  }, [])
+
   return (
     <div className="analysis-market">
       <GroupButton redirect={props.history.push} clickable="c" />
@@ -268,7 +293,7 @@ const AnalysisMarket = (props) => {
       >
         <Col xs={14} sm={20} md={20} lg={21} xl={22} className="date-picker">
           <Row gutter={[4, 4]}>
-            <Col xs={24} sm={3} md={3} lg={2} xl={2}>
+            <Col xs={24} sm={3} md={3} lg={2} xl={1}>
               <h1
                 style={{
                   paddingTop: '3px',
@@ -282,6 +307,7 @@ const AnalysisMarket = (props) => {
             </Col>
             <Col xs={24} sm={10} md={10} lg={10} xl={4}>
               <DatePicker.RangePicker
+                defaultValue={[moment(startOfMonth), moment(endOfMonth)]}
                 onChange={onChange}
                 separator={<MinusOutlined />}
               />

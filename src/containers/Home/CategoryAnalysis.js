@@ -146,7 +146,6 @@ const CategoryAnalysis = (props) => {
     const convetToNumber = parseInt(renamedObj.y)
     return { ...renamedObj, y: convetToNumber }
   })
-  console.log(dataChartRename)
 
   const options = {
     chart: {
@@ -214,14 +213,12 @@ const CategoryAnalysis = (props) => {
 
   /* DatePicker */
   const [datePicker, setDatePicker] = useState([])
-
   const toTimestamp = (strDate) => {
     var datum = Date.parse(strDate)
     return datum / 1000
   }
 
   const onChange = (date, dateString) => {
-    // console.log(date, dateString);
     let storeDay = [toTimestamp(dateString[0]), toTimestamp(dateString[1])]
     setDatePicker(storeDay)
   }
@@ -383,20 +380,20 @@ const CategoryAnalysis = (props) => {
   /* Current month and get data */
   const startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
   const endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
-  useEffect(async () => {
-    let allDateOfCurrentMonth = [
-      toTimestamp(startOfMonth),
-      toTimestamp(endOfMonth),
-    ]
+  // useEffect(async () => {
+  //   let allDateOfCurrentMonth = [
+  //     toTimestamp(startOfMonth),
+  //     toTimestamp(endOfMonth),
+  //   ]
 
-    const params = {
-      start: allDateOfCurrentMonth[0],
-      end: allDateOfCurrentMonth[1],
-      key: '국내기저귀',
-    }
-    console.log(params)
-    await callApiHome(params)
-  }, [])
+  //   const params = {
+  //     start: allDateOfCurrentMonth[0],
+  //     end: allDateOfCurrentMonth[1],
+  //     key: '국내기저귀',
+  //   }
+  //   console.log(params)
+  //   await callApiHome(params)
+  // }, [])
 
   return (
     <div className="category-analysis">

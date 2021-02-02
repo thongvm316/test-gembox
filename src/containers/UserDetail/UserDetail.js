@@ -14,11 +14,14 @@ import {
   message,
   Alert,
   Spin,
+  Popover,
 } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
 import './UserDetail.scss'
 
 const UserDetail = (props) => {
+  const [showNameOfFileUpload, setShowNameOfFileUpload] = useState('')
+
   /* Modal */
   const [isModalVisible, setIsModalVisible] = useState(false)
   const onChangePassword = () => {
@@ -26,6 +29,21 @@ const UserDetail = (props) => {
   }
   const handleCancel = () => {
     setIsModalVisible(false)
+  }
+
+  /* Modal for show pdf file */
+  const [isModalVisibleTwo, setIsModalVisibleTwo] = useState(false)
+
+  const showModalTwo = () => {
+    setIsModalVisibleTwo(true)
+  }
+
+  const handleOkTwo = () => {
+    setIsModalVisibleTwo(false)
+  }
+
+  const handleCancelTwo = () => {
+    setIsModalVisibleTwo(false)
   }
 
   /* Add more URL */
@@ -225,7 +243,7 @@ const UserDetail = (props) => {
                   <div>
                     <Input
                       size="large"
-                      defaultValue=""
+                      defaultValue="******"
                       suffix={
                         <EditOutlined onClick={() => onChangePassword()} />
                       }
@@ -243,19 +261,31 @@ const UserDetail = (props) => {
                   justify="center"
                 >
                   <Col xs={24} sm={6} md={6} lg={6} xl={6}>
-                    <embed
-                      src={
-                        data.business_license
-                          ? data.business_license
-                          : 'https://via.placeholder.com/400'
+                    <Popover
+                      content={
+                        <p
+                          style={{
+                            cursor: 'pointer',
+                          }}
+                          onClick={showModalTwo}
+                        >
+                          View full pdf file
+                        </p>
                       }
-                      type="application/pdf"
-                      frameBorder="0"
-                      scrolling="auto"
-                      height="150"
-                      // width="400"
-                      style={{ width: '100%' }}
-                    ></embed>
+                    >
+                      <embed
+                        src={
+                          data.business_license
+                            ? data.business_license
+                            : 'https://via.placeholder.com/400'
+                        }
+                        type="application/pdf"
+                        frameBorder="0"
+                        scrolling="auto"
+                        height="150"
+                        style={{ width: '100%' }}
+                      ></embed>
+                    </Popover>
                   </Col>
                   <Col
                     xs={24}
@@ -265,35 +295,46 @@ const UserDetail = (props) => {
                     xl={18}
                     style={{ textAlign: 'center' }}
                   >
-                    <Image src="/img/Upload.png" />
-                    <p
-                      style={{
-                        fontWeight: '400',
-                        fontSize: '10px',
-                        color: '#14141A',
-                        marginTop: '16px',
-                        marginBottom: '0',
-                      }}
-                    >
-                      사업자 등록증 pdf 또는 이미지 첨부
-                    </p>
-                    <p
-                      style={{
-                        fontWeight: '400',
-                        fontSize: '10px',
-                        color: '#14141A',
-                      }}
-                    >
-                      or
-                    </p>
+                    {showNameOfFileUpload ? (
+                      <p style={{ marginTop: '2rem' }}>
+                        {showNameOfFileUpload}
+                      </p>
+                    ) : (
+                      <>
+                        <Image src="/img/Upload.png" />
+                        <p
+                          style={{
+                            fontWeight: '400',
+                            fontSize: '10px',
+                            color: '#14141A',
+                            marginTop: '16px',
+                            marginBottom: '0',
+                          }}
+                        >
+                          사업자 등록증 pdf 또는 이미지 첨부
+                        </p>
+                        <p
+                          style={{
+                            fontWeight: '400',
+                            fontSize: '10px',
+                            color: '#14141A',
+                          }}
+                        >
+                          or
+                        </p>
+                      </>
+                    )}
                     <label className="custom-file-upload">
                       <Input
                         style={{ display: 'none' }}
                         id="file-upload"
                         type="file"
                         accept=".pdf"
-                        onChange={(e) => {
-                          uploadPdfFile(e)
+                        onChange={async (e) => {
+                          await uploadPdfFile(e)
+                          if (e.target.files && e.target.files[0].name) {
+                            setShowNameOfFileUpload(e.target.files[0].name)
+                          }
                         }}
                       />
                       Browse
@@ -310,7 +351,7 @@ const UserDetail = (props) => {
                       type=""
                       className="btn-save"
                     >
-                      로그인
+                      변경사항 저장하기
                     </Button>
                   </div>
                 </div>
@@ -365,6 +406,26 @@ const UserDetail = (props) => {
                   </Button>
                 </div>
               </div>
+            </Modal>
+
+            <Modal
+              visible={isModalVisibleTwo}
+              onOk={handleOkTwo}
+              onCancel={handleCancelTwo}
+              width={1000}
+            >
+              <embed
+                src={
+                  data.business_license
+                    ? data.business_license
+                    : 'https://via.placeholder.com/400'
+                }
+                type="application/pdf"
+                frameBorder="0"
+                scrolling="auto"
+                height="800"
+                style={{ width: '100%' }}
+              ></embed>
             </Modal>
           </div>
         </>

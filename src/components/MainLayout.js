@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Layout, Dropdown, Menu } from 'antd'
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  DownOutlined,
-} from '@ant-design/icons'
+import { MenuUnfoldOutlined, DownOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import Logout from '../images/logout.png'
 import Setting from '../images/Setting.png'
@@ -100,19 +96,6 @@ const MainLayout = (props) => {
           style={{ background: '#fff', padding: 0 }}
           className="main-header"
         >
-          {/* {collapsed ? (
-            <MenuUnfoldOutlined
-              style={showSiderBar ? {} : { visibility: 'hidden' }}
-              className="trigger"
-              onClick={() => toggle()}
-            />
-          ) : (
-            <MenuFoldOutlined
-              style={showSiderBar ? {} : { visibility: 'hidden' }}
-              className="trigger"
-              onClick={() => toggle()}
-            />
-          )} */}
           <MenuUnfoldOutlined
             style={{ visibility: 'hidden' }}
             className="trigger"
