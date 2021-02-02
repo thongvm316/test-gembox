@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import homeApi from '../../api/HomeAPI'
 import NumberFormat from 'react-number-format'
 
 import GroupButton from './GroupButton/GroupButton'
 import Footer from '../../components/Footer'
-import { DatePicker, Button, Row, Col, Card, Spin } from 'antd'
+import { DatePicker, Button, Row, Col, Card, Spin, Popover } from 'antd'
 import { MinusOutlined, LoadingOutlined } from '@ant-design/icons'
 import moment from 'moment'
 
@@ -26,6 +26,7 @@ import CategoryList from '../CategoryList/CategoryList'
 const CategoryAnalysis = (props) => {
   const [loading, setLoading] = useState(false)
   const [totalSale, setTotalSale] = useState([])
+  const [spinning, setSpinning] = useState(false)
   const [topProduct, setTopProduct] = useState({
     topcoupang: [],
     topauction: [],
@@ -98,7 +99,21 @@ const CategoryAnalysis = (props) => {
                 {product.id}
               </li>
 
-              <li style={{ flexBasis: '60%' }}>{product.name}</li>
+              <Popover content={product.name}>
+                <li className="style-text-home" style={{ flexBasis: '60%' }}>
+                  <a
+                    style={{
+                      fontWeight: '400',
+                      fontSize: '16px',
+                      color: '#495057',
+                    }}
+                    href={product.url}
+                    target="_blank"
+                  >
+                    {product.name}
+                  </a>
+                </li>
+              </Popover>
 
               <li style={{ flexBasis: '30%', textAlign: 'end' }}>
                 <NumberFormat
@@ -127,9 +142,11 @@ const CategoryAnalysis = (props) => {
   const dataChartRename = totalSale.map((data) => {
     const newKeys = { market_name: 'name', total: 'y' }
     const renamedObj = renameKeys(data, newKeys)
+
     const convetToNumber = parseInt(renamedObj.y)
     return { ...renamedObj, y: convetToNumber }
   })
+  console.log(dataChartRename)
 
   const options = {
     chart: {
@@ -153,10 +170,13 @@ const CategoryAnalysis = (props) => {
       },
     },
     tooltip: {
-      enabled: true,
-      formatter: function () {
-        return '<b>' + this.y + '</b>'
-      },
+      shared: true,
+      useHTML: true,
+      headerFormat: '<small>{point.key}</small><table>',
+      pointFormat:
+        '<tr><td</td>' +
+        '<td style="text-align: right"><b>{point.y} ₩ </b></td></tr>',
+      footerFormat: '</table>',
     },
     credits: {
       enabled: false,
@@ -184,7 +204,7 @@ const CategoryAnalysis = (props) => {
   const titileCard = (props) => (
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
       <h3 style={{ fontSize: '24px', fontWeight: '700', color: '#495057' }}>
-        완구TOP10
+        {category} TOP10
       </h3>
       <h3 style={{ fontWeight: '700', fontSize: '24px', color: '#495057' }}>
         {props}
@@ -222,21 +242,8 @@ const CategoryAnalysis = (props) => {
   const [category, setCategory] = useState('완구')
 
   /* Get data */
-  const getData = async () => {
-    setLoading(true)
-    console.log('Waiting for data.....')
-    const params = {
-      start: datePicker[0],
-      end: datePicker[1],
-      key: category,
-    }
-
-    // const params = {
-    //   start: 1234567890,
-    //   end: 2134567890,
-    //   key: category,
-    // }
-
+  const callApiHome = async (params) => {
+    setSpinning(true)
     await Promise.all([
       homeApi
         .getTotalSell(params)
@@ -244,9 +251,13 @@ const CategoryAnalysis = (props) => {
           console.log(value)
           if (value && value.data && value.data.result) {
             setTotalSale(value.data.result)
+            setSpinning(false)
           }
         })
-        .catch((err) => console.log(err.response)),
+        .catch((err) => {
+          setSpinning(true)
+          console.log(err.response)
+        }),
 
       homeApi
         .getTopCoupang(params)
@@ -352,6 +363,16 @@ const CategoryAnalysis = (props) => {
         })
         .catch((err) => console.log(err.response)),
     ])
+  }
+  const getData = async () => {
+    setLoading(true)
+    const params = {
+      start: datePicker[0],
+      end: datePicker[1],
+      key: category,
+    }
+
+    await callApiHome(params)
     setLoading(false)
   }
 
@@ -360,20 +381,22 @@ const CategoryAnalysis = (props) => {
   }
 
   /* Current month and get data */
-  // useEffect(async () => {
-  //   let startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
-  //   let endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
-  //   let allDateOfCurrentMonth = [
-  //     toTimestamp(startOfMonth),
-  //     toTimestamp(endOfMonth),
-  //   ]
+  const startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
+  const endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
+  useEffect(async () => {
+    let allDateOfCurrentMonth = [
+      toTimestamp(startOfMonth),
+      toTimestamp(endOfMonth),
+    ]
 
-  //   const params = {
-  //     start: allDateOfCurrentMonth[0],
-  //     end: allDateOfCurrentMonth[1],
-  //   }
-  //   callApiHome(params)
-  // }, [])
+    const params = {
+      start: allDateOfCurrentMonth[0],
+      end: allDateOfCurrentMonth[1],
+      key: '국내기저귀',
+    }
+    console.log(params)
+    await callApiHome(params)
+  }, [])
 
   return (
     <div className="category-analysis">
@@ -387,7 +410,7 @@ const CategoryAnalysis = (props) => {
       >
         <Col xs={17} sm={21} md={21} lg={21} xl={22} className="date-picker">
           <Row gutter={[4, 4]}>
-            <Col xs={24} sm={3} md={3} lg={2} xl={2}>
+            <Col xs={24} sm={3} md={3} lg={2} xl={1}>
               <h1
                 style={{
                   paddingTop: '3px',
@@ -401,6 +424,7 @@ const CategoryAnalysis = (props) => {
             </Col>
             <Col xs={24} sm={10} md={10} lg={8} xl={5}>
               <DatePicker.RangePicker
+                defaultValue={[moment(startOfMonth), moment(endOfMonth)]}
                 onChange={onChange}
                 separator={<MinusOutlined />}
               />
@@ -450,10 +474,13 @@ const CategoryAnalysis = (props) => {
       <Row
         gutter={24}
         className="chart card-border"
-        style={{ marginTop: '24px', marginBottom: '24px' }}
+        style={{
+          marginTop: '24px',
+          marginBottom: '24px',
+        }}
         justify="center"
       >
-        <Col span={24}>
+        <Col style={{ textAlign: 'center' }} span={24}>
           <HighchartsReact
             highcharts={Highcharts}
             options={options}
@@ -521,22 +548,22 @@ const CategoryAnalysis = (props) => {
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={24} md={24} lg={24} xl={6}>
               <Card title={titileCard('11번가')} bordered={false}>
-                <RenderData data={topcoupang} />
+                <RenderData data={top11str} />
               </Card>
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={6}>
               <Card title={titileCard('G마켓')} bordered={false}>
-                <RenderData data={topauction} />
+                <RenderData data={topgmarket} />
               </Card>
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={6}>
               <Card title={titileCard('쿠팡')} bordered={false}>
-                <RenderData data={topsmartstore} />
+                <RenderData data={topcoupang} />
               </Card>
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={6}>
               <Card title={titileCard('인터파크')} bordered={false}>
-                <RenderData data={topwemake} />
+                <RenderData data={topinterpark} />
               </Card>
             </Col>
           </Row>
@@ -544,22 +571,22 @@ const CategoryAnalysis = (props) => {
           <Row gutter={[16, 16]} style={{ marginTop: '1rem' }}>
             <Col xs={24} sm={24} md={24} lg={24} xl={6}>
               <Card title={titileCard('옥션')} bordered={false}>
-                <RenderData data={toptmon} />
+                <RenderData data={topauction} />
               </Card>
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={6}>
               <Card title={titileCard('스마트스토어')} bordered={false}>
-                <RenderData data={topinterpark} />
+                <RenderData data={topsmartstore} />
               </Card>
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={6}>
               <Card title={titileCard('티몬')} bordered={false}>
-                <RenderData data={top11str} />
+                <RenderData data={toptmon} />
               </Card>
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={6}>
               <Card title={titileCard('위메프')} bordered={false}>
-                <RenderData data={topgmarket} />
+                <RenderData data={topwemake} />
               </Card>
             </Col>
           </Row>

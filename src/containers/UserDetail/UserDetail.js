@@ -15,7 +15,7 @@ import {
   Alert,
   Spin,
 } from 'antd'
-import { EditOutlined, LeftOutlined } from '@ant-design/icons'
+import { EditOutlined } from '@ant-design/icons'
 import './UserDetail.scss'
 
 const UserDetail = (props) => {
@@ -155,17 +155,6 @@ const UserDetail = (props) => {
         </div>
       ) : (
         <>
-          <Button
-            style={{
-              marginBottom: '6px',
-              borderRadius: '6px',
-              border: 'none',
-              color: '#333',
-            }}
-            // onClick={() => props.history.push('/home')}
-          >
-            <LeftOutlined /> 목록으로 돌아가기
-          </Button>
           <div className="card-border user-detail">
             <Row>
               <Col span={24}>

@@ -169,61 +169,520 @@ const CategoryList = (props) => {
 
       <Menu.SubMenu title="11번가">
         <Menu.Item>
-          <div onClick={selectCategory}>기저귀</div>
+          <div onClick={selectCategory}>국내기저귀</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>분유</div>
+          <div onClick={selectCategory}>수입기저귀</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>기능성기저귀</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>국내분유</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>수입분유</div>
         </Menu.Item>
         <Menu.Item>
           <div onClick={selectCategory}>물티슈</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>장난감</div>
+          <div onClick={selectCategory}>비데물티슈</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>출산/돌기념품</div>
+          <div onClick={selectCategory}>기능성 물티슈</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>순금/돌반지</div>
+          <div onClick={selectCategory}>로봇</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>이유용품</div>
+          <div onClick={selectCategory}>액션피규어/조립완구</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>수유용품</div>
+          <div onClick={selectCategory}>무선조종완구/RC</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>유아동식/영양제</div>
+          <div onClick={selectCategory}>블록</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>유아목욕/스킨케어</div>
+          <div onClick={selectCategory}>캐릭터카드/딱지</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>유아세제/위생용품</div>
+          <div onClick={selectCategory}>퍼즐</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>유아안전/실내용품</div>
+          <div onClick={selectCategory}>보드게임</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>외출용품</div>
+          <div onClick={selectCategory}>인형</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>유아가구/침구</div>
+          <div onClick={selectCategory}>역할놀이/소꿉놀이</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>신생아의류</div>
+          <div onClick={selectCategory}>승용완구</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>유아의류</div>
+          <div onClick={selectCategory}>스포츠완구</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>아동/주니어의류</div>
+          <div onClick={selectCategory}>공간놀이기구</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>유아동신발</div>
+          <div onClick={selectCategory}>물놀이용품</div>
         </Menu.Item>
         <Menu.Item>
-          <div onClick={selectCategory}>유아동찹화</div>
+          <div onClick={selectCategory}>음악/악기놀이</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>미술놀이</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>자연과학완구</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>초등학습교구</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>학습완구</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>신생아/영유아완구</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>감각발달완구</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>출산DIY</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>출산선물/기념품</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>출산준비패키지</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>기저귀케익</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>답례품</div>
+        </Menu.Item>
+
+        <Menu.Item>
+          <div onClick={selectCategory}>돌잔치용품</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>성장앨범/액자</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>손발도장/배냇액자</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>탯줄도장</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>탯줄보관함</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>베이비스튜디오</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>빨대컵</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>보온보냉컵</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>아동용물병</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>아동용컵</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>아동용식기/식판</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>이유식조리기</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>이유식기</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>스푼</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>젓가락</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>포크</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>턱받이</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>과즙망</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>보관용기</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>스낵컵/케이스</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>젖병</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>젖꼭지</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>일회용젖병/비닐팩</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>치발기</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>노리개젖꼭지</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유축기</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>모유저장팩</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>보틀워머</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>분유케이스</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>수유가리개</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>수유쿠션</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>수유패드</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유두교정기</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>젖병세정용품</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>모유수유차/스틸티</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>기타 수유용품</div>
+        </Menu.Item>
+
+        <Menu.Item>
+          <div onClick={selectCategory}>중고/리퍼</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아동식</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아동 두유</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아동 치즈</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아동 과자</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아동 주스/퓨레</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아동 건강</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아목욕용품</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아스킨/바디용품</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아세제</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아구강용품</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>위생/건강용품</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>놀이방매트</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>락커</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>바운서</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>흔들의자</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>보행기</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>쏘서</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>점퍼루</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아안전용품</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>중고/리퍼</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유모차</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유모차용품</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>카시트</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>카시트용품</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>아기띠</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>아기띠워머</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>바람막이</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>슬링</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>파우치</div>
+        </Menu.Item>
+
+        <Menu.Item>
+          <div onClick={selectCategory}>포대기</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>힙시트</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>기저귀가방</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아배낭</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>미아방지용품</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>중고/리퍼</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아침대</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아의자</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아책상</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아공부상</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아소파</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아책장</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아책꽂이</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아옷장</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아옷걸이</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>기저귀정리함</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>아기의자/범보의자</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>취침등/자장가램프</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>범퍼/가드</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>블라인드</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>캐노피</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>유아침구</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>기타 가구/소품</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>우주복</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>바디슈트/롬퍼</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>레그/스패츠</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>배냇저고리</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>손발싸개</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>신생아모자/보닛</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>세트상품</div>
+        </Menu.Item>
+
+        <Menu.Item>
+          <div onClick={selectCategory}>여아의류</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>남아의류</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>여아속옷/언더웨어</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>남아속옷/언더웨어</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>배변훈련팬티</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>출산/백일/돌복</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>한복</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>여아의류</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>남아의류</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>주니어 여아의류</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>주니어 남아의류</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>아동 스포츠의류</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>여아속옷/언더웨어</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>남아속옷/언더웨어</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>한복</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>우의</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>테마의류</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>남아신발</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>여아신발</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>보행기신발</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>가방</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>손가방</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>모자</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>선글라스/안경테</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>양말</div>
+        </Menu.Item>
+
+        <Menu.Item>
+          <div onClick={selectCategory}>우산</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>레깅스</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>덧신</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>토시</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>앞치마</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>마스크</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>머리핀</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>멜빵</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>벨트</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>스카프</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>목도리/넥워머</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>장갑</div>
+        </Menu.Item>
+
+        <Menu.Item>
+          <div onClick={selectCategory}>시계</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>지갑</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>헤어밴드</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={selectCategory}>기타 패션소품</div>
         </Menu.Item>
       </Menu.SubMenu>
 

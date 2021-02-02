@@ -53,7 +53,6 @@ const MainLayout = (props) => {
   const tokenAdmin = localStorage.getItem('token')
   useEffect(() => {
     const getUserInfo = async () => {
-      console.log('user')
       const config = {
         headers: {
           Accept: 'application/json',
@@ -130,7 +129,8 @@ const MainLayout = (props) => {
                     fontSize: '13px',
                   }}
                 >
-                  <strong>{userName ? userName : adminName}</strong> 님 안녕하세요
+                  <strong>{userName ? userName : adminName}</strong> 님
+                  안녕하세요
                 </span>
                 <span style={{ paddingLeft: '11px' }}>
                   <DownOutlined />
