@@ -9,15 +9,13 @@ import fileDownload from 'js-file-download'
 import NumberFormat from 'react-number-format'
 import saleStatusApi from '../../api/SaleStatusAPI'
 
-const { Option } = Select;
-const { RangePicker } = DatePicker;
+const { Option } = Select
+const { RangePicker } = DatePicker
 
 const VendorSearch = (props) => {
-
-  const [hackValue, setHackValue] = useState();
-  const [value, setValue] = useState();
-  const [dates, setDates] = useState([]);
-
+  const [hackValue, setHackValue] = useState()
+  const [value, setValue] = useState()
+  const [dates, setDates] = useState([])
 
   const [vendors, setVendors] = useState([])
   const [startDate, setStartDate] = useState()
@@ -40,12 +38,21 @@ const VendorSearch = (props) => {
     win.focus()
   }
 
-
-
   const columns = [
     {
       title: '벤더명',
-      render: record => <a onClick={() => goToStore(record)}>{record.bander_name}</a>
+      render: (record) => (
+        <a
+          style={{
+            fontWeight: 500,
+            fontSize: '16px',
+            color: '#74788D',
+          }}
+          onClick={() => goToStore(record)}
+        >
+          {record.bander_name}
+        </a>
+      ),
     },
     {
       title: '총 판매 상품 수',
@@ -218,34 +225,36 @@ const VendorSearch = (props) => {
     // }
   }
 
-
-
-  const onOpenChange = open => {
+  const onOpenChange = (open) => {
     if (open) {
-      setHackValue([]);
-      setDates([]);
+      setHackValue([])
+      setDates([])
     } else {
-      setHackValue(undefined);
+      setHackValue(undefined)
     }
-  };
+  }
 
-  const disabledDate = current => {
+  const disabledDate = (current) => {
     if (!dates || dates.length === 0) {
-      return false;
+      return false
     }
 
-    const daysInMonth = parseInt(moment(dates[0], "YYYY-MM").daysInMonth())
+    const daysInMonth = parseInt(moment(dates[0], 'YYYY-MM').daysInMonth())
     const day = parseInt(moment(dates[0]).format('DD'))
 
-    const tooLate = dates[0] && current.diff(dates[0], 'days') > (daysInMonth - day);
+    const tooLate =
+      dates[0] && current.diff(dates[0], 'days') > daysInMonth - day
 
-    return tooLate;
-  };
+    return tooLate
+  }
 
   const onChangeRangePicker = (val) => {
     setValue(val)
-    setFilter({ ...filter,start: moment(val[0]).unix() , end: moment(val[1]).unix() })
-
+    setFilter({
+      ...filter,
+      start: moment(val[0]).unix(),
+      end: moment(val[1]).unix(),
+    })
   }
 
   return (
@@ -258,20 +267,24 @@ const VendorSearch = (props) => {
                 <RangePicker
                   value={hackValue || value}
                   disabledDate={disabledDate}
-                  onCalendarChange={val => setDates(val)}
-                  onChange={val => onChangeRangePicker(val)}
+                  onCalendarChange={(val) => setDates(val)}
+                  onChange={(val) => onChangeRangePicker(val)}
                   onOpenChange={onOpenChange}
                 />
               </Space>
             </div>
             <div>
               <Button
-                style={{ backgroundColor: '#42ABBC', color: 'white', border: 'none' }}
+                style={{
+                  backgroundColor: '#42ABBC',
+                  color: 'white',
+                  border: 'none',
+                }}
                 className="border-radius-6"
                 onClick={getVendor}
               >
                 적용하기
-            </Button>
+              </Button>
             </div>
           </div>
           <div style={{ display: 'flex' }}>
@@ -330,8 +343,8 @@ const VendorSearch = (props) => {
               LOAD MORE
             </Button>
           ) : (
-              ''
-            )}
+            ''
+          )}
         </Col>
       </Row>
     </div>

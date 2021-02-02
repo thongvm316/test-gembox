@@ -3,6 +3,7 @@ import { Row, Col, Button, Input, DatePicker, Space, Table } from 'antd'
 import { MinusOutlined } from '@ant-design/icons'
 
 import fileDownload from 'js-file-download'
+import moment from 'moment'
 import * as _ from 'lodash'
 import NumberFormat from 'react-number-format'
 import saleStatusAPI from '../../api/SaleStatusAPI'
@@ -26,13 +27,23 @@ import saleStatusApi from '../../api/SaleStatusAPI'
 
 const SaleStatus = () => {
   // Table
+  const goToStore = (record) => {
+    var win = window.open(record.url, '_blank')
+    win.focus()
+  }
   const columns = [
     {
       title: '상품명',
-      dataIndex: 'name',
-      render: (text) => (
-        <a target="_blank" style={{ fontWeight: '500' }}>
-          {text}
+      render: (record) => (
+        <a
+          style={{
+            fontWeight: 500,
+            fontSize: '16px',
+            color: '#74788D',
+          }}
+          onClick={() => goToStore(record)}
+        >
+          {record.name}
         </a>
       ),
     },
@@ -47,7 +58,14 @@ const SaleStatus = () => {
     {
       title: '가격',
       dataIndex: 'seller_price',
-      render: (text) => <p>￦ {text}</p>,
+      render: (text) => (
+        <NumberFormat
+          value={text}
+          displayType={'text'}
+          thousandSeparator={true}
+          prefix={'₩'}
+        />
+      ),
     },
     {
       title: '리뷰',
@@ -129,6 +147,7 @@ const SaleStatus = () => {
       })
   }
 
+  /* Use when load more */
   useEffect(() => {
     if (datePicker.length === 0) {
       return
@@ -256,6 +275,45 @@ const SaleStatus = () => {
         setLoading(false)
       })
   }
+
+  /* Get data of current month */
+  const startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
+  const endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
+  useEffect(() => {
+    let allDateOfCurrentMonth = [
+      toTimestamp(startOfMonth),
+      toTimestamp(endOfMonth),
+    ]
+
+    const params = {
+      start: allDateOfCurrentMonth[0],
+      end: allDateOfCurrentMonth[1],
+      key: valueOfSearchInput,
+      lastIndex: lastIndex,
+    }
+    saleStatusApi
+      .getDataSearch(params)
+      .then((value) => {
+        if (
+          value &&
+          value.data &&
+          value.data.result &&
+          value.data.result.product
+        ) {
+          if (lastIndex > 0) {
+            setDataSearch(dataSearch.concat(value.data.result.product))
+          } else {
+            setDataSearch(value.data.result.product)
+          }
+        }
+
+        setLoading(false)
+      })
+      .catch((err) => {
+        setLoading(false)
+        console.log(err.response)
+      })
+  }, [])
 
   /* Make Random Id */
   const guidGenerator = () => {
@@ -406,6 +464,7 @@ const SaleStatus = () => {
           <Space className="space-small" style={{ marginRight: '2rem' }}>
             <DatePicker.RangePicker
               bordered={false}
+              defaultValue={[moment(startOfMonth), moment(endOfMonth)]}
               separator={<MinusOutlined />}
               onChange={onChange}
             />
