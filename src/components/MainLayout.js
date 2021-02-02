@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, Dropdown, Menu } from 'antd'
+import { Layout, Dropdown, Menu, Popover } from 'antd'
 import { MenuUnfoldOutlined, DownOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import Logout from '../images/logout.png'
@@ -21,17 +21,20 @@ const MainLayout = (props) => {
 
   const renderUserInfor = () => {
     return (
-      <Menu selectedKeys={[]}>
-        <Menu.Item key="logout">
-          <img src={Logout} />{' '}
-          <span
-            onClick={logout}
-            style={{ marginLeft: '13px', color: '#248D9E', fontWeight: 'bold' }}
-          >
-            Logout
-          </span>
-        </Menu.Item>
-      </Menu>
+      <div>
+        <img src={Logout} />{' '}
+        <span
+          onClick={logout}
+          style={{
+            marginLeft: '13px',
+            color: '#248D9E',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+          }}
+        >
+          Logout
+        </span>
+      </div>
     )
   }
 
@@ -102,7 +105,7 @@ const MainLayout = (props) => {
             onClick={() => toggle()}
           />
           <div style={{ display: 'flex' }}>
-            <Dropdown overlay={renderUserInfor()}>
+            <Popover content={renderUserInfor()}>
               <a style={{ color: '#42ABBC' }}>
                 <span style={{ fontWeight: '500', fontSize: '13px' }}></span>
                 <span
@@ -119,7 +122,7 @@ const MainLayout = (props) => {
                   <DownOutlined />
                 </span>
               </a>
-            </Dropdown>
+            </Popover>
             <div style={{ marginLeft: '10px' }}>
               {localStorage.getItem('token') ? (
                 <Link to="/admin-setting">
