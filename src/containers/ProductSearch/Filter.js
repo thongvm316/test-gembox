@@ -105,22 +105,16 @@ const Filter = (props) => {
     };
 
     const disabledDate = current => {
-        if (!dates || dates.length === 0) {
-            return false;
-        }
-
-        const daysInMonth = parseInt(moment(dates[0], "YYYY-MM").daysInMonth())
-        const day = parseInt(moment(dates[0]).format('DD'))
-
-        const tooLate = dates[0] && current.diff(dates[0], 'days') > (daysInMonth - day);
-
-        return tooLate;
+        const daysInMonth = parseInt(moment(current, 'YYYY-MM').daysInMonth())
+        const date = current && moment(current).format('DD') == 1 || current && moment(current).format('DD') == 15 || current && moment(current).format('DD') == daysInMonth
+    
+        return !date
     };
 
     const onChangeRangePicker = (val) => {
         setValue(val)
 
-        if (val[0] && val[1]) {
+        if (val && val[0] && val[1]) {
             setFilter({ ...filter, start: moment(val[0]).unix(), end: moment(val[1]).unix() })
 
         } else {
@@ -137,11 +131,10 @@ const Filter = (props) => {
                 <Col span={4}><h4>시작일, 종료일</h4></Col>
                 <Col span={16}>
                     <RangePicker
-                        value={hackValue || value}
                         disabledDate={disabledDate}
-                        onCalendarChange={val => setDates(val)}
+                        // onCalendarChange={val => setDates(val)}
                         onChange={val => onChangeRangePicker(val)}
-                        onOpenChange={onOpenChange}
+                        // onOpenChange={onOpenChange}
                     />
                 </Col>
             </Row>

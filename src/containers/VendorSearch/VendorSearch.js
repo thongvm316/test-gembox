@@ -235,22 +235,18 @@ const VendorSearch = (props) => {
   }
 
   const disabledDate = (current) => {
-    if (!dates || dates.length === 0) {
-      return false
-    }
+    const daysInMonth = parseInt(moment(current, 'YYYY-MM').daysInMonth())
+    const date =
+      current && moment(current).format('DD') == 1
+      || current && moment(current).format('DD') == 15
+      || current && moment(current).format('DD') == daysInMonth
 
-    const daysInMonth = parseInt(moment(dates[0], 'YYYY-MM').daysInMonth())
-    const day = parseInt(moment(dates[0]).format('DD'))
-
-    const tooLate =
-      dates[0] && current.diff(dates[0], 'days') > daysInMonth - day
-
-    return tooLate
+    return !date
   }
 
   const onChangeRangePicker = (val) => {
     setValue(val)
-    if (val[0] && val[1]) {
+    if (val && val[0] && val[1]) {
       setFilter({ ...filter, start: moment(val[0]).unix(), end: moment(val[1]).unix() })
 
     } else {
@@ -261,17 +257,17 @@ const VendorSearch = (props) => {
 
   return (
     <div className="vendor-search">
-      <Row className="card-border" style={{ marginBottom: '5rem' }}>
+      <Row className="card-border" style={{ marginBottom: '2rem' }}>
         <Col span={24} className="wraper-actions-vender">
           <div style={{ display: 'flex', marginRight: '50px' }}>
             <div className="filter-date" style={{ marginRight: '10px' }}>
               <Space>
                 <RangePicker
-                  value={hackValue || value}
+                  // value={hackValue || value}
                   disabledDate={disabledDate}
-                  onCalendarChange={(val) => setDates(val)}
+                  // onCalendarChange={(val) => setDates(val)}
                   onChange={(val) => onChangeRangePicker(val)}
-                  onOpenChange={onOpenChange}
+                  // onOpenChange={onOpenChange}
                 />
               </Space>
             </div>
