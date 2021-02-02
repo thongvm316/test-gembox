@@ -119,7 +119,14 @@ const Filter = (props) => {
 
     const onChangeRangePicker = (val) => {
         setValue(val)
-        setFilter({ ...filter, start: moment(val[0]).unix(), end: moment(val[1]).unix() })
+
+        if (val[0] && val[1]) {
+            setFilter({ ...filter, start: moment(val[0]).unix(), end: moment(val[1]).unix() })
+
+        } else {
+            setFilter({ ...filter, start: '', end: '' })
+
+        }
 
     }
 
