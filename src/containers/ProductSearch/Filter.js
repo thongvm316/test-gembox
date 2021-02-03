@@ -106,14 +106,25 @@ const Filter = (props) => {
 
     const disabledDate = current => {
         const daysInMonth = parseInt(moment(current, 'YYYY-MM').daysInMonth())
-        const date = current && moment(current).format('DD') == 1 || current && moment(current).format('DD') == 15 || current && moment(current).format('DD') == daysInMonth
-    
-        return !date
+
+        if (!dates || dates.length === 0) {
+            const date =
+                current && moment(current).format('DD') == 1
+                || current && moment(current).format('DD') == 15
+                || current && moment(current).format('DD') == daysInMonth
+
+            return !date
+        } else {
+            return !(
+                moment(dates[0]).format('YYYY-MM') == moment(current).format('YYYY-MM') && current && moment(current).format('DD') == 1
+                || moment(dates[0]).format('YYYY-MM') == moment(current).format('YYYY-MM') && current && moment(current).format('DD') == 15
+                || moment(dates[0]).format('YYYY-MM') == moment(current).format('YYYY-MM') && current && moment(current).format('DD') == daysInMonth
+            )
+        }
     };
 
     const onChangeRangePicker = (val) => {
         setValue(val)
-
         if (val && val[0] && val[1]) {
             setFilter({ ...filter, start: moment(val[0]).unix(), end: moment(val[1]).unix() })
 
@@ -121,7 +132,10 @@ const Filter = (props) => {
             setFilter({ ...filter, start: '', end: '' })
 
         }
+    }
 
+    const onCalendarChange = (val) => {
+        setDates(val)
     }
 
     return (
@@ -131,10 +145,11 @@ const Filter = (props) => {
                 <Col span={4}><h4>시작일, 종료일</h4></Col>
                 <Col span={16}>
                     <RangePicker
+                        value={hackValue || value}
                         disabledDate={disabledDate}
-                        // onCalendarChange={val => setDates(val)}
+                        onCalendarChange={val => onCalendarChange(val)}
                         onChange={val => onChangeRangePicker(val)}
-                        // onOpenChange={onOpenChange}
+                        onOpenChange={onOpenChange}
                     />
                 </Col>
             </Row>
