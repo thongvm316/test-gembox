@@ -213,6 +213,7 @@ const CategoryAnalysis = (props) => {
 
   /* DatePicker */
   const [datePicker, setDatePicker] = useState([])
+  console.log(datePicker)
   const toTimestamp = (strDate) => {
     var datum = Date.parse(strDate)
     return datum / 1000
@@ -364,10 +365,11 @@ const CategoryAnalysis = (props) => {
   const getData = async () => {
     setLoading(true)
     const params = {
-      start: datePicker[0],
-      end: datePicker[1],
+      start: datePicker[0] ? datePicker[0] : allDateOfCurrentMonth[0],
+      end: datePicker[1] ? datePicker[1] : allDateOfCurrentMonth[1],
       key: category,
     }
+    console.log(datePicker, params)
 
     await callApiHome(params)
     setLoading(false)
@@ -380,6 +382,10 @@ const CategoryAnalysis = (props) => {
   /* Current month and get data */
   const startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
   const endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
+  let allDateOfCurrentMonth = [
+    toTimestamp(startOfMonth),
+    toTimestamp(endOfMonth),
+  ]
   // useEffect(async () => {
   //   let allDateOfCurrentMonth = [
   //     toTimestamp(startOfMonth),

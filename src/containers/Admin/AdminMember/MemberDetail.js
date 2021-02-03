@@ -13,6 +13,7 @@ const MemberDetail = (props) => {
   const [loading, setLoading] = useState(false)
   const location = useLocation()
   const { memberDetail } = location.state
+  console.log(memberDetail)
 
   // Congif for call API
   const config = {
@@ -192,10 +193,7 @@ const MemberDetail = (props) => {
               <p>
                 <strong>사업자 등록번호</strong>
               </p>
-              <p className="border-solid">
-                <Input style={{ backgroundColor: 'transparent', marginBottom: '3px' }}/> <br/>
-                <Button style={{ width: '100%' }}>확인</Button>
-              </p>
+              <p className="border-solid">{memberDetail.company_number}</p>
             </Col>
             <Col
               xs={24}

@@ -32,6 +32,11 @@ const adminApi = {
     const url = `/admin/findaccount`
     return axiosAdmin.put(url, body)
   },
+
+  registerCompanyNumber: (body) => {
+    const url = `/admin/registercompanynumber`
+    return axiosAdmin.put(url, body)
+  },
 }
 
 export default adminApi
