@@ -13,7 +13,6 @@ const { Option } = Select
 const { RangePicker } = DatePicker
 
 const VendorSearch = (props) => {
-
   const [hackValue, setHackValue] = useState()
   const [value, setValue] = useState()
   const [dates, setDates] = useState([])
@@ -240,32 +239,39 @@ const VendorSearch = (props) => {
 
     if (!dates || dates.length === 0) {
       const date =
-        current && moment(current).format('DD') == 1
-        || current && moment(current).format('DD') == 15
-        || current && moment(current).format('DD') == daysInMonth
+        (current && moment(current).format('DD') == 1) ||
+        (current && moment(current).format('DD') == 15) ||
+        (current && moment(current).format('DD') == daysInMonth)
 
       return !date
     } else {
       return !(
-        moment(dates[0]).format('YYYY-MM') == moment(current).format('YYYY-MM') && current && moment(current).format('DD') == 1
-        || moment(dates[0]).format('YYYY-MM') == moment(current).format('YYYY-MM') && current && moment(current).format('DD') == 15
-        || moment(dates[0]).format('YYYY-MM') == moment(current).format('YYYY-MM') && current && moment(current).format('DD') == daysInMonth
+        (moment(dates[0]).format('YYYY-MM') ==
+          moment(current).format('YYYY-MM') &&
+          current &&
+          moment(current).format('DD') == 1) ||
+        (moment(dates[0]).format('YYYY-MM') ==
+          moment(current).format('YYYY-MM') &&
+          current &&
+          moment(current).format('DD') == 15) ||
+        (moment(dates[0]).format('YYYY-MM') ==
+          moment(current).format('YYYY-MM') &&
+          current &&
+          moment(current).format('DD') == daysInMonth)
       )
     }
-
-
-
-
   }
 
   const onChangeRangePicker = (val) => {
     setValue(val)
     if (val && val[0] && val[1]) {
-      setFilter({ ...filter, start: moment(val[0]).unix(), end: moment(val[1]).unix() })
-
+      setFilter({
+        ...filter,
+        start: moment(val[0]).unix(),
+        end: moment(val[1]).unix(),
+      })
     } else {
       setFilter({ ...filter, start: '', end: '' })
-
     }
   }
 
@@ -359,8 +365,8 @@ const VendorSearch = (props) => {
               LOAD MORE
             </Button>
           ) : (
-              ''
-            )}
+            ''
+          )}
         </Col>
       </Row>
     </div>

@@ -90,15 +90,67 @@ const SaleStatus = () => {
 
   /* DatePicker */
   const [datePicker, setDatePicker] = useState([])
-
+  const [hackValue, setHackValue] = useState()
+  const [value, setValue] = useState()
+  const [filter, setFilter] = useState()
+  const [dates, setDates] = useState([])
   const toTimestamp = (strDate) => {
     var datum = Date.parse(strDate)
     return datum / 1000
   }
 
-  function onChange(date, dateString) {
+  const onChange = (date, dateString) => {
     let storeDay = [toTimestamp(dateString[0]), toTimestamp(dateString[1])]
     setDatePicker(storeDay)
+  }
+
+  const onChangeRangePicker = (val) => {
+    setValue(val)
+    if (val && val[0] && val[1]) {
+      console.log(moment(val[0]), moment(val[1]))
+    } else {
+    }
+  }
+
+  const onCalendarChange = (val) => {
+    setDates(val)
+  }
+
+  const disabledDate = (current) => {
+    const daysInMonth = parseInt(moment(current, 'YYYY-MM').daysInMonth())
+
+    if (!dates || dates.length === 0) {
+      const date =
+        (current && moment(current).format('DD') == 1) ||
+        (current && moment(current).format('DD') == 15) ||
+        (current && moment(current).format('DD') == daysInMonth)
+
+      return !date
+    } else {
+      return !(
+        (moment(dates[0]).format('YYYY-MM') ==
+          moment(current).format('YYYY-MM') &&
+          current &&
+          moment(current).format('DD') == 1) ||
+        (moment(dates[0]).format('YYYY-MM') ==
+          moment(current).format('YYYY-MM') &&
+          current &&
+          moment(current).format('DD') == 15) ||
+        (moment(dates[0]).format('YYYY-MM') ==
+          moment(current).format('YYYY-MM') &&
+          current &&
+          moment(current).format('DD') == daysInMonth)
+      )
+    }
+  }
+
+  const onOpenChange = (open) => {
+    if (open) {
+      setHackValue([])
+      setDates([])
+    } else {
+      setHackValue(undefined)
+    }
   }
 
   /* Get Data */
@@ -477,7 +529,13 @@ const SaleStatus = () => {
               bordered={false}
               defaultValue={[moment(startOfMonth), moment(endOfMonth)]}
               separator={<MinusOutlined />}
-              onChange={onChange}
+              // onChange={onChange}
+
+              value={hackValue || value}
+              disabledDate={disabledDate}
+              onCalendarChange={(val) => onCalendarChange(val)}
+              onChange={(val) => onChangeRangePicker(val)}
+              onOpenChange={onOpenChange}
             />
             <Button
               style={{ backgroundColor: '#71c4d5', border: 'none' }}
