@@ -294,7 +294,17 @@ const VendorSearch = (props) => {
 
   const onChangeRangePicker = (val) => {
     setValue(val)
+
     if (val && val[0] && val[1]) {
+
+      const startDate = parseInt(moment(val[0]).format('DD'))
+      const endDate = parseInt(moment(val[1]).format('DD'))
+
+      if (startDate == endDate) {
+        setValue('')
+      }
+
+
       setFilter({
         ...filter,
         start: moment(val[0]).unix(),
@@ -319,6 +329,17 @@ const VendorSearch = (props) => {
       const day = parseInt(moment(val[1]).format('DD'))
       if (1 == day) {
         modal('시작일을 마지막 일자로 선택 할 수 없습니다')
+        return
+      }
+    }
+
+    if (val && val[0] && val[1]) {
+      const startDate = parseInt(moment(val[0]).format('DD'))
+      const endDate = parseInt(moment(val[1]).format('DD'))
+
+      if (startDate == endDate) {
+        modal('시작일은 종료일과 같을 수 없습니다')
+
         return
       }
     }
@@ -419,8 +440,8 @@ const VendorSearch = (props) => {
               LOAD MORE
             </Button>
           ) : (
-            ''
-          )}
+              ''
+            )}
         </Col>
       </Row>
     </div>
