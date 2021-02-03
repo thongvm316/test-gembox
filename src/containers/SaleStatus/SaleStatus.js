@@ -92,23 +92,19 @@ const SaleStatus = () => {
   const [datePicker, setDatePicker] = useState([])
   const [hackValue, setHackValue] = useState()
   const [value, setValue] = useState()
-  const [filter, setFilter] = useState()
   const [dates, setDates] = useState([])
   const toTimestamp = (strDate) => {
     var datum = Date.parse(strDate)
     return datum / 1000
   }
 
-  const onChange = (date, dateString) => {
-    let storeDay = [toTimestamp(dateString[0]), toTimestamp(dateString[1])]
-    setDatePicker(storeDay)
-  }
-
   const onChangeRangePicker = (val) => {
     setValue(val)
     if (val && val[0] && val[1]) {
-      console.log(moment(val[0]), moment(val[1]))
-    } else {
+      const start = moment(val[0]).format('YYYY-MM-DD')
+      const end = moment(val[1]).format('YYYY-MM-DD')
+      let storeDay = [toTimestamp(start), toTimestamp(end)]
+      setDatePicker(storeDay)
     }
   }
 
@@ -571,8 +567,6 @@ const SaleStatus = () => {
               bordered={false}
               defaultValue={[moment(startOfMonth), moment(endOfMonth)]}
               separator={<MinusOutlined />}
-              // onChange={onChange}
-
               value={hackValue || value}
               disabledDate={disabledDate}
               onCalendarChange={(val) => onCalendarChange(val)}

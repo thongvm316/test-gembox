@@ -4,7 +4,7 @@ import NumberFormat from 'react-number-format'
 
 import GroupButton from './GroupButton/GroupButton'
 import Footer from '../../components/Footer'
-import { DatePicker, Button, Row, Col, Card, Spin, Popover } from 'antd'
+import { DatePicker, Button, Row, Col, Card, Spin, Popover, Modal } from 'antd'
 import { MinusOutlined, LoadingOutlined } from '@ant-design/icons'
 import moment from 'moment'
 
@@ -213,15 +213,106 @@ const CategoryAnalysis = (props) => {
 
   /* DatePicker */
   const [datePicker, setDatePicker] = useState([])
-  console.log(datePicker)
+  const [hackValue, setHackValue] = useState()
+  const [value, setValue] = useState()
+  const [dates, setDates] = useState([])
   const toTimestamp = (strDate) => {
     var datum = Date.parse(strDate)
     return datum / 1000
   }
 
-  const onChange = (date, dateString) => {
-    let storeDay = [toTimestamp(dateString[0]), toTimestamp(dateString[1])]
-    setDatePicker(storeDay)
+  const onChangeRangePicker = (val) => {
+    setValue(val)
+    if (val && val[0] && val[1]) {
+      const start = moment(val[0]).format('YYYY-MM-DD')
+      const end = moment(val[1]).format('YYYY-MM-DD')
+      let storeDay = [toTimestamp(start), toTimestamp(end)]
+      setDatePicker(storeDay)
+    }
+  }
+
+  const onCalendarChange = (val) => {
+    if (val && val[0]) {
+      const daysInMonth = parseInt(moment(val[0], 'YYYY-MM').daysInMonth())
+      const day = parseInt(moment(val[0]).format('DD'))
+      if (daysInMonth == day) {
+        modal('시작일은 월의 마지막 일자가 될 수 없습니다')
+        return
+      }
+    }
+
+    if (val && val[1]) {
+      const day = parseInt(moment(val[1]).format('DD'))
+      if (1 == day) {
+        modal('시작일을 마지막 일자로 선택 할 수 없습니다')
+        return
+      }
+    }
+
+    setDates(val)
+  }
+
+  const disabledDate = (current) => {
+    const daysInMonth = parseInt(moment(current, 'YYYY-MM').daysInMonth())
+
+    if (!dates || dates.length === 0) {
+      const date =
+        (current && moment(current).format('DD') == 1) ||
+        (current && moment(current).format('DD') == 15) ||
+        (current && moment(current).format('DD') == daysInMonth)
+
+      return !date
+    } else {
+      if (dates[0]) {
+        return !(
+          (moment(dates[0]).format('YYYY-MM') ==
+            moment(current).format('YYYY-MM') &&
+            current &&
+            moment(current).format('DD') == 1) ||
+          (moment(dates[0]).format('YYYY-MM') ==
+            moment(current).format('YYYY-MM') &&
+            current &&
+            moment(current).format('DD') == 15) ||
+          (moment(dates[0]).format('YYYY-MM') ==
+            moment(current).format('YYYY-MM') &&
+            current &&
+            moment(current).format('DD') == daysInMonth)
+        )
+      }
+
+      if (dates[1]) {
+        return !(
+          (moment(dates[1]).format('YYYY-MM') ==
+            moment(current).format('YYYY-MM') &&
+            current &&
+            moment(current).format('DD') == 1) ||
+          (moment(dates[1]).format('YYYY-MM') ==
+            moment(current).format('YYYY-MM') &&
+            current &&
+            moment(current).format('DD') == 15) ||
+          (moment(dates[1]).format('YYYY-MM') ==
+            moment(current).format('YYYY-MM') &&
+            current &&
+            moment(current).format('DD') == daysInMonth)
+        )
+      }
+    }
+  }
+
+  const onOpenChange = (open) => {
+    if (open) {
+      setHackValue([])
+      setDates([])
+    } else {
+      setHackValue(undefined)
+    }
+  }
+
+  const modal = (text) => {
+    Modal.error({
+      title: '에러',
+      content: text,
+    })
   }
 
   /* For render total sale component */
@@ -428,8 +519,13 @@ const CategoryAnalysis = (props) => {
             <Col xs={24} sm={10} md={10} lg={8} xl={4}>
               <DatePicker.RangePicker
                 defaultValue={[moment(startOfMonth), moment(endOfMonth)]}
-                onChange={onChange}
+                // onChange={onChange}
                 separator={<MinusOutlined />}
+                value={hackValue || value}
+                disabledDate={disabledDate}
+                onCalendarChange={(val) => onCalendarChange(val)}
+                onChange={(val) => onChangeRangePicker(val)}
+                onOpenChange={onOpenChange}
               />
             </Col>
             <Col xs={24} sm={2} md={2} lg={2} xl={2}>
