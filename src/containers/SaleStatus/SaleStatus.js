@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Button, Input, DatePicker, Space, Table } from 'antd'
+import { Row, Col, Button, Input, DatePicker, Space, Table, Modal } from 'antd'
 import { MinusOutlined } from '@ant-design/icons'
 
 import fileDownload from 'js-file-download'
@@ -113,6 +113,23 @@ const SaleStatus = () => {
   }
 
   const onCalendarChange = (val) => {
+    if (val && val[0]) {
+      const daysInMonth = parseInt(moment(val[0], 'YYYY-MM').daysInMonth())
+      const day = parseInt(moment(val[0]).format('DD'))
+      if (daysInMonth == day) {
+        modal('시작일은 월의 마지막 일자가 될 수 없습니다')
+        return
+      }
+    }
+
+    if (val && val[1]) {
+      const day = parseInt(moment(val[1]).format('DD'))
+      if (1 == day) {
+        modal('시작일을 마지막 일자로 선택 할 수 없습니다')
+        return
+      }
+    }
+
     setDates(val)
   }
 
@@ -127,20 +144,39 @@ const SaleStatus = () => {
 
       return !date
     } else {
-      return !(
-        (moment(dates[0]).format('YYYY-MM') ==
-          moment(current).format('YYYY-MM') &&
-          current &&
-          moment(current).format('DD') == 1) ||
-        (moment(dates[0]).format('YYYY-MM') ==
-          moment(current).format('YYYY-MM') &&
-          current &&
-          moment(current).format('DD') == 15) ||
-        (moment(dates[0]).format('YYYY-MM') ==
-          moment(current).format('YYYY-MM') &&
-          current &&
-          moment(current).format('DD') == daysInMonth)
-      )
+      if (dates[0]) {
+        return !(
+          (moment(dates[0]).format('YYYY-MM') ==
+            moment(current).format('YYYY-MM') &&
+            current &&
+            moment(current).format('DD') == 1) ||
+          (moment(dates[0]).format('YYYY-MM') ==
+            moment(current).format('YYYY-MM') &&
+            current &&
+            moment(current).format('DD') == 15) ||
+          (moment(dates[0]).format('YYYY-MM') ==
+            moment(current).format('YYYY-MM') &&
+            current &&
+            moment(current).format('DD') == daysInMonth)
+        )
+      }
+
+      if (dates[1]) {
+        return !(
+          (moment(dates[1]).format('YYYY-MM') ==
+            moment(current).format('YYYY-MM') &&
+            current &&
+            moment(current).format('DD') == 1) ||
+          (moment(dates[1]).format('YYYY-MM') ==
+            moment(current).format('YYYY-MM') &&
+            current &&
+            moment(current).format('DD') == 15) ||
+          (moment(dates[1]).format('YYYY-MM') ==
+            moment(current).format('YYYY-MM') &&
+            current &&
+            moment(current).format('DD') == daysInMonth)
+        )
+      }
     }
   }
 
@@ -153,6 +189,12 @@ const SaleStatus = () => {
     }
   }
 
+  const modal = (text) => {
+    Modal.error({
+      title: '에러',
+      content: text,
+    })
+  }
   /* Get Data */
   const [valueOfSearchInput, setValueOfSearchInput] = useState('')
   const [loading, setLoading] = useState(false)
