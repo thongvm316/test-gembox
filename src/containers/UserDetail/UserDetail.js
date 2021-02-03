@@ -130,40 +130,58 @@ const UserDetail = (props) => {
     setPassword({ ...password, [e.target.name]: e.target.value })
   }
 
-  const handleExitBtn = () => {
-    if (new_password !== confirm_new_password) {
-      message.error('The two passwords that you entered do not match!')
-      return
-    }
-    setIsModalVisible(false)
-  }
-
   const bodyOfProfile = {
     url_market: url,
     business_license: basePdf,
   }
 
-  const changeUserProfileAndPassword = async () => {
+  const changeUserProfile = async () => {
     setDisableBtn(true)
-    await Promise.all([
-      axios
-        .put(`${API_URL}/user/changepassword`, bodyPassword, config)
-        .then((value) => {
-          console.log('Success')
-        })
-        .catch((error) => console.log(error.response)),
-
-      axios
-        .put(`${API_URL}/user/profile`, bodyOfProfile, config)
-        .then((value) => {
-          console.log('Success')
-        })
-        .catch((error) => console.log(error.response)),
-    ])
+    const res = await axios
+      .put(`${API_URL}/user/profile`, bodyOfProfile, config)
+      .then((value) => {
+        console.log('Success')
+      })
+      .catch((error) => console.log(error.response))
     Modal.success({
       content: 'Success',
     })
     setDisableBtn(false)
+  }
+
+  const changePassword = async () => {
+    setDisableBtn(true)
+    if (new_password !== confirm_new_password) {
+      Modal.error({
+        content: 'Confirm passwords that you entered do not match!'
+      })
+      setDisableBtn(false)
+      return
+    }
+
+    const res = await axios
+      .put(`${API_URL}/user/changepassword`, bodyPassword, config)
+      .then((value) => {
+        Modal.success({
+          content: 'Success',
+        })
+        setPassword({
+          current_password: '',
+          new_password: '',
+          confirm_new_password: '',
+        })
+        setDisableBtn(false)
+        setIsModalVisible(false)
+      })
+      .catch((error) => {
+        console.log(error.response)
+         Modal.error({
+          content: 'Current password is incorrect',
+        })
+        return 
+        setDisableBtn(false)
+        setIsModalVisible(false)
+      })
   }
 
   return (
@@ -347,7 +365,7 @@ const UserDetail = (props) => {
                   <div className="actions">
                     <Button
                       disabled={disableBtn}
-                      onClick={changeUserProfileAndPassword}
+                      onClick={changeUserProfile}
                       size="large"
                       type=""
                       className="btn-save"
@@ -369,6 +387,7 @@ const UserDetail = (props) => {
                 <div style={{ marginBottom: 20 }}>
                   <Input.Password
                     name="current_password"
+                    value={current_password}
                     onChange={onChange}
                     size="large"
                     placeholder="Your Password"
@@ -378,12 +397,14 @@ const UserDetail = (props) => {
                 <div>
                   <Input.Password
                     name="new_password"
+                    value={new_password}
                     onChange={onChange}
                     size="large"
                     placeholder="Type Your New Password"
                   />
                   <Input.Password
                     name="confirm_new_password"
+                    value={confirm_new_password}
                     onChange={onChange}
                     size="large"
                     placeholder="Confirm Your New Password"
@@ -400,7 +421,7 @@ const UserDetail = (props) => {
                   </Button>
                   <Button
                     size="large"
-                    onClick={handleExitBtn}
+                    onClick={changePassword}
                     className="btn-save"
                   >
                     나가기
@@ -413,6 +434,7 @@ const UserDetail = (props) => {
               visible={isModalVisibleTwo}
               onOk={handleOkTwo}
               onCancel={handleCancelTwo}
+              cancelButtonProps={{ style: { display: 'none' } }}
               width={1000}
             >
               <embed

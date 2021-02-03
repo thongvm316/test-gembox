@@ -221,35 +221,13 @@ const CategoryAnalysis = (props) => {
     return datum / 1000
   }
 
-  const onChangeRangePicker = (val) => {
-    setValue(val)
-    if (val && val[0] && val[1]) {
-      const start = moment(val[0]).format('YYYY-MM-DD')
-      const end = moment(val[1]).format('YYYY-MM-DD')
-      let storeDay = [toTimestamp(start), toTimestamp(end)]
-      setDatePicker(storeDay)
+  const onOpenChange = (open) => {
+    if (open) {
+      setHackValue([])
+      setDates([])
+    } else {
+      setHackValue(undefined)
     }
-  }
-
-  const onCalendarChange = (val) => {
-    if (val && val[0]) {
-      const daysInMonth = parseInt(moment(val[0], 'YYYY-MM').daysInMonth())
-      const day = parseInt(moment(val[0]).format('DD'))
-      if (daysInMonth == day) {
-        modal('시작일은 월의 마지막 일자가 될 수 없습니다')
-        return
-      }
-    }
-
-    if (val && val[1]) {
-      const day = parseInt(moment(val[1]).format('DD'))
-      if (1 == day) {
-        modal('시작일을 마지막 일자로 선택 할 수 없습니다')
-        return
-      }
-    }
-
-    setDates(val)
   }
 
   const disabledDate = (current) => {
@@ -299,13 +277,47 @@ const CategoryAnalysis = (props) => {
     }
   }
 
-  const onOpenChange = (open) => {
-    if (open) {
-      setHackValue([])
-      setDates([])
-    } else {
-      setHackValue(undefined)
+  const onChangeRangePicker = (val) => {
+    setValue(val)
+    if (val && val[0] && val[1]) {
+      const start = moment(val[0]).format('YYYY-MM-DD')
+      const end = moment(val[1]).format('YYYY-MM-DD')
+      if (start == end) {
+        setValue('')
+      }
+      let storeDay = [toTimestamp(start), toTimestamp(end)]
+      setDatePicker(storeDay)
     }
+  }
+
+  const onCalendarChange = (val) => {
+    if (val && val[0]) {
+      const daysInMonth = parseInt(moment(val[0], 'YYYY-MM').daysInMonth())
+      const day = parseInt(moment(val[0]).format('DD'))
+      if (daysInMonth == day) {
+        modal('시작일은 월의 마지막 일자가 될 수 없습니다')
+        return
+      }
+    }
+
+    if (val && val[1]) {
+      const day = parseInt(moment(val[1]).format('DD'))
+      if (1 == day) {
+        modal('시작일을 마지막 일자로 선택 할 수 없습니다')
+        return
+      }
+    }
+
+    if (val && val[0] && val[1]) {
+      const startDate = parseInt(moment(val[0]).format('DD'))
+      const endDate = parseInt(moment(val[1]).format('DD'))
+      if (startDate == endDate) {
+        modal('시작일은 종료일과 같을 수 없습니다')
+        return
+      }
+    }
+
+    setDates(val)
   }
 
   const modal = (text) => {
@@ -460,7 +472,6 @@ const CategoryAnalysis = (props) => {
       end: datePicker[1] ? datePicker[1] : allDateOfCurrentMonth[1],
       key: category,
     }
-    console.log(datePicker, params)
 
     await callApiHome(params)
     setLoading(false)

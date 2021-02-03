@@ -103,6 +103,9 @@ const SaleStatus = () => {
     if (val && val[0] && val[1]) {
       const start = moment(val[0]).format('YYYY-MM-DD')
       const end = moment(val[1]).format('YYYY-MM-DD')
+      if (start == end) {
+        setValue('')
+      }
       let storeDay = [toTimestamp(start), toTimestamp(end)]
       setDatePicker(storeDay)
     }
@@ -122,6 +125,17 @@ const SaleStatus = () => {
       const day = parseInt(moment(val[1]).format('DD'))
       if (1 == day) {
         modal('시작일을 마지막 일자로 선택 할 수 없습니다')
+        return
+      }
+    }
+
+    if (val && val[0] && val[1]) {
+      const startDate = parseInt(moment(val[0]).format('DD'))
+      const endDate = parseInt(moment(val[1]).format('DD'))
+
+      if (startDate == endDate) {
+        modal('시작일은 종료일과 같을 수 없습니다')
+
         return
       }
     }
@@ -191,6 +205,7 @@ const SaleStatus = () => {
       content: text,
     })
   }
+
   /* Get Data */
   const [valueOfSearchInput, setValueOfSearchInput] = useState('')
   const [loading, setLoading] = useState(false)

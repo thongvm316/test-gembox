@@ -303,8 +303,7 @@ const VendorSearch = (props) => {
       if (startDate == endDate) {
         setValue('')
       }
-
-
+      
       setFilter({
         ...filter,
         start: moment(val[0]).unix(),

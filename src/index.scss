@@ -333,12 +333,3 @@ code {
   text-overflow:ellipsis; 
   width:100px;
 }
-
-/* Show btn for trigger Sider Bar */
-@media (max-width: 576px) {
-  .main-header {
-    .trigger {
-      visibility: visible !important;
-    }
-  }
-}
