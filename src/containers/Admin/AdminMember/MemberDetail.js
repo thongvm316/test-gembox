@@ -13,7 +13,6 @@ const MemberDetail = (props) => {
   const [loading, setLoading] = useState(false)
   const location = useLocation()
   const { memberDetail } = location.state
-  console.log(memberDetail)
 
   // Config for call API
   const config = {
@@ -25,6 +24,7 @@ const MemberDetail = (props) => {
   }
 
   const deleteMember = async () => {
+    setLoading(true)
     try {
       await axios.delete(`${API_URL}/members/${memberDetail.id}`, config)
       console.log('Delete User')
@@ -32,6 +32,7 @@ const MemberDetail = (props) => {
     } catch (error) {
       console.log(error.response)
     }
+    setLoading(false)
   }
 
   const dowloadPdfFile = async () => {
@@ -234,7 +235,9 @@ const MemberDetail = (props) => {
       <Row style={{ marginTop: '100px' }} justify="center">
         <Col span={12} style={{ textAlign: 'center' }}>
           <Space size="large">
-            <Button onClick={deleteMember}>계정 삭제하기</Button>
+            <Button disabled={loading} onClick={deleteMember}>
+              계정 삭제하기
+            </Button>
             {/* <Button onClick={() => props.history.push('/admin-member')}>목록으로 돌아가기</Button> */}
           </Space>
         </Col>

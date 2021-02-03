@@ -25,8 +25,10 @@ const AdminMemberRequestDetail = (props) => {
   }
 
   const approve = async () => {
+    setLoading(true)
     if (!isNumberRegister) {
       message.warning('You must enter a company registration number')
+      setLoading(false)
       return
     }
     const body = {
@@ -43,9 +45,11 @@ const AdminMemberRequestDetail = (props) => {
     } catch (error) {
       console.log(error.response)
     }
+    setLoading(false)
   }
 
   const reject = async () => {
+    setLoading(true)
     const body = {
       action: 'reject',
     }
@@ -61,21 +65,22 @@ const AdminMemberRequestDetail = (props) => {
     } catch (error) {
       console.log(error.response)
     }
+    setLoading(true)
   }
 
-  const dowloadPdfFile = async () => {
+  const dowloadPdfFile = () => {
     setLoading(true)
     adminApi
       .dowloadPdfFile(memberRequestDetail.id)
       .then((value) => {
         console.log('success')
         fileDownload(value, 'license.pdf')
-        setLoading(false)
       })
       .catch((error) => {
         console.log(error.response)
-        setLoading(false)
       })
+
+    setLoading(false)
   }
 
   const resetPassword = async () => {
@@ -238,8 +243,12 @@ const AdminMemberRequestDetail = (props) => {
             ''
           ) : (
             <Space size="large">
-              <Button onClick={reject}>거부하기</Button>
-              <Button onClick={approve}>승인 하기</Button>
+              <Button disabled={loading} onClick={reject}>
+                거부하기
+              </Button>
+              <Button disabled={loading} onClick={approve}>
+                승인 하기
+              </Button>
             </Space>
           )}
         </Col>
