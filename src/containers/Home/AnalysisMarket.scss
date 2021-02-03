@@ -58,6 +58,12 @@
       display: none !important;
     }
   }
+
+  .spin-usefect {
+    margin-left: 50%;
+    margin-top: 2rem;
+    transform: translateX(-50%);
+  }
 }
 
 @media (min-width: 1200px) {

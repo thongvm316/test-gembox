@@ -9,7 +9,10 @@ import {
   message,
   Checkbox,
   Image,
+  Spin,
 } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
+
 import { API_URL } from '../../constants/appConstants'
 import Footer from '../../components/Footer'
 import axios from 'axios'
@@ -517,7 +520,18 @@ const SignUp = (props) => {
                       htmlType="submit"
                       className="submit"
                     >
-                      회원가입 신청
+                      {loading ? (
+                        <Spin
+                          indicator={
+                            <LoadingOutlined style={{ color: '#fff' }} />
+                          }
+                        />
+                      ) : (
+                        ''
+                      )}
+                      <span style={loading ? { marginLeft: '5px' } : {}}>
+                        회원가입 신청
+                      </span>
                     </Button>
                   </FormItem>
                 </Col>
