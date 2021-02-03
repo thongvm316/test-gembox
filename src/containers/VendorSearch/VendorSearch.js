@@ -13,6 +13,7 @@ const { Option } = Select
 const { RangePicker } = DatePicker
 
 const VendorSearch = (props) => {
+
   const [hackValue, setHackValue] = useState()
   const [value, setValue] = useState()
   const [dates, setDates] = useState([])
@@ -236,12 +237,25 @@ const VendorSearch = (props) => {
 
   const disabledDate = (current) => {
     const daysInMonth = parseInt(moment(current, 'YYYY-MM').daysInMonth())
-    const date =
-      current && moment(current).format('DD') == 1
-      || current && moment(current).format('DD') == 15
-      || current && moment(current).format('DD') == daysInMonth
 
-    return !date
+    if (!dates || dates.length === 0) {
+      const date =
+        current && moment(current).format('DD') == 1
+        || current && moment(current).format('DD') == 15
+        || current && moment(current).format('DD') == daysInMonth
+
+      return !date
+    } else {
+      return !(
+        moment(dates[0]).format('YYYY-MM') == moment(current).format('YYYY-MM') && current && moment(current).format('DD') == 1
+        || moment(dates[0]).format('YYYY-MM') == moment(current).format('YYYY-MM') && current && moment(current).format('DD') == 15
+        || moment(dates[0]).format('YYYY-MM') == moment(current).format('YYYY-MM') && current && moment(current).format('DD') == daysInMonth
+      )
+    }
+
+
+
+
   }
 
   const onChangeRangePicker = (val) => {
@@ -255,6 +269,10 @@ const VendorSearch = (props) => {
     }
   }
 
+  const onCalendarChange = (val) => {
+    setDates(val)
+  }
+
   return (
     <div className="vendor-search">
       <Row className="card-border" style={{ marginBottom: '2rem' }}>
@@ -263,11 +281,11 @@ const VendorSearch = (props) => {
             <div className="filter-date" style={{ marginRight: '10px' }}>
               <Space>
                 <RangePicker
-                  // value={hackValue || value}
+                  value={hackValue || value}
                   disabledDate={disabledDate}
-                  // onCalendarChange={(val) => setDates(val)}
+                  onCalendarChange={(val) => onCalendarChange(val)}
                   onChange={(val) => onChangeRangePicker(val)}
-                  // onOpenChange={onOpenChange}
+                  onOpenChange={onOpenChange}
                 />
               </Space>
             </div>
