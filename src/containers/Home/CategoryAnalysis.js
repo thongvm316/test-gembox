@@ -174,7 +174,7 @@ const CategoryAnalysis = (props) => {
       headerFormat: '<small>{point.key}</small><table>',
       pointFormat:
         '<tr><td</td>' +
-        '<td style="text-align: right"><b>{point.y} ₩ </b></td></tr>',
+        '<td style="text-align: right"><b>₩{point.y}</b></td></tr>',
       footerFormat: '</table>',
     },
     credits: {
@@ -425,7 +425,7 @@ const CategoryAnalysis = (props) => {
                 집계 월
               </h1>
             </Col>
-            <Col xs={24} sm={10} md={10} lg={8} xl={5}>
+            <Col xs={24} sm={10} md={10} lg={8} xl={4}>
               <DatePicker.RangePicker
                 defaultValue={[moment(startOfMonth), moment(endOfMonth)]}
                 onChange={onChange}

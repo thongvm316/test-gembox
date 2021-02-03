@@ -182,27 +182,21 @@ const Home = (props) => {
   }
 
   const getData = () => {
-    // const params = {
-    //   start: 1234567890,
-    //   end: 2345678901,
-    // }
-
     const params = {
-      start: day[0],
-      end: day[1],
+      start: day[0] ? day[0] : allDateOfCurrentMonth[0],
+      end: day[1] ? day[1] : allDateOfCurrentMonth[1],
     }
     callApiHome(params)
   }
 
   // Get data of current month
+  const startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
+  const endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
+  const allDateOfCurrentMonth = [
+    toTimestamp(startOfMonth),
+    toTimestamp(endOfMonth),
+  ]
   useEffect(async () => {
-    let startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD')
-    let endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DD')
-    let allDateOfCurrentMonth = [
-      toTimestamp(startOfMonth),
-      toTimestamp(endOfMonth),
-    ]
-
     const params = {
       start: allDateOfCurrentMonth[0],
       end: allDateOfCurrentMonth[1],

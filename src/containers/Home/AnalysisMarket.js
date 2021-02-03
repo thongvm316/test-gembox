@@ -20,6 +20,7 @@ hcnd(Highcharts)
 const AnalysisMarket = (props) => {
   const [selectMarket, setSelectMarket] = useState('11번가')
   const [loading, setLoading] = useState(false)
+  const [loadingUseEfect, setLoadingUseEfect] = useState(false)
 
   // Handle data
   const [data, setData] = useState([])
@@ -91,12 +92,28 @@ const AnalysisMarket = (props) => {
 
   // Chart 1
   const titleOfChartOne = `${selectMarket} 카테고리별 분석`
-  const colorsChart1 = data.map((color) => {
-    let listColor = '#'.concat(
-      Math.floor(Math.random() * 16777215).toString(16),
-    )
-    return listColor
-  })
+  const colorsChart1 = [
+    '#FF6633',
+    '#FFB399',
+    '#FF33FF',
+    '#FFFF99',
+    '#00B3E6',
+    '#E6B333',
+    '#3366E6',
+    '#999966',
+    '#99FF99',
+    '#B34D4D',
+    '#80B300',
+    '#809900',
+    '#E6B3B3',
+    '#6680B3',
+    '#66991A',
+    '#FF99E6',
+    '#CCFF1A',
+    '#FF1A66',
+    '#E6331A',
+    '#33FFCC',
+  ]
 
   const dataOfChartOne = data.map((data) => {
     const newKeys = { category_tag: 'name', total: 'y' }
@@ -123,7 +140,7 @@ const AnalysisMarket = (props) => {
       headerFormat: '<small>{point.key}</small><table>',
       pointFormat:
         '<tr><td</td>' +
-        '<td style="text-align: right"><b>{point.y} ₩ </b></td></tr>',
+        '<td style="text-align: right"><b>₩{point.y}</b></td></tr>',
       footerFormat: '</table>',
     },
     credits: {
@@ -208,7 +225,7 @@ const AnalysisMarket = (props) => {
         yAxis: 1,
         data: dataOfTotalLineAndColumnChart,
         tooltip: {
-          valueSuffix: ' ₩',
+          valuePrefix: '₩',
         },
       },
       {
@@ -260,6 +277,7 @@ const AnalysisMarket = (props) => {
     toTimestamp(endOfMonth),
   ]
   useEffect(async () => {
+    setLoadingUseEfect(true)
     const params = {
       start: allDateOfCurrentMonth[0],
       end: allDateOfCurrentMonth[1],
@@ -269,9 +287,11 @@ const AnalysisMarket = (props) => {
       const value = await homeApi.getAnalysisMarket(params)
       if (value && value.data.result && value.data.result.total_sale) {
         setData(value.data.result.total_sale)
+        setLoadingUseEfect(false)
       }
     } catch (error) {
       console.log(error.response)
+      setLoadingUseEfect(false)
     }
   }, [])
 
@@ -345,44 +365,50 @@ const AnalysisMarket = (props) => {
         </Col>
       </Row>
 
-      <Row
-        gutter={16}
-        className="chart-one card-border"
-        style={{ marginTop: '24px' }}
-      >
-        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={options}
-            {...props}
-          />
-        </Col>
-
-        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-          <Row gutter={[16, 16]} justify="center">
-            <Col xs={24} sm={12} md={12} lg={10} xl={10}>
-              <Card title="매출액" style={{ borderRadius: '16px' }}>
-                <RenderData data={data1} />
-              </Card>
+      {loadingUseEfect ? (
+        <Spin className="spin-usefect" size="large" />
+      ) : (
+        <>
+          <Row
+            gutter={16}
+            className="chart-one card-border"
+            style={{ marginTop: '24px' }}
+          >
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={options}
+                {...props}
+              />
             </Col>
-            <Col xs={24} sm={12} md={12} lg={10} xl={10}>
-              <Card title="매출액" style={{ borderRadius: '16px' }}>
-                <RenderData data={data2} />
-              </Card>
+
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Row gutter={[16, 16]} justify="center">
+                <Col xs={24} sm={12} md={12} lg={10} xl={10}>
+                  <Card title="매출액" style={{ borderRadius: '16px' }}>
+                    <RenderData data={data1} />
+                  </Card>
+                </Col>
+                <Col xs={24} sm={12} md={12} lg={10} xl={10}>
+                  <Card title="매출액" style={{ borderRadius: '16px' }}>
+                    <RenderData data={data2} />
+                  </Card>
+                </Col>
+              </Row>
             </Col>
           </Row>
-        </Col>
-      </Row>
 
-      <Row style={{ marginTop: '40px' }} className="chart-two card-border">
-        <Col span={24}>
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={optionsLineAndColumnChart}
-            {...props}
-          />
-        </Col>
-      </Row>
+          <Row style={{ marginTop: '40px' }} className="chart-two card-border">
+            <Col span={24}>
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={optionsLineAndColumnChart}
+                {...props}
+              />
+            </Col>
+          </Row>
+        </>
+      )}
 
       <Footer />
     </div>

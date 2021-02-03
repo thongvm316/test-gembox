@@ -89,3 +89,10 @@
   transform: translateX(-50%);
   text-align: center;
 }
+
+.ant-modal-root {
+  .ant-btn, .ant-btn-primary:hover, .ant-btn-primary:focus {
+    background-color: #3F537D;
+    border-color: #3F537D;
+  }
+}

@@ -15,7 +15,7 @@ const MemberDetail = (props) => {
   const { memberDetail } = location.state
   console.log(memberDetail)
 
-  // Congif for call API
+  // Config for call API
   const config = {
     headers: {
       Accept: 'application/json',

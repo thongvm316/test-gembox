@@ -12,7 +12,6 @@ import {
   Divider,
   Image,
   message,
-  Alert,
   Spin,
   Popover,
 } from 'antd'
@@ -22,7 +21,7 @@ import './UserDetail.scss'
 const UserDetail = (props) => {
   const [showNameOfFileUpload, setShowNameOfFileUpload] = useState('')
 
-  /* Modal */
+  /* Modal ChangePassword */
   const [isModalVisible, setIsModalVisible] = useState(false)
   const onChangePassword = () => {
     setIsModalVisible(true)
@@ -161,7 +160,9 @@ const UserDetail = (props) => {
         })
         .catch((error) => console.log(error.response)),
     ])
-    message.success(<Alert message="Success" type="success" />)
+    Modal.success({
+      content: 'Success',
+    })
     setDisableBtn(false)
   }
 

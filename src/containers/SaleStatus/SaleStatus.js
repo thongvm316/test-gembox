@@ -127,8 +127,8 @@ const SaleStatus = () => {
 
   const getData = () => {
     const params = {
-      start: datePicker[0],
-      end: datePicker[1],
+      start: datePicker[0] ? datePicker[0] : allDateOfCurrentMonth[0],
+      end: datePicker[1] ? datePicker[1] : allDateOfCurrentMonth[1],
       key: valueOfSearchInput,
       lastIndex: lastIndex,
     }
@@ -167,7 +167,6 @@ const SaleStatus = () => {
   }, [lastIndex])
 
   useEffect(async () => {
-    console.log('Waiting....')
     await Promise.all([
       saleStatusAPI
         .getProductCount()
@@ -297,6 +296,7 @@ const SaleStatus = () => {
     toTimestamp(endOfMonth),
   ]
   useEffect(() => {
+    setLoading(true)
     const params = {
       start: allDateOfCurrentMonth[0],
       end: allDateOfCurrentMonth[1],
@@ -318,7 +318,6 @@ const SaleStatus = () => {
             setDataSearch(value.data.result.product)
           }
         }
-
         setLoading(false)
       })
       .catch((err) => {

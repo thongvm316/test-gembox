@@ -10,13 +10,16 @@ import {
   Image,
   message,
   Alert,
+  Spin,
 } from 'antd'
+import { EyeOutlined, LoadingOutlined } from '@ant-design/icons'
+
 import { useLocation } from 'react-router-dom'
 import { API_URL } from '../constants/appConstants'
 import axios from 'axios'
+
 import Footer from '../components/Footer'
 import './Login.scss'
-import { EyeOutlined } from '@ant-design/icons'
 
 const FormItem = Form.Item
 
@@ -172,7 +175,18 @@ const Login = (props) => {
                         htmlType="submit"
                         disabled={loading}
                       >
-                        로그인
+                        {loading ? (
+                          <Spin
+                            indicator={
+                              <LoadingOutlined style={{ color: '#fff' }} />
+                            }
+                          />
+                        ) : (
+                          ''
+                        )}
+                        <span style={loading ? { marginLeft: '5px' } : {}}>
+                          로그인
+                        </span>
                       </Button>
                     </Col>
                   </Row>
