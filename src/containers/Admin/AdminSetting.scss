@@ -27,7 +27,12 @@
         margin-left: 50%;
         margin-top: 2rem;
         transform: translateX(-50%);
-      }
+    }
+
+    .ant-btn[disabled], .ant-btn[disabled]:hover {
+        color: #fff !important;
+        background-color: #5c72a3 !important;
+    }
 }
 
 .modal-admin-setting {

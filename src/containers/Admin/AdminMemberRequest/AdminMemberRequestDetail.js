@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Row, Col, Button, Space, List, Input, message } from 'antd'
 import { useLocation } from 'react-router-dom'
+
+import { AdminMemberContext } from '../../../lib/admin/AdminMemberContext'
+import { action } from '../../../lib/admin/AdminMemberContext'
 
 import axios from 'axios'
 import { API_URL } from '../../../constants/appConstants'
@@ -24,6 +27,10 @@ const AdminMemberRequestDetail = (props) => {
     },
   }
 
+  /* Get global sate */
+  const context = useContext(AdminMemberContext)
+  const { dispatch } = context
+
   const approve = async () => {
     setLoading(true)
     if (!isNumberRegister) {
@@ -40,7 +47,7 @@ const AdminMemberRequestDetail = (props) => {
         body,
         config,
       )
-      console.log('Approve')
+      dispatch({ type: action.APPROVE, payload: memberRequestDetail })
       props.history.push('/member-request')
     } catch (error) {
       console.log(error.response)
@@ -60,7 +67,7 @@ const AdminMemberRequestDetail = (props) => {
         body,
         config,
       )
-      console.log('Reject')
+      dispatch({ type: action.REJECT })
       props.history.push('/member-request')
     } catch (error) {
       console.log(error.response)
@@ -75,12 +82,12 @@ const AdminMemberRequestDetail = (props) => {
       .then((value) => {
         console.log('success')
         fileDownload(value, 'license.pdf')
+        setLoading(false)
       })
       .catch((error) => {
         console.log(error.response)
+        setLoading(false)
       })
-
-    setLoading(false)
   }
 
   const resetPassword = async () => {

@@ -135,7 +135,6 @@ const SaleStatus = () => {
 
       if (startDate == endDate) {
         modal('시작일은 종료일과 같을 수 없습니다')
-
         return
       }
     }

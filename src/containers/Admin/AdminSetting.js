@@ -10,6 +10,7 @@ const AdminSetting = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [userInfo, setUserInfo] = useState('')
   const [loading, setLoading] = useState(false)
+  const [loadingBtn, setLoadingBtn] = useState(false)
 
   /* Change Password */
   const [password, setPassword] = useState({
@@ -41,19 +42,26 @@ const AdminSetting = (props) => {
 
   const changePassword = () => {
     if (new_password !== confirm_new_password) {
-      message.error('The two passwords that you entered do not match!')
+      message.error('새 비밀번호와 확인 새 비밀번호가 일치하지 않습니다.')
       return
     }
-    setLoading(true)
+    setLoadingBtn(true)
     adminApi
       .adminChangePassword(bodyPassword)
       .then((value) => {
-        console.log('success')
-        setLoading(false)
         handleExitBtn()
+        setPassword({
+          current_password: '',
+          new_password: '',
+          confirm_new_password: '',
+        })
+        Modal.success({
+          content: '성공',
+        })
+        setLoadingBtn(false)
       })
       .catch((error) => {
-        setLoading(false)
+        setLoadingBtn(false)
         handleExitBtn()
         console.log(error.response)
       })
@@ -97,7 +105,10 @@ const AdminSetting = (props) => {
 
             <Col span={24}>
               <p>Password</p>
-              <Input suffix={<EditOutlined onClick={showModal} />} />
+              <Input
+                placeholder="******"
+                suffix={<EditOutlined onClick={showModal} />}
+              />
             </Col>
           </Row>
 
@@ -111,16 +122,14 @@ const AdminSetting = (props) => {
               style={{ textAlign: 'center' }}
             >
               <Button
-                onClick={() => {
-                  localStorage.clear()
-                  props.history.push('/admin-login')
-                }}
+                disabled={loadingBtn}
+                onClick={changePassword}
                 type="primary"
                 block
                 shape="round"
                 style={{ textAlign: 'center' }}
               >
-                로그인
+                변경사항 저장하기
               </Button>
             </Col>
           </Row>
@@ -137,7 +146,7 @@ const AdminSetting = (props) => {
                   name="current_password"
                   onChange={onChange}
                   size="large"
-                  placeholder="Your Password"
+                  placeholder="너의 비밀번호"
                 />
               </div>
 
@@ -146,20 +155,20 @@ const AdminSetting = (props) => {
                   name="new_password"
                   onChange={onChange}
                   size="large"
-                  placeholder="Type Your New Password"
+                  placeholder="새 비밀번호 입력"
                 />
                 <Input.Password
                   name="confirm_new_password"
                   onChange={onChange}
                   size="large"
-                  placeholder="Confirm Your New Password"
+                  placeholder="새 비밀번호 확인"
                 />
               </div>
 
               <div className="actions-change-password">
                 <Button
                   size="large"
-                  onClick={changePassword}
+                  onClick={handleExitBtn}
                   className="btn-save"
                 >
                   확인

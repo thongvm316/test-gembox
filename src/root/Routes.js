@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Switch } from 'react-router-dom'
 
 import SignUp from '../containers/Register/SignUp'
@@ -28,127 +28,133 @@ import AdminSetting from '../containers/Admin/AdminSetting'
 import PrivateRoute from './PrivateRoute'
 import AppRoute from './AppRoute'
 
+import AdminMemberContextProvider from '../lib/admin/AdminMemberContext'
+
 const Routes = () => {
   return (
-    <Switch>
-      {/* Admin */}
-      <AppRoute
-        exact
-        path="/admin-login"
-        component={AdminLogin}
-        layout={LoginLayout}
-      />
-      <AppRoute
-        exact
-        path="/admin-find-account"
-        component={AdminFindAccount}
-        layout={LoginLayout}
-      />
-      <PrivateRoute
-        exact
-        showSiderBar={false}
-        path="/admin-member"
-        dataToken={'token'}
-        component={AdminMember}
-      />
-      <PrivateRoute
-        exact
-        showSiderBar={false}
-        path="/member-detail"
-        dataToken={'token'}
-        component={MemberDetail}
-      />
-      <PrivateRoute
-        exact
-        showSiderBar={false}
-        path="/member-request"
-        dataToken={'token'}
-        component={AdminMemberRequest}
-      />
-      <PrivateRoute
-        exact
-        showSiderBar={false}
-        path="/member-request-detail"
-        dataToken={'token'}
-        component={AdminMemberRequestDetail}
-      />
-      <PrivateRoute
-        exact
-        showSiderBar={false}
-        path="/admin-setting"
-        dataToken={'token'}
-        component={AdminSetting}
-      />
+    <AdminMemberContextProvider>
+      <Switch>
+        {/* Admin */}
+        <AppRoute
+          exact
+          path="/admin-login"
+          component={AdminLogin}
+          layout={LoginLayout}
+        />
+        <AppRoute
+          exact
+          path="/admin-find-account"
+          component={AdminFindAccount}
+          layout={LoginLayout}
+        />
 
-      {/* Signup - Login */}
-      <AppRoute exact path="/" component={Login} layout={LoginLayout} />
-      <AppRoute
-        exact
-        path="/signup"
-        component={SignUp}
-        layout={RegisterLayout}
-      />
+        <PrivateRoute
+          exact
+          showSiderBar={false}
+          path="/admin-member"
+          dataToken={'token'}
+          component={AdminMember}
+        />
+        <PrivateRoute
+          exact
+          showSiderBar={false}
+          path="/member-detail"
+          dataToken={'token'}
+          component={MemberDetail}
+        />
+        <PrivateRoute
+          exact
+          showSiderBar={false}
+          path="/member-request"
+          dataToken={'token'}
+          component={AdminMemberRequest}
+        />
+        <PrivateRoute
+          exact
+          showSiderBar={false}
+          path="/member-request-detail"
+          dataToken={'token'}
+          component={AdminMemberRequestDetail}
+        />
 
-      {/* Home Page */}
-      <PrivateRoute
-        showSiderBar={true}
-        exact
-        path="/home"
-        dataToken={'token-user'}
-        component={Home}
-      />
-      <PrivateRoute
-        showSiderBar={true}
-        exact
-        path="/category-analysis"
-        dataToken={'token-user'}
-        component={CategoryAnalysis}
-      />
-      <PrivateRoute
-        showSiderBar={true}
-        exact
-        path="/analysis-market"
-        dataToken={'token-user'}
-        component={AnalysisMarket}
-      />
+        <PrivateRoute
+          exact
+          showSiderBar={false}
+          path="/admin-setting"
+          dataToken={'token'}
+          component={AdminSetting}
+        />
 
-      <PrivateRoute
-        showSiderBar={true}
-        dataToken={'token-user'}
-        exact
-        path="/product-search"
-        component={ProductSearch}
-      />
-      <PrivateRoute
-        showSiderBar={true}
-        dataToken={'token-user'}
-        exact
-        path="/vendor-search"
-        component={VendorSearch}
-      />
-      <PrivateRoute
-        showSiderBar={true}
-        dataToken={'token-user'}
-        exact
-        path="/product-detail"
-        component={ProductDetail}
-      />
+        {/* Signup - Login */}
+        <AppRoute exact path="/" component={Login} layout={LoginLayout} />
+        <AppRoute
+          exact
+          path="/signup"
+          component={SignUp}
+          layout={RegisterLayout}
+        />
 
-      <PrivateRoute
-        showSiderBar={true}
-        dataToken={'token-user'}
-        exact
-        path="/sale-status"
-        component={SaleStatus}
-      />
-      <PrivateRoute
-        showSiderBar={true}
-        dataToken={'token-user'}
-        exact
-        path="/user-detail"
-        component={UserDetail}
-      />
-    </Switch>
+        {/* Home Page */}
+        <PrivateRoute
+          showSiderBar={true}
+          exact
+          path="/home"
+          dataToken={'token-user'}
+          component={Home}
+        />
+        <PrivateRoute
+          showSiderBar={true}
+          exact
+          path="/category-analysis"
+          dataToken={'token-user'}
+          component={CategoryAnalysis}
+        />
+        <PrivateRoute
+          showSiderBar={true}
+          exact
+          path="/analysis-market"
+          dataToken={'token-user'}
+          component={AnalysisMarket}
+        />
+
+        <PrivateRoute
+          showSiderBar={true}
+          dataToken={'token-user'}
+          exact
+          path="/product-search"
+          component={ProductSearch}
+        />
+        <PrivateRoute
+          showSiderBar={true}
+          dataToken={'token-user'}
+          exact
+          path="/vendor-search"
+          component={VendorSearch}
+        />
+        <PrivateRoute
+          showSiderBar={true}
+          dataToken={'token-user'}
+          exact
+          path="/product-detail"
+          component={ProductDetail}
+        />
+
+        <PrivateRoute
+          showSiderBar={true}
+          dataToken={'token-user'}
+          exact
+          path="/sale-status"
+          component={SaleStatus}
+        />
+        <PrivateRoute
+          showSiderBar={true}
+          dataToken={'token-user'}
+          exact
+          path="/user-detail"
+          component={UserDetail}
+        />
+      </Switch>
+    </AdminMemberContextProvider>
   )
 }
 export default Routes

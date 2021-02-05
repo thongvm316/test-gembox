@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, Dropdown, Menu, Popover } from 'antd'
+import { Layout, Popover } from 'antd'
 import { MenuUnfoldOutlined, DownOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import Logout from '../images/logout.png'
@@ -44,6 +44,7 @@ const MainLayout = (props) => {
   }
 
   const toggle = () => {
+    console.log('object')
     setCollapsed(!collapsed)
   }
 
@@ -91,16 +92,28 @@ const MainLayout = (props) => {
     }
   }, [tokenUser, tokenAdmin])
 
+  /* Get width and use for toggle sider in small device */
+  const width = window.innerWidth
+  const isShowIconAndCollapsed = width < 576 ? true : false
+
   return (
     <Layout className="admin-layout">
-      {showSiderBar ? <Sidebar collapsed={collapsed} /> : <></>}
+      {showSiderBar ? (
+        <Sidebar collapsed={isShowIconAndCollapsed ? collapsed : false} />
+      ) : (
+        <></>
+      )}
       <Layout style={{ background: '#fff' }}>
         <Header
           style={{ background: '#fff', padding: 0 }}
           className="main-header"
         >
           <MenuUnfoldOutlined
-            style={{ visibility: 'hidden' }}
+            style={
+              isShowIconAndCollapsed
+                ? { visibility: 'visible' }
+                : { visibility: 'hidden' }
+            }
             className="trigger"
             onClick={() => toggle()}
           />

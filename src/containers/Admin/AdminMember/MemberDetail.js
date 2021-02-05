@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
-import { Row, Col, Button, Space, List, Input } from 'antd'
+import React, { useState, useContext } from 'react'
+import { Row, Col, Button, Space, List } from 'antd'
 import { useLocation } from 'react-router-dom'
+
+import { AdminMemberContext } from '../../../lib/admin/AdminMemberContext'
+import { action } from '../../../lib/admin/AdminMemberContext'
 
 import { API_URL } from '../../../constants/appConstants'
 import axios from 'axios'
@@ -13,6 +16,10 @@ const MemberDetail = (props) => {
   const [loading, setLoading] = useState(false)
   const location = useLocation()
   const { memberDetail } = location.state
+
+  /* Get global sate */
+  const context = useContext(AdminMemberContext)
+  const { dispatch } = context
 
   // Config for call API
   const config = {
@@ -27,7 +34,7 @@ const MemberDetail = (props) => {
     setLoading(true)
     try {
       await axios.delete(`${API_URL}/members/${memberDetail.id}`, config)
-      console.log('Delete User')
+      dispatch({ type: action.DELETE, payload: memberDetail.id })
       props.history.push('/admin-member')
     } catch (error) {
       console.log(error.response)

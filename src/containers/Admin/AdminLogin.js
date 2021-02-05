@@ -73,25 +73,14 @@ const AdminLogin = (props) => {
         flexDirection: 'column',
         justifyContent: 'space-between',
         height: '100vh',
-        paddingTop: '17rem',
+        paddingTop: '15rem',
       }}
     >
       <Row justify="center" gutter={24} style={{ textAlign: 'center' }}>
         <Col span={24}>
           <h1>GEM BOX</h1>
         </Col>
-        <Col
-          xs={20}
-          sm={24}
-          md={24}
-          lg={24}
-          xl={24}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+        <Col xs={20} sm={7} md={10} lg={7} xl={5}>
           <Form onFinish={onFinish}>
             <FormItem
               name="email"
@@ -132,7 +121,10 @@ const AdminLogin = (props) => {
             </FormItem>
           </Form>
         </Col>
-        <Col span={3} style={{ marginTop: '36px' }}>
+      </Row>
+
+      <Row justify="center">
+        <Col xs={6} sm={5} md={5} lg={5} xl={2}>
           <Button
             className="btn-login"
             onClick={() => history.push('/admin-find-account')}

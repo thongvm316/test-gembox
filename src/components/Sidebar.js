@@ -17,7 +17,7 @@ const Sidebar = (props) => {
       collapsedWidth="0"
       trigger={null}
       collapsible
-      collapsed={false}
+      collapsed={collapsed}
     >
       <Menu
         theme="dark"

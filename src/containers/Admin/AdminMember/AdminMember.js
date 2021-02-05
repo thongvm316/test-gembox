@@ -1,19 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Row, Col, Space, Input, Table, Radio } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
+
+import { AdminMemberContext } from '../../../lib/admin/AdminMemberContext'
+import { action } from '../../../lib/admin/AdminMemberContext'
 
 import adminApi from '../../../api/AdminAPI'
 import './AdminMember.scss'
 
 const AdminMember = (props) => {
-  const [data, setData] = useState(null)
+  // const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
+
+  /* Get global sate */
+  const context = useContext(AdminMemberContext)
+  const { state, dispatch } = context
+  const { member } = state
 
   /* Filter */
   const [isFiltering, setFiltering] = useState(false)
   const [filtered, setFiltered] = useState(null)
   const filterResults = (input) => {
-    let results = data.filter((item) => {
+    let results = member.filter((item) => {
       const name = item.name.toLowerCase()
       const term = input.toLowerCase()
       return name.indexOf(term) !== -1
@@ -42,12 +50,18 @@ const AdminMember = (props) => {
 
   // Get Data
   useEffect(() => {
-    setLoading(true)
+    if (member.length === 0) {
+      setLoading(true)
+    }
     adminApi
       .getMember()
       .then((value) => {
         if (value && value.data && value.data.result) {
-          setData(value.data.result.member)
+          dispatch({
+            type: action.FETCH_MEMBER_SUCCESS,
+            payload: value.data.result.member,
+          })
+          // setData(value.data.result.member)
         }
         setLoading(false)
       })
@@ -100,7 +114,7 @@ const AdminMember = (props) => {
             scroll={{ x: 1300 }}
             rowKey={(record) => record.id}
             columns={columns}
-            dataSource={isFiltering ? filtered : data}
+            dataSource={isFiltering ? filtered : member}
             onRow={(record, rowIndex) => {
               return {
                 onClick: (event) => {

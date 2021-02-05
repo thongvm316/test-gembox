@@ -1,8 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Routes from './Routes'
-
-import axios from 'axios'
-import { API_URL } from '../constants/appConstants'
 
 import 'moment/locale/ko'
 import { BrowserRouter as Router } from 'react-router-dom'

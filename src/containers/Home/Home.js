@@ -20,7 +20,6 @@ import './home.scss'
 
 const Home = (props) => {
   const [loading, setLoading] = useState(false)
-
   // Handle Data
   const [dataTopBander, setDataTopBander] = useState([])
   const [dataTopProduct, setDataTopProduct] = useState([])
@@ -245,21 +244,25 @@ const Home = (props) => {
       {loading ? (
         <Spin size="large" />
       ) : (
-        <Row className="site-card-wrapper" gutter={32}>
+        <Row
+          className="site-card-wrapper"
+          style={{ marginTop: '24px' }}
+          gutter={[32, 32]}
+        >
           <Col
             xs={24}
             sm={24}
             md={24}
-            lg={12}
+            lg={24}
             xl={12}
             className="style-small-device"
           >
             <Card title="TOP 20 매출 벤더">
               <Row gutter={32}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   <RenderData data={dataTopBander1} />
                 </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   <RenderData data={dataTopBander2} />
                 </Col>
               </Row>
@@ -270,16 +273,16 @@ const Home = (props) => {
             xs={24}
             sm={24}
             md={24}
-            lg={12}
+            lg={24}
             xl={12}
             className="style-small-device"
           >
             <Card title="TOP 20 판매 상품">
               <Row gutter={32}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   <RenderData data={dataTopProduct1} />
                 </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   <RenderData data={dataTopProduct2} />
                 </Col>
               </Row>

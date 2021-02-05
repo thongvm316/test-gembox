@@ -1,19 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Row, Col, Space, Input, Table, Radio } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
+
+import { AdminMemberContext } from '../../../lib/admin/AdminMemberContext'
+import { action } from '../../../lib/admin/AdminMemberContext'
 
 import adminApi from '../../../api/AdminAPI'
 import './AdminMemberRequest.scss'
 
 const AdminMemberRequest = (props) => {
-  const [data, setData] = useState(null)
+  // const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
+
+  /* Get global sate */
+  const context = useContext(AdminMemberContext)
+  const { state, dispatch } = context
+  const { member_request } = state
 
   /* Filter */
   const [isFiltering, setFiltering] = useState(false)
   const [filtered, setFiltered] = useState(null)
   const filterResults = (input) => {
-    let results = data.filter((item) => {
+    let results = member_request.filter((item) => {
       const name = item.name.toLowerCase()
       const term = input.toLowerCase()
       return name.indexOf(term) !== -1
@@ -60,12 +68,18 @@ const AdminMemberRequest = (props) => {
 
   // Get Data
   useEffect(async () => {
-    setLoading(true)
+    if (member_request.length === 0) {
+      setLoading(true)
+    }
     adminApi
       .getMember()
       .then((value) => {
         if (value && value.data && value.data.result) {
-          setData(value.data.result.member_request)
+          dispatch({
+            type: action.FETCH_MEMBER_REQUEST_SUCCESS,
+            payload: value.data.result.member_request,
+          })
+          // setData(value.data.result.member_request)
         }
         setLoading(false)
       })
@@ -118,7 +132,7 @@ const AdminMemberRequest = (props) => {
             loading={loading}
             columns={columns}
             rowKey={(record) => record.id}
-            dataSource={isFiltering ? filtered : data}
+            dataSource={isFiltering ? filtered : member_request}
             onRow={(record, rowIndex) => {
               return {
                 onClick: (event) => {

@@ -140,12 +140,11 @@ const UserDetail = (props) => {
     const res = await axios
       .put(`${API_URL}/user/profile`, bodyOfProfile, config)
       .then((value) => {
-        console.log('Success')
+        Modal.success({
+          content: '성공',
+        })
       })
       .catch((error) => console.log(error.response))
-    Modal.success({
-      content: 'Success',
-    })
     setDisableBtn(false)
   }
 
@@ -153,7 +152,7 @@ const UserDetail = (props) => {
     setDisableBtn(true)
     if (new_password !== confirm_new_password) {
       Modal.error({
-        content: 'Confirm passwords that you entered do not match!'
+        content: '새 비밀번호와 확인 새 비밀번호가 일치하지 않습니다.',
       })
       setDisableBtn(false)
       return
@@ -162,25 +161,22 @@ const UserDetail = (props) => {
     const res = await axios
       .put(`${API_URL}/user/changepassword`, bodyPassword, config)
       .then((value) => {
-        Modal.success({
-          content: 'Success',
-        })
         setPassword({
           current_password: '',
           new_password: '',
           confirm_new_password: '',
         })
         setDisableBtn(false)
-        setIsModalVisible(false)
+        Modal.success({
+          content: '암호를 성공적으로 변경',
+        })
       })
       .catch((error) => {
         console.log(error.response)
-         Modal.error({
-          content: 'Current password is incorrect',
-        })
-        return 
         setDisableBtn(false)
-        setIsModalVisible(false)
+        Modal.error({
+          content: '현재 암호가 잘못되었습니다',
+        })
       })
   }
 
@@ -390,7 +386,7 @@ const UserDetail = (props) => {
                     value={current_password}
                     onChange={onChange}
                     size="large"
-                    placeholder="Your Password"
+                    placeholder="너의 비밀번호"
                   />
                 </div>
 
@@ -400,14 +396,14 @@ const UserDetail = (props) => {
                     value={new_password}
                     onChange={onChange}
                     size="large"
-                    placeholder="Type Your New Password"
+                    placeholder="새 비밀번호 입력"
                   />
                   <Input.Password
                     name="confirm_new_password"
                     value={confirm_new_password}
                     onChange={onChange}
                     size="large"
-                    placeholder="Confirm Your New Password"
+                    placeholder="새 비밀번호 확인"
                   />
                 </div>
 
@@ -424,7 +420,7 @@ const UserDetail = (props) => {
                     onClick={changePassword}
                     className="btn-save"
                   >
-                    나가기
+                    확인
                   </Button>
                 </div>
               </div>
