@@ -195,7 +195,7 @@ const Home = (props) => {
     toTimestamp(startOfMonth),
     toTimestamp(endOfMonth),
   ]
-  useEffect(async () => {
+  useEffect(() => {
     const params = {
       start: allDateOfCurrentMonth[0],
       end: allDateOfCurrentMonth[1],

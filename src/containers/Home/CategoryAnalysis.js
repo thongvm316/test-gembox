@@ -488,6 +488,7 @@ const CategoryAnalysis = (props) => {
     toTimestamp(startOfMonth),
     toTimestamp(endOfMonth),
   ]
+
   // useEffect(async () => {
   //   let allDateOfCurrentMonth = [
   //     toTimestamp(startOfMonth),

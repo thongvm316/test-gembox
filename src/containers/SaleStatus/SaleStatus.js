@@ -270,8 +270,8 @@ const SaleStatus = () => {
     getData()
   }, [lastIndex])
 
-  useEffect(async () => {
-    await Promise.all([
+  useEffect(() => {
+    Promise.all([
       saleStatusAPI
         .getProductCount()
         .then((value) => {
