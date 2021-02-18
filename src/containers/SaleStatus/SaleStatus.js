@@ -334,37 +334,37 @@ const SaleStatus = () => {
 
   /*  For render market of user set */
   const newListMarket = listMarket.map((market) => {
-    const { market_name, market_url } = market
+    const { market_name, url } = market
     if (market_name === '11번가') {
-      return { market_name, market_url, img: Market1 }
+      return { market_name, url, img: Market1 }
     }
 
     if (market_name === 'G마켓') {
-      return { market_name, market_url, img: Market2 }
+      return { market_name, url, img: Market2 }
     }
 
     if (market_name === '쿠팡') {
-      return { market_name, market_url, img: Market3 }
+      return { market_name, url, img: Market3 }
     }
 
     if (market_name === '인터파크') {
-      return { market_name, market_url, img: Market4 }
+      return { market_name, url, img: Market4 }
     }
 
     if (market_name === '옥션') {
-      return { market_name, market_url, img: Market5 }
+      return { market_name, url, img: Market5 }
     }
 
     if (market_name === '스마트스토어') {
-      return { market_name, market_url, img: Market6 }
+      return { market_name, url, img: Market6 }
     }
 
     if (market_name === '티몬') {
-      return { market_name, market_url, img: Market7 }
+      return { market_name, url, img: Market7 }
     }
 
     if (market_name === '위메프') {
-      return { market_name, market_url, img: Market8 }
+      return { market_name, url, img: Market8 }
     }
   })
 
@@ -626,7 +626,7 @@ const SaleStatus = () => {
             style={{ textAlign: 'center' }}
             className="total-sale"
           >
-            <a href={market.market_url} target="_blank">
+            <a href={market.url} target="_blank">
               <img src={market.img} />
               <span
                 style={{

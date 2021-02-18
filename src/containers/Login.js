@@ -110,7 +110,7 @@ const Login = (props) => {
                 <Col span={16}>
                   <h1 className="login-title">로그인</h1>
                   <p className="adv">
-                    최상의 상품판매 전략을 위한 빅데이터 서비스
+                    최상의 상품판매 전략을 위한 빅데이터 서비스 
                   </p>
                 </Col>
               </Row>
