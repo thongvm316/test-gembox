@@ -296,14 +296,13 @@ const VendorSearch = (props) => {
     setValue(val)
 
     if (val && val[0] && val[1]) {
-
       const startDate = parseInt(moment(val[0]).format('DD'))
       const endDate = parseInt(moment(val[1]).format('DD'))
 
       if (startDate == endDate) {
         setValue('')
       }
-      
+
       setFilter({
         ...filter,
         start: moment(val[0]).unix(),
@@ -362,8 +361,8 @@ const VendorSearch = (props) => {
               <Space>
                 <RangePicker
                   value={hackValue || value}
-                  disabledDate={disabledDate}
-                  onCalendarChange={(val) => onCalendarChange(val)}
+                  // disabledDate={disabledDate}
+                  // onCalendarChange={(val) => onCalendarChange(val)}
                   onChange={(val) => onChangeRangePicker(val)}
                   onOpenChange={onOpenChange}
                 />
@@ -439,8 +438,8 @@ const VendorSearch = (props) => {
               LOAD MORE
             </Button>
           ) : (
-              ''
-            )}
+            ''
+          )}
         </Col>
       </Row>
     </div>

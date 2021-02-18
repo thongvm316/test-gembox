@@ -531,11 +531,10 @@ const CategoryAnalysis = (props) => {
             <Col xs={24} sm={10} md={10} lg={8} xl={4}>
               <DatePicker.RangePicker
                 defaultValue={[moment(startOfMonth), moment(endOfMonth)]}
-                // onChange={onChange}
                 separator={<MinusOutlined />}
                 value={hackValue || value}
-                disabledDate={disabledDate}
-                onCalendarChange={(val) => onCalendarChange(val)}
+                // disabledDate={disabledDate}
+                // onCalendarChange={(val) => onCalendarChange(val)}
                 onChange={(val) => onChangeRangePicker(val)}
                 onOpenChange={onOpenChange}
               />

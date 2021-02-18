@@ -582,8 +582,8 @@ const SaleStatus = () => {
               defaultValue={[moment(startOfMonth), moment(endOfMonth)]}
               separator={<MinusOutlined />}
               value={hackValue || value}
-              disabledDate={disabledDate}
-              onCalendarChange={(val) => onCalendarChange(val)}
+              // disabledDate={disabledDate}
+              // onCalendarChange={(val) => onCalendarChange(val)}
               onChange={(val) => onChangeRangePicker(val)}
               onOpenChange={onOpenChange}
             />
@@ -626,7 +626,7 @@ const SaleStatus = () => {
             style={{ textAlign: 'center' }}
             className="total-sale"
           >
-            <a href={market.url} target="_blank">
+            <a href={market.url ? market.url : ''} target="_blank">
               <img src={market.img} />
               <span
                 style={{

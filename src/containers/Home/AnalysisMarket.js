@@ -428,8 +428,8 @@ const AnalysisMarket = (props) => {
                 defaultValue={[moment(startOfMonth), moment(endOfMonth)]}
                 separator={<MinusOutlined />}
                 value={hackValue || value}
-                disabledDate={disabledDate}
-                onCalendarChange={(val) => onCalendarChange(val)}
+                // disabledDate={disabledDate}
+                // onCalendarChange={(val) => onCalendarChange(val)}
                 onChange={(val) => onChangeRangePicker(val)}
                 onOpenChange={onOpenChange}
               />
