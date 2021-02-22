@@ -26,12 +26,7 @@ const Sidebar = (props) => {
         defaultSelectedKeys={['1']}
       >
         <Menu.Item className="app-menu-item" key="/home">
-          <h1
-            to=""
-            style={{ fontWeight: '900', color: 'white', fontSize: '24px' }}
-          >
-            GEM BOX
-          </h1>
+            <NavLink style={{ fontWeight: '900', color: 'white', fontSize: '24px' }} to="home">GEM BOX</NavLink>
         </Menu.Item>
         <Menu.Item
           style={{ marginTop: '50px' }}

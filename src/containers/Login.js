@@ -65,14 +65,9 @@ const Login = (props) => {
       setLoading(false)
       history.push('/home')
     } catch (error) {
-      console.log(error.response)
-      message.error({
-        content: (
-          <Alert description="Incorrect username or password." type="error" />
-        ),
-        style: {
-          marginTop: '10vh',
-        },
+      // console.log(error.response)
+      Modal.error({
+        content: '잘못된 사용자 이름 또는 비밀번호',
       })
       setLoading(false)
     }
@@ -110,7 +105,7 @@ const Login = (props) => {
                 <Col span={16}>
                   <h1 className="login-title">로그인</h1>
                   <p className="adv">
-                    최상의 상품판매 전략을 위한 빅데이터 서비스 
+                    최상의 상품판매 전략을 위한 빅데이터 서비스
                   </p>
                 </Col>
               </Row>
