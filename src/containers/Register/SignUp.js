@@ -92,8 +92,11 @@ const SignUp = (props) => {
     // } catch (error) {
     //   console.log(error.response)
     // }
+    // 0936467794
 
-    var recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha')
+    var recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha', {
+      size: "invisible"
+  })
     var number = phoneInput
     firebase
       .auth()
@@ -110,7 +113,7 @@ const SignUp = (props) => {
           .catch(function (error) {
             console.error(error)
             Modal.error({
-              content: 'Wrong OTP'
+              content: '"Invalid Verification Code"'
             })
           })
       })
@@ -383,7 +386,8 @@ const SignUp = (props) => {
                       className="send-sms"
                       type="text"
                     >
-                      {resendSms ? resendSms : '인증번호 전송'}
+                      {/* {resendSms ? resendSms : '인증번호 전송'} */}
+                      인증번호 전송
                     </Button>
                   }
                   type="text"
@@ -393,8 +397,8 @@ const SignUp = (props) => {
                 />
               </FormItem>
               <FormItem>
-                <div id="recaptcha"></div>
-              </FormItem>
+                  <div id="recaptcha"></div>
+                </FormItem>
               {/* {verifiedPhone ? (
                 <FormItem
                   name="verify_code"
