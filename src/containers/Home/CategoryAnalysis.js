@@ -340,7 +340,7 @@ const CategoryAnalysis = (props) => {
   ]
 
   /* Select category */
-  const [category, setCategory] = useState('완구')
+  const [category, setCategory] = useState('전체보기')
 
   /* Get data */
   const callApiHome = async (params) => {

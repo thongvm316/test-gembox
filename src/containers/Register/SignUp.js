@@ -104,10 +104,8 @@ const SignUp = (props) => {
 
         e.confirm(code)
           .then(function (result) {
-            console.log(result.user.za)
+            // console.log(result.user.za)
             setFirebaseToken(result.user.za)
-            // document.querySelector('label').textContent +=
-            //   result.user.phoneNumber + 'Number verified'
           })
           .catch(function (error) {
             console.error(error)
