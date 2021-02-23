@@ -63,7 +63,7 @@ const SignUp = (props) => {
     let phone = e.target.value
     let str_phone = phone.toString().trim()
     let slicePhone = str_phone.slice(1)
-    let convertToCountryPhone = "+84".concat(slicePhone)
+    let convertToCountryPhone = "+82".concat(slicePhone)
     setPhoneInput(convertToCountryPhone)
   }
   const { nameAndCompany, email, password, phone } = bodyphone
