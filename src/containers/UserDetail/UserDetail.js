@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { API_URL } from '../../constants/appConstants'
+import { UserDetailContext } from '../../lib/userdetail/UserDetailContext'
+import { action } from '../../lib/userdetail/UserDetailContext'
 
 import {
   Row,
@@ -15,10 +17,14 @@ import {
   Spin,
   Popover,
 } from 'antd'
-import { EditOutlined } from '@ant-design/icons'
+import { CloseSquareFilled, EditOutlined } from '@ant-design/icons'
 import './UserDetail.scss'
 
 const UserDetail = (props) => {
+  const context = useContext(UserDetailContext)
+  const { state, dispatch } = context
+  const { data } = state
+  console.log(data)
   const [showNameOfFileUpload, setShowNameOfFileUpload] = useState('')
 
   /* Modal ChangePassword */
@@ -85,7 +91,7 @@ const UserDetail = (props) => {
   }
 
   /* Get data */
-  const [data, setData] = useState('')
+  // const [data, setData] = useState('')
   const [dataUrlMarket, setDataUrlMarket] = useState([])
   const [loading, setLoading] = useState(false)
   const [disableBtn, setDisableBtn] = useState(false)
@@ -102,8 +108,13 @@ const UserDetail = (props) => {
       setLoading(true)
       const { data } = await axios.get(`${API_URL}/user/profile`, config)
       if (data && data.data.result) {
-        setData(data.data.result)
-        setDataUrlMarket(data.data.result.url_market)
+        // console.log(data.data.result)
+        dispatch({
+          type: action.FETCH_SUCCESS,
+          payload: data.data.result,
+        })
+        // setData(data.data.result)
+        // setDataUrlMarket(data.data.result.url_market)
       }
       setLoading(false)
     } catch (error) {
@@ -136,10 +147,15 @@ const UserDetail = (props) => {
   }
 
   const changeUserProfile = async () => {
+    const { url_market, business_license } = bodyOfProfile
     setDisableBtn(true)
     const res = await axios
       .put(`${API_URL}/user/profile`, bodyOfProfile, config)
       .then((value) => {
+        dispatch({
+          type: action.UPDATE_PDF,
+          payload: business_license,
+        })
         Modal.success({
           content: '성공',
         })
@@ -177,6 +193,20 @@ const UserDetail = (props) => {
         Modal.error({
           content: '현재 암호가 잘못되었습니다',
         })
+      })
+  }
+
+  const deleteMarket = (uid) => {
+    axios
+      .delete(`${API_URL}/user/market/${uid}`, config)
+      .then((value) => {
+        dispatch({
+          type: action.DELETE_MARKET,
+          payload: uid,
+        })
+      })
+      .catch((error) => {
+        console.log(error.response)
       })
   }
 
@@ -219,17 +249,30 @@ const UserDetail = (props) => {
                   <div style={{ marginBottom: 10 }}>등록 마켓</div>
                   <div>
                     <Card style={{ marginBottom: '5px' }}>
-                      {dataUrlMarket.map((market, i) => (
-                        <React.Fragment key={i}>
-                          <a
-                            style={{ color: 'rgba(0, 0, 0, 0.85)' }}
-                            href={market}
-                          >
-                            {market}
-                          </a>
-                          <br />
-                        </React.Fragment>
-                      ))}
+                      {data.url_market &&
+                        data.url_market.map((market, i) => (
+                          <React.Fragment key={i}>
+                            <a
+                              style={{ color: 'rgba(0, 0, 0, 0.85)' }}
+                              href={market.url}
+                            >
+                              {market.url}
+                            </a>{' '}
+                            <Button
+                              onClick={() => deleteMarket(market.id)}
+                              className="btn-del"
+                              style={{
+                                backgroundColor: 'transparent',
+                                color: 'red',
+                                cursor: 'pointer',
+                              }}
+                              type="text"
+                            >
+                              X
+                            </Button>
+                            <br />
+                          </React.Fragment>
+                        ))}
                     </Card>
                     {inputs.inputs.map((input, index) => (
                       <Input

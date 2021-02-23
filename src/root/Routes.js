@@ -31,6 +31,7 @@ import AppRoute from './AppRoute'
 import TestFirebase from '../constants/TestFirebase'
 
 import AdminMemberContextProvider from '../lib/admin/AdminMemberContext'
+import UserDetailContextProvider from '../lib/userdetail/UserDetailContext'
 
 const Routes = () => {
   return (
@@ -148,13 +149,15 @@ const Routes = () => {
           path="/sale-status"
           component={SaleStatus}
         />
-        <PrivateRoute
-          showSiderBar={true}
-          dataToken={'token-user'}
-          exact
-          path="/user-detail"
-          component={UserDetail}
-        />
+        <UserDetailContextProvider>
+          <PrivateRoute
+            showSiderBar={true}
+            dataToken={'token-user'}
+            exact
+            path="/user-detail"
+            component={UserDetail}
+          />
+        </UserDetailContextProvider>
 
         {/* test firebase */}
         <AppRoute
