@@ -68,7 +68,7 @@ const SignUp = (props) => {
   }
   const { nameAndCompany, email, password, phone } = bodyphone
 
-  const verifySmsCode = async () => {
+  const verifySmsCode = () => {
     setVerifiedPhone(true)
     setResemdSms('재전송')
     // const config = {
@@ -105,7 +105,6 @@ const SignUp = (props) => {
       .then(function (e) {
         var code = prompt('Enter the otp', '')
         if (code === null) return
-
         e.confirm(code)
           .then(function (result) {
             // console.log(result.user.za)
