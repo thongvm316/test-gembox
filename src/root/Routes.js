@@ -28,6 +28,8 @@ import AdminSetting from '../containers/Admin/AdminSetting'
 import PrivateRoute from './PrivateRoute'
 import AppRoute from './AppRoute'
 
+import TestFirebase from '../constants/TestFirebase'
+
 import AdminMemberContextProvider from '../lib/admin/AdminMemberContext'
 
 const Routes = () => {
@@ -152,6 +154,14 @@ const Routes = () => {
           exact
           path="/user-detail"
           component={UserDetail}
+        />
+
+        {/* test firebase */}
+        <AppRoute
+          exact
+          path="/test-firebase"
+          component={TestFirebase}
+          layout={LoginLayout}
         />
       </Switch>
     </AdminMemberContextProvider>

@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Button, DatePicker, Row, Col, Table, Modal, Select } from 'antd'
+import {
+  Button,
+  DatePicker,
+  Row,
+  Col,
+  Table,
+  Modal,
+  Select,
+  Popover,
+} from 'antd'
 import Filter from './Filter'
 import Chart from './Chart'
 import './ProductSearch.scss'
@@ -125,7 +134,32 @@ const ProductSearch = (props) => {
     )
   }
 
+
   // Of Table
+  const SelectOption = () => (
+    // <Select defaultValue="카테고리" className="select-option" bordered={false}>
+    //   <Option value="카테고리">카테고리</Option>
+    //   <Option value="밴더명">밴더명</Option>
+    //   <Option value="제품명">제품명</Option> 
+    // </Select>
+    <div className="style-sort">
+      <p onClick={Sorter.descend}>오름차순</p>
+      <p onClick={Sorter.ascend}>내림차순</p>
+      <p onClick={Sorter.cansleSort}>취소</p>
+    </div>
+  )
+
+  // const sortDescend = (a, b) => b.seller_price - a.seller_price
+  // const sortAscend = (a, b) => a.seller_price - b.seller_price
+  const sortDescend = (a, b) => { return -1 }
+  const sortAscend = (a, b) => { return 1 }
+  const cansleSort = () => { return 0 }
+  const Sorter = {
+    descend: sortDescend,
+    ascend: sortAscend,
+    cancle: cansleSort
+  }
+
   const [countSelected, setCountSelected] = useState(0)
   const columns = [
     {
@@ -139,15 +173,19 @@ const ProductSearch = (props) => {
     {
       title: '카테고리',
       dataIndex: 'category_tag',
-      sorter: (a, b) => a.category_tag.length - b.category_tag.length,
+      // sorter: (a, b) => a.category_tag.length - b.category_tag.length,
     },
     {
       title: '마켓명',
       dataIndex: 'market_name',
-      sorter: (a, b) => a.market_name.length - b.market_name.length,
+      // sorter: (a, b) => a.market_name.length - b.market_name.length,
     },
     {
-      title: '가격',
+      title: (
+        <Popover content={<SelectOption />} trigger="hover">
+          가격
+        </Popover>
+      ),
       render: (record) => (
         <NumberFormat
           value={record.seller_price}
@@ -300,14 +338,6 @@ const ProductSearch = (props) => {
     // }
   }
 
-  const selectAfter = (
-    <Select defaultValue="카테고리" className="select-after">
-      <Option value="카테고리">카테고리</Option>
-      <Option value="밴더명">밴더명</Option>
-      <Option value="제품명">제품명</Option>
-    </Select>
-  )
-
   const onChangeSearch = (e) => {
     setParams({ ...params, key: e.target.value })
   }
@@ -378,6 +408,7 @@ const ProductSearch = (props) => {
             dataSource={productList}
             scroll={{ x: 1300 }}
             pagination={false}
+            showSorterTooltip={false}
             onRow={(record, rowIndex) => {
               return {
                 onClick: (event) => {
@@ -433,6 +464,7 @@ const ProductSearch = (props) => {
         onCancel={handleCancelTwo}
         width={1000}
         className="style-btn"
+        sorter={true}
         footer={[
           <Button key="back" onClick={handleOkTwo}>
             Cancel

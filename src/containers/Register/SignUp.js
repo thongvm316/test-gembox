@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import firebase from '../../constants/firebase'
 import {
   Row,
   Col,
@@ -29,6 +30,7 @@ const SignUp = (props) => {
   const [validatePassword, setValidatePassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showNameOfFileUpload, setShowNameOfFileUpload] = useState('')
+
   const [bodyphone, setBodyPhone] = useState({
     email: '',
     password: '',
@@ -53,37 +55,70 @@ const SignUp = (props) => {
   }
 
   // For Verify Phone
+  const [ phoneInput, setPhoneInput ] = useState('')
+  const [ firebaseToken, setFirebaseToken ] = useState('')
   const onChange = (e) => {
-    setBodyPhone({ ...bodyphone, [e.target.name]: e.target.value })
-    setEmailVerify({ email: e.target.value })
+    // setBodyPhone({ ...bodyphone, [e.target.name]: e.target.value })
+    // setEmailVerify({ email: e.target.value })
+    let phone = e.target.value
+    let str_phone = phone.toString().trim()
+    let slicePhone = str_phone.slice(1)
+    let convertToCountryPhone = "+84".concat(slicePhone)
+    setPhoneInput(convertToCountryPhone)
   }
   const { nameAndCompany, email, password, phone } = bodyphone
 
   const verifySmsCode = async () => {
     setVerifiedPhone(true)
     setResemdSms('재전송')
-    const config = {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }
+    // const config = {
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    // }
 
-    const name = nameAndCompany.split('/')[0]
+    // const name = nameAndCompany.split('/')[0]
+    // const body = {
+    //   email,
+    //   password,
+    //   name,
+    //   phone,
+    // }
 
-    const body = {
-      email,
-      password,
-      name,
-      phone,
-    }
+    // try {
+    //   const { data } = await axios.post(`${API_URL}/verify`, body, config)
+    //   console.log(data)
+    // } catch (error) {
+    //   console.log(error.response)
+    // }
 
-    try {
-      const { data } = await axios.post(`${API_URL}/verify`, body, config)
-      console.log(data)
-    } catch (error) {
-      console.log(error.response)
-    }
+    var recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha')
+    var number = phoneInput
+    firebase
+      .auth()
+      .signInWithPhoneNumber(number, recaptcha)
+      .then(function (e) {
+        var code = prompt('Enter the otp', '')
+        if (code === null) return
+
+        e.confirm(code)
+          .then(function (result) {
+            console.log(result.user.za)
+            setFirebaseToken(result.user.za)
+            // document.querySelector('label').textContent +=
+            //   result.user.phoneNumber + 'Number verified'
+          })
+          .catch(function (error) {
+            console.error(error)
+            Modal.error({
+              content: 'Wrong OTP'
+            })
+          })
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
   }
 
   // Verify Email
@@ -121,6 +156,7 @@ const SignUp = (props) => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        'Firebase-Auth-Token': firebaseToken
       },
     }
 
@@ -358,7 +394,10 @@ const SignUp = (props) => {
                   onChange={onChange}
                 />
               </FormItem>
-              {verifiedPhone ? (
+              <FormItem>
+                <div id="recaptcha"></div>
+              </FormItem>
+              {/* {verifiedPhone ? (
                 <FormItem
                   name="verify_code"
                   rules={[
@@ -372,7 +411,7 @@ const SignUp = (props) => {
                 </FormItem>
               ) : (
                 ''
-              )}
+              )} */}
               <br />
               {inputs.inputs.map((input, index) => (
                 <Input
