@@ -134,31 +134,30 @@ const ProductSearch = (props) => {
     )
   }
 
-
   // Of Table
-  const SelectOption = () => (
-    // <Select defaultValue="카테고리" className="select-option" bordered={false}>
-    //   <Option value="카테고리">카테고리</Option>
-    //   <Option value="밴더명">밴더명</Option>
-    //   <Option value="제품명">제품명</Option> 
-    // </Select>
-    <div className="style-sort">
-      <p onClick={Sorter.descend}>오름차순</p>
-      <p onClick={Sorter.ascend}>내림차순</p>
-      <p onClick={Sorter.cansleSort}>취소</p>
-    </div>
-  )
+  // const SelectOption = () => (
+  // <Select defaultValue="카테고리" className="select-option" bordered={false}>
+  //   <Option value="카테고리">카테고리</Option>
+  //   <Option value="밴더명">밴더명</Option>
+  //   <Option value="제품명">제품명</Option>
+  // </Select>
+  // <div className="style-sort">
+  //   <p onClick={Sorter.descend}>오름차순</p>
+  //   <p onClick={Sorter.ascend}>내림차순</p>
+  //   <p onClick={Sorter.cansleSort}>취소</p>
+  // </div>
+  // )
 
   // const sortDescend = (a, b) => b.seller_price - a.seller_price
   // const sortAscend = (a, b) => a.seller_price - b.seller_price
-  const sortDescend = (a, b) => { return -1 }
-  const sortAscend = (a, b) => { return 1 }
-  const cansleSort = () => { return 0 }
-  const Sorter = {
-    descend: sortDescend,
-    ascend: sortAscend,
-    cancle: cansleSort
-  }
+  // const sortDescend = (a, b) => { return -1 }
+  // const sortAscend = (a, b) => { return 1 }
+  // const cansleSort = () => { return 0 }
+  // const Sorter = {
+  //   descend: sortDescend,
+  //   ascend: sortAscend,
+  //   cancle: cansleSort
+  // }
 
   const [countSelected, setCountSelected] = useState(0)
   const columns = [
@@ -181,11 +180,7 @@ const ProductSearch = (props) => {
       // sorter: (a, b) => a.market_name.length - b.market_name.length,
     },
     {
-      title: (
-        <Popover content={<SelectOption />} trigger="hover">
-          가격
-        </Popover>
-      ),
+      title: '가격',
       render: (record) => (
         <NumberFormat
           value={record.seller_price}
