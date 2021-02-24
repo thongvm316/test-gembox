@@ -8,11 +8,11 @@ import {
   Col,
   Table,
   Select,
-  notification,
   Modal,
 } from 'antd'
-import { LineOutlined } from '@ant-design/icons'
+import { SearchOutlined } from '@ant-design/icons'
 import { API_URL } from '../../constants/appConstants'
+import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
 import './VendorSearch.scss'
 import moment from 'moment'
@@ -52,18 +52,21 @@ const VendorSearch = (props) => {
   const columns = [
     {
       title: '벤더명',
-      render: (record) => (
-        <a
-          style={{
-            fontWeight: 500,
-            fontSize: '16px',
-            color: '#74788D',
-          }}
-          onClick={() => goToStore(record)}
-        >
-          {record.bander_name}
-        </a>
-      ),
+      render: (record) => {
+        console.log(record)
+        return (
+          <a
+            style={{
+              fontWeight: 500,
+              fontSize: '16px',
+              color: '#74788D',
+            }}
+            onClick={() => goToStore(record)}
+          >
+            {record.bander_name}
+          </a>
+        )
+      },
     },
     {
       title: '총 판매 상품 수',
@@ -74,6 +77,10 @@ const VendorSearch = (props) => {
           thousandSeparator={true}
         />
       ),
+      sorter: {
+        compare: (a, b) =>
+          parseInt(a.product_count) - parseInt(b.product_count),
+      },
     },
     {
       title: '총 판매 매출',
@@ -84,6 +91,9 @@ const VendorSearch = (props) => {
           thousandSeparator={true}
         />
       ),
+      sorter: {
+        compare: (a, b) => parseInt(a.revenue) - parseInt(b.revenue),
+      },
     },
     {
       title: '리뷰',
@@ -94,6 +104,9 @@ const VendorSearch = (props) => {
           thousandSeparator={true}
         />
       ),
+      sorter: {
+        compare: (a, b) => parseInt(a.total_review) - parseInt(b.total_review),
+      },
     },
     {
       title: '판매수',
@@ -104,6 +117,9 @@ const VendorSearch = (props) => {
           thousandSeparator={true}
         />
       ),
+      sorter: {
+        compare: (a, b) => parseInt(a.sale_count) - parseInt(b.sale_count),
+      },
     },
   ]
 
@@ -388,6 +404,7 @@ const VendorSearch = (props) => {
               onChange={onChangeSearch}
               style={{ marginRight: '5px' }}
               placeholder="Search"
+              suffix={<SearchOutlined />}
             />
             {/* <Select defaultValue="카테고리" className="select-after">
               <Option value="카테고리">카테고리</Option>
@@ -414,11 +431,11 @@ const VendorSearch = (props) => {
       <Row className="card-border">
         <Col span={24}>
           <Table
-            rowKey={(record, index) => index}
             loading={loading}
-            rowKey={(record) => record.id}
+            rowKey={(record) => uuidv4()}
             columns={columns}
             dataSource={vendors}
+            showSorterTooltip={false}
             scroll={{ x: 1300 }}
             pagination={false}
           />

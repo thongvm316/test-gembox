@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import firebase from '../../constants/firebase'
 import {
   Row,
@@ -59,7 +59,6 @@ const SignUp = (props) => {
   const [ firebaseToken, setFirebaseToken ] = useState('')
   const onChange = (e) => {
     // setBodyPhone({ ...bodyphone, [e.target.name]: e.target.value })
-    // setEmailVerify({ email: e.target.value })
     let phone = e.target.value
     let str_phone = phone.toString().trim()
     let slicePhone = str_phone.slice(1)
@@ -67,6 +66,11 @@ const SignUp = (props) => {
     setPhoneInput(convertToCountryPhone)
   }
   const { nameAndCompany, email, password, phone } = bodyphone
+  const inputRef = useRef()
+  const focus = () => {
+    inputRef.current.focus()
+    
+  }
 
   const verifySmsCode = () => {
     setVerifiedPhone(true)
@@ -96,31 +100,51 @@ const SignUp = (props) => {
 
     var recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha', {
       size: "invisible"
-  })
+    })
     var number = phoneInput
-    console.log(number);
-    firebase
-      .auth()
-      .signInWithPhoneNumber(number, recaptcha)
-      .then(function (e) {
-        var code = prompt('Enter the otp', '')
-        if (code === null) return
-        e.confirm(code)
-          .then(function (result) {
-            // console.log(result.user.za)
-            setFirebaseToken(result.user.za)
-          })
-          .catch(function (error) {
-            console.error(error)
-            Modal.error({
-              content: '"Invalid Verification Code"'
-            })
-          })
-      })
-      .catch(function (error) {
-        console.error(error)
-      })
+    // firebase
+    //   .auth()
+    //   .signInWithPhoneNumber(number, recaptcha)
+    //   .then(function (e) {
+    //     var code = prompt('Enter the otp', '')
+    //     console.log(e);
+    //     if (code === null) return
+    //     e.confirm(code)
+    //       .then(function (result) {
+    //         // console.log(result.user.za)
+    //         setFirebaseToken(result.user.za)
+    //       })
+    //       .catch(function (error) {
+    //         console.error(error)
+    //         Modal.error({
+    //           content: '"Invalid Verification Code"'
+    //         })
+    //       })
+    //   })
+    //   .catch(function (error) {
+    //     console.error(error)
+    //   })
+
+      firebase.auth().signInWithPhoneNumber(number, recaptcha).then(function (confirmationResult) {
+        window.confirmationResult=confirmationResult;
+    }).catch(function (error) {
+        alert(error.message);
+        // grecaptcha.reset(document.getElementById('recaptcha'));
+    });
   }
+
+  const [ otp, setOtp ] = useState('')
+  const codeVerifyOtp = () => {
+    var code = otp
+    window.confirmationResult.confirm(code).then(function (result) {
+      setFirebaseToken(result.user.za)
+      console.log(result.user);
+    }).catch(function (error) {
+        alert(error.message);
+    });
+  }
+
+
 
   // Verify Email
   const [emailVerify, setEmailVerify] = useState({ email: '' })
@@ -283,7 +307,7 @@ const SignUp = (props) => {
                 <Input
                   placeholder="이메일*"
                   type="text"
-                  onChange={onChange}
+                  onChange={(e) => { setEmailVerify({ email: e.target.value }) }}
                   name="email"
                   value={email}
                   onBlur={handleInputBlur}
@@ -396,10 +420,7 @@ const SignUp = (props) => {
                   onChange={onChange}
                 />
               </FormItem>
-              <FormItem>
-                  <div id="recaptcha"></div>
-                </FormItem>
-              {/* {verifiedPhone ? (
+              {verifiedPhone ? (
                 <FormItem
                   name="verify_code"
                   rules={[
@@ -409,11 +430,14 @@ const SignUp = (props) => {
                     },
                   ]}
                 >
-                  <Input placeholder="인증번호 입력" type="text" />
+                  <Input onBlur={codeVerifyOtp} placeholder="인증번호 입력" type="text" ref={inputRef} onChange={(e) => setOtp(e.target.value)} />
                 </FormItem>
               ) : (
                 ''
-              )} */}
+              )}
+              <FormItem>
+                  <div id="recaptcha"></div>
+                </FormItem>
               <br />
               {inputs.inputs.map((input, index) => (
                 <Input

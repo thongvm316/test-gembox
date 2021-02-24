@@ -106,3 +106,10 @@
         color: #2A4EAA
     }
 }
+
+.product-detail__style {
+    position: absolute !important;
+    z-index: 999;
+    top: 16px;
+    left: 166px;
+}

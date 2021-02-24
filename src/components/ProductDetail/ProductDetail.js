@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import './ProductDetail.scss'
-import { Row, Col, Button, Space, Divider, Spin } from 'antd'
+import { Row, Col, Button, Space, Divider, Spin, DatePicker } from 'antd'
 import Highcharts from 'highcharts/highstock'
 import PieChart from 'highcharts-react-official'
 import axios from 'axios'
 import HighchartsReact from 'highcharts-react-official'
 import Card2 from '../../images/Card_2.png'
 import Card3 from '../../images/Card_3.png'
-import { API_URL } from '../../constants/appConstants';
-import { market_list } from '../../constants/appConstants';
+import { API_URL } from '../../constants/appConstants'
+import { market_list } from '../../constants/appConstants'
 import NumberFormat from 'react-number-format'
 
-import * as _ from 'lodash';
+import * as _ from 'lodash'
 import moment from 'moment'
 import MarketSaleStatusChart from '../MarketSaleStatusChart/MarketSaleStatusChart'
 
 const ProductDetail = (props) => {
-  console.log(props)
+  // console.log(props)
   const [product, setProduct] = useState(props.location.state.product)
   const [categoryRanking, setCategoryRanking] = useState()
   const [saleRanking, setSaleRanking] = useState()
@@ -27,9 +27,7 @@ const ProductDetail = (props) => {
   const [spinning, setSpinning] = useState(false)
   const [spinningOfShare, setSpinningOfShare] = useState(false)
 
-
   const [productDetailShare, setProductDetailShare] = useState()
-
 
   useEffect(() => {
     getCategoryRanking()
@@ -58,14 +56,13 @@ const ProductDetail = (props) => {
         setProductDetailShare(res.data.data.result.share)
       }
     } catch (error) {
-      if (error.response.statusText == "Unauthorized") {
+      if (error.response.statusText == 'Unauthorized') {
         localStorage.clear()
 
         props.history.push('/')
       }
     }
     setSpinningOfShare(false)
-
   }
 
   const getProductTrendGraph = async () => {
@@ -89,14 +86,13 @@ const ProductDetail = (props) => {
         setProductTrendGraph(res.data.data.result)
       }
     } catch (error) {
-      if (error.response.statusText == "Unauthorized") {
+      if (error.response.statusText == 'Unauthorized') {
         localStorage.clear()
 
         props.history.push('/')
       }
     }
     setSpinning(false)
-
   }
 
   const getCategoryRanking = async () => {
@@ -117,7 +113,7 @@ const ProductDetail = (props) => {
         setCategoryRanking(res.data.data.result.category_rank)
       }
     } catch (error) {
-      if (error.response.statusText == "Unauthorized") {
+      if (error.response.statusText == 'Unauthorized') {
         localStorage.clear()
 
         props.history.push('/')
@@ -143,7 +139,7 @@ const ProductDetail = (props) => {
         setSaleRanking(res.data.data.result.total_rank)
       }
     } catch (error) {
-      if (error.response.statusText == "Unauthorized") {
+      if (error.response.statusText == 'Unauthorized') {
         localStorage.clear()
 
         props.history.push('/')
@@ -169,7 +165,7 @@ const ProductDetail = (props) => {
         setShareKing(res.data.data.result.share)
       }
     } catch (error) {
-      if (error.response.statusText == "Unauthorized") {
+      if (error.response.statusText == 'Unauthorized') {
         localStorage.clear()
 
         props.history.push('/')
@@ -184,7 +180,7 @@ const ProductDetail = (props) => {
       renderTo: 'container',
     },
     credits: {
-      enabled: false
+      enabled: false,
     },
     tooltip: {
       enabled: true,
@@ -222,16 +218,18 @@ const ProductDetail = (props) => {
       floating: false,
       itemWidth: 80,
       floating: false,
-      layout: 'vertical'
+      layout: 'vertical',
     },
   }
 
   const optionsLineChart = {
     chart: {
       type: 'spline',
+      renderTo: 'container',
+      width: 1800,
     },
     credits: {
-      enabled: false
+      enabled: false,
     },
     title: {
       text: '판매 추이 그래프',
@@ -246,14 +244,48 @@ const ProductDetail = (props) => {
     },
     series: [
       {
-        data: productTrendGraph.map(product => { return parseInt(product.revenue) }),
+        // data: productTrendGraph.map((product) => {
+        //   return parseInt(product.revenue)
+        // }),
+        data: [
+          7.0,
+          6.9,
+          9.5,
+          14.5,
+          18.4,
+          21.5,
+          25.2,
+          26.5,
+          23.3,
+          18.3,
+          13.9,
+          9.6,
+        ],
         name: 'Product',
         color: '#FF21B4',
-
       },
     ],
     xAxis: {
-      categories: productTrendGraph.map(product => { return product.created }),
+      // accessibility: {
+      //   rangeDescription: 'Range: 1 to 13',
+      // },
+      // categories: productTrendGraph.map((product) => {
+      //   return product.created
+      // }),
+      categories: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      labels: {
+        formatter: function () {
+          return this.value + '월'
+        },
+      },
+    },
+    plotOptions: {
+      series: {
+        label: {
+          connectorAllowed: false,
+        },
+        pointStart: 1,
+      },
     },
     yAxis: {
       title: {
@@ -272,6 +304,11 @@ const ProductDetail = (props) => {
       enable: true,
     },
     legend: false,
+  }
+
+  // Date Picker
+  function onChange(date, dateString) {
+    console.log(date, dateString)
   }
 
   const goToStore = () => {
@@ -354,7 +391,7 @@ const ProductDetail = (props) => {
         <div className="gust-header">
           <div className="card-item-border card-item">
             <div className="card-item-text">
-              <h2 style={{ color: '#2A4EAA' }}>유아 인형 카테고리 순위</h2>
+              <h2 style={{ color: '#2A4EAA' }}>{product.category_tag}</h2>
               <h2 style={{ color: '#6E798C' }}>{categoryRanking}위</h2>
             </div>
             <div className="card-item-icon">
@@ -408,7 +445,25 @@ const ProductDetail = (props) => {
                 </Col>
 
             </Row> */}
-      <Row style={{ marginBottom: '20px' }} className="card-border">
+      <Row
+        style={{ marginBottom: '20px', position: 'relative' }}
+        className="card-border"
+      >
+        <Col span={24} className="product-detail__style">
+          <Space>
+            <DatePicker onChange={onChange} picker="year" />
+            <Button
+              style={{
+                backgroundColor: '#42ABBC',
+                border: 'none',
+                color: '#fff',
+                fontWeight: '500',
+              }}
+            >
+              적용하기
+            </Button>
+          </Space>
+        </Col>
         <Col span={24}>
           <Spin tip="Loading..." spinning={spinning}>
             <HighchartsReact
@@ -421,18 +476,15 @@ const ProductDetail = (props) => {
       </Row>
 
       <Row gutter={16} className="card-border">
-        {
-          market_list.map(market => {
-            return (
-              <Col span={6} style={{ marginBottom: '10px' }}>
-                <div className="card-item-border">
-                  <MarketSaleStatusChart market={market} productId={product.id} />
-                </div>
-              </Col>
-            )
-          })
-        }
-
+        {market_list.map((market) => {
+          return (
+            <Col span={6} style={{ marginBottom: '10px' }}>
+              <div className="card-item-border">
+                <MarketSaleStatusChart market={market} productId={product.id} />
+              </div>
+            </Col>
+          )
+        })}
       </Row>
     </>
   )

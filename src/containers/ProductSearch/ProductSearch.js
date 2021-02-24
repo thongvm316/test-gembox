@@ -181,13 +181,16 @@ const ProductSearch = (props) => {
     },
     {
       title: '가격',
-      render: (record) => (
-        <NumberFormat
-          value={record.seller_price}
-          displayType={'text'}
-          thousandSeparator={true}
-        />
-      ),
+      render: (record) => {
+        console.log(record)
+        return (
+          <NumberFormat
+            value={record.seller_price}
+            displayType={'text'}
+            thousandSeparator={true}
+          />
+        )
+      },
       sorter: {
         compare: (a, b) => a.seller_price - b.seller_price,
       },

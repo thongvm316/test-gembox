@@ -34,18 +34,21 @@ const SaleStatus = () => {
   const columns = [
     {
       title: '상품명',
-      render: (record) => (
-        <a
-          style={{
-            fontWeight: 500,
-            fontSize: '16px',
-            color: '#74788D',
-          }}
-          onClick={() => goToStore(record)}
-        >
-          {record.name}
-        </a>
-      ),
+      render: (record) => {
+        // console.log(record)
+        return (
+          <a
+            style={{
+              fontWeight: 500,
+              fontSize: '16px',
+              color: '#74788D',
+            }}
+            onClick={() => goToStore(record)}
+          >
+            {record.name}
+          </a>
+        )
+      },
     },
     {
       title: '카테고리',
