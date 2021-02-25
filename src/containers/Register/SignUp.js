@@ -55,21 +55,20 @@ const SignUp = (props) => {
   }
 
   // For Verify Phone
-  const [ phoneInput, setPhoneInput ] = useState('')
-  const [ firebaseToken, setFirebaseToken ] = useState('')
+  const [phoneInput, setPhoneInput] = useState('')
+  const [firebaseToken, setFirebaseToken] = useState('')
   const onChange = (e) => {
     // setBodyPhone({ ...bodyphone, [e.target.name]: e.target.value })
     let phone = e.target.value
     let str_phone = phone.toString().trim()
     let slicePhone = str_phone.slice(1)
-    let convertToCountryPhone = "+82".concat(slicePhone)
+    let convertToCountryPhone = '+82'.concat(slicePhone)
     setPhoneInput(convertToCountryPhone)
   }
   const { nameAndCompany, email, password, phone } = bodyphone
   const inputRef = useRef()
   const focus = () => {
     inputRef.current.focus()
-    
   }
 
   const verifySmsCode = () => {
@@ -99,7 +98,7 @@ const SignUp = (props) => {
     // 0936467794
 
     var recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha', {
-      size: "invisible"
+      size: 'invisible',
     })
     var number = phoneInput
     // firebase
@@ -125,26 +124,31 @@ const SignUp = (props) => {
     //     console.error(error)
     //   })
 
-      firebase.auth().signInWithPhoneNumber(number, recaptcha).then(function (confirmationResult) {
-        window.confirmationResult=confirmationResult;
-    }).catch(function (error) {
-        alert(error.message);
+    firebase
+      .auth()
+      .signInWithPhoneNumber(number, recaptcha)
+      .then(function (confirmationResult) {
+        window.confirmationResult = confirmationResult
+      })
+      .catch(function (error) {
+        alert(error.message)
         // grecaptcha.reset(document.getElementById('recaptcha'));
-    });
+      })
   }
 
-  const [ otp, setOtp ] = useState('')
+  const [otp, setOtp] = useState('')
   const codeVerifyOtp = () => {
     var code = otp
-    window.confirmationResult.confirm(code).then(function (result) {
-      setFirebaseToken(result.user.za)
-      console.log(result.user);
-    }).catch(function (error) {
-        alert(error.message);
-    });
+    window.confirmationResult
+      .confirm(code)
+      .then(function (result) {
+        setFirebaseToken(result.user.za)
+        console.log(result.user)
+      })
+      .catch(function (error) {
+        alert(error.message)
+      })
   }
-
-
 
   // Verify Email
   const [emailVerify, setEmailVerify] = useState({ email: '' })
@@ -181,7 +185,7 @@ const SignUp = (props) => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Firebase-Auth-Token': firebaseToken
+        'Firebase-Auth-Token': firebaseToken,
       },
     }
 
@@ -269,7 +273,7 @@ const SignUp = (props) => {
     <div className="signup">
       <Row gutter={24}>
         <Col span={24} style={{ textAlign: 'center' }}>
-          <h1 className="logo">GEM BOX</h1>
+          <h1 className="logo">잼인사이트</h1>
         </Col>
       </Row>
 
@@ -307,7 +311,9 @@ const SignUp = (props) => {
                 <Input
                   placeholder="이메일*"
                   type="text"
-                  onChange={(e) => { setEmailVerify({ email: e.target.value }) }}
+                  onChange={(e) => {
+                    setEmailVerify({ email: e.target.value })
+                  }}
                   name="email"
                   value={email}
                   onBlur={handleInputBlur}
@@ -430,14 +436,20 @@ const SignUp = (props) => {
                     },
                   ]}
                 >
-                  <Input onBlur={codeVerifyOtp} placeholder="인증번호 입력" type="text" ref={inputRef} onChange={(e) => setOtp(e.target.value)} />
+                  <Input
+                    onBlur={codeVerifyOtp}
+                    placeholder="인증번호 입력"
+                    type="text"
+                    ref={inputRef}
+                    onChange={(e) => setOtp(e.target.value)}
+                  />
                 </FormItem>
               ) : (
                 ''
               )}
               <FormItem>
-                  <div id="recaptcha"></div>
-                </FormItem>
+                <div id="recaptcha"></div>
+              </FormItem>
               <br />
               {inputs.inputs.map((input, index) => (
                 <Input

@@ -21,13 +21,56 @@ const ProductDetail = (props) => {
   const [categoryRanking, setCategoryRanking] = useState()
   const [saleRanking, setSaleRanking] = useState()
   const [shareRanking, setShareKing] = useState()
-
   const [productTrendGraph, setProductTrendGraph] = useState([])
-
   const [spinning, setSpinning] = useState(false)
   const [spinningOfShare, setSpinningOfShare] = useState(false)
-
   const [productDetailShare, setProductDetailShare] = useState()
+  const [year, setYear] = useState('')
+  const [yearForCallApi, setYearForCallApi] = useState()
+
+  const convertData = (data) => {
+    const dataForRender = ['', '', '', '', '', '', '', '', '', '', '', '']
+    data.map((item) => {
+      let parseToNumber = parseInt(item.created)
+      if (parseToNumber == 1) {
+        dataForRender[0] = parseInt(item.revenue)
+      }
+      if (parseToNumber == 2) {
+        dataForRender[1] = parseInt(item.revenue)
+      }
+      if (parseToNumber == 3) {
+        dataForRender[2] = parseInt(item.revenue)
+      }
+      if (parseToNumber == 4) {
+        dataForRender[3] = parseInt(item.revenue)
+      }
+      if (parseToNumber == 5) {
+        dataForRender[4] = parseInt(item.revenue)
+      }
+      if (parseToNumber == 6) {
+        dataForRender[5] = parseInt(item.revenue)
+      }
+      if (parseToNumber == 7) {
+        dataForRender[6] = parseInt(item.revenue)
+      }
+      if (parseToNumber == 8) {
+        dataForRender[7] = parseInt(item.revenue)
+      }
+      if (parseToNumber == 9) {
+        dataForRender[8] = parseInt(item.revenue)
+      }
+      if (parseToNumber == 10) {
+        dataForRender[9] = parseInt(item.revenue)
+      }
+      if (parseToNumber == 11) {
+        dataForRender[10] = parseInt(item.revenue)
+      }
+      if (parseToNumber == 12) {
+        dataForRender[11] = parseInt(item.revenue)
+      }
+    })
+    return dataForRender
+  }
 
   useEffect(() => {
     getCategoryRanking()
@@ -52,13 +95,13 @@ const ProductDetail = (props) => {
         `${API_URL}/product/detail/share?id=${product.id}`,
         config,
       )
+      // console.log(res.data)
       if (res.status == 200) {
         setProductDetailShare(res.data.data.result.share)
       }
     } catch (error) {
       if (error.response.statusText == 'Unauthorized') {
         localStorage.clear()
-
         props.history.push('/')
       }
     }
@@ -67,6 +110,8 @@ const ProductDetail = (props) => {
 
   const getProductTrendGraph = async () => {
     setSpinning(true)
+    setYearForCallApi(year)
+    const currentYear = moment().year()
     const config = {
       headers: {
         Accept: 'application/json',
@@ -77,7 +122,9 @@ const ProductDetail = (props) => {
 
     try {
       const res = await axios.get(
-        `${API_URL}/product/detail/saletrend?id=${product.id}`,
+        `${API_URL}/product/detail/saletrend?id=${product.id}&year=${
+          year ? year : currentYear
+        }`,
         config,
       )
 
@@ -86,10 +133,12 @@ const ProductDetail = (props) => {
         setProductTrendGraph(res.data.data.result)
       }
     } catch (error) {
-      if (error.response.statusText == 'Unauthorized') {
-        localStorage.clear()
-
-        props.history.push('/')
+      console.log(error.response)
+      if (error && error.response && error.statusText) {
+        if (error.response.statusText == 'Unauthorized') {
+          localStorage.clear()
+          props.history.push('/')
+        }
       }
     }
     setSpinning(false)
@@ -244,47 +293,20 @@ const ProductDetail = (props) => {
     },
     series: [
       {
-        // data: productTrendGraph.map((product) => {
-        //   return parseInt(product.revenue)
-        // }),
-        data: [
-          7.0,
-          6.9,
-          9.5,
-          14.5,
-          18.4,
-          21.5,
-          25.2,
-          26.5,
-          23.3,
-          18.3,
-          13.9,
-          9.6,
-        ],
+        data: convertData(productTrendGraph),
         name: 'Product',
         color: '#FF21B4',
+        tooltip: {
+          valuePrefix: '₩',
+        },
       },
     ],
     xAxis: {
-      // accessibility: {
-      //   rangeDescription: 'Range: 1 to 13',
-      // },
-      // categories: productTrendGraph.map((product) => {
-      //   return product.created
-      // }),
-      categories: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       labels: {
         formatter: function () {
           return this.value + '월'
         },
-      },
-    },
-    plotOptions: {
-      series: {
-        label: {
-          connectorAllowed: false,
-        },
-        pointStart: 1,
       },
     },
     yAxis: {
@@ -308,7 +330,8 @@ const ProductDetail = (props) => {
 
   // Date Picker
   function onChange(date, dateString) {
-    console.log(date, dateString)
+    // console.log(date, dateString)
+    setYear(dateString)
   }
 
   const goToStore = () => {
@@ -391,7 +414,9 @@ const ProductDetail = (props) => {
         <div className="gust-header">
           <div className="card-item-border card-item">
             <div className="card-item-text">
-              <h2 style={{ color: '#2A4EAA' }}>{product.category_tag}</h2>
+              <h2 style={{ color: '#2A4EAA' }}>
+                {product.category_tag} <br /> 카테고리 순위
+              </h2>
               <h2 style={{ color: '#6E798C' }}>{categoryRanking}위</h2>
             </div>
             <div className="card-item-icon">
@@ -459,6 +484,7 @@ const ProductDetail = (props) => {
                 color: '#fff',
                 fontWeight: '500',
               }}
+              onClick={getProductTrendGraph}
             >
               적용하기
             </Button>
@@ -476,11 +502,15 @@ const ProductDetail = (props) => {
       </Row>
 
       <Row gutter={16} className="card-border">
-        {market_list.map((market) => {
+        {market_list.map((market, index) => {
           return (
-            <Col span={6} style={{ marginBottom: '10px' }}>
+            <Col key={index} span={6} style={{ marginBottom: '10px' }}>
               <div className="card-item-border">
-                <MarketSaleStatusChart market={market} productId={product.id} />
+                <MarketSaleStatusChart
+                  year={yearForCallApi}
+                  market={market}
+                  productId={product.id}
+                />
               </div>
             </Col>
           )

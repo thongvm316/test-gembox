@@ -163,7 +163,7 @@ const ProductSearch = (props) => {
   const columns = [
     {
       title: '상품명',
-      render: renderName,
+      dataIndex: 'name',
     },
     {
       title: '벤더명',

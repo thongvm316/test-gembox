@@ -29,9 +29,10 @@ const VendorSearch = (props) => {
   const [dates, setDates] = useState([])
 
   const [vendors, setVendors] = useState([])
-  const [startDate, setStartDate] = useState()
-  const [endDate, setEndDate] = useState()
-  const [key, setKey] = useState()
+  console.log(vendors)
+  // const [startDate, setStartDate] = useState()
+  // const [endDate, setEndDate] = useState()
+  // const [key, setKey] = useState()
   const [loading, setLoading] = useState(false)
 
   const [filter, setFilter] = useState()
@@ -53,7 +54,7 @@ const VendorSearch = (props) => {
     {
       title: '벤더명',
       render: (record) => {
-        console.log(record)
+        // console.log(record)
         return (
           <a
             style={{
@@ -78,8 +79,7 @@ const VendorSearch = (props) => {
         />
       ),
       sorter: {
-        compare: (a, b) =>
-          parseInt(a.product_count) - parseInt(b.product_count),
+        compare: (a, b) => a.product_count - b.product_count,
       },
     },
     {
@@ -92,7 +92,7 @@ const VendorSearch = (props) => {
         />
       ),
       sorter: {
-        compare: (a, b) => parseInt(a.revenue) - parseInt(b.revenue),
+        compare: (a, b) => a.revenue - b.revenue,
       },
     },
     {
@@ -105,7 +105,7 @@ const VendorSearch = (props) => {
         />
       ),
       sorter: {
-        compare: (a, b) => parseInt(a.total_review) - parseInt(b.total_review),
+        compare: (a, b) => a.total_review - b.total_review,
       },
     },
     {
@@ -118,7 +118,7 @@ const VendorSearch = (props) => {
         />
       ),
       sorter: {
-        compare: (a, b) => parseInt(a.sale_count) - parseInt(b.sale_count),
+        compare: (a, b) => a.sale_count - b.sale_count,
       },
     },
   ]
