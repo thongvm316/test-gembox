@@ -182,7 +182,7 @@ const ProductSearch = (props) => {
     {
       title: '가격',
       render: (record) => {
-        console.log(record)
+        // console.log(record)
         return (
           <NumberFormat
             value={record.seller_price}
