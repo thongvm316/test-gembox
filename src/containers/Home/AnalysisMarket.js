@@ -225,7 +225,7 @@ const AnalysisMarket = (props) => {
     const parseToNum = parseInt(renamedObj.y)
     return { name: renamedObj.name, y: parseToNum }
   })
-  console.log(dataOfChartOne)
+  // console.log(dataOfChartOne)
 
   const options = {
     chart: {

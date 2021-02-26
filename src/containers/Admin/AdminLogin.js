@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, Button, Row, Col, message, Alert } from 'antd'
+import { Form, Input, Button, Row, Col, notification } from 'antd'
 import { useLocation } from 'react-router-dom'
 import { API_URL } from '../../constants/appConstants'
 import axios from 'axios'
@@ -7,6 +7,13 @@ import Footer from '../../components/Footer'
 import './AdminLogin.scss'
 
 const FormItem = Form.Item
+
+const openNotification = (placement) => {
+  notification.error({
+    description: 'Incorrect username or password.',
+    placement,
+  })
+}
 
 const AdminLogin = (props) => {
   const { history } = props
@@ -45,14 +52,7 @@ const AdminLogin = (props) => {
       history.push('/admin-member')
     } catch (error) {
       console.log(error.response)
-      message.error({
-        content: (
-          <Alert description="Incorrect username or password." type="error" />
-        ),
-        style: {
-          marginTop: '10vh',
-        },
-      })
+      openNotification('topRight')
       setLoading(false)
     }
   }

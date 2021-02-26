@@ -1,6 +1,6 @@
-export const API_URL =
-  'http://ec2-54-180-132-160.ap-northeast-2.compute.amazonaws.com'
-// export const API_URL = 'http://192.168.1.76'
+// export const API_URL =
+//   'http://ec2-54-180-132-160.ap-northeast-2.compute.amazonaws.com'
+export const API_URL = 'http://192.168.1.76'
 
 export const market_list = [
   '11번가',

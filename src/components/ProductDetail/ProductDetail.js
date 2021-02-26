@@ -277,9 +277,6 @@ const ProductDetail = (props) => {
       renderTo: 'container',
       width: 1800,
     },
-    credits: {
-      enabled: false,
-    },
     title: {
       text: '판매 추이 그래프',
       align: 'left',
@@ -290,6 +287,15 @@ const ProductDetail = (props) => {
     },
     credits: {
       enabled: false,
+    },
+    tooltip: {
+      shared: true,
+      useHTML: true,
+      headerFormat: '<small></small><table>',
+      pointFormat:
+        '<tr><td style="color: {series.color}"></td>' +
+        '<td style="text-align: right"><b>{point.y}</b></td></tr>',
+      footerFormat: '</table>',
     },
     series: [
       {
@@ -322,13 +328,12 @@ const ProductDetail = (props) => {
         },
       },
     },
-    tooltip: {
-      enable: true,
-    },
     legend: false,
   }
 
   // Date Picker
+  const date = new Date()
+  const currentMonth = moment.utc(date).format('YYYY-MM')
   function onChange(date, dateString) {
     // console.log(date, dateString)
     setYear(dateString)
@@ -476,7 +481,11 @@ const ProductDetail = (props) => {
       >
         <Col span={24} className="product-detail__style">
           <Space>
-            <DatePicker onChange={onChange} picker="year" />
+            <DatePicker
+              defaultValue={moment(currentMonth, 'YYYY')}
+              onChange={onChange}
+              picker="year"
+            />
             <Button
               style={{
                 backgroundColor: '#42ABBC',

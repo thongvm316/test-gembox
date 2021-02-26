@@ -467,10 +467,17 @@ const CategoryAnalysis = (props) => {
   }
   const getData = async () => {
     setLoading(true)
-    const params = {
-      start: datePicker[0] ? datePicker[0] : allDateOfCurrentMonth[0],
-      end: datePicker[1] ? datePicker[1] : allDateOfCurrentMonth[1],
-      key: category,
+    if (category === '전체보기') {
+      var params = {
+        start: datePicker[0] ? datePicker[0] : allDateOfCurrentMonth[0],
+        end: datePicker[1] ? datePicker[1] : allDateOfCurrentMonth[1],
+      }
+    } else {
+      var params = {
+        start: datePicker[0] ? datePicker[0] : allDateOfCurrentMonth[0],
+        end: datePicker[1] ? datePicker[1] : allDateOfCurrentMonth[1],
+        key: category,
+      }
     }
 
     await callApiHome(params)

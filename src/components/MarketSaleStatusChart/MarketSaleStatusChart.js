@@ -84,46 +84,88 @@ const MarketSaleStatusChart = (props) => {
     // },
   ])
   const [spinning, setSpinning] = useState(false)
+
+  useEffect(() => {
+    getData()
+  }, [props.year])
+
+  /* Chart */
   const convertData = (data, isGetRevenue, isGetSold) => {
     const dataForRender = ['', '', '', '', '', '', '', '', '', '', '', '']
     if (isGetRevenue) {
       data.map((item) => {
         let parseToNumber = parseInt(item.created)
         if (parseToNumber == 1) {
-          dataForRender[0] = parseInt(item.revenue)
+          dataForRender[0] = {
+            y: parseInt(item.revenue),
+            name: item.bander_name,
+          }
         }
         if (parseToNumber == 2) {
-          dataForRender[1] = parseInt(item.revenue)
+          dataForRender[1] = {
+            y: parseInt(item.revenue),
+            name: item.bander_name,
+          }
         }
         if (parseToNumber == 3) {
-          dataForRender[2] = parseInt(item.revenue)
+          dataForRender[2] = {
+            y: parseInt(item.revenue),
+            name: item.bander_name,
+          }
         }
         if (parseToNumber == 4) {
-          dataForRender[3] = parseInt(item.revenue)
+          dataForRender[3] = {
+            y: parseInt(item.revenue),
+            name: item.bander_name,
+          }
         }
         if (parseToNumber == 5) {
-          dataForRender[4] = parseInt(item.revenue)
+          dataForRender[4] = {
+            y: parseInt(item.revenue),
+            name: item.bander_name,
+          }
         }
         if (parseToNumber == 6) {
-          dataForRender[5] = parseInt(item.revenue)
+          dataForRender[5] = {
+            y: parseInt(item.revenue),
+            name: item.bander_name,
+          }
         }
         if (parseToNumber == 7) {
-          dataForRender[6] = parseInt(item.revenue)
+          dataForRender[6] = {
+            y: parseInt(item.revenue),
+            name: item.bander_name,
+          }
         }
         if (parseToNumber == 8) {
-          dataForRender[7] = parseInt(item.revenue)
+          dataForRender[7] = {
+            y: parseInt(item.revenue),
+            name: item.bander_name,
+          }
         }
         if (parseToNumber == 9) {
-          dataForRender[8] = parseInt(item.revenue)
+          dataForRender[8] = {
+            y: parseInt(item.revenue),
+            name: item.bander_name,
+          }
         }
         if (parseToNumber == 10) {
-          dataForRender[9] = parseInt(item.revenue)
+          dataForRender[9] = {
+            y: parseInt(item.revenue),
+            name: item.bander_name,
+          }
         }
         if (parseToNumber == 11) {
-          dataForRender[10] = parseInt(item.revenue)
+          dataForRender[10] = {
+            y: parseInt(item.revenue),
+            name: item.bander_name,
+          }
         }
         if (parseToNumber == 12) {
-          dataForRender[11] = parseInt(item.revenue)
+          dataForRender[11] = {
+            y: parseInt(item.revenue),
+            name: item.bander_name,
+          }
         }
       })
     }
@@ -171,19 +213,6 @@ const MarketSaleStatusChart = (props) => {
     }
 
     return dataForRender
-  }
-
-  useEffect(() => {
-    getData()
-  }, [props.year])
-
-  /* Chart */
-  const renameKeys = (obj, newKeys) => {
-    const keyValues = Object.keys(obj).map((key) => {
-      const newKey = newKeys[key] || key
-      return { [newKey]: obj[key] }
-    })
-    return Object.assign({}, ...keyValues)
   }
 
   const optionsLineAndColumnChart = {
@@ -236,6 +265,16 @@ const MarketSaleStatusChart = (props) => {
         lineWidth: 6,
       },
     },
+    tooltip: {
+      shared: true,
+      useHTML: true,
+      headerFormat:
+        '<small style="color: #1890ff; font-size: 15px">{point.key}</small><table>',
+      pointFormat:
+        '<tr><td style="color: {series.color}">{series.name} </td>' +
+        '<td style="text-align: left"><b>{point.y}</b></td></tr>',
+      footerFormat: '</table>',
+    },
     series: [
       {
         name: '',
@@ -243,7 +282,7 @@ const MarketSaleStatusChart = (props) => {
         yAxis: 1,
         data: convertData(data, true, false),
         tooltip: {
-          valueSuffix: ' 매출액',
+          valueSuffix: '  매출액',
           valuePrefix: '₩',
         },
         color: '#ECE9F1',
@@ -253,7 +292,7 @@ const MarketSaleStatusChart = (props) => {
         type: 'spline',
         data: convertData(data, false, true),
         tooltip: {
-          valueSuffix: ' 판매건수',
+          valueSuffix: '  판매건수',
         },
       },
     ],

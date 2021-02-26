@@ -8,8 +8,7 @@ import {
   Modal,
   Divider,
   Image,
-  message,
-  Alert,
+  notification,
   Spin,
 } from 'antd'
 import { EyeOutlined, LoadingOutlined } from '@ant-design/icons'
@@ -22,6 +21,12 @@ import Footer from '../components/Footer'
 import './Login.scss'
 
 const FormItem = Form.Item
+const openNotification = (placement) => {
+  notification.error({
+    description: 'Incorrect username or password.',
+    placement,
+  })
+}
 
 const Login = (props) => {
   if (localStorage.getItem('token-user')) {
@@ -65,10 +70,7 @@ const Login = (props) => {
       setLoading(false)
       history.push('/home')
     } catch (error) {
-      // console.log(error.response)
-      Modal.error({
-        content: '잘못된 사용자 이름 또는 비밀번호',
-      })
+      openNotification('topRight')
       setLoading(false)
     }
   }

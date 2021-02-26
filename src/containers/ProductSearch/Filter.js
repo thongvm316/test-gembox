@@ -28,7 +28,7 @@ const Filter = (props) => {
   const [price, setPrice] = useState([50000, 7500000])
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
-  const [filter, setFilter] = useState({ searchBy: '0'})
+  const [filter, setFilter] = useState({ searchBy: '0' })
 
   function onChangeMarket(value) {
     setFilter({ ...filter, markets: value })
@@ -303,7 +303,9 @@ const Filter = (props) => {
             category={filter.category}
             onChangeCategory={(value) => handleChangeCategory(value)}
           /> */}
-          <p style={{ padding: '.5rem 1.5rem', backgroundColor: '#F8F8FB' }}>보드게임</p>
+          <p style={{ padding: '.5rem 1.5rem', backgroundColor: '#F8F8FB' }}>
+            전체보기
+          </p>
         </Col>
       </Row>
 

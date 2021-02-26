@@ -17,43 +17,44 @@ const homeApi = {
     return axiosClient.get(url, { params })
   },
 
+  // Top product
   getTopCoupang: (params) => {
-    const url = `/home/category/topcoupang`
+    const url = `/home/category/topproduct?market=쿠팡`
     return axiosClient.get(url, { params })
   },
 
   getTopauction: (params) => {
-    const url = `/home/category/topauction`
+    const url = `/home/category/topproduct?market=옥션`
     return axiosClient.get(url, { params })
   },
 
   getTopSmartstore: (params) => {
-    const url = `/home/category/topsmartstore`
+    const url = `/home/category/topproduct?market=스마트스토어`
     return axiosClient.get(url, { params })
   },
 
   getTopWemake: (params) => {
-    const url = `/home/category/topwemake`
+    const url = `/home/category/topproduct?market=위메프`
     return axiosClient.get(url, { params })
   },
 
   getTopTmon: (params) => {
-    const url = `/home/category/toptmon`
+    const url = `/home/category/topproduct?market=티몬`
     return axiosClient.get(url, { params })
   },
 
   getTopInterpark: (params) => {
-    const url = `/home/category/topinterpark`
+    const url = `/home/category/topproduct?market=인터파크`
     return axiosClient.get(url, { params })
   },
 
   getTop11str: (params) => {
-    const url = `/home/category/top11str`
+    const url = `/home/category/topproduct?market=11번가`
     return axiosClient.get(url, { params })
   },
 
   getTopGmarket: (params) => {
-    const url = `/home/category/topgmarket`
+    const url = `/home/category/topproduct?market=G마켓`
     return axiosClient.get(url, { params })
   },
 

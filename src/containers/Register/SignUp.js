@@ -132,7 +132,6 @@ const SignUp = (props) => {
       })
       .catch(function (error) {
         alert(error.message)
-        // grecaptcha.reset(document.getElementById('recaptcha'));
       })
   }
 
