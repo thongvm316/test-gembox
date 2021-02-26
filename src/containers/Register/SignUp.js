@@ -146,6 +146,7 @@ const SignUp = (props) => {
       })
       .catch(function (error) {
         alert(error.message)
+        window.location = '/signup'
       })
   }
 
