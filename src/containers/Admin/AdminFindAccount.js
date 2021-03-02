@@ -1,48 +1,115 @@
 import React, { useState } from 'react'
 
-import { Form, Input, Button, Row, Col } from 'antd'
+import { Form, Input, Button, Row, Col, Modal } from 'antd'
 import Footer from '../../components/Footer'
 
 import adminApi from '../../api/AdminAPI'
 import './AdminFindAccount.scss'
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import firebase from '../../constants/firebase';
+import { API_URL } from '../../constants/appConstants'
+import axios from 'axios'
 
-const AdminFindAccount = () => {
+const AdminFindAccount = (props) => {
+  console.log(props)
+  const [isModalVisible, setIsModalVisible] = useState(false)
+
   const [bodySubmit, setBodySubmit] = useState({
     phone: '',
     verify_code: '',
   })
   const [loading, setLoading] = useState(false)
   const onChange = (e) => {
+    let str_phone = e.target.value.toString().trim()
+    let slicePhone = str_phone.slice(1)
+    let convertToCountryPhone = '+82'.concat(slicePhone)
+    setPhoneInput(convertToCountryPhone)
     setBodySubmit({ ...bodySubmit, [e.target.name]: e.target.value })
   }
-  const { phone, verify_code } = bodySubmit
+
+  const [phoneInput, setPhoneInput] = useState('')
+  const { phone, verify_code } = bodySubmit;
+  const [firebaseToken, setFirebaseToken] = useState('')
+  const [account, setAccount] = useState({});
 
   const verify = () => {
-    setLoading(true)
-    adminApi
-      .verifyPhoneNumber({ phone })
-      .then((value) => {
-        console.log('success')
-        setLoading(false)
-      })
-      .catch((error) => {
-        console.log(error.response)
-        setLoading(false)
-      })
+    var recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha', {
+      size: 'invisible',
+    })
+
+    firebase
+    .auth()
+    .signInWithPhoneNumber(phoneInput, recaptcha)
+    .then(function (confirmationResult) {
+      window.confirmationResult = confirmationResult
+    })
+    .catch(function (error) {
+      alert(error.message)
+    })
+
+    // setLoading(true)
+    // adminApi
+    //   .verifyPhoneNumber({ phone })
+    //   .then((value) => {
+    //     console.log('success')
+    //     setLoading(false)
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.response)
+    //     setLoading(false)
+    //   })
   }
 
-  const findAccount = () => {
-    setLoading(true)
-    adminApi
-      .findAccount(bodySubmit)
-      .then((value) => {
-        console.log('success')
-        setLoading(false)
-      })
-      .catch((error) => {
-        console.log(error.response)
-        setLoading(false)
-      })
+  const findAccount = async () => {
+    console.log(firebaseToken)
+    console.log(phoneInput)
+
+    const config = {
+      headers: {
+        'Firebase-Auth-Token': firebaseToken,
+        'Content-type': 'application/json',
+        Accept: 'application/json'
+      },
+    }
+
+    const { data } = await axios.put(
+      `${API_URL}/admin/findaccount`,
+      {phone: '0969351874'},
+      config,
+    )
+    console.log(data)
+
+    if (data.success == true){
+      setAccount(data.data.result)
+      setIsModalVisible(true)
+    }
+
+
+
+    // setLoading(true)
+    // adminApi
+    //   .findAccount(bodySubmit)
+    //   .then((value) => {
+    //     console.log(value)
+    //     setLoading(false)
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.response)
+    //     setLoading(false)
+    //   })
+  }
+
+  const onChangeVerifyCode = async (e) => {
+
+    window.confirmationResult
+    .confirm(e.target.value)
+    .then(function (result) {
+      setFirebaseToken(result.user.za)
+      console.log(result.user.za)
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
   }
 
   const onFinish = async (values) => {
@@ -52,6 +119,11 @@ const AdminFindAccount = () => {
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
   }
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+    props.history.push('admin-login')
+  };
 
   return (
     <div
@@ -82,6 +154,9 @@ const AdminFindAccount = () => {
         >
           <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <div className="verified" style={{ display: 'flex' }}>
+            <Form.Item>
+              <div id="recaptcha"></div>
+            </Form.Item>
               <Form.Item
                 name="phone"
                 rules={[
@@ -113,7 +188,7 @@ const AdminFindAccount = () => {
               ]}
             >
               <Input
-                onChange={onChange}
+                onBlur={onChangeVerifyCode}
                 name="verify_code"
                 placeholder="인증번호 입력"
                 type="text"
@@ -134,6 +209,18 @@ const AdminFindAccount = () => {
         </Col>
       </Row>
       <Footer />
+      <Modal title={'계정'} visible={isModalVisible} onOk={handleOk}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ marginBottom: '30px' }}>
+            <p>Id</p>
+            <p>{account.id}</p>
+          </div>
+          <div>
+            <p>Password</p>
+            <p>{account.password}</p>
+          </div>
+        </div>
+      </Modal>
     </div>
   )
 }
