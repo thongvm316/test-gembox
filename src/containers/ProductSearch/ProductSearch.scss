@@ -17,6 +17,10 @@
       padding: 0 11px 0 0 !important;
     }
   }
+
+  .ant-table-column-sorter, .ant-table-column-sorter-full {
+    display: none;
+  }
 }
 
 .style-sort {

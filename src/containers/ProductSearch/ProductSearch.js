@@ -8,6 +8,7 @@ import {
   Modal,
   Select,
   Popover,
+  Tooltip,
 } from 'antd'
 import Filter from './Filter'
 import Chart from './Chart'
@@ -20,6 +21,7 @@ import * as _ from 'lodash'
 import moment from 'moment'
 import NumberFormat from 'react-number-format'
 import saleStatusApi from '../../api/SaleStatusAPI'
+import { Fragment } from 'react'
 
 const { Option } = Select
 
@@ -134,30 +136,66 @@ const ProductSearch = (props) => {
     )
   }
 
-  // Of Table
-  // const SelectOption = () => (
-  // <Select defaultValue="카테고리" className="select-option" bordered={false}>
-  //   <Option value="카테고리">카테고리</Option>
-  //   <Option value="밴더명">밴더명</Option>
-  //   <Option value="제품명">제품명</Option>
-  // </Select>
-  // <div className="style-sort">
-  //   <p onClick={Sorter.descend}>오름차순</p>
-  //   <p onClick={Sorter.ascend}>내림차순</p>
-  //   <p onClick={Sorter.cansleSort}>취소</p>
-  // </div>
-  // )
+  /* ---- Of Table ---- */
+  const [stateSort, setStateSort] = useState({
+    sortedInfo: null,
+  })
+  let { sortedInfo } = stateSort
+  sortedInfo = sortedInfo || {}
+  const handleChangeTable = (pagination, filters, sorter) => {
+    // console.log('Various parameters', pagination, filters, sorter)
+    // console.log(sorter)
+    setStateSort({
+      sortedInfo: sorter,
+    })
+  }
 
-  // const sortDescend = (a, b) => b.seller_price - a.seller_price
-  // const sortAscend = (a, b) => a.seller_price - b.seller_price
-  // const sortDescend = (a, b) => { return -1 }
-  // const sortAscend = (a, b) => { return 1 }
-  // const cansleSort = () => { return 0 }
-  // const Sorter = {
-  //   descend: sortDescend,
-  //   ascend: sortAscend,
-  //   cancle: cansleSort
-  // }
+  const clearSorter = () => {
+    setStateSort({
+      sortedInfo: null,
+    })
+  }
+
+  // descend
+  // ascend
+  const ascendSort = (isAs) => {
+    console.log('1')
+    setStateSort({
+      sortedInfo: {
+        order: 'ascend',
+        columnKey: '가격',
+      },
+    })
+  }
+
+  const descendSort = (isDe) => {
+    console.log('2')
+    setStateSort({
+      sortedInfo: {
+        order: 'descend',
+        columnKey: '가격',
+      },
+    })
+  }
+
+  const SelectOption = () => (
+    <>
+      {/* <Select
+        defaultValue="카테고리"
+        className="select-option"
+        bordered={false}
+      >
+        <Option value="카테고리">카테고리</Option>
+        <Option value="밴더명">밴더명</Option>
+        <Option value="제품명">제품명</Option>
+      </Select> */}
+      <div className="style-sort">
+        <p onClick={ascendSort}>오름차순</p>
+        <p onClick={descendSort}>내림차순</p>
+        <p onClick={clearSorter}>취소</p>
+      </div>
+    </>
+  )
 
   const [countSelected, setCountSelected] = useState(0)
   const columns = [
@@ -180,7 +218,8 @@ const ProductSearch = (props) => {
       // sorter: (a, b) => a.market_name.length - b.market_name.length,
     },
     {
-      title: '가격',
+      title: <Popover content={SelectOption}>가격</Popover>,
+      key: '가격',
       render: (record) => {
         // console.log(record)
         return (
@@ -191,12 +230,15 @@ const ProductSearch = (props) => {
           />
         )
       },
-      sorter: {
-        compare: (a, b) => a.seller_price - b.seller_price,
+      sorter: (a, b) => {
+        // console.log('3')
+        return a.seller_price - b.seller_price
       },
+      sortOrder: sortedInfo.columnKey === '가격' && sortedInfo.order,
+      // ellipsis: true,
     },
     {
-      title: '리뷰',
+      title: <Popover content={SelectOption}>리뷰</Popover>,
       render: (record) => (
         <NumberFormat
           value={record.review}
@@ -398,6 +440,10 @@ const ProductSearch = (props) => {
       </Row>
 
       <Row className="res-small-device card-border">
+        <Button onClick={ascendSort}>as Test</Button>
+        <Button onClick={descendSort}>de Test</Button>
+        <Button onClick={clearSorter}>cl Test</Button>
+
         <Col span={24}>
           <Table
             loading={loading}
@@ -407,6 +453,8 @@ const ProductSearch = (props) => {
             scroll={{ x: 1300 }}
             pagination={false}
             showSorterTooltip={false}
+            onChange={handleChangeTable}
+            sorter={false}
             onRow={(record, rowIndex) => {
               return {
                 onClick: (event) => {
