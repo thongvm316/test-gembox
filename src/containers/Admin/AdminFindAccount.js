@@ -41,6 +41,7 @@ const AdminFindAccount = (props) => {
     .auth()
     .signInWithPhoneNumber(phoneInput, recaptcha)
     .then(function (confirmationResult) {
+      console.log(confirmationResult)
       window.confirmationResult = confirmationResult
     })
     .catch(function (error) {
@@ -100,16 +101,19 @@ const AdminFindAccount = (props) => {
   }
 
   const onChangeVerifyCode = async (e) => {
+    if (e.target.value && e.target.value.length >= 6){
+      window.confirmationResult
+      .confirm(e.target.value)
+      .then(function (result) {
+        setFirebaseToken(result.user.za)
+        console.log(result.user.za)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    }
 
-    window.confirmationResult
-    .confirm(e.target.value)
-    .then(function (result) {
-      setFirebaseToken(result.user.za)
-      console.log(result.user.za)
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
+
   }
 
   const onFinish = async (values) => {
@@ -188,7 +192,7 @@ const AdminFindAccount = (props) => {
               ]}
             >
               <Input
-                onBlur={onChangeVerifyCode}
+                onChange={onChangeVerifyCode}
                 name="verify_code"
                 placeholder="인증번호 입력"
                 type="text"
@@ -209,7 +213,7 @@ const AdminFindAccount = (props) => {
         </Col>
       </Row>
       <Footer />
-      <Modal title={'계정'} visible={isModalVisible} onOk={handleOk}>
+      <Modal title={'계정'} visible={isModalVisible} footer={false} onCancel={handleOk}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ marginBottom: '30px' }}>
             <p>Id</p>
