@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Row, Col, Button, Space, List } from 'antd'
+import { Row, Col, Button, Space, List, Input } from 'antd'
 import { useLocation } from 'react-router-dom'
 
 import { AdminMemberContext } from '../../../lib/admin/AdminMemberContext'
@@ -16,6 +16,7 @@ const MemberDetail = (props) => {
   const [loading, setLoading] = useState(false)
   const location = useLocation()
   const { memberDetail } = location.state
+  const [newPassword, setNewPassword] =  useState('12345678')
 
   /* Get global sate */
   const context = useContext(AdminMemberContext)
@@ -60,6 +61,7 @@ const MemberDetail = (props) => {
     setLoading(true)
     const body = {
       user_id: memberDetail.id,
+      new_password: newPassword
     }
     try {
       const { data } = await axios.put(
@@ -138,12 +140,14 @@ const MemberDetail = (props) => {
               xl={24}
               className="style-positon"
             >
+
               <p>
                 <strong>패스워드</strong>
               </p>
-              <Button disabled={loading} onClick={resetPassword} type="default">
-                Reset Password
-              </Button>
+              <div>
+                <Input.Password value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+              </div>
+
             </Col>
             <Col
               xs={24}
@@ -242,6 +246,9 @@ const MemberDetail = (props) => {
       <Row style={{ marginTop: '100px' }} justify="center">
         <Col span={12} style={{ textAlign: 'center' }}>
           <Space size="large">
+            <Button disabled={loading} onClick={resetPassword} type="default">
+              저장하기
+              </Button>
             <Button disabled={loading} onClick={deleteMember}>
               계정 삭제하기
             </Button>
