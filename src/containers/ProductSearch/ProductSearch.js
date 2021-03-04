@@ -177,67 +177,6 @@ const ProductSearch = (props) => {
   )
 
   const [countSelected, setCountSelected] = useState(0)
-  const columns = [
-    {
-      title: '상품명',
-      dataIndex: 'name',
-    },
-    {
-      title: '벤더명',
-      dataIndex: 'bander_name',
-    },
-    {
-      title: '카테고리',
-      dataIndex: 'category_tag',
-      // sorter: (a, b) => a.category_tag.length - b.category_tag.length,
-    },
-    {
-      title: '마켓명',
-      dataIndex: 'market_name',
-      // sorter: (a, b) => a.market_name.length - b.market_name.length,
-    },
-    {
-      title: '가격',
-      key: '가격',
-      render: (record) => {
-        return (
-          <NumberFormat
-            value={record.seller_price}
-            displayType={'text'}
-            thousandSeparator={true}
-          />
-        )
-      },
-      sorter: (a, b) => a.seller_price - b.seller_price,
-      sortOrder: sortedInfo.columnKey === '가격' && sortedInfo.order,
-    },
-    {
-      title: '리뷰',
-      key: '리뷰',
-      render: (record) => (
-        <NumberFormat
-          value={record.review}
-          displayType={'text'}
-          thousandSeparator={true}
-        />
-      ),
-      sorter: (a, b) => a.review - b.review,
-      sortOrder: sortedInfo.columnKey === '리뷰' && sortedInfo.order,
-    },
-    {
-      title: '판매수',
-      key: '판매수',
-      render: (record) => (
-        <NumberFormat
-          value={record.sold}
-          displayType={'text'}
-          thousandSeparator={true}
-        />
-      ),
-      sorter: (a, b) => a.sold - b.sold,
-      sortOrder: sortedInfo.columnKey === '판매수' && sortedInfo.order,
-    },
-  ]
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -283,8 +222,7 @@ const ProductSearch = (props) => {
 
     try {
       const { data } = await axios.get(
-        `${API_URL}/product?keyword=kid&start_date=${valueDate[0]}&end_date=${
-          valueDate[1]
+        `${API_URL}/product?keyword=kid&start_date=${valueDate[0]}&end_date=${valueDate[1]
         }&last_id=${100}`,
         config,
       )
@@ -369,6 +307,67 @@ const ProductSearch = (props) => {
     setLastIndex(productList[lengthData - 1].id)
   }
 
+  const columns = [
+    {
+      title: '상품명',
+      dataIndex: 'name',
+    },
+    {
+      title: '벤더명',
+      dataIndex: 'bander_name',
+    },
+    {
+      title: '카테고리',
+      dataIndex: 'category_tag',
+      // sorter: (a, b) => a.category_tag.length - b.category_tag.length,
+    },
+    {
+      title: '마켓명',
+      dataIndex: 'market_name',
+      // sorter: (a, b) => a.market_name.length - b.market_name.length,
+    },
+    {
+      title: '마켓명',
+      render: (record) => {
+        return (
+          <NumberFormat
+            value={record.seller_price}
+            displayType={'text'}
+            thousandSeparator={true}
+          />
+        )
+      },
+      defaultSortOrder: false,
+      sorter: (a, b) => a.seller_price - b.seller_price,
+    },
+    {
+      title: '리뷰',
+      key: '리뷰',
+      render: (record) => (
+        <NumberFormat
+          value={record.review}
+          displayType={'text'}
+          thousandSeparator={true}
+        />
+      ),
+      defaultSortOrder: false,
+      sorter: (a, b) => a.review - b.review,
+    },
+    {
+      title: '판매수',
+      key: '판매수',
+      render: (record) => (
+        <NumberFormat
+          value={record.sold}
+          displayType={'text'}
+          thousandSeparator={true}
+        />
+      ),
+      defaultSortOrder: false,
+      sorter: (a, b) => a.sold - b.sold,
+    },
+  ];
+
   return (
     <div className="product-search">
       <Row className="card-border" style={{ marginBottom: '2rem' }}>
@@ -420,6 +419,31 @@ const ProductSearch = (props) => {
 
         <Col span={24}>
           <Table
+            columns={columns}
+            dataSource={productList}
+            pagination={false}
+            loading={loading}
+            rowKey={(record) => record.id}
+            scroll={{ x: 1300 }}
+            onChange={handleChangeTable}
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: (event) => {
+                  let state = { product: record }
+
+                  if (filters && filters.start && filters.end) {
+                    state.data = { start: filters.start, end: filters.end }
+                  }
+
+                  props.history.push({
+                    pathname: '/product-detail',
+                    state,
+                  })
+                },
+              }
+            }}
+            />
+          {/* <Table
             loading={loading}
             rowKey={(record) => record.id}
             columns={columns}
@@ -445,7 +469,7 @@ const ProductSearch = (props) => {
                 },
               }
             }}
-          />
+          /> */}
         </Col>
         <Col span={24} style={{ textAlign: 'center', marginTop: '2rem' }}>
           {productList.length ? (
@@ -462,8 +486,8 @@ const ProductSearch = (props) => {
               LOAD MORE
             </Button>
           ) : (
-            ''
-          )}
+              ''
+            )}
         </Col>
       </Row>
 
