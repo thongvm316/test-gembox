@@ -1,27 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Button,
-  DatePicker,
-  Row,
-  Col,
-  Table,
-  Modal,
-  Select,
-  Popover,
-  Tooltip,
-} from 'antd'
+import { Button, DatePicker, Row, Col, Table, Modal, Select } from 'antd'
 import Filter from './Filter'
 import Chart from './Chart'
 import './ProductSearch.scss'
 import { API_URL } from '../../constants/appConstants'
 import axios from 'axios'
 import fileDownload from 'js-file-download'
-import { LineOutlined } from '@ant-design/icons'
 import * as _ from 'lodash'
 import moment from 'moment'
 import NumberFormat from 'react-number-format'
 import saleStatusApi from '../../api/SaleStatusAPI'
-import { Fragment } from 'react'
 
 const { Option } = Select
 
@@ -180,15 +168,6 @@ const ProductSearch = (props) => {
 
   const SelectOption = () => (
     <>
-      {/* <Select
-        defaultValue="카테고리"
-        className="select-option"
-        bordered={false}
-      >
-        <Option value="카테고리">카테고리</Option>
-        <Option value="밴더명">밴더명</Option>
-        <Option value="제품명">제품명</Option>
-      </Select> */}
       <div className="style-sort">
         <p onClick={ascendSort}>오름차순</p>
         <p onClick={descendSort}>내림차순</p>
@@ -218,10 +197,9 @@ const ProductSearch = (props) => {
       // sorter: (a, b) => a.market_name.length - b.market_name.length,
     },
     {
-      title: <Popover content={SelectOption}>가격</Popover>,
+      title: '가격',
       key: '가격',
       render: (record) => {
-        // console.log(record)
         return (
           <NumberFormat
             value={record.seller_price}
@@ -230,15 +208,12 @@ const ProductSearch = (props) => {
           />
         )
       },
-      sorter: (a, b) => {
-        // console.log('3')
-        return a.seller_price - b.seller_price
-      },
+      sorter: (a, b) => a.seller_price - b.seller_price,
       sortOrder: sortedInfo.columnKey === '가격' && sortedInfo.order,
-      // ellipsis: true,
     },
     {
-      title: <Popover content={SelectOption}>리뷰</Popover>,
+      title: '리뷰',
+      key: '리뷰',
       render: (record) => (
         <NumberFormat
           value={record.review}
@@ -246,12 +221,12 @@ const ProductSearch = (props) => {
           thousandSeparator={true}
         />
       ),
-      sorter: {
-        compare: (a, b) => a.review - b.review,
-      },
+      sorter: (a, b) => a.review - b.review,
+      sortOrder: sortedInfo.columnKey === '리뷰' && sortedInfo.order,
     },
     {
       title: '판매수',
+      key: '판매수',
       render: (record) => (
         <NumberFormat
           value={record.sold}
@@ -259,9 +234,8 @@ const ProductSearch = (props) => {
           thousandSeparator={true}
         />
       ),
-      sorter: {
-        compare: (a, b) => a.sold - b.sold,
-      },
+      sorter: (a, b) => a.sold - b.sold,
+      sortOrder: sortedInfo.columnKey === '판매수' && sortedInfo.order,
     },
   ]
 
@@ -440,9 +414,9 @@ const ProductSearch = (props) => {
       </Row>
 
       <Row className="res-small-device card-border">
-        <Button onClick={ascendSort}>as Test</Button>
+        {/* <Button onClick={ascendSort}>as Test</Button>
         <Button onClick={descendSort}>de Test</Button>
-        <Button onClick={clearSorter}>cl Test</Button>
+        <Button onClick={clearSorter}>cl Test</Button> */}
 
         <Col span={24}>
           <Table
