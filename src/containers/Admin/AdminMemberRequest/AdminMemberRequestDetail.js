@@ -18,6 +18,8 @@ const AdminMemberRequestDetail = (props) => {
   const [numberOfRegister, setNumberOfRegister] = useState('')
   const [isNumberRegister, setIsNumberRegister] = useState(false)
   const { memberRequestDetail } = location.state
+  const [newPassword, setNewPassword] = useState('12345678')
+
   // Config for call API
   const config = {
     headers: {
@@ -165,9 +167,12 @@ const AdminMemberRequestDetail = (props) => {
               <p>
                 <strong>패스워드</strong>
               </p>
-              <Button disabled={loading} onClick={resetPassword} type="default">
+              {/* <Button disabled={loading} onClick={resetPassword} type="default">
                 Reset Password
-              </Button>
+              </Button> */}
+              <div>
+              <Input.Password disabled={true} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+              </div>
             </Col>
             <Col
               span={24}
@@ -194,27 +199,27 @@ const AdminMemberRequestDetail = (props) => {
                 {memberRequestDetail.company_number ? (
                   memberRequestDetail.company_number
                 ) : (
-                  <>
-                    {' '}
-                    <Input
-                      style={{
-                        backgroundColor: 'transparent',
-                        marginBottom: '3px',
-                      }}
-                      onChange={(e) => {
-                        setNumberOfRegister(e.target.value)
-                      }}
-                    />{' '}
-                    <br />
-                    <Button
-                      disabled={loading}
-                      onClick={addNumberRegisterCompany}
-                      style={{ width: '100%' }}
-                    >
-                      확인
+                    <>
+                      {' '}
+                      <Input
+                        style={{
+                          backgroundColor: 'transparent',
+                          marginBottom: '3px',
+                        }}
+                        onChange={(e) => {
+                          setNumberOfRegister(e.target.value)
+                        }}
+                      />{' '}
+                      <br />
+                      <Button
+                        disabled={loading}
+                        onClick={addNumberRegisterCompany}
+                        style={{ width: '100%' }}
+                      >
+                        확인
                     </Button>
-                  </>
-                )}
+                    </>
+                  )}
               </p>
             </Col>
             <Col span={24} className="style-positon">
@@ -249,15 +254,15 @@ const AdminMemberRequestDetail = (props) => {
           {memberRequestDetail.status === 2 ? (
             ''
           ) : (
-            <Space size="large">
-              <Button disabled={loading} onClick={reject}>
-                거부하기
+              <Space size="large">
+                <Button disabled={loading} onClick={reject}>
+                  거부하기
               </Button>
-              <Button disabled={loading} onClick={approve}>
-                승인 하기
+                <Button disabled={loading} onClick={approve}>
+                  승인 하기
               </Button>
-            </Space>
-          )}
+              </Space>
+            )}
         </Col>
       </Row>
     </div>
