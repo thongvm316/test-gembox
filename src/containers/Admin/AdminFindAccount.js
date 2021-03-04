@@ -75,7 +75,7 @@ const AdminFindAccount = (props) => {
 
     const { data } = await axios.put(
       `${API_URL}/admin/findaccount`,
-      {phone: '0969351874'},
+      {phone: phone},
       config,
     )
     console.log(data)
