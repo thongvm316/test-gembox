@@ -34,6 +34,7 @@ const ProductSearch = (props) => {
     setVisible(true)
   }
   const handleOk = (values) => {
+    console.log(values)
     setLastIndex(0)
     setFilters(values)
     setVisible(false)
@@ -222,7 +223,8 @@ const ProductSearch = (props) => {
 
     try {
       const { data } = await axios.get(
-        `${API_URL}/product?keyword=kid&start_date=${valueDate[0]}&end_date=${valueDate[1]
+        `${API_URL}/product?keyword=kid&start_date=${valueDate[0]}&end_date=${
+          valueDate[1]
         }&last_id=${100}`,
         config,
       )
@@ -366,7 +368,7 @@ const ProductSearch = (props) => {
       defaultSortOrder: false,
       sorter: (a, b) => a.sold - b.sold,
     },
-  ];
+  ]
 
   return (
     <div className="product-search">
@@ -377,7 +379,7 @@ const ProductSearch = (props) => {
               className="main-btn-style border-radius-6"
               onClick={showModal}
             >
-              필터
+              검색
             </Button>
           </div>
           {/* <div className="filter-date">
@@ -442,7 +444,7 @@ const ProductSearch = (props) => {
                 },
               }
             }}
-            />
+          />
           {/* <Table
             loading={loading}
             rowKey={(record) => record.id}
@@ -486,8 +488,8 @@ const ProductSearch = (props) => {
               LOAD MORE
             </Button>
           ) : (
-              ''
-            )}
+            ''
+          )}
         </Col>
       </Row>
 

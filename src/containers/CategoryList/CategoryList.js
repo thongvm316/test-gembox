@@ -1286,6 +1286,9 @@ const CategoryList = (props) => {
 
     <Menu>
       <Menu.Item>
+        <div onClick={selectCategory}>전체보기</div>
+      </Menu.Item>
+      <Menu.Item>
         <div onClick={selectCategory}>콘솔/휴대용게임기</div>
       </Menu.Item>
       <Menu.Item>

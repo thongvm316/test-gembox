@@ -37,6 +37,8 @@ const CategoryAnalysis = (props) => {
     top11str: [],
     topgmarket: [],
   })
+  /* Select category */
+  const [category, setCategory] = useState('전체보기')
 
   /* Render Data */
   let id = [1, 1, 1, 1, 1, 1, 1, 1]
@@ -131,6 +133,7 @@ const CategoryAnalysis = (props) => {
   }
 
   /* Chart */
+  const [titleChart, setTitleChart] = useState('2020년 전체 점유율 분석')
   const renameKeys = (obj, newKeys) => {
     const keyValues = Object.keys(obj).map((key) => {
       const newKey = newKeys[key] || key
@@ -181,7 +184,10 @@ const CategoryAnalysis = (props) => {
       enabled: false,
     },
     title: {
-      text: '2020년 완구 총 점유율 분석',
+      text:
+        category === '전체보기'
+          ? '2020년 전체 점유율 분석'
+          : '2020년 완구 총 점유율 분석',
       align: 'left',
       style: {
         color: '#495057',
@@ -338,9 +344,6 @@ const CategoryAnalysis = (props) => {
     { market: '티몬', img: Market7 },
     { market: '위메프', img: Market8 },
   ]
-
-  /* Select category */
-  const [category, setCategory] = useState('전체보기')
 
   /* Get data */
   const callApiHome = async (params) => {

@@ -299,13 +299,13 @@ const Filter = (props) => {
           <h4>카테고리</h4>
         </Col>
         <Col className="select-category-analysis">
-          {/* <CategoryList
+          <CategoryList
             category={filter.category}
             onChangeCategory={(value) => handleChangeCategory(value)}
-          /> */}
-          <p style={{ padding: '.5rem 1.5rem', backgroundColor: '#F8F8FB' }}>
+          />
+          {/* <p style={{ padding: '.5rem 1.5rem', backgroundColor: '#F8F8FB' }}>
             전체보기
-          </p>
+          </p> */}
         </Col>
       </Row>
 
