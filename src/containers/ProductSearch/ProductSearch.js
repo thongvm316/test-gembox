@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Button, DatePicker, Row, Col, Table, Modal, Select } from 'antd'
+import {
+  Button,
+  DatePicker,
+  Row,
+  Col,
+  Table,
+  Modal,
+  Select,
+  Popover,
+} from 'antd'
 import Filter from './Filter'
 import Chart from './Chart'
 import './ProductSearch.scss'
@@ -19,6 +28,8 @@ const ProductSearch = (props) => {
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
   const [lastIndex, setLastIndex] = useState(0)
+  const [getParamsFilter, setGetParamsFilter] = useState(null)
+  console.log(getParamsFilter)
 
   const [filters, setFilters] = useState()
 
@@ -34,7 +45,6 @@ const ProductSearch = (props) => {
     setVisible(true)
   }
   const handleOk = (values) => {
-    console.log(values)
     setLastIndex(0)
     setFilters(values)
     setVisible(false)
@@ -42,6 +52,9 @@ const ProductSearch = (props) => {
 
   const getProducts = async () => {
     setLoading(true)
+    if (filters && filters.category && filters.category === '전체보기') {
+      delete filters['category']
+    }
     let params = ''
 
     if (filters && filters.markets && filters.markets.length) {
@@ -55,6 +68,9 @@ const ProductSearch = (props) => {
         params += `&${key}=${filters[key]}`
       }
     }
+
+    setGetParamsFilter(params)
+
     const config = {
       headers: {
         Accept: 'application/json',
@@ -64,9 +80,7 @@ const ProductSearch = (props) => {
     }
     try {
       const res = await axios.get(
-        `${API_URL}/product/search?
-        lastIndex=${lastIndex}
-        ${params}`,
+        `${API_URL}/product/search?lastIndex=${lastIndex}${params}`,
         config,
       )
 
@@ -79,15 +93,59 @@ const ProductSearch = (props) => {
       }
       setLoading(false)
     } catch (error) {
-      if (error.response.statusText == 'Unauthorized') {
+      if (
+        error &&
+        error.response &&
+        error.response.statusText == 'Unauthorized'
+      ) {
         localStorage.clear()
-
         props.history.push('/')
       }
-
       setLoading(false)
     }
+    if (typeof filters === 'object') {
+      filters.category = '전체보기'
+    }
   }
+
+  /*---- Sort API ----*/
+  const [sortIndex, setSortIndex] = useState(0)
+  const sortApi = (field, sort) => {
+    const getData = async () => {
+      setLoading(true)
+      const addSortParam = getParamsFilter.concat(`&sort=${field},${sort}`)
+      const config = {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-Auth-Token': localStorage.getItem('token-user'),
+        },
+      }
+      try {
+        const res = await axios.get(
+          `${API_URL}/product/search?sortIndex=${sortIndex}${addSortParam}`,
+          config,
+        )
+
+        if (res.status == 200) {
+          if (lastIndex > 0) {
+            setProductList(productList.concat(res.data.data.result))
+          } else {
+            setProductList(res.data.data.result)
+          }
+        }
+        setLoading(false)
+      } catch (error) {
+        if (error.response.statusText == 'Unauthorized') {
+          localStorage.clear()
+          props.history.push('/')
+        }
+        setLoading(false)
+      }
+    }
+    getData()
+  }
+
   const handleCancel = (e) => {
     setVisible(false)
   }
@@ -132,47 +190,37 @@ const ProductSearch = (props) => {
   let { sortedInfo } = stateSort
   sortedInfo = sortedInfo || {}
   const handleChangeTable = (pagination, filters, sorter) => {
-    // console.log('Various parameters', pagination, filters, sorter)
-    // console.log(sorter)
     setStateSort({
       sortedInfo: sorter,
     })
   }
 
-  const clearSorter = () => {
-    setStateSort({
-      sortedInfo: null,
-    })
-  }
-
-  // descend
-  // ascend
-  const ascendSort = (isAs) => {
-    console.log('1')
-    setStateSort({
-      sortedInfo: {
-        order: 'ascend',
-        columnKey: '가격',
-      },
-    })
-  }
-
-  const descendSort = (isDe) => {
-    console.log('2')
-    setStateSort({
-      sortedInfo: {
-        order: 'descend',
-        columnKey: '가격',
-      },
-    })
-  }
-
-  const SelectOption = () => (
+  const SortSellerPrice = () => (
     <>
       <div className="style-sort">
-        <p onClick={ascendSort}>오름차순</p>
-        <p onClick={descendSort}>내림차순</p>
-        <p onClick={clearSorter}>취소</p>
+        <p onClick={() => sortApi('seller_price', 'asc')}>오름차순</p>
+        <p onClick={() => sortApi('seller_price', 'desc')}>내림차순</p>
+        {/* <p>취소</p> */}
+      </div>
+    </>
+  )
+
+  const SortReview = () => (
+    <>
+      <div className="style-sort">
+        <p onClick={() => sortApi('review', 'asc')}>오름차순</p>
+        <p onClick={() => sortApi('review', 'desc')}>내림차순</p>
+        {/* <p>취소</p> */}
+      </div>
+    </>
+  )
+
+  const SortSold = () => (
+    <>
+      <div className="style-sort">
+        <p onClick={() => sortApi('sold', 'asc')}>오름차순</p>
+        <p onClick={() => sortApi('sold', 'desc')}>내림차순</p>
+        {/* <p>취소</p> */}
       </div>
     </>
   )
@@ -329,7 +377,7 @@ const ProductSearch = (props) => {
       // sorter: (a, b) => a.market_name.length - b.market_name.length,
     },
     {
-      title: '마켓명',
+      title: <Popover content={<SortSellerPrice />}>가격</Popover>,
       render: (record) => {
         return (
           <NumberFormat
@@ -339,11 +387,11 @@ const ProductSearch = (props) => {
           />
         )
       },
-      defaultSortOrder: false,
-      sorter: (a, b) => a.seller_price - b.seller_price,
+      // defaultSortOrder: false,
+      // sorter: (a, b) => a.seller_price - b.seller_price,
     },
     {
-      title: '리뷰',
+      title: <Popover content={<SortReview />}>리뷰</Popover>,
       key: '리뷰',
       render: (record) => (
         <NumberFormat
@@ -352,11 +400,11 @@ const ProductSearch = (props) => {
           thousandSeparator={true}
         />
       ),
-      defaultSortOrder: false,
-      sorter: (a, b) => a.review - b.review,
+      // defaultSortOrder: false,
+      // sorter: (a, b) => a.review - b.review,
     },
     {
-      title: '판매수',
+      title: <Popover content={<SortSold />}>판매수</Popover>,
       key: '판매수',
       render: (record) => (
         <NumberFormat
@@ -365,8 +413,8 @@ const ProductSearch = (props) => {
           thousandSeparator={true}
         />
       ),
-      defaultSortOrder: false,
-      sorter: (a, b) => a.sold - b.sold,
+      // defaultSortOrder: false,
+      // sorter: (a, b) => a.sold - b.sold,
     },
   ]
 
@@ -378,6 +426,7 @@ const ProductSearch = (props) => {
             <Button
               className="main-btn-style border-radius-6"
               onClick={showModal}
+              disabled={loading}
             >
               검색
             </Button>

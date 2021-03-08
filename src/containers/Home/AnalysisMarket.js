@@ -474,6 +474,23 @@ const AnalysisMarket = (props) => {
         </Col>
       </Row>
 
+      <Row gutter={16} style={{ marginTop: '20px' }} className="card-border">
+        <Col span={24}>
+          <h1 style={{ display: 'inline-block', marginBottom: '0px' }}>
+            {selectMarket} 총매출
+          </h1>
+          <h1
+            style={{
+              display: 'inline-block',
+              marginLeft: '25px',
+              marginBottom: '0px',
+            }}
+          >
+            ₩ 500,000,000
+          </h1>
+        </Col>
+      </Row>
+
       {loadingUseEfect ? (
         <Spin className="spin-usefect" size="large" />
       ) : (
