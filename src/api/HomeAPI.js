@@ -63,6 +63,12 @@ const homeApi = {
     const url = `/home/market`
     return axiosClient.get(url, { params })
   },
+
+  /* Get Market Total Sale */
+  getMarketTotalSale: (params) => {
+    const url = `/home/market/totalsale`
+    return axiosClient.get(url, { params })
+  },
 }
 
 export default homeApi

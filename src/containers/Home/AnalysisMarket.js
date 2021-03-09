@@ -13,6 +13,7 @@ import HighchartsReact from 'highcharts-react-official'
 import * as hcnd from 'highcharts/modules/no-data-to-display'
 
 import './AnalysisMarket.scss'
+import axios from 'axios'
 const { Option } = Select
 
 hcnd(Highcharts)
@@ -21,6 +22,7 @@ const AnalysisMarket = (props) => {
   const [selectMarket, setSelectMarket] = useState('11번가')
   const [loading, setLoading] = useState(false)
   const [loadingUseEfect, setLoadingUseEfect] = useState(false)
+  const [marketTotalSale, setMarketTotalSale] = useState(0)
 
   // Handle data
   const [data, setData] = useState([])
@@ -363,7 +365,6 @@ const AnalysisMarket = (props) => {
     try {
       setLoading(true)
       const value = await homeApi.getAnalysisMarket(params)
-      console.log(value)
       if (value && value.data.result && value.data.result.total_sale) {
         setData(value.data.result.total_sale)
       }
@@ -399,6 +400,39 @@ const AnalysisMarket = (props) => {
       setLoadingUseEfect(false)
     }
   }, [])
+
+  useEffect(async () => {
+    const params = {
+      start: allDateOfCurrentMonth[0],
+      end: allDateOfCurrentMonth[1],
+      key: selectMarket,
+    }
+    try {
+      const res = await homeApi.getMarketTotalSale(params)
+      if (res && res.data.result && res.data.result.total_sale) {
+        setMarketTotalSale(res.data.result.total_sale)
+      }
+    } catch (error) {
+      console.log(error.response)
+    }
+  }, [])
+
+  /* Get Market Total Sale */
+  const getMarketTotalSale = async () => {
+    const params = {
+      start: datePicker[0] ? datePicker[0] : allDateOfCurrentMonth[0],
+      end: datePicker[1] ? datePicker[1] : allDateOfCurrentMonth[1],
+      key: selectMarket,
+    }
+    try {
+      const res = await homeApi.getMarketTotalSale(params)
+      if (res && res.data.result && res.data.result.total_sale) {
+        setMarketTotalSale(res.data.result.total_sale)
+      }
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
 
   return (
     <div className="analysis-market">
@@ -444,7 +478,10 @@ const AnalysisMarket = (props) => {
                 }}
                 disabled={loading}
                 type="primary"
-                onClick={getData}
+                onClick={() => {
+                  getData()
+                  getMarketTotalSale()
+                }}
               >
                 {loading ? (
                   <Spin
@@ -486,7 +523,12 @@ const AnalysisMarket = (props) => {
               marginBottom: '0px',
             }}
           >
-            ₩ 500,000,000
+            <NumberFormat
+              value={marketTotalSale}
+              displayType={'text'}
+              thousandSeparator={true}
+              prefix={'₩'}
+            />
           </h1>
         </Col>
       </Row>
