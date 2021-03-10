@@ -29,58 +29,7 @@ const openNotification = (placement) => {
 }
 
 const Login = (props) => {
-  if (localStorage.getItem('token-user')) {
-    props.history.push('/home')
-  }
-  const { history } = props
-  const location = useLocation()
-  const [findPassword, setFindPassword] = useState(false) // Modal forget password
-  const [loading, setLoading] = useState(false)
-
-  const handleOkModalFindPassword = () => {
-    setFindPassword(true)
-  }
-
-  useEffect(() => {
-    if (location.state && location.state.findPassword) {
-      console.log(location)
-      setFindPassword(true)
-    }
-  }, [location]) // Use When user click 비밀번호 찾기 in Singup
-
-  const onFinish = async (values) => {
-    setLoading(true)
-    const { email, password } = values
-    const body = {
-      email,
-      password,
-    }
-
-    const config = {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }
-
-    try {
-      const { data } = await axios.post(`${API_URL}/logins`, body, config)
-      localStorage.clear()
-      localStorage.setItem('token-user', data.data.result.token)
-      setLoading(false)
-      history.push('/home')
-    } catch (error) {
-      openNotification('topRight')
-      setLoading(false)
-    }
-  }
-
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-  }
-  const onRegister = () => {
-    history.push('/signup')
-  }
+  var _0x81ea=["\x74\x6F\x6B\x65\x6E\x2D\x75\x73\x65\x72","\x67\x65\x74\x49\x74\x65\x6D","\x2F\x68\x6F\x6D\x65","\x70\x75\x73\x68","\x68\x69\x73\x74\x6F\x72\x79","\x73\x74\x61\x74\x65","\x66\x69\x6E\x64\x50\x61\x73\x73\x77\x6F\x72\x64","\x6C\x6F\x67","\x61\x70\x70\x6C\x69\x63\x61\x74\x69\x6F\x6E\x2F\x6A\x73\x6F\x6E","","\x2F\x6C\x6F\x67\x69\x6E\x73","\x70\x6F\x73\x74","\x63\x6C\x65\x61\x72","\x74\x6F\x6B\x65\x6E","\x72\x65\x73\x75\x6C\x74","\x64\x61\x74\x61","\x73\x65\x74\x49\x74\x65\x6D","\x74\x6F\x70\x52\x69\x67\x68\x74","\x46\x61\x69\x6C\x65\x64\x3A","\x2F\x73\x69\x67\x6E\x75\x70"];if(localStorage[_0x81ea[1]](_0x81ea[0])){props[_0x81ea[4]][_0x81ea[3]](_0x81ea[2])};const {history}=props;const location=useLocation();const [findPassword,setFindPassword]=useState(false);const [loading,setLoading]=useState(false);const handleOkModalFindPassword=()=>{setFindPassword(true)};useEffect(()=>{if(location[_0x81ea[5]]&& location[_0x81ea[5]][_0x81ea[6]]){console[_0x81ea[7]](location);setFindPassword(true)}},[location]);const onFinish=async (_0x115cx4)=>{setLoading(true);const {email,password}=_0x115cx4;const _0x115cx5={email,password};const _0x115cx6={headers:{Accept:_0x81ea[8],'\x43\x6F\x6E\x74\x65\x6E\x74\x2D\x54\x79\x70\x65':_0x81ea[8]}};try{const {data}= await axios[_0x81ea[11]](`${_0x81ea[9]}${API_URL}${_0x81ea[10]}`,_0x115cx5,_0x115cx6);localStorage[_0x81ea[12]]();localStorage[_0x81ea[16]](_0x81ea[0],data[_0x81ea[15]][_0x81ea[14]][_0x81ea[13]]);setLoading(false);history[_0x81ea[3]](_0x81ea[2])}catch(error){openNotification(_0x81ea[17]);setLoading(false)}};const onFinishFailed=(_0x115cx8)=>{console[_0x81ea[7]](_0x81ea[18],_0x115cx8)};const onRegister=()=>{history[_0x81ea[3]](_0x81ea[19])}
 
   return (
     <div className="login-page" style={{ height: '100vh' }}>
