@@ -187,7 +187,7 @@ const CategoryAnalysis = (props) => {
       text:
         category === '전체보기'
           ? '2020년 전체 점유율 분석'
-          : '2020년 완구 총 점유율 분석',
+          : `2020년 ${category} 총 점유율 분석`,
       align: 'left',
       style: {
         color: '#495057',

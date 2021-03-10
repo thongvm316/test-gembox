@@ -416,11 +416,18 @@ const ProductSearch = (props) => {
         console.log(res)
 
         if (res.status == 200) {
+          // if (sortIndex > 0) {
+          //   if (lastIndex > 0) {
+          //     setProductList([])
+          //   }
+          //   setProductList(productList.concat(res.data.data.result))
+          // } else {
+          //   setProductList(res.data.data.result)
+          // }
           if (lastIndex > 0) {
-            setProductList(productList.concat(res.data.data.result))
-          } else {
-            setProductList(res.data.data.result)
+            setProductList([])
           }
+          setProductList(res.data.data.result)
         }
         setLoading(false)
       } catch (error) {
