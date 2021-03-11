@@ -2,72 +2,59 @@ import axiosClient from './axiosClient'
 
 const homeApi = {
   getTopRevenue: (params) => {
-    const url = '/home/revenue/toprevenue'
-    return axiosClient.get(url, { params })
+    var _0x111c=["\x2F\x68\x6F\x6D\x65\x2F\x72\x65\x76\x65\x6E\x75\x65\x2F\x74\x6F\x70\x72\x65\x76\x65\x6E\x75\x65","\x67\x65\x74"];const url=_0x111c[0];return axiosClient[_0x111c[1]](url,{params})
   },
 
   getTopSell: (params) => {
-    const url = `home/revenue/topsellitem`
-    return axiosClient.get(url, { params })
+    var _0x48e8=["\x68\x6F\x6D\x65\x2F\x72\x65\x76\x65\x6E\x75\x65\x2F\x74\x6F\x70\x73\x65\x6C\x6C\x69\x74\x65\x6D","\x67\x65\x74"];const url=`${_0x48e8[0]}`;return axiosClient[_0x48e8[1]](url,{params})
   },
 
   /* Category */
   getTotalSell: (params) => {
-    const url = `/home/category/totalsales`
-    return axiosClient.get(url, { params })
+    var _0xb9b4=["\x2F\x68\x6F\x6D\x65\x2F\x63\x61\x74\x65\x67\x6F\x72\x79\x2F\x74\x6F\x74\x61\x6C\x73\x61\x6C\x65\x73","\x67\x65\x74"];const url=`${_0xb9b4[0]}`;return axiosClient[_0xb9b4[1]](url,{params})
   },
 
   // Top product
   getTopCoupang: (params) => {
-    const url = `/home/category/topproduct?market=쿠팡`
-    return axiosClient.get(url, { params })
+    var _0x2720=["\x2F\x68\x6F\x6D\x65\x2F\x63\x61\x74\x65\x67\x6F\x72\x79\x2F\x74\x6F\x70\x70\x72\x6F\x64\x75\x63\x74\x3F\x6D\x61\x72\x6B\x65\x74\x3D\uCFE0\uD321","\x67\x65\x74"];const url=`${_0x2720[0]}`;return axiosClient[_0x2720[1]](url,{params})
   },
 
   getTopauction: (params) => {
-    const url = `/home/category/topproduct?market=옥션`
-    return axiosClient.get(url, { params })
+    var _0x7b10=["\x2F\x68\x6F\x6D\x65\x2F\x63\x61\x74\x65\x67\x6F\x72\x79\x2F\x74\x6F\x70\x70\x72\x6F\x64\x75\x63\x74\x3F\x6D\x61\x72\x6B\x65\x74\x3D\uC625\uC158","\x67\x65\x74"];const url=`${_0x7b10[0]}`;return axiosClient[_0x7b10[1]](url,{params})
   },
 
   getTopSmartstore: (params) => {
-    const url = `/home/category/topproduct?market=스마트스토어`
-    return axiosClient.get(url, { params })
+    var _0xeaaf=["\x2F\x68\x6F\x6D\x65\x2F\x63\x61\x74\x65\x67\x6F\x72\x79\x2F\x74\x6F\x70\x70\x72\x6F\x64\x75\x63\x74\x3F\x6D\x61\x72\x6B\x65\x74\x3D\uC2A4\uB9C8\uD2B8\uC2A4\uD1A0\uC5B4","\x67\x65\x74"];const url=`${_0xeaaf[0]}`;return axiosClient[_0xeaaf[1]](url,{params})
   },
 
   getTopWemake: (params) => {
-    const url = `/home/category/topproduct?market=위메프`
-    return axiosClient.get(url, { params })
+    var _0x57eb=["\x2F\x68\x6F\x6D\x65\x2F\x63\x61\x74\x65\x67\x6F\x72\x79\x2F\x74\x6F\x70\x70\x72\x6F\x64\x75\x63\x74\x3F\x6D\x61\x72\x6B\x65\x74\x3D\uC704\uBA54\uD504","\x67\x65\x74"];const url=`${_0x57eb[0]}`;return axiosClient[_0x57eb[1]](url,{params})
   },
 
   getTopTmon: (params) => {
-    const url = `/home/category/topproduct?market=티몬`
-    return axiosClient.get(url, { params })
+    var _0xaec4=["\x2F\x68\x6F\x6D\x65\x2F\x63\x61\x74\x65\x67\x6F\x72\x79\x2F\x74\x6F\x70\x70\x72\x6F\x64\x75\x63\x74\x3F\x6D\x61\x72\x6B\x65\x74\x3D\uD2F0\uBAAC","\x67\x65\x74"];const url=`${_0xaec4[0]}`;return axiosClient[_0xaec4[1]](url,{params})
   },
 
   getTopInterpark: (params) => {
-    const url = `/home/category/topproduct?market=인터파크`
-    return axiosClient.get(url, { params })
+    var _0x1234=["\x2F\x68\x6F\x6D\x65\x2F\x63\x61\x74\x65\x67\x6F\x72\x79\x2F\x74\x6F\x70\x70\x72\x6F\x64\x75\x63\x74\x3F\x6D\x61\x72\x6B\x65\x74\x3D\uC778\uD130\uD30C\uD06C","\x67\x65\x74"];const url=`${_0x1234[0]}`;return axiosClient[_0x1234[1]](url,{params})
   },
 
   getTop11str: (params) => {
-    const url = `/home/category/topproduct?market=11번가`
-    return axiosClient.get(url, { params })
+    var _0x62e2=["\x2F\x68\x6F\x6D\x65\x2F\x63\x61\x74\x65\x67\x6F\x72\x79\x2F\x74\x6F\x70\x70\x72\x6F\x64\x75\x63\x74\x3F\x6D\x61\x72\x6B\x65\x74\x3D\x31\x31\uBC88\uAC00","\x67\x65\x74"];const url=`${_0x62e2[0]}`;return axiosClient[_0x62e2[1]](url,{params})
   },
 
   getTopGmarket: (params) => {
-    const url = `/home/category/topproduct?market=G마켓`
-    return axiosClient.get(url, { params })
+    var _0xd44b=["\x2F\x68\x6F\x6D\x65\x2F\x63\x61\x74\x65\x67\x6F\x72\x79\x2F\x74\x6F\x70\x70\x72\x6F\x64\x75\x63\x74\x3F\x6D\x61\x72\x6B\x65\x74\x3D\x47\uB9C8\uCF13","\x67\x65\x74"];const url=`${_0xd44b[0]}`;return axiosClient[_0xd44b[1]](url,{params})
   },
 
   /* Market */
   getAnalysisMarket: (params) => {
-    const url = `/home/market`
-    return axiosClient.get(url, { params })
+    var _0x4a22=["\x2F\x68\x6F\x6D\x65\x2F\x6D\x61\x72\x6B\x65\x74","\x67\x65\x74"];const url=`${_0x4a22[0]}`;return axiosClient[_0x4a22[1]](url,{params})
   },
 
   /* Get Market Total Sale */
   getMarketTotalSale: (params) => {
-    const url = `/home/market/totalsale`
-    return axiosClient.get(url, { params })
+    var _0xefe5=["\x2F\x68\x6F\x6D\x65\x2F\x6D\x61\x72\x6B\x65\x74\x2F\x74\x6F\x74\x61\x6C\x73\x61\x6C\x65","\x67\x65\x74"];const url=`${_0xefe5[0]}`;return axiosClient[_0xefe5[1]](url,{params})
   },
 }
 

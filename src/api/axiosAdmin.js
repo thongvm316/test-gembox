@@ -2,44 +2,6 @@ import axios from 'axios'
 import queryString from 'query-string'
 import { API_URL } from '../constants/appConstants'
 
-const axiosAdmin = axios.create({
-  baseURL: API_URL,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-  paramsSerializer: (params) => queryString.stringify(params),
-})
-
-axiosAdmin.interceptors.request.use((request) => {
-  const token = localStorage.getItem('token')
-  if (token) {
-    request.headers['X-Auth-Token'] = token
-  }
-
-  return request
-})
-
-axiosAdmin.interceptors.response.use(
-  (response) => {
-    if (response && response.data) {
-      return response.data
-    }
-
-    return response
-  },
-  (error) => {
-    // Handle errors
-    if (
-      error.response.status === 401 &&
-      error.response.data.data.message === 'Token has expired'
-    ) {
-      localStorage.clear()
-      window.location = '/'
-    } else {
-      throw error
-    }
-  },
-)
+var _0xe7d9=["\x61\x70\x70\x6C\x69\x63\x61\x74\x69\x6F\x6E\x2F\x6A\x73\x6F\x6E","\x73\x74\x72\x69\x6E\x67\x69\x66\x79","\x63\x72\x65\x61\x74\x65","\x74\x6F\x6B\x65\x6E","\x67\x65\x74\x49\x74\x65\x6D","\x58\x2D\x41\x75\x74\x68\x2D\x54\x6F\x6B\x65\x6E","\x68\x65\x61\x64\x65\x72\x73","\x75\x73\x65","\x72\x65\x71\x75\x65\x73\x74","\x69\x6E\x74\x65\x72\x63\x65\x70\x74\x6F\x72\x73","\x64\x61\x74\x61","\x73\x74\x61\x74\x75\x73","\x72\x65\x73\x70\x6F\x6E\x73\x65","\x6D\x65\x73\x73\x61\x67\x65","\x54\x6F\x6B\x65\x6E\x20\x68\x61\x73\x20\x65\x78\x70\x69\x72\x65\x64","\x63\x6C\x65\x61\x72","\x6C\x6F\x63\x61\x74\x69\x6F\x6E","\x2F"];const axiosAdmin=axios[_0xe7d9[2]]({baseURL:API_URL,headers:{Accept:_0xe7d9[0],'\x43\x6F\x6E\x74\x65\x6E\x74\x2D\x54\x79\x70\x65':_0xe7d9[0]},paramsSerializer:(_0x8496x2)=>{return queryString[_0xe7d9[1]](_0x8496x2)}});axiosAdmin[_0xe7d9[9]][_0xe7d9[8]][_0xe7d9[7]]((_0x8496x3)=>{const _0x8496x4=localStorage[_0xe7d9[4]](_0xe7d9[3]);if(_0x8496x4){_0x8496x3[_0xe7d9[6]][_0xe7d9[5]]= _0x8496x4};return _0x8496x3});axiosAdmin[_0xe7d9[9]][_0xe7d9[12]][_0xe7d9[7]]((_0x8496x5)=>{if(_0x8496x5&& _0x8496x5[_0xe7d9[10]]){return _0x8496x5[_0xe7d9[10]]};return _0x8496x5},(_0x8496x6)=>{if(_0x8496x6[_0xe7d9[12]][_0xe7d9[11]]=== 401&& _0x8496x6[_0xe7d9[12]][_0xe7d9[10]][_0xe7d9[10]][_0xe7d9[13]]=== _0xe7d9[14]){localStorage[_0xe7d9[15]]();window[_0xe7d9[16]]= _0xe7d9[17]}else {throw _0x8496x6}})
 
 export default axiosAdmin
